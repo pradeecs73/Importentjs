@@ -1,0 +1,39 @@
+<div id="panelFour" class="panel">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <span data-toggle="collapse" data-parent="#detailAccordion" data-panel="#panelFour" class="collapsed">
+        	<i class="icon-badge-shield"></i>
+          	Top Expert Connections
+        </span>
+      </h4>
+    </div>
+    <div class="panel-collapse collapse">
+      <div class="panel-body">
+      	<div class="sub-panel">
+
+        	<div class="sub-panel-content">
+        		{{#if experts}}
+	        		<ul id="topExpertConn" class="sub-panel-list sub-person-list">
+	        			{{#each expert in experts}}
+		        			<li class="person-wrap">
+		        				<img class="person-photo" src="assets/avatars/'+userId+'.jpg" onerror="this.src='assets/images/avatars/noimage_mini.png'" alt=""><span class="person-info" style="width: 179px; margin: 3px"><p class="person-name">{{expert.userName}}</p>
+		        					<span class="person-endorsements"> No. of Endorsements: {{expert.endorsementCount}} </span>
+		        					<!--Commented out on shridhar's request-->
+		        					<!--<span class="person-endorsements" > Expert Rating: {{expert.expertRating}}</span>-->
+		        				</span>
+		        			</li>
+	        			{{/each}}
+	        		</ul>
+            {{else}}
+              <div class="missing-data-message">
+              <p class="error-message"><em>No Experts to display.</em></p>
+              </div>
+            {{/if}}
+
+
+	        </div>
+
+      	</div>
+      </div>
+    </div>
+  </div>

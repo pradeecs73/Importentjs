@@ -1,0 +1,105 @@
+<div id="otg" class="tab-pane">
+	<div class="dashboard filters-wrapper container">
+        <div class="row filters-panel results-count table-top-header clearfix">            
+
+            <ul class="col-xs-7 col-sm-7 col-md-7 col-lg-8 filters">
+                <li><span class="results-count-label">{{totalResults}} Results for :</span></li>
+                <li><span class="selected-tag">{{searchText}}</span></li>
+            </ul>
+
+            <div id="document_toggle_view" class="clearfix pull-right layout-buttons">
+                <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action toggleView "list-view" "document"}}></a>
+                <a id="catalog-grid-view" {{ bind-attr class=":icon-grid-layout :pull-left isGridView:active" }} {{action toggleView "grid-view" "document"}}></a>
+            </div>
+        </div>
+    </div>
+    {{#if results.length}}
+    	<div  id="document_search_results" class="container widget-container">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                {{#each results itemController='documentItem'}}
+                    {{#if isGridView}}
+                    	<div class="col-sm-4 col-md-4 col-lg-3">
+                            <div class="kc-grid withPopOver" data-rel="popover" data-container="body" data-toggle="popover" data-placement="auto right" data-original-title="" title="">
+                                <h2 class="grid-header">
+                                    <div class="category-image">
+                                        <i class="white icon-file"></i>
+                                    </div>
+                                    <div class="grid-title">
+                                        <a {{bindAttr href="controller.kotgUrl"}} class="white" target="_self">
+                                		{{resource.document.title}}
+                                		</a>
+                                    </div>
+                                </h2>
+                                <div class="grid-sub-section summary snippets">
+                                    {{#if resource.document.digest}}
+                                        {{{resource.document.digest}}}
+                                    {{else}}
+                                        <p class="no-value">No Description.</p>
+                                    {{/if}}
+                                </div>
+                                <div class="grid-sub-section">
+                                    <span>Type:</span>
+                                    <span> {{resource.document.type}}</span>
+                                </div>
+                                <div class="grid-sub-section">
+                                    <span>Created at: </span>
+                                    <span>{{formatDate resource.asset.createdAt "hh:mm DD MMM YYYY"}}</span>
+                                </div>
+                                <div class="grid-sub-section last">
+                                    <div class="align-left action-icons">
+                                        <a {{bindAttr href="controller.kotgUrl"}} class="white" target="_self">
+                                		    <span class="btn btn-sm btn-primary">Read</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+			    	{{else}}
+						<div class="catalog-list-view">
+		                    <div class="document-catalog">
+		                        <div class="category-description-block position-relative">
+		                            <div class="category-image">
+		                                <i class="blue icon-file"></i>
+		                                <span class="blue">
+		                                    {{resource.document.type}}
+		                                </span>
+		                            </div>
+		                            <div class="document-name">
+		                            	<a {{bindAttr href="controller.kotgUrl"}} target="_self">
+		                                	{{resource.document.title}}
+		                                </a>
+		                            </div>
+		                            <div class="category-block-description">
+		                                <p class="category-description">
+		                                        <b>Description : </b>
+		                                        {{#if resource.document.digest}}
+		                                        	{{resource.document.digest}}
+		                                        {{/if}}
+		                                </p>
+		                            </div>
+		                            <div class="document-upload-date">
+		                                <div><span class="grey uploaded-date">Created At: {{formatDate resource.asset.createdAt "hh:mm DD MMM YYYY"}}</span>
+		                                </div>
+		                                <div class="action-buttons">
+		                                    <div class="pull-right">
+		                                        <a {{bindAttr href="controller.kotgUrl"}} target="_self"><span class="btn btn-sm btn-primary">Read</span></a>
+		                                        
+		                                    </div>
+		                                    <div class="clearfix"></div>
+		                                </div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>    
+		    		{{/if}}
+	    		{{/each}}
+	    	</div>
+    	</div>
+    {{else}}
+        <div class="no-value"> No results found </div>
+    {{/if}}
+    <div>
+        {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+    </div>
+</div>

@@ -1,0 +1,93 @@
+<div class="page-content list-grid-page training-catalog learning-plans no-padding">
+    <div class="container header-panel">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h1 class="eclipse-text" {{bind-attr title=pageTitle}}>Pending Approvals</h1>
+            </div>
+        </div>
+    </div>
+    <div class="sortCatalogCustom">
+        <div class="list-headings">
+            <ul class="col-sm-9">
+                <li> <h5>Course Requests</h5> </li>
+            </ul>
+			{{#if pendingApprovals.courseList}}
+				<ul class="col-sm-1" style="text-align:center">
+					<li><h5>Actions</h5> </li>
+				</ul>
+			{{/if}}
+        </div>
+    </div>
+    {{#if pendingApprovals.courseList}}
+        {{#each course in pendingApprovals.courseList}}
+            <div class="container" style="margin:10px;border-bottom: 1px solid #e2e2e2;">
+                <div class="row">
+                    <div class="col-sm-9 col-xs-12 item-name">
+                      <div class="pull-left">
+                        {{avatarMini course.userName course.userName}}
+                      </div>
+                          <div class="pull-left status-message-section">
+                            <i class="smaller">
+                                <i data-rel="tooltip" class="pill-icon chat-status status-offline" data-bindattr-41="41" data-original-title="" title=""></i>
+                            </i>
+                            
+                          </div>
+                        <div class="pull-left status-message-section">
+                            {{course.shortName}} has requested:approval for course <span style="font-weight: bold" > {{course.entityName}} </span> 
+                         </div>
+                    </div>
+
+                    <div class="col-sm-3 col-xs-12 item-name"><button class="btn green" id="approve1" title="Accept" {{action "approveOrRejectEnrollment" course.id "approve"}}><i class="icon-checked green btn bigger-125"></i></button>
+					<button class="btn"  id="reject1" title="Reject" {{action "approveOrRejectEnrollment" course.id "reject"}}><i class="icon-remove btn bigger-125"></i></button>
+                         
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    {{else}}
+        <div style="text-align:center; margin: 10px"> No course(s) to approve </div>
+    {{/if}}
+    
+    <div class="sortCatalogCustom">
+        <div class="list-headings">
+            <ul class="col-sm-9">
+                <li> <h5>Learning Plan Requests</h5> </li>
+            </ul>
+			{{#if pendingApprovals.plpList}}
+				<ul class="col-sm-1" style="text-align:center">
+					<li><h5>Actions</h5> </li>
+				</ul>
+			{{/if}}
+        </div>
+    </div>
+    {{#if pendingApprovals.plpList}}
+        {{#each plp in pendingApprovals.plpList}}
+            <div class="container" style="margin:10px;border-bottom: 1px solid #e2e2e2;">
+                <div class="row">
+
+                    <div class="col-sm-9 col-xs-12 item-name">
+                      <div class="pull-left">
+                        {{avatarMini plp.userName plp.userName}}
+                      </div>
+                          <div class="pull-left status-message-section">
+                            <i class="smaller">
+                                <i data-rel="tooltip" class="pill-icon chat-status status-offline" data-bindattr-41="41" data-original-title="" title=""></i>
+                            </i>
+                            
+                          </div>
+                        <div class="pull-left status-message-section">
+                            {{plp.shortName}} has requested:approval for Learning Plan <span style="font-weight: bold" > {{plp.entityName}} </span> 
+                         </div>
+                    </div>
+
+                    <div class="col-sm-3 col-xs-12 item-name"><button class="btn green" id="approve1" title="Accept" {{action "approveOrRejectEnrollment" plp.id "approve"}}><i class="icon-checked green btn bigger-125"></i></button>
+					<button class="btn"  id="reject1" title="Reject" {{action "approveOrRejectEnrollment" plp.id "reject"}}><i class="icon-remove btn bigger-125"></i></button>
+                         
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    {{else}}
+        <div style="text-align:center; margin: 10px"> No learning plan(s) to approve </div>
+    {{/if}}
+</div>

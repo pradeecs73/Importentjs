@@ -1,0 +1,152 @@
+<div class="page-content my-file-library list-grid-page documents no-padding">
+    <div {{ bind-attr class=":widget-body :list-with-tags isGridView:grid-view:list-view"}}>
+        <div class="container header-panel my-files-page-title">
+            <div class="row">
+                <div id="messageDiv" class="alert alert-block">
+                    <p></p>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h1 class="eclipse-text" {{bind-attr title=pageTitle}}>{{pageTitle}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="filter-wrapper">
+            <div class="filters-panel has-sorting">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                    <div class="row">
+                        <div id="view-option-buttons" class="col-lg-4 col-md-5 col-sm-4 col-xs-5 layout-buttons">
+                            <a id="catalog-grid-view" {{ bind-attr class=":icon-grid-layout :pull-left isGridView:active" }} {{action toggleView "grid-view" target=view}}></a>
+                            <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action toggleView "list-view" target=view}}></a>
+                            {{sorting-link sortableFields=sortableFields sortBy=sortBy sortOrder=sortOrder updateSortByAction='updateSortBy' toggleSortOrderAction='toggleSortOrder'}}
+
+                            <!--div class="dropdown sorting-dropdown" data-action="sort" id="sortLibrary">
+                                <a href="#" class="sorter-toggle dropdown-toggle" id="change-dir" data-toggle="dropdown" data-icon-before="sort-descending">
+                                    <span class="icon-caret-down"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="#" data-sub-action="f_name" data-sort-direction="asc" data-icon-after="sort-ascending">Name</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" data-sub-action="f_size" data-sort-direction="asc" data-icon-after="sort-ascending">Size</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" data-sub-action="f_modf" data-sort-direction="asc" data-icon-after="sort-ascending">Modified</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="selected" data-sub-action="f_upld" data-sort-direction="asc" data-icon-after="sort-ascending">Uploaded</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" data-sub-action="f_type" data-sort-direction="asc" data-icon-after="sort-ascending">Type</a>
+                                    </li>
+                                </ul>
+                            </div--> 
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-8 col-xs-7">
+                            {{visual-search componentId='fileCatalogFilterBox' facets=allFacets filters=filters searchAction='filter' placeHolderText='Filter by Type'}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 search-add-wrap">
+                    <div class="row">
+                        <div {{ bind-attr class=":form-wrap uploadEnabled:col-lg-10:col-lg-12 uploadEnabled:col-lg-10:col-lg-12 uploadEnabled:col-md-10:col-md-12 uploadEnabled:col-sm-10:col-sm-12 uploadEnabled:col-xs-10:col-xs-12"}}>
+                            <div class="form-search">
+                                <i class="icon-search" {{action 'search'}}></i>
+                                {{input id="documentCatalogSearchBox" class="form-control" value=searchBoxText placeholder="Search by Title, Description, Tags" type="text" action='search'}}
+                            </div>
+                        </div>
+                        {{#if uploadEnabled}}
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <button class="btn upload-btn" type="button" data-icon-before="arrow-upload" data-dismiss="modal"
+                                    data-toggle="modal"  data-rel="tooltip" data-original-title="Upload"
+                                    data-target="#uploadNewFile" {{action 'openCreateDocumentModal'}}>
+                                </button>
+                            </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+            <div {{ bind-attr class=":filters-panel :has-filter-list sharingEnabled:has-sharing taggingEnabled:has-tagging deleteEnabled:has-delete"}}>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 file-actions-wrap">
+                    <!--ul>
+                        {{#if sharingEnabled}}
+                            <li>
+                                <button class="btn share-btn" type="button" data-icon-before="arrow-share" data-dismiss="modal"
+                                        data-target="#editFileSharing" data-toggle="modal" disabled="disabled">
+                                </button>
+                            </li>
+                        {{/if}}
+                        {{#if taggingEnabled}}
+                            <li>
+                                <button class="btn tag-btn" type="button" data-icon-before="tag-plus" data-dismiss="modal"
+                                        data-target="#editTags" data-toggle="modal">
+                                </button>
+                            </li>
+                        {{/if}}
+                        {{#if deleteEnabled}}
+                            <li>
+                                <button class="btn delete-btn" type="button" data-icon-before="trash-o" data-dismiss="modal"
+                                        data-target="#deleteFile" data-toggle="modal" disabled="disabled">
+                                </button>
+                            </li>
+                        {{/if}}
+                    </ul-->
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 filter-items-wrapper">
+                    {{catalog-filter filters=requiredCloudletFilters selected=filterType type="document" action='cloudletFilter'}}
+                </div>
+            </div>
+        </div>
+        {{#if allDocuments.length}}
+            {{#if isGridView}}
+            {{else}}
+                <div class="container list-headings">
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-2">
+                            <h5>Name</h5>
+                        </div>
+                        <div class="col-3">
+                            <h5>Size</h5>
+                        </div>
+                        <div class="col-4">
+                            <h5>Modified</h5>
+                        </div>
+                        <div class="col-5">
+                            <h5>Uploaded</h5>
+                        </div>
+                        <div class="col-6 text-right right-aligned">
+                            <h5>Actions</h5>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+            <div class="widget-body-inner">
+                <div class="widget-main clearfix">
+                    <div id="file-library-list" class="all-catalog-items">
+                        {{#each allDocuments itemController="documentsCatalogItem"}}
+                            <div {{ bind-attr class=":item-wrap :ui-widget-content :ui-selectee isGridView:col-lg-3 isGridView:col-md-4 isGridView:col-sm-6 isGridView:col-xs-12 isGridView::col-xs-12" }} >
+                                <div class="item-inner-wrap">
+                                    {{#if isGridView}}
+                                        {{ view App.DocumentGridView}}
+                                    {{else}} 
+                                        {{ view App.DocumentListView}}
+                                    {{/if}}
+                                </div>
+                            </div>
+
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div>
+                    {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber }}
+                </div>
+            </div>
+        {{else}}
+            <div class="no-value"> No results found</div>
+        {{/if}}
+    </div>
+</div>

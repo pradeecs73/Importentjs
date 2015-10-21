@@ -1,0 +1,265 @@
+<style>
+  .kotgCustom .message-navbar {
+  border-style: none !important;
+  }
+  .kotgCustom .messagebar-item-left, .kotgCustom .messagebar-item-right {
+  bottom: 2px !important
+  }
+  .kotgCustom .messagebar-item-right {
+  right: auto !important;
+  }
+  .shareModal .modal{padding-top:60px;}
+  
+  @media screen and (-webkit-min-device-pixel-ratio:0) {
+  .kotg .upload-content-ul li input[type="text"] {          
+          line-height: 20px;
+  }
+  }
+
+  
+  
+  
+</style>
+
+<div class="documents page-content my-file-library list-grid-page no-padding">
+  <div class="container header-panel">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h1 class="eclipse-text">My Collections</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Don't remove! It's responsible UI of search bar and detail information
+<div class="filter-wrapper">
+  <div class="filters-panel has-sorting list-grid-page">
+    <div class="search-add-wrap" style="width:300px;float:left;">
+      <div class="row">
+        <div class='' style="float:left;width:40px;">
+          <div {m{action desc}} class='icon-sort-descending pull-left'></div>
+          <div href="#" class='icon-caret-down' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></div>
+          <ul class='dropdown-menu' role='menu' aria-labelledby='dLabel' style='position:absolute;margin:-10px auto auto 25px;border-radius:3px !important;'>
+            <li class='sortItem sortByTimeItem active'>
+              <a {m{action sort 'Time'}}>Time</a>
+              <i class="k-icon-sorter k-icon-sorter-sm k-order-descending pull-right"></i>
+            </li>
+            <li class='sortItem sortByNameItem'>
+              <a {m{action sort 'Name'}}>Name</a>
+              <i class="k-icon-sorter k-icon-sorter-sm k-order-descending pull-right"></i>
+            </li>
+          </ul>
+        </div>
+        <div class="form-wrap" style="float:right;width:250px;">
+          <div class="form-search">
+            <i class="icon-search"></i>
+            <input id="tc-search1" class="ember-view ember-text-field form-control no-shadow-input input-mask-date width2x" placeholder="Search By Title , Description" type="text" size="40">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="float:left;margin-left:20px;">{m{shortenedCurrentLink}}</div>
+    <div class="" style="float:left;margin-left:20px;">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 form-wrap col-xs-12">
+          <span title="" class="pointer kotg-custom-btns" data-rel="tooltip" style="cursor: pointer;" data-original-title="Delete Collection" data-placement="left" data-toggle='modal' data-target="#deleteConfirmModal">
+            <i class="kotg-custom-btns-i middle icon-trash-o grey"></i>
+          </span>
+          <span title="" class="pointer kotg-custom-btns" data-rel="tooltip" style="cursor: pointer;" data-original-title="Share" data-placement="left" >
+            <i class="kotg-custom-btns-i middle icon-share grey" {m{action "_openShareModel"}}></i>
+          </span>
+          <div id="kotg_social_strip" class="social pull-right"  ref-entity-id="" ref-entity-type="collection" style='width:234px;padding-top:10px;'></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ -->
+
+<div class="col-xs-12 no-padding">
+  <div class="kotg">
+      <!--home_list_view.html-->
+      <div id="home-content">
+        <div class='home-nav-list'>
+          <div class='search clear-fix'>
+              <div class='k-sorting-dropdown'>
+                <a {{action desc}}>
+                  <i class='k-icon-sorter k-icon-sorter-lg icon-sort-descending pull-left'></i>
+                </a>
+                <a href="#" class='' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' >
+                  <span class="icon-caret-down" style="padding-top:12px;"></span>
+                </a>
+                <ul class='dropdown-menu' role='menu' aria-labelledby='dLabel' style='position:absolute;margin:-10px auto auto 25px;border-radius:3px !important;'>
+                  <li class='sortItem sortByTimeItem active'>
+                    <i class="icon-checkmark pull-left"></i>
+                    <span {{action sort 'Time'}}>Time</span>
+                    <i class="k-icon-sorter icon-sort-descending pull-right"></i>
+                  </li>
+                  <li class='sortItem sortByNameItem'>
+                    <i class="icon-checkmark pull-left"></i>
+                    <span {{action sort 'Name'}}>Name</span>
+                    <i class="k-icon-sorter icon-sort-descending pull-right"></i>
+                  </li>
+                </ul>
+              </div>
+              <div class="k-search-input">
+                  <i class="icon icon-search"></i>
+                  {{input type="text" placeholder="Search" action="searchCollection" valueBinding='keywords'}}
+                  <i class="k-icon-remove icon-cancel" style="display:none;" {{action clearSearchBar}}></i>
+              </div>
+          </div>
+          <div class='k-count'>
+            <span class='item-count content-text-font'>{{model.collections.length}} Item(s)</span>
+          </div>
+
+          <!-- Content List-->
+          <div class='home-nav-list-content'>
+            <div class='home-nav-list-content-li'>
+              <ul>
+                {{#each model.collections}}
+                  {{#link-to 'myCollection' document.id tagName='li'}}
+                    {{#if document.hasImg}}
+                      <div class='l-area f-l'>
+                        <h5 class='content-text-font' style='word-wrap:break-word !important;'>{{document.shortenedTitle}}</h5>
+                        <span class='time'>{{formatDate document.createdAt "DD MMM YYYY, HH:mm:ss"}}</span>
+                      </div>
+                      <div class='r-area f-r'>
+                        <span class='kotg-nav-img'><img {{bind-attr src=document.img}}></span>
+                      </div>
+                    {{else}}
+                      <div class="l-area f-l" style="width: 278px;">
+                        <h5 class='content-text-font' style='word-wrap:break-word !important;'>{{document.shortenedTitle}}</h5>
+                        <span class="time">{{formatDate document.createdAt "DD MMM YYYY, HH:mm:ss"}}</span>
+                      </div>
+                    {{/if}}
+                  {{/link-to}}
+                {{/each}}
+              </ul>
+              <div class='loading-more vertical-center' style='text-align:center;'>
+                <span class='img-loading loadingCollection' style='font-size:24px;'>
+                  <i class='icon-spin icon-spinner-dots' style='line-height: 0.7;'></i>
+                </span>
+               
+                <span class='text loading-more-text'  style='display:none;' {{action loadMoreCollections}}>
+                  <i class='icon-refresh'></i>
+                  <em>&nbsp;&nbsp;show more</em>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail -->
+        <div class='details-area' style='min-width:1000px;'>
+          <div class='details-nav' style="padding:8px 0;">
+              <div style="float: right;">
+                <div class='btn' data-icon-before='arrow-upload' data-placement='left' data-rel='tooltip' data-original-title='Add a File' data-toggle='modal' data-target='#addFileCollections-modal' {{action 'openFileUploadModal'}}>
+                </div>
+                <div class='btn' data-icon-before='plus-thin' data-placement='left' data-rel='tooltip' data-original-title='Add a Collection' data-toggle='modal' data-target='#addCollections-modal' {{action 'showDialog'}}>
+                </div>
+              </div>
+          </div>
+          <div class='details-nav details-nav-2'>
+            <div class='source-articles-address f-l'>
+              <i class='kotg-custom-btns-i icon-globe'></i>
+              <p class='address-text'><a target='_blank' style='color:#0096d6;' id='address-bar-link' {{bind-attr href=currentLink}}>{{shortenedCurrentLink}}</a></p>
+            </div>
+            <div class='ui-details-tools-btn' style='min-width:300px;'>
+              <span class="kotg-custom-btns" data-rel="tooltip" style="cursor: pointer;" data-original-title="Delete Collection" data-placement="left" data-toggle='modal' data-target="#deleteConfirmModal">
+                <i class="kotg-custom-btns-i btn" data-icon-before="trash-o"></i>
+              </span>
+              <span class="kotg-custom-btns" data-rel="tooltip" style="cursor: pointer;" data-original-title="Share" data-placement="left" >
+                <i class="kotg-custom-btns-i btn" data-icon-before="arrow-shared" {{action "_openShareModel"}}></i>
+              </span>
+              <span class="kotg-custom-btns" data-rel="tooltip" style="cursor: pointer;" data-original-title="Favorite" data-placement="left">
+                <i class="kotg-custom-btns-i btn" data-icon-before="star" id="kotg-favorite" {{action "favorite"}}></i>
+              </span>
+              <div id="kotg_social_strip" class="social pull-right"  ref-entity-id="" ref-entity-type="collection" style='width:234px;padding-top:15px;'></div>
+            </div>
+          </div>
+          {{outlet tagArea}}
+          <div class='detail-pane' style='padding-left:320px;'>
+            {{outlet detail}}
+          </div>
+        </div>
+
+    </div>
+    <div id="addCollections-modal" class="modal fade" tabindex="-1">
+      <div class="modal-overlay">
+        <div class="modal-container">
+          <div class="modal-content" style='border-radius:3px;border:none;'>
+              <div class="notice-title">
+                <div class="modal-header" style='border-radius:3px 3px 0px 0px;border:none;background-color:#0096d6'>
+                  <button class="close" id='addCollectionCloseBtn' data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class='modal-title' style='color:#fff;'>Web Content</h4>
+                </div>
+              </div>
+              <div class='modal-middle' id='kotg-fetch' style='height:150px'>
+                <div class='modal-input-area' style='padding:20px 0px;text-align:center;border-bottom:1px solid #EFEFEF;height:60px;'>
+                    <span class='col-xs-2' data-icon-before="globe-add" style="font-size:35px;"></span>
+                    {{input type='text' id='fetchURLtext' class='col-xs-9' valueBinding='fetchURL' action='crawlWebContent'}}
+                </div>
+                <div class='modal-input-area' style='padding:15px 0px;border-bottom:1px solid #EFEFEF;height:44px;'>
+                    <span class='col-xs-2'>&nbsp;</span>
+                    <label class="plpchek">
+                      Fetch web page as image
+                      {{input type="checkbox" checked=isFetchAsImage}}
+                      <span class="lbl"></span>
+                    </label>
+                </div>
+                <div class='modal-btns' style='padding:10px;text-align:right;'>
+                  <button class='btn btn-primary' data-dismiss='modal'>Cancel</button>
+                  <button class='btn btn-primary' {{action 'crawlWebContent'}}>Fetch</button>
+                </div>
+              </div>
+              <div class='modal-middle' id='kotg-fetch-start' style='height:150px;text-align:center;padding:20px;display:none'>
+                <img alt='loading' src='../../../assets/images/kotg/loading.gif'></img>
+                <p style='font-size:20px;'>
+                  Collecting data, please wait...
+                </p>
+              </div>
+              <div class='modal-middle' id='kotg-fetch-success' style='height:150px;text-align:center;padding:20px;display:none'>
+                <img alt='success' src='../../../assets/images/kotg/success-img.png'></img>
+                <p style='font-size:20px;'>
+                  Congrats, data is saved.
+                </p>
+              </div>
+              <div class='modal-middle' id='kotg-fetch-fail' style='height:150px;text-align:center;padding:20px;display:none'>
+                <img alt='failure' src='../../../assets/images/kotg/failure-img.png'></img>
+                <p style='font-size:20px;'>
+                  Sorry, the URL entered cannot be reached from our server.
+                </p>
+              </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id='addFileCollections-modal' class='modal fade' tabindex='-1'>
+        {{outlet fileUploadOutlet}}
+    </div>
+  </div>
+</div>
+{{outlet shareDocumentModalOutlet}}
+
+<!-- delete confirm modal -->
+<div class="modal shareModal" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close white" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Delete Collection</h4>
+              </div>
+              <div class="modal-body">
+                <div class="col-sm-12">
+                  <div class="padding-10">
+                    <span class="grey">Please confirm you want to delete the collection.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary"  data-dismiss="modal" {{action deleteCollection}}>Delete</button>
+              </div>
+            </div>
+          </div>
+</div>

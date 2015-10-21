@@ -1,0 +1,72 @@
+<div id="panelTwo" class="panel">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <span data-parent="#topicDetailAccordion" data-panel="#panelTwo">
+        Courses <span class="panel-counter">({{coursecount}})</span>
+      </span>
+    </h4>
+    </div>
+    <div id="coursesPanel" class="panel-collapse collapse">
+      <div class="panel-body">
+        <div class="sub-panel">
+
+          <div class="sub-panel-content">
+
+            <div class="sub-panel-list sub-panel-table course-list">
+
+          <!-- COURSE TEMPLATE -->
+          {{#if courses}}
+          {{#each course in courses}}
+              <div class="row sub-panel-table-row item-template" id="course-template">
+                <div class="col-sm-7 course-summary">
+                  <a href="#/learningCourse/{{unbound course.courseURL}}"><span class="course-title eclipse-text">{{course.courseName}}</span></a> 
+                  <!-- <span class="course-format">WebEx</span> <span class="course-sessions">3 Sessions</span> -->
+                  {{#if course.courseDescription}}
+                    <p class="course-description"> {{course.courseDescription}}</p>
+                  {{else}}
+                    <p class="course-description error-message"> No Description Available</p>
+                  {{/if}}
+                  
+                  <ul class="course-interaction-data">
+                    {{#if course.likesNo}}
+                      <li class="first"><a class="course-likes enabled" href="javascript:void(0)"><i class="icon-thumbs-up"></i></a><span class="course-likes-count">{{course.likesNo}}</span></li>
+                    {{else}}
+                      <li class="first"><a class="course-likes" href="javascript:void(0)"><i class="icon-thumbs-up"></i></a> <span class="course-likes-count">0</span></li>
+                    {{/if}}
+                    {{#if course.sharedNo}}
+                      <li><a class="course-views enabled" href="javascript:void(0)"><i class="icon-eye"></i></a> <span class="course-views-count">
+                        {{course.sharedNo}}</span></li>
+                    {{else}}
+                      <li><a class="course-views" href="javascript:void(0)"><i class="icon-eye"></i></a> <span class="course-views-count">
+                        0</span></li>
+                    {{/if}}
+                    {{#if course.bokmarksNo}}
+                      <li><a class="course-favorites enabled" href="javascript:void(0)"><i class="icon-star"></i></a><span class="course-favorites-count">{{course.bokmarksNo}}</span></li>
+                    {{else}}
+                      <li><a class="course-favorites" href="javascript:void(0)"><i class="icon-star"></i></a><span class="course-favorites-count">0</span></li>
+                    {{/if}}
+                  </ul>
+                </div>
+                <div class="col-sm-4 no-padding course-dates">
+                  <ul>
+                  </ul>
+                </div>
+                <div class="col-sm-1 no-padding course-links course-linkscourse-links">
+                   <a href="#/learningCourse/{{unbound course.courseURL}}"><i class="icon-window-new"></i></a>
+                </div>
+              </div>
+          {{/each}}
+          {{else}}
+            <div class="missing-data-message">
+              <p class="error-message"><em>No Courses to display.</em></p>
+            </div>
+          {{/if}}
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>

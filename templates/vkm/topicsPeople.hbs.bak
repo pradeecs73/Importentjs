@@ -1,0 +1,81 @@
+
+<div id="panelOne" class="panel active">
+<div class="panel-heading">
+    <h4 class="panel-title">
+      <span data-toggle="collapse" data-parent="#topicDetailAccordion" data-panel="#panelOne">
+        Knowledgeable People <span class="panel-counter">({{peopleCount}})</span>
+      </span>
+    </h4>
+</div>
+<div id="peoplePanel" class="panel-collapse collapse in">
+  <div class="panel-body">
+  	<div class="sub-panel">
+
+    	<div class="sub-panel-content">
+
+    		<div class="sub-panel-list people-list">
+    					
+				<!-- KNOWLEDGE PERSON TEMPLATE -->
+				{{#if topicPeople}}
+				{{#each people in topicPeople}}	
+				<div class="tile-item-wrap tile-item-contact" id="person-template">
+					
+					<div class="tile-item-inner clearfix">
+
+						<div class="row clearfix">
+							<div class="item-image"><img class="user-image" onerror="this.src='assets/images/people/noimage_mini.jpg'" src="assets/images/people/{{ people.person_avatar }}" alt=""></div>
+							<div class="online-status">
+								<i class="jabber-status"></i>
+								<i class="icon-caret-down jabber-dropdown"></i>
+							</div>
+							<div class="basic-info">
+								<p class="item-fullname ccksicon-after eclipse-text">{{people.userName}}</p>
+								<p class="item-workemail eclipse-text">{{people.email}}</p>
+								<p class="item-title eclipse-text"> {{people.funcRole}} <span class="user-likes-count"><i class="icon-thumbs-up"></i> {{people.endorsementCount}}</span></p>
+							</div>
+						</div>
+						<div class="row clearfix contact-links">
+							<ul class="network-links">
+								<li>
+									{{#if people.person_chat}}
+										<a href="javascript:void(0)" class="icon-chat-square jabber enabled"></a>
+									{{else}}
+										<a href="javascript:void(0)" class="icon-chat-square jabber"></a>
+									{{/if}}
+									{{#if people.person_webex}}
+										<a href="javascript:void(0)" class="icon-webex webex enabled"></a>
+									{{else}}
+										<a href="javascript:void(0)" class="icon-webex webex"> <span class="people-webex-count">
+										</span></a>
+									{{/if}}
+								</li>
+								<li class="pull-right">
+									{{#if people.person_favorites}}
+										<a href="javascript:void(0)" class="icon-star add-favorite enabled"></a>
+									{{else}}
+										<a href="javascript:void(0)" class="icon-star add-favorite "><span class="people-likes-count"></span></a>
+									{{/if}}
+								</li>
+							</ul>
+						</div>
+						
+					</div>
+					
+				</div>
+				{{/each}}
+				
+				{{else}}
+					<div class="missing-data-message">
+						<p class="error-message"><em>No Knowledgeable People to display.</em></p>
+					</div>
+				{{/if}}
+
+    		</div>
+
+    	</div>
+
+  	</div>
+  </div>
+</div>
+</div>
+	

@@ -1,0 +1,39 @@
+<div class="modal-create-header">
+  <button  {{bindAttr class=":close busy:hide"}} {{action close}}>
+    <i class="icon-remove white"></i>
+  </button>
+  Bulk Assign Expertise
+
+</div>
+<div class="modal-body clearfix">
+    {{#if success}}
+      <p>Learners have been tagged with areas of expertise. Upload report will be sent to your registered email address</p>
+    {{else}}
+      <div>
+        {{input type="file" id="file"}}
+      </div>
+
+      <div class="pull-left" style="width: 200px;">
+          <a href="assets/data/expertise/bulk-import-template.csv">Download Sample Template</a>
+      </div>
+
+      <div class="pull-right" style="width: 100px;">
+        {{#if busy}}
+          <i class="icon-spin icon-spinner-dots loading-icon bigger-160" style="margin-top: 7px;"></i>
+        {{/if}}
+        <button type="submit" {{action upload}} {{bindAttr class=":btn :btn-sm :btn-primary :pull-right busy:disabled"}}>
+          Submit
+        </button>
+      </div>
+
+      <div class="pull-left" style="width: 400px;">
+         <span>Note: Please make sure that the areas of expertise have already been created and the users exist in the application.</span>
+      </div>
+
+      <ul>
+        {{#each error in validationErrors}}
+          <li class="error">{{error}}</li>
+        {{/each}}
+      </ul>
+    {{/if}}
+</div>

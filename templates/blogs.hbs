@@ -1,0 +1,45 @@
+<div class="page-content">
+	<div class="space-8"></div>
+	<!-- /.page-header -->
+	<div class="row">
+		<div class="col-xs-12">
+			<!-- PAGE CONTENT BEGINS -->
+			<div class="row">
+				<div class="col-xs-12">
+					{{#view Ember.FlashView id="flash-view"}}
+								 <div class="alert alert-danger" id="message">
+								    <strong>Error !!</strong> {{view.content.message}}.
+								</div>
+					{{/view}}
+					<div class="tabsCusNew">
+					<div class="tabbable">
+							<ul id="inbox-tabs" class="inbox-tabs nav nav-tabs padding-16 tab-size-bigger tab-space-1">
+								<li {{bind-attr class=":li-new-mail :pull-right newPath:active"}}> {{#link-to "blogs.new" class="btn-new-mail createNew-icon-right" data-toggle="tab" data-target="#blogs-outlet" (query-params chatSession="" session="" chatRoom="")}} <span class=""> <i data-rel="tooltip" data-original-title="Add A Blog" data-placement="left" class="btn-new-community"></i></span>{{/link-to}}</li>
+								<li class="visible-sm visible-md col-sm-12 col-md-12"><div class="space-10"></div></li>
+								<!-- ./li-new-mail -->
+								<li {{bind-attr class="myPath:active" }}> {{#link-to "blogs.my" data-toggle="tab" data-target="#blogs-outlet"}} <i class="green icon-comment bigger-100"></i> <span>My Blogs<span class="badge badge-grey">{{my.length}}</span></span> {{/link-to}} </li>
+								<li {{bind-attr class="recentPath:active" }}> {{#link-to "blogs.recent" data-toggle="tab" data-target="#blogs-outlet"}} <i class="blue icon-time bigger-100"></i> <span>Most Recent<span class="badge badge-grey">{{recent.length}}</span></span> {{/link-to}} </li>
+								<li {{bind-attr class="sharedPath:active" }}> {{#link-to "blogs.shared" data-toggle="tab" data-target="#blogs-outlet"}} <i class="purple icon-share bigger-100 "></i> <span>Shared<span class="badge badge-grey">{{shared.length}}</span></span> {{/link-to}} </li>
+								<li {{bind-attr class="followedPath:active" }}> {{#link-to "blogs.followed" data-toggle="tab" data-target="#blogs-outlet"}} <i class="red icon-bullhorn bigger-100"></i> <span>Followed By Me<span class="badge badge-grey">{{followed.length}}</span></span> {{/link-to}} </li>
+								<li {{bind-attr class="likedPath:active" }}> {{#link-to "blogs.liked" data-toggle="tab" data-target="#blogs-outlet"}} <i class="orange icon-thumbs-up bigger-100"></i> <span>Liked By Me<span class="badge badge-grey">{{liked.length}}</span></span> {{/link-to}} </li>
+								<li {{bind-attr class="favoritedPath:active" }}> {{#link-to "blogs.favorited" data-toggle="tab" data-target="#blogs-outlet"}} <i class="orange icon-star bigger-100"></i> <span>Favorited By Me<span class="badge badge-grey">{{favorited.length}}</span></span> {{/link-to}} </li>
+							</ul>
+
+							{{outlet}}
+						<!-- /.message-list-container -->
+					</div>
+					</div>
+							<!-- /.tab-pane -->
+				</div>
+						<!-- /.tab-content -->
+			</div>
+					<!-- /.tabbable -->
+		</div>
+				<!-- /.col -->
+	</div>
+	<!-- /.row -->
+</div>
+<!-- /.page-content -->
+
+<!-- page specific plugin scripts -->
+<script src="assets/js/jquery.autosize.min.js"></script>

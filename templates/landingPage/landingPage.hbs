@@ -1,0 +1,28 @@
+<div class="msg_page-wrap landing-login-page">
+
+    <div class="msg_page-box">
+          
+        <!-- Message Header (branding, logo) -->
+        <div class="msg_box-header">
+            <img class="msg_page-logo" src="knowledgecenter/branding/images/common_landing_logo.png" alt="CISCO">
+            <h2 class="msg_page-heading sub-heading">Cisco Collaborative Knowledge</h2>
+        </div><!--/.msg_page-header-->
+
+        <!-- Message Contents (text, forms, actions) -->
+        <div class="msg_box-content landing-login-form" id="landing-login-form-x">
+            {{input type="text" class="msg_page-text-input" value=email name="email" placeholder="Enter Work Email" action='login' on='enter'}}
+            {{#if errors.email}}
+                <span class="error msg_box-input-status"> {{errors.email}}</span>
+            {{/if}}
+            {{#if errors.pending}}
+                <span class="error msg_box-input-status"> {{errors.pending}}</span>
+            {{/if}}
+            <button class="btn btn-primary msg_page-button" {{action "login"}}>Next</button>
+        </div><!--/.msg_page-content-->
+
+        <!-- Message Footer (disclaimers, terms) -->
+        {{partial "loginTerms"}}
+
+    </div>
+
+</div>

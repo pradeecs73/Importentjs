@@ -1,0 +1,37 @@
+{{#if view.isMultiSelectEnabled}}
+<div  id="js-multi-action-toolbar-box" {{bindAttr class=":multi-action-toolbar-box anyUserSelected:show:hide"}}>
+
+    {{#if view.isJabberEnabled}}
+    <span {{bindAttr class=":error-message offlineError::hide"}}>You need to be online to start a group chat</span>
+    <span {{bindAttr class=":error-message selectedUsersNotAvailableError::hide"}}>One or more selected users are offline and wont receive the invite.</span>
+    <span data-rel="tooltip" data-placement="bottom" data-original-title="Invite users to group chat" title="Invite users to group chat" {{action startGroupChat}}>
+        <i class="icon-user-plus"></i>
+    </span>
+    {{/if}}
+
+    {{#if view.isWebexEnabled}}
+    <span data-rel="tooltip" data-placement="bottom" data-original-title="Invite users to group chat" title="Start WebEx meeting" {{action startWebExMeeting}}>
+        <i class="icon-webex"></i>
+    </span>
+    {{/if}}
+    <span id="js-clear-checkbox-count" {{action clearSelection}}>Clear</span>
+
+    <span class="last-child">
+        (<b id="js-count-checkbox-checked">{{selectedUsersLength}}</b>)
+        <i class="icon-caret-down" {{action toggleViewSelectedUsers}}></i>
+    </span>
+
+    <div {{bindAttr class=":multiselect-detailbox showList:show:hide"}}>
+        {{#each selectedUser in selectedUsers}}
+            <span class="multiselect-capsule">
+                <span class="name">{{selectedUser.shortName}}</span>
+                <span class="close-link">
+                    <i class="icon-remove" {{action unselectUser selectedUser.id}}></i>
+                </span>
+                <div class="clearfix"></div>
+            </span>
+        {{/each}}
+    </div>
+</div>
+<div {{bindAttr class=":multiaction-toolbox-push anyUserSelected:show:hide"}}></div>
+{{/if}}

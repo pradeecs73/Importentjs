@@ -1,0 +1,11 @@
+{{#if isGridView}}
+  {{ view App.ManagerUserTileItemView }}
+{{else}}
+  <div class="item-wrap expertise-item-wrap">
+  	<div class="item-inner-wrap">
+  		<div class="item-inner-content">
+  			{{ view App.ManagerUserListItemView }}
+  		</div>
+  	</div>
+  </div>
+{{/if}}

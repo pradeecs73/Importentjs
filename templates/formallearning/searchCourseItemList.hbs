@@ -1,0 +1,33 @@
+    <li>
+        <div class="list-item">
+            <span class="summary">
+                <span class="name">
+                    {{#link-to "learningCourse" resource.id (query-params coursetype=resource.offeringtype) class="top-minus-12"}} {{resource.title}} {{/link-to}}
+                </span>
+                <span class="categories">
+                  <label>Categories</label>
+                </span>
+                <span class="description"><label>Summary </label>
+                    {{#if resource.content}}
+                        {{{ellipsis resource.content 180}}}
+                    {{else}}
+                        <p class="no-value remove-left-padding">Description is not available for this document.</p>
+                    {{/if}}
+                </span>
+                {{#if resource.stats}}
+                    <div class="grey social-icons margin-top-5">
+                        <span><i class="icon-thumbs-up icon-1x"></i> {{resource.stats.likes}} Likes</span>
+                        <span><i class="icon-eye-open icon-1x"></i> {{resource.stats.views}} Views</span>
+                        <span><i class="icon-comments-alt icon-1x"></i> {{resource.stats.comments}} Comments</span>
+                    </div>
+                {{/if}}
+            </span>
+             <span class="type">{{resource.offeringtype}}</span>
+            <span class="actions">
+                 {{#link-to "learningCourse" resource.id (query-params coursetype=resource.offeringtype) class="top-minus-12 white"}}
+                     <span class="btn btn-sm btn-primary">View Course</span>
+                 {{/link-to}}
+                <div class="clearfix"></div>
+            </span>
+        </div>
+    </li>

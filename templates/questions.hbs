@@ -1,0 +1,283 @@
+ <div class="page-content">
+	<div class="space-8"></div>
+	<!-- /.page-header -->
+	<div class="row">
+		<div class="col-xs-12">
+			<!-- PAGE CONTENT BEGINS -->
+			<div class="row">
+				<div class="col-xs-12">
+					{{#view Ember.FlashView id="flash-view"}}
+								 <div class="alert alert-danger" id="message">
+								    <strong>Error !!</strong> {{view.content.message}}.
+								</div>
+					{{/view}}
+					<div class="tabsCusNew">
+					<div class="tabbable">
+						<ul id="inbox-tabs" class="inbox-tabs nav nav-tabs padding-16 tab-size-bigger tab-space-1">
+							<li {{bind-attr class=":li-new-mail :pull-right newPath:active"}}> {{#link-to "questions.new" class="btn-new-mail createNew-icon-right" data-toggle="tab" data-target="#questions-outlet"}} <span> <i data-rel="tooltip" data-original-title="Ask A Question" data-placement="left"  class="btn-new-community"></i></span>{{/link-to}}</li>
+							<!-- ./li-new-mail -->
+							<li {{bind-attr class="myPath:active"}}> {{#link-to "questions.my" data-toggle="tab" data-target="#questions-outlet"}} <i class="blue icon-question-sign bigger-100"></i><span>My Questions<span class="badge badge-grey">{{my.length}}</span></span> {{/link-to}} </li>
+							<li {{bind-attr class="recentPath:active"}}> {{#link-to "questions.recent" data-toggle="tab" data-target="#questions-outlet"}} <i class="green icon-time bigger-100"></i><span>Most Recent<span class="badge badge-grey">{{recent.length}}</span></span> {{/link-to}} </li>
+							<li {{bind-attr class="sharedPath:active" }}> {{#link-to "questions.shared" data-toggle="tab" data-target="#questions-outlet"}} <i class="purple icon-share bigger-100 "></i><span>Shared<span class="badge badge-grey">{{shared.length}}</span></span> {{/link-to}} </li>
+							<li {{bind-attr class="followedPath:active"}}> {{#link-to "questions.followed" data-toggle="tab" data-target="#questions-outlet"}} <i class="red icon-bullhorn bigger-100"></i> <span>Questions I Follow<span class="badge badge-grey">{{followed.length}}</span></span> {{/link-to}} </li>
+							<li {{bind-attr class="likedPath:active" }}> {{#link-to "questions.liked" data-toggle="tab" data-target="#questions-outlet"}} <i class="orange icon-thumbs-up bigger-100"></i> <span>Liked By Me<span class="badge badge-grey">{{liked.length}}</span></span> {{/link-to}} </li>
+							<li {{bind-attr class="favoritedPath:active" }}> {{#link-to "questions.favorited" data-toggle="tab" data-target="#questions-outlet"}} <i class="orange icon-star bigger-100"></i> <span>Favorited By Me <span class="badge badge-grey">{{favorited.length}}</span></span> {{/link-to}} </li>
+						</ul>
+						{{outlet}}
+						<!-- /.tab-content --> 
+					</div>
+					</div>
+					<!-- /.tabbable --> 
+				</div>
+				<!-- /.col --> 
+			</div>
+			<!-- /.row -->
+			<div id="write">
+				<div id="id-message-new-navbar" class="hide message-navbar align-center clearfix">
+					<div class="message-bar"> </div>
+					<div class="message-item-bar">
+						<div class="messagebar-item-left"> <a href="#" class="btn-back-message-list no-hover-underline"> <i class="icon-angle-left blue bigger-110 middle"></i> <b class="middle bigger-110">Back</b> </a> </div>
+					</div>
+				</div>
+				<form id="id-message-form" class="hide form-horizontal message-form">
+					<div class="row post-form-blog-question">
+						<div class="col-md-12">
+							<div class="col-md-8">
+								<div class="form-group">
+									<label class="col-md-2 control-label no-padding-right" for="form-field-subject">Title<span class="asterisk">*</span>:</label>
+									<div class="col-md-10">
+										<div class="input-icon block  no-padding">
+											<input maxlength="100" type="text" class="col-md-12" name="subject" id="form-field-subject" placeholder="Title" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-2 control-label no-padding-right"> <span class="inline space-24 hidden-480"></span> Content<span class="asterisk">*</span>: </label>
+									<div class="col-md-10">
+										<div class="wysiwyg-editor wysiwyg-editor-height"></div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-2 control-label no-padding-right" for="form-field-tags">Tag input:</label>
+									<div class="col-md-10">
+
+                                        This is not supposed to work. Please change the below autocomplete to the new one-saranya/vidhi
+										<input type="text" name="tags" id="form-field-tags" value="Tag Input Control" placeholder="Enter tags ..." />
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label class="col-md-3 control-label no-padding-right" for="form-field-subject">Scope:</label>
+									<div class="col-md-9">
+										<div class="input-icon block no-padding">
+											<select class="form-control" id="form-field-select-1">
+												<option value="">Select Scope</option>
+												<option value="AL">Public</option>
+												<option value="AK">Restricted</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label no-padding-right" for="form-field-subject">Status:</label>
+									<div class="col-md-9">
+										<div class="input-icon block no-padding">
+											<select class="form-control" id="form-field-select-1">
+												<option value="">Select Status</option>
+												<option selected="" value="published">published</option>
+												<option value="draft">draft</option>
+												<option value="inactive">inactive</option>
+												<option value="flagged">flagged</option>
+												<option value="deleted">deleted</option>
+												<option value="banned">banned</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label no-padding-right" for="form-field-subject">Share:</label>
+									<div class="col-md-9">
+										<div class="input-icon block no-padding">
+											<div class="input-group"> <span class="input-group-addon"> <i class="icon-link"></i> </span>
+												<input class="form-control input-mask-phone" type="text" id="form-field-mask-2">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label no-padding-right" for="form-field-subject">Permissions:</label>
+									<div class="col-md-9">
+										<div class="input-icon block  no-padding">
+											<label >
+												<input name="form-field-checkbox" type="checkbox">
+												<span class="lbl"></span> Comment
+											</label>
+											<br>
+											<label >
+												<input name="form-field-checkbox" type="checkbox">
+												<span class="lbl"></span> Edit
+											</label>
+											<br>
+											<label>
+												<input name="form-field-checkbox" type="checkbox">
+												<span class="lbl"></span> Share
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-11">
+								<div class="align-right">
+									<button id="id-add-attachment" type="button" class="btn btn-sm btn-primary"> <i class="icon-plus bigger-140"></i> Create </button>
+									<button id="id-add-attachment" type="button" class="btn btn-sm btn-danger"> <i class="icon-remove bigger-140"></i> Cancel </button>
+								</div>
+								<div class="clearfix space"></div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="clearfix hide message-content no-padding" id="id-message-content">
+            <div id="id-message-item-navbar" class="hide message-navbar align-center clearfix">
+									<div class="message-bar">
+										<div class="message-toolbar">
+											<div class="inline position-relative align-left">
+												<a href="#" class="btn-message btn btn-xs dropdown-toggle" data-toggle="dropdown"> <span class="bigger-110">Action</span> <i class="icon-caret-down icon-on-right"></i> </a>
+												<ul class="dropdown-menu dropdown-lighter dropdown-caret dropdown-125">
+													<li> <a href="#"> <i class="icon-folder-open orange"></i> &nbsp; Archive </a> </li>
+													<li> <a href="#"> <i class="icon-flag-alt red"></i> &nbsp; Flag </a> </li>
+													<li class="divider"></li>
+													<li> <a href="#"> <i class="icon-trash-o red bigger-110"></i> &nbsp; Delete </a> </li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div>
+										<div class="messagebar-item-left"> <a href="#" class="btn-back-message-list"> <i class="icon-angle-left blue bigger-110 middle"></i> <b class="bigger-110 middle">Back</b> </a> </div>
+										<div class="messagebar-item-right"> <i class="icon-time bigger-110 orange middle"></i> <span class="time grey">Today, 7:15 pm</span> </div>
+									</div>
+								</div>
+				<div class="col-lg-8">
+					<div class="message-header clearfix">
+						<div class="pull-left">
+							<span class="blue bigger-125"> BGP routes NOT advertising </span>
+							<div class="space-4"></div>
+							<i class="icon-star orange2 mark-star"></i> &nbsp; <img class="middle" alt="John's Avatar" src="assets/images/avatars/avatar.png" width="32" /> &nbsp; <a href="#" class="sender">John Doe</a> &nbsp; <i class="icon-time bigger-110 orange middle"></i> <span class="time">Today, 7:15 pm</span> 
+						</div>
+						<div class="action-buttons pull-right"> <a href="#"> <i class="icon-edit blue icon-only bigger-130"></i> </a> <a href="#"> <i class="icon-trash-o red icon-only bigger-130"></i> </a> </div>
+					</div>
+					<div class="hr hr-double"></div>
+					<div class="message-body">
+						<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+						<p> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+						<p> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+						<p> Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+						<p> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+						<p> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+					</div>
+					<div class="dialogs" style="overflow: hidden; width: auto; height: 300px;">
+						<div class="itemdiv dialogdiv">
+							<div class="user"> <img alt="Alexa's Avatar" src="/knowledgecenter/profiles/avatar1.png"> </div>
+							<div class="body">
+								<div class="time"> <i class="icon-time"></i> <span class="green">4 sec</span> </div>
+								<div class="name"> <a href="#">Alexa</a> </div>
+								<div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis.</div>
+								<div class="tools"> <a href="#" class="btn btn-minier btn-info"> <i class="icon-only icon-arrow-share"></i> </a> </div>
+							</div>
+						</div>
+						<div class="itemdiv dialogdiv">
+							<div class="user"> <img alt="John's Avatar" src="/knowledgecenter/profiles/avatar.png"> </div>
+							<div class="body">
+								<div class="time"> <i class="icon-time"></i> <span class="blue">38 sec</span> </div>
+								<div class="name"> <a href="#">John</a> </div>
+								<div class="text">Raw denim you probably haven't heard of them jean shorts Austin.</div>
+								<div class="tools"> <a href="#" class="btn btn-minier btn-info"> <i class="icon-only icon-arrow-share"></i> </a> </div>
+							</div>
+						</div>
+						<div class="itemdiv dialogdiv">
+							<div class="user"> <img alt="Bob's Avatar" src="/knowledgecenter/profiles/user.png"> </div>
+							<div class="body">
+								<div class="time"> <i class="icon-time"></i> <span class="orange">2 min</span> </div>
+								<div class="name"> <a href="#">Bob</a> <span class="label label-info arrowed arrowed-in-right">admin</span> </div>
+								<div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis.</div>
+								<div class="tools"> <a href="#" class="btn btn-minier btn-info"> <i class="icon-only icon-arrow-share"></i> </a> </div>
+							</div>
+						</div>
+						<div class="itemdiv dialogdiv">
+							<div class="user"> <img alt="Jim's Avatar" src="/knowledgecenter/profiles/avatar4.png"> </div>
+							<div class="body">
+								<div class="time"> <i class="icon-time"></i> <span class="grey">3 min</span> </div>
+								<div class="name"> <a href="#">Jim</a> </div>
+								<div class="text">Raw denim you probably haven't heard of them jean shorts Austin.</div>
+								<div class="tools"> <a href="#" class="btn btn-minier btn-info"> <i class="icon-only icon-arrow-share"></i> </a> </div>
+							</div>
+						</div>
+						<div class="itemdiv dialogdiv">
+							<div class="user"> <img alt="Alexa's Avatar" src="/knowledgecenter/profiles/avatar1.png"> </div>
+							<div class="body">
+								<div class="time"> <i class="icon-time"></i> <span class="green">4 min</span> </div>
+								<div class="name"> <a href="#">Alexa</a> </div>
+								<div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+								<div class="tools"> <a href="#" class="btn btn-minier btn-info"> <i class="icon-only icon-arrow-share"></i> </a> </div>
+							</div>
+						</div>
+					</div>
+                   			 	<form>
+									<div class="form-actions">
+									<textarea id="form-field-11" class="autosize-transition form-control" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 28px;"></textarea>
+                                    <div class="space-2"></div> 
+									<div class="wizard-actions">
+                                    <button class="btn btn-sm btn-info no-radius" type="button">
+                                    <i class="icon-ok"></i>
+                                    Submit														
+                                    </button> 
+                                     </div>                                                      
+									</div>	
+								</form>
+				</div>
+				<div class="col-lg-4">
+					<div class="widget-box transparent">
+						<div class="widget-header">
+							<h5>Related Questions</h5>
+						</div>
+						<div class="widget-body">
+							<div class="alert alert-info no-padding-top">
+								<div class="row">
+									<div class="profile-activity message-header clearfix">
+										<div class="user pull-left"> &nbsp; <img alt="John's Avatar" src="/knowledgecenter/profiles/avatar4.png"> &nbsp; <a href="#" class="sender">Alexa</a> <small class="time"><i class="icon-time bigger-110 orange middle"></i>&nbsp;Today, 7:15 pm</small> </div>
+									</div>
+									<div class="clearfix" style=" padding:8px !important;height:auto !important">
+										<span class="blue bigger-100">why Latency can contribute substantially to iSCSI-based storage system's performance</span>
+										<p><small> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor dolore nostrud consequ...</small></p>
+									</div>
+									<hr>
+									<div style="font-size:11px !important;" class="pull-right"> <span class="grey"><i class="icon-thumbs-up icon-1x blue"></i>&nbsp;112&nbsp;likes</span> <span class="grey"><i class="icon-eye-open icon-1x purple"></i>&nbsp;165&nbsp;views</span> <span class="grey"><i class="icon-comments-alt icon-1x red"></i>&nbsp;96&nbsp;comments</span> </div>
+								</div>
+							</div>
+							<div class="space-10"></div>
+							<div class="alert alert-success no-padding-top">
+								<div class="row">
+									<div class="profile-activity message-header clearfix">
+										<div class="user pull-left"> &nbsp; <img alt="John's Avatar" src="/knowledgecenter/profiles/avatar5.png"> &nbsp; <a href="#" class="sender">Jim</a> <small class="time"><i class="icon-time bigger-110 orange middle"></i>&nbsp;Today, 7:15 pm</small> </div>
+									</div>
+									<div class="clearfix no-padding-top" style=" padding:8px !important;height:auto !important">
+										<span class="blue bigger-100">why Latency can contribute substantially to iSCSI-based storage system's performance</span>
+										<p><small> Lorem ipsum dolor sit amet, consectetur adipisicing elit, veniam, quis nostrud consequ...</small></p>
+									</div>
+									<hr>
+									<div style="font-size:11px !important;" class="pull-right"> <span class="grey"><i class="icon-thumbs-up icon-1x blue"></i>&nbsp;112&nbsp;likes</span> <span class="grey"><i class="icon-eye-open icon-1x purple"></i>&nbsp;165&nbsp;views</span> <span class="grey"><i class="icon-comments-alt icon-1x red"></i>&nbsp;96&nbsp;comments</span> </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /.message-content --> 
+		<!-- PAGE CONTENT ENDS --> 
+	</div>
+	<!-- /.col --> 
+</div>
+<!-- page specific plugin scripts --> 
+<script src="assets/js/jquery.autosize.min.js"></script>

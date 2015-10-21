@@ -1,0 +1,42 @@
+<div id="mySpace-tab" class="tab-pane active">
+  <div class="widget-box transparent" id="recent-box">
+        <div class="widget-header widget-header-flat padding-12">
+        <h4 class="lighter"> <i class="icon-list orange"></i> My Blogs </h4>
+  </div>
+  <div class="widget-body">
+    <div class="widget-body-inner" style="display: block;">
+      <div class="widget-main no-padding">
+      
+      {{#each blog in model.posts}}
+            <div class="itemdiv commentdiv profile-activity clearfix">
+                <div class="body" style="margin:5px !important">
+                    {{avatarMini blog.authorName blog.author}}
+                    {{#link-to "blog" blog._id class="user"}} <span class="text">{{blog.title}} </span>{{/link-to}} <br/>
+                    <span class="author_name">{{profileLink blog.authorName blog.author}} <i class="icon-time orange bigger-110"></i> {{from-now blog.createDate}}</span>
+                    <div class="grey"><i class="icon-quote-left"></i>  {{{ellipsis blog.content 150}}} </div>
+                        <div class="pull-left status-buttons grey">
+                        <span>
+                              <i class="icon-thumbs-up icon-1x blue"></i> {{blog.follows.length}} likes
+                        </span>                
+                        <span>
+                             <i class="icon-eye-open icon-1x purple"></i> {{blog.views.length}} views
+                        </span>                                                                                                                                                
+                        <span>
+                             <i class="icon-comments-alt icon-1x red"></i> {{blog.comments.length}} comments
+                        </span>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+      
+        
+        <div class="center"> <i class="icon-comments-alt icon-2x green"></i> &nbsp; {{#link-to "blogs.my"}} See more &nbsp; <i class="icon-angle-right"></i> {{/link-to}} </div>
+        <div class="hr hr-double hr8"></div>
+      </div>
+      <!-- /widget-main --> 
+    </div>
+    </div>
+  <!-- /widget-body --> 
+  </div>
+
+</div>

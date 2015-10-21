@@ -1,0 +1,15 @@
+<div class="topic-section topic-overview-section first-section" data-topic-id="46" data-topic-connection="communities" data-topic-prefix="community">
+	<h4 class="topic-heading display-full-topic" data-icon-before="community-dark" data-icon-after="angle-right">Related Communities</h4>
+		{{#if relatedCommunities}}
+			<ul class= "topic-item-list topic-preview-list">
+				{{#each community in relatedCommunities}}
+					<li><a title="{{unbound community.communityName}}" href="#/community/{{unbound community.communityURI}}">{{community.communityName}}</a>
+					</li>
+				{{/each}}	
+			</ul>
+		{{else}}
+			<ul class="missing-data-message">
+				<li><em>No Communities to Display</em></li>
+			</ul>
+		{{/if}}
+</div>

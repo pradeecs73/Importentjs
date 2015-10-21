@@ -1,0 +1,92 @@
+<style>
+    .modal-dialog {
+    left: 0;
+    }
+</style>
+
+
+<div class="info-bar clearfix">
+
+    <span class="pull-left margin-right-20">
+         <i class="icon-user grey bigger-125"></i>Started by {{creatorShortName}}
+    </span>
+    <span class='pull-left'>
+      <i class="icon-calendar-empty"></i>
+      <span>Created On: {{formatDate createdOn "DD MMM YYYY"}}</span>
+    </span>
+    <span class='pull-left'>
+      <i class="icon-calendar-empty"></i>
+      <span>Updated On: {{formatDate updatedOn "DD MMM YYYY"}}</span>
+    </span>
+    <span class='pull-left'>
+      <i {{bind-attr class=":bigger-125 :grey :middle isPublic:icon-lock-open:icon-lock-closed"}}></i>&nbsp;{{type}}
+    </span>
+
+    <div class="userprofileRow detail-tool-bar">
+        <div class="pull-right">
+            <ul class="toolbar">
+                {{#if isUserAuthored}}
+                    <li>
+                        <a {{action "editCommunity" _id}}>
+							<i class="icon-pencil add-question-icon margin-top-5 pull-right show" data-placement="left" data-original-title="Edit" data-rel="tooltip"></i>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="no-underline" data-dismiss="modal" data-target="#deleteCommunity" data-toggle="modal" {{action beforeDelete this target="view"}}>
+                            <i class="middle icon-trash-o margin-top-5 grey bigger-125" data-rel="tooltip" data-placement="left" data-original-title="Delete"></i>
+                        </a>         
+                    </li>
+                    {{else}}
+                      {{#if isUserAuthoredForEdit}}
+                        <li>
+                          <a {{action "editCommunity" _id}}>
+                              <i class="icon-pencil add-question-icon margin-top-5 pull-right show" data-placement="left" data-original-title="Edit" data-rel="tooltip"></i>
+                          </a>      
+                        </li>
+                      {{/if}}
+
+                      {{#if isUserAuthoredForDeletion}}
+                        <li>
+                            <a class="no-underline" data-dismiss="modal" data-target="#deleteCommunity" data-toggle="modal" {{action beforeDelete this target="view"}}>
+                                <i class="middle icon-trash-o margin-top-5 grey bigger-125" data-rel="tooltip" data-placement="left" data-original-title="Delete"></i>
+                            </a>         
+                        </li>
+                      {{/if}}
+                      
+                {{/if}}
+                {{#if active}}
+                    <li {{bindAttr class=":last-child write::first-child"}}>
+                        <a {{bindAttr class="isMember:show:hidden"}} {{action "instantMeeting" on="click"}} >
+                            <i class="icon ccksicon-12-webex" data-rel="tooltip" data-original-title="Webex"></i>
+                        </a>
+                    </li>
+                {{/if}}
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal shareModal" id="deleteCommunity" tabindex="-1" role="dialog" aria-labelledby="communityDeleteModal" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close white" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="communityDeleteModal"> Delete Community</h4>
+              </div>
+              <div class="modal-body">
+                <div class="col-sm-12">
+                  <div class="padding-10">
+                    <span class="grey" id="deleteCommunityMessage">Are you sure to delete community?</span>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal"> Cancel </button>
+                <a href="javascript:;" {{action deleteCommunity this}}><button type="button" class="btn btn-sm btn-primary"  data-dismiss="modal" id="deleteCommunityButton"> Delete Community</button>
+                </a>
+              </div>
+            </div>
+          </div>
+</div>

@@ -1,0 +1,25 @@
+
+<div id="description" class="tab-pane active">
+    <div class="widget-box transparent">
+       
+            <!-- <div class="widget-header widget-header-flat widget-padding bborder row-header">
+
+                <span class="widget-toolbar">  
+                   <!-- <a data-parent="#accordion" data-action="collapse" class="accordion-toggle">
+                        <i class="icon-caret-up"></i>
+                    </a> -->
+                 </span>
+               <!-- <i data-rel="tooltip" data-original-title="Edit" data-placement="left" {{bindAttr class=":icon-pencil :add-question-icon :margin-top-5 :pull-right active:show:hidden isMember:show:hidden"}}{{action "editCommunity" _id}}></i> -->
+                {{#if view.isWebexEnabled}}
+                    <i data-rel="tooltip" data-original-title="Launch Webex" data-placement="left" {{bindAttr class=":icon-webex :add-question-icon :margin-top-5 :pull-right active:show:hidden isMember:show:hidden"}}{{action "instantMeeting" on="click"}}></i>
+                {{/if}}
+            </div>
+       
+        <div id="communityDescription" class="panel-collapse collapse in">
+            <div class="widget-body page-padding">
+                <p class="page-padding">{{{description}}}</p>
+            </div>
+        </div>
+    </div>
+
+</div>

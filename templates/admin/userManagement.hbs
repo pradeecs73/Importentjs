@@ -1,0 +1,48 @@
+<div class="page-header">
+    <h1> User </h1>
+</div>
+
+<div class="tabbable toggle_view admin-tabs">
+
+    <ul class="nav nav-tabs padding-left-18 tab-size-bigger" id="adminTab">
+
+        {{#if userTabEnabled}}
+            {{#link-to "userManagement.users" (query-params filters="" searchText="" pageNumber=1 sortBy='shortName' sortOrder='asc') data-target="#admin-outlet" tagName="li"}}
+                <a>Users</a>
+            {{/link-to}}
+        {{/if}}
+
+        {{#if registrationTabEnabled}}
+            {{#link-to "userManagement.registrations" data-target="#admin-outlet" tagName="li"}}
+                <a>Pending Registrations</a>
+            {{/link-to}}
+        {{/if}}
+
+        {{#if rolesTabEnabled}}
+            {{#link-to "userManagement.roles" (query-params pageNumber=1 sortField='createdOn' sortOrder='asc') data-target="#admin-outlet" tagName="li"}}
+                <a>Roles and Permissions</a>
+            {{/link-to}}
+        {{/if}}
+
+        {{#if expertiseTabEnabled}}
+            {{#link-to "userManagement.expertise" (query-params pageNumber=1 searchtextvalue="") data-target="#admin-outlet" tagName="li"}}
+                <a>Define Expertise</a>
+            {{/link-to}}
+        {{/if}}
+
+
+    </ul>
+
+
+    <div class="tab-content no-border" id="admin-outlet">
+        <div class="message-container"></div>
+        {{#if showErrorTab}}
+            <h3>Access Denied.</h3>
+            <h5>It looks like the required permission to perform this administrative operation has been revoked. Please
+                refresh this application to access the relevant administrative operations.</h5>
+        {{else}}
+            {{outlet}}
+        {{/if}}
+    </div>
+
+</div>

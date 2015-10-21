@@ -1,0 +1,95 @@
+ <!-- Add Prescribed Learning Plan Modal -->
+    <div class="modal fade" id="addPrescribedModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header learningplanblue-header modal-create-header clearfix">
+                    <button type="button" class="close white" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Assign Prescribed Learning Plan(s) to User(s)</h4>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="container filter-by-wrapper">
+                        {{visual-search componentId='search_box_container3' facets=userSearchFacets filters=userSearchFilters searchAction='peopleSearchFilter' placeHolderText='Filter By Job Title / Organization / Location'}}
+                    </div>
+
+                    <div class="container search-add-wrap">
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-wrap col-xs-12">
+                            <div class="form-search">
+                                <i class="icon-search" {{action 'search'}}></i>
+                                {{input id="tc-search-people" type="text" placeholder="Search people" value=searchPeople class="form-control" action="peopleSearch" on="enter"}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <form class="container" action="#" method="POST" id="createLPForm">
+                        <fieldset>
+                            <div class="row grey-back">
+                                <div class="col-sm-12 col-xs-12">
+                                    <label class="search-group title" for="CTitle" style="margin-top: 10px;">
+                                        <i class="icon ccksicon-size-30 black catelog-LP pointer add-learningplan-icon-big"></i>
+                                        <b>Select Prescribed Learning Plans:</b> (select all that apply)
+                                    </label>
+                                </div>
+
+                                <div class="col-sm-12 col-xs-12">
+                                    <div class="manager-plp-list" style="height:150px; margin-top:-15px">
+                                        {{#each user in users}}
+                                            <div class="manager-plp-label"></div>
+                                            <div class="manager-plp-container">
+                                                <label class="manager-plp-checkbox">
+                                                    {{view Ember.Checkbox checkedBinding=user.isSelected class="checkbox"}}
+                                                    <span class="lbl"></span>
+                                                </label>
+
+                                                <div class="manager-plp-label">
+													 <div class="eclipse-text">{{user.fullName}}</div>
+                                                </div>
+                                            </div>
+                                        {{/each}}
+
+                                    </div>
+                                </div>
+                                <!--div class="col-sm-11">
+                                </div-->
+                            </div>
+                            <div class="row padding-12">
+                                <div class="col-sm-11 col-xs-9 set-date" style="margin-top:-10px">
+                                    <label class="search-group" for="LPTitle"><i
+                                            class="icon-add-learning-small margin-right-8"></i>Set a date for Learning
+                                        Plan
+                                        completion:</label>
+                                </div>
+                            </div>
+                            <div class="row padding-12 no-padding-topbottom date-picker">
+								<div class="col-sm-12">
+									<div class="input-group date addToPlpPopup" data-provide="datepicker">{{input class="date-picker-input" valueBinding="learningPlanDate"}}<i class="btn icon-calendar learning_calendar_btn"></i>
+									</div>
+								</div>
+                                <span id="plpDateError" style="color:red;float:left;padding-left:6px;display:none">Date should be future date</span>
+                            </div>
+                        </fieldset>
+                    </form>
+					<div class="modal-footer padding-12">
+						<span class="dark-red-border inline-border">
+							<button class="btn btn-red" type="button" data-dismiss="modal" {{action "cancelAddToLp" on="click"}}>Cancel</button>
+						</span>
+						<span class="dark-border inline-border">
+							<button type="button" class="btn btn-primary"
+									id="modalAddButton" {{action assignPLPsToUsers}} {{bind-attr disabled=buttonUserDisabled}}>
+								Add
+							</button>
+						</span>
+					</div>
+                </div>
+                <div class="tc-pagination" style="padding-bottom: 20px;">
+                    {{pagination-link action='gotoUserPage' totalResults=userCount pageNumber=userPageNumber}}
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /. Add Prescribed Learning Plan modal -->

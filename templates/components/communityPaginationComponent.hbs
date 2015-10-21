@@ -1,0 +1,24 @@
+{{#if hasBlogPages}}
+    <ul class="pagination">
+        <li {{bindAttr class="disableBlogPrev:disabled"}}><a {{action prevPage}}>← Previous</a></li>
+        <li class="align-center">{{input class="form-control" value=blogPageNumberValue type="text" action='gotoBlogPage' size="2" class="pageVal"}}/ {{totalBlogPages}}</li>
+        <li {{bindAttr class="disableBlogNext:disabled"}}><a {{action nextPage}}>Next →</a></li>
+    </ul>
+{{/if}}
+
+
+{{#if hasForumPages}}
+    <ul class="pagination">
+        <li {{bindAttr class="disableForumPrev:disabled"}}><a {{action prevPage}}>← Previous</a></li>
+        <li class="align-center">{{input class="form-control" value=forumPageNumberValue type="text" action='gotoForumPage' size="2" class="pageVal"}}/ {{totalForumPages}}</li>
+        <li {{bindAttr class="disableForumNext:disabled"}}><a {{action nextPage}}>Next →</a></li>
+    </ul>
+{{/if}}
+
+{{#if hasWikiPages}}
+    <ul class="pagination">
+        <li {{bindAttr class="disableWikiPrev:disabled"}}><a {{action prevPage}}>← Previous</a></li>
+        <li class="align-center">{{input class="form-control" value=wikiPageNumberValue type="text" action='gotoWikiPage' size="2" class="pageVal"}}/ {{totalWikiPages}}</li>
+        <li {{bindAttr class="disableWikiNext:disabled"}}><a {{action nextPage}}>Next →</a></li>
+    </ul>
+{{/if}}

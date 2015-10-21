@@ -1,0 +1,72 @@
+<div class="page-content mobileknowledge no-padding">
+    <div class="container header-panel">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h1 class="eclipse-text" {{bind-attr title=model.title}}>{{model.title}}</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="filter-wrapper">
+        <div class="filters-panel options-bar">
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 original-link-area">
+            	{{#unless model.isNote}}
+            	<span class="original-link-icon" data-icon-before="globe"></span>
+            	<a class="original-link" {{bind-attr href=model.pLink}}>{{model.pLinkTxt}}</a>
+            	{{/unless}}
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <span class="pull-right">
+                	{{#if isNote}}
+                	<div class="btn" data-icon-before="pencil-thick" data-placement="left" data-rel="tooltip" data-original-title="Edit" {{action edit}}></div>
+                	{{/if}}
+                	<div {{bind-attr class=":btn isStared:starred"}} data-icon-before="star" data-placement="left" data-rel="tooltip" data-original-title="Favorite" {{action star}}></div>
+                	<div class="btn" data-icon-before="arrow-share" data-placement="left" data-rel="tooltip" data-original-title="Share" {{action "openNewkotgShareModal" model.id}}></div>
+                    <div class="btn" data-icon-before="trash-o" data-placement="left" data-rel="tooltip" data-original-title="Delete"  data-toggle='modal' data-target='#kotgDeleteModal'></div>
+                </span>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+    <div class="tags-area col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <span class="tags-label" data-icon-before="tags"></span>
+        <div>
+            <ul class="tags-items">
+            	{{#each tag in tags}}
+                	<li class="tag-item">
+                        <span class="tag-label">{{tag.label}}</span>
+                        <a class="unbind-tag-btn" data-icon-before="x-thick" {{action unbindTag tag.id}}></a>
+                	</li>
+            	{{/each}}
+            </ul>
+            <a data-icon-before="plus" {{bind-attr class=":add-tag-btn isAddingTag:hide:show"}} {{action showTagInput}} data-placement="left" data-rel="tooltip" data-original-title="Add a Tag"></a>
+            <span {{bind-attr class="isAddingTag:show:hide"}} {{action hideTagInput on="focusOut"}}>
+                <input type="text" id="tagInput" placeholder="Add a tag">
+            </span>
+        </div>
+    </div>
+    <div class="article col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    </div>
+    <div class="uyan-comment col-lg-12 col-md-12 col-sm-12 col-xs-12" load="no" style='padding:0;word-wrap:break-word;word-break:break-all;'></div>
+</div>
+<div id="kotgDeleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modal-create-header clearfix">
+                <button type="button" class="close font-25" data-dismiss="modal" aria-hidden="true">
+                    <i class="icon-remove white"></i>
+                </button>
+                <h4 class="modal-title">Delete Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <div class="padding-10">
+                    <span class="">Please confirm you want to delete it.</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal" {{action delete __deleteId}}>Yes</button>
+            </div>
+        </div>
+    </div>
+</div>

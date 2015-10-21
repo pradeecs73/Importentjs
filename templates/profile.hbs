@@ -1,0 +1,801 @@
+<div id="user-profile" class="page-content user-profile-page">
+  <div class="widget-body list-with-tags" id="profile-layout">
+    <div class="container header-panel">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <h1 class="eclipse-text">Profile</h1>
+        </div>
+      </div>
+    </div>
+    <div class="tabbable">
+      {{#if isMyProfile}}
+      <ul class="nav nav-tabs padding-left-18 tab-size-bigger" id="myTab">
+        <li class="active">
+            {{#link-to "profile.my" data-toggle="tab" data-target="#profile"}}Profile {{/link-to}}
+        </li>
+        <li>
+          {{#link-to "profile.myactivity" data-toggle="tab" data-target="#activity"}}
+          My Activities {{/link-to}}
+        </li>
+          {{#if preferences.FormalLearning}}
+        <li>
+          {{#link-to "profile.myrecentlearnings" data-toggle="tab" data-target="#rl"}}
+          Recent Learnings {{/link-to}}
+        </li>	
+        <li>
+          {{#link-to "profile.myprescribedlearningplans" data-toggle="tab" data-target="#plp"}}
+          Prescribed Learning Plans {{/link-to}}
+        </li>
+          {{/if}}
+        <li>
+          {{#link-to "profile.activitysettings" data-toggle="tab" data-target="#notificationsSettings"}}
+          Activity Stream Preferences  {{/link-to}}
+        </li>
+      </ul>
+      {{/if}}
+      <div class="tab-content">
+        <div id="profile" class="tab-pane in active">
+          
+          <div class="container widget-main profile-overview">
+            <div class="row">
+
+                            <div class="user-image-wrapper" data-dismiss="modal" data-toggle="modal"
+                                 data-target="#profileImageModal">
+                                {{#if adminAssignedExpertise.length}}
+                                    <span class="expert-badge" data-icon-before="badge-shield"></span>
+                                {{/if}}
+                                {{avatarProfile shortName username isCurrentUser}}
+                            </div>
+
+                            <div class="user-info-wrapper">
+                                <h5 id="qa-automation-username">{{fullName}}</h5>
+                                <span class="hidden"><b>Jabber :</b> {{jabberUsername}}</span>
+
+                                <p><strong>Title :</strong> {{jobTitle}}</p>
+
+                                <p><strong>Organization :</strong> {{organization}}</p>
+
+                                <p><strong>{{activeMessage}}</strong></p>
+                                {{#if hasManagerField}}
+                                    <p class="manager-details"><strong>Manager
+                                        : {{profileLink managerName managerId}}</strong></p>
+                                {{/if}}
+                                {{#unless isCurrentUser}}
+                                    <div class="clearfix">
+                                        <div class="contact-icons">
+                                            {{ render "jabberItem" model}}
+                                            {{ render "webexItem" model}}
+                                            <i data-rel="tooltip" class="follow-enabled"
+                                               ref-entity-type="users" {{bind-attr ref-entity-id="username"}}></i>
+                                        </div>
+                                    </div>
+                                {{/unless}}
+                                <p class="user-views">
+                                    {{#if profileViewCountAvailable}}
+                                        <img src="assets/images/user-profile-views.png" alt="" data-rel="tooltip"
+                                             data-original-title="Profile Visits"> <span>{{profileViewCount}}
+                                        views</span>
+                                    {{/if}}
+                                </p>
+
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/.widget-main-->
+
+                    <!-- Notifications -->
+                    {{#if isCurrentUser }}
+                        <div class="widget-box no-border profile-section-notifications" id="notifications">
+                            <div class="widget-header widget-padding bborder row-header">
+                                <h4 class="widget-header-title" data-icon-before="exclamation-triangle">
+                                    Notifications</h4>
+
+                                <div class="widget-toolbar">
+                                    <a class="btn"
+                                       data-toggle="collapse"
+                                       href="#notifications-inner"
+                                       aria-expanded="true"
+                                       aria-controls="notifications-inner"></a>
+                                </div>
+                            </div>
+                            <div class="widget-body">
+                                <div class="widget-body-inner collapse in" id="notifications-inner"
+                                     aria-expanded="true">
+                                    <div class="widget-main container">
+                                        <div class="error">{{approveRejectErrorMessage}}</div>
+
+                                        <!-- Tag Recommendations -->
+                                        {{#each expertiseOnADay in groupedPendingExpertise}}
+                                            {{#each expertiseForAUser in expertiseOnADay.groupedByUsers}}
+                                                {{#if expertiseForAUser.assignedByShortName}}
+                                                    <div class="row recommendations tag-recommendations">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="profile-image-wrap">
+                                                                {{avatarCommunityImgWithGivenUrl expertiseForAUser.assignedByShortName expertiseForAUser.assignedByUsername expertiseForAUser.assignedByImageUrl}}
+                                                                <span class="user-profile-status">
+                                                  <i>{{ render "jabberStatusPill" expertiseForAUser.assignedByUserJabberInfo}}</i>
+                                                  <i class="icon-caret-down icon-only leftmove"></i>
+                                              </span>
+                                              <span class="user-profile-text">
+                                                  <p class="recommending-user">
+                                                      <strong>{{profileLink expertiseForAUser.assignedByShortName expertiseForAUser.assignedByUsername}}</strong>
+                                                      has suggested new tags for your profile
+                                                      on {{formatDate expertiseOnADay.assignedOn "MMMM DD"}} : </p>
+                                                  <ul class="item-tags recommended-tags">
+                                                      {{#each expertise in expertiseForAUser.expertise}}
+                                                          <li>
+                                                              <div><span>{{expertise.name}}</span></div>
+                                                              <i class="icon-remove" {{action rejectExpertise expertise}}></i><i
+                                                                  class="icon-checked" {{action approveExpertise expertiseForAUser.assignedByUsername expertise}}></i>
+                                                          </li>
+                                                      {{/each}}
+                                                  </ul>
+                                              </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {{/if}}
+                                            {{/each}}
+                                        {{/each}}
+
+                                        <!-- Comment Recommendations -->
+                                        {{#each recommendationForApproval in pendingRecommendations itemController="recommendationItem"}}
+                                            {{#if recommendationForApproval.recommendedByShortName}}
+                                                <div class="row recommendations comment-recommendation">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="profile-image-wrap">
+                                                            {{avatarCommunityImgWithGivenUrl recommendationForApproval.recommendedByShortName recommendationForApproval.recommendedBy recommendationForApproval.recommendedByImageUrl}}
+                                                            <span class="user-profile-status">
+                                              <i>{{ render "jabberStatusPill" recommendationForApproval.recommendedByJabberInfo}}</i>
+                                          </span>
+
+                                          <span class="user-profile-text">
+                                              <p class="recommending-user">
+                                                  <strong>
+                                                      {{profileLink recommendationForApproval.recommendedByShortName recommendationForApproval.recommendedBy}}
+                                                  </strong> has written a recommendation for your profile
+                                                  on {{formatDate recommendationForApproval.recommendedOn "MMMM Do"}}:
+                                              </p>
+                                              <div class="recommended-comment">
+                                                  <div class="recommended-comment-wrap">
+                                                      <i class="icon-caret-left"></i>
+                                                      <span>{{recommendationForApproval.message}}</span>
+                                                  </div>
+                                                  <i class="icon-x-rounded icon-remove" {{action "reject" recommendationForApproval.recommendedBy}}></i>
+                                                  <i class="icon-checked" {{action "approve" recommendationForApproval.recommendedBy}}></i>
+                                              </div>
+                                          </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {{/if}}
+                                        {{/each}}
+
+                                        <!-- Comment -->
+                                        <div class="row recommendations comment-recommendation hide">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="profile-image-wrap">
+                                                    <img src="assets/avatars/apoorv_mini.jpg" alt=""
+                                                         class="nav-user-photo">
+                                      <span class="user-profile-status">
+                                          <i class="pill-icon status-available"></i>
+
+                                      </span>
+                                      <span class="user-profile-text">
+                                          <p class="recommending-user"><strong>Dennis Williams</strong> has written a
+                                              recommendation for your profile on August 5th:</p>
+                                          <div class="recommended-comment">
+                                              <div class="recommended-comment-wrap">
+                                                  <i class="icon-caret-left"></i>
+                                                  <span>I had the good fortune to work Chris to crreate a Quicktime to go with a speech i was giving on new media. His work was TOP NOTCH. not only did he deliver  what he promised on time</span>
+                                              </div>
+                                              <i class="icon-remove icon-x-rounded"></i>
+                                              <i class="icon-checked"></i>
+                                          </div>
+                                      </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Comment -->
+                                        <div class="row recommendations comment-recommendation hide">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="profile-image-wrap">
+                                                    <img src="assets/avatars/xkit_mini.jpg" alt=""
+                                                         class="nav-user-photo">
+                                      <span class="user-profile-status">
+                                          <i class="pill-icon status-away"></i>
+                                      </span>
+                                      <span class="user-profile-text">
+                                          <p class="recommending-user"><strong>Anna Lopez</strong> has written a
+                                              recommendation for your profile on August 11th:</p>
+                                          <div class="recommended-comment">
+                                              <div class="recommended-comment-wrap">
+                                                  <i class="icon-caret-left"></i>
+                                                  <span>I had the good fortune to work Chris to crreate a Quicktime to go with a speech i was giving on new media. His work was TOP NOTCH. not only did he deliver  what he promised on time</span>
+                                              </div>
+                                              <i class="icon-remove icon-rounded"></i>
+                                              <i class="icon-checked"></i>
+                                          </div>
+                                      </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /widget-main -->
+                                </div>
+                            </div>
+                            <!-- /widget-body -->
+                        </div>
+                        <!-- /widget-box -->
+                    {{/if}}
+
+                    <!-- End Notifications when viewing own profile -->
+                    <div class="widget-box no-border no-border profile-section-contact-info" id="contact-info">
+                        <div class="widget-header widget-padding bborder row-header">
+                            <h4 class="widget-header-title" data-icon-before="contact"> Contact Info</h4>
+
+                            <div class="widget-toolbar">
+                                {{#if isCurrentUser}}
+                                    <a href="#" class="edit-save-buttons edit-contact-info">
+                                        {{#if editContactInfoMode}}
+                                            <button class="btn save-button" data-icon-before="save" alt="Save"
+                                                    data-rel="tooltip"
+                                                    data-original-title="Save" {{action saveContactInfo}}></button>
+                                        {{else}}
+                                            <button class="btn edit-button" data-icon-before="pencil-thick" alt="Edit"
+                                                    data-rel="tooltip"
+                                                    data-original-title="Edit" {{action editContactInfo}}></button>
+                                        {{/if}}
+                                    </a>
+                                {{/if}}
+                                <a class="btn"
+                                   data-toggle="collapse"
+                                   href="#contact-inner"
+                                   aria-expanded="true"
+                                   aria-controls="contact-inner"></a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-body-inner collapse in" id="contact-inner" aria-expanded="true">
+                                <div class="widget-main container">
+                                    <div class="row">
+                                        {{#if editContactInfoMode}}
+                                            <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+                                                <ul class="profile-info-list">
+                                                    <li class="profile-info-item qa-automation-address">
+                                                        <i class="profile-info-icon icon-home"></i>
+                                                        {{location.address}}
+                                                    </li>
+                                                    <li class="profile-info-item qa-automation-location">
+                                                        <i class="profile-info-icon icon-location-pin center-marker"></i>
+                                                        {{input value=location.city placeholder='City'}}
+                                                        , {{input value=location.country placeholder='Country'}}
+                                                    </li>
+                                                    <li class="profile-info-item qa-automation-contactNumber">
+                                                        <i class="profile-info-icon icon-phone"></i>
+                                                        <span class="contact-number">{{input type="text" value=contactNumber maxlength="20"}}</span>
+                                                        <span style="color:red;"
+                                                              class="contact-number error">{{ errors.contactNumber}}</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+                                                <ul class="profile-info-list">
+                                                    <li class="profile-info-item profile-info-link">
+                                                        <i class="profile-info-icon icon-envelope-closed"></i>
+                                                        <a {{bindAttr href='mailToEmail'}}>{{email}}</a>
+                                                    </li>
+                                                    <li class="profile-info-item profile-social-input qa-automation-twitter">
+                                                        <i class="profile-info-icon icon-social-twitter"></i>
+                                                        {{twitter " "}} {{input type="text" value=social.twitter maxlength="15"}}
+                                                        <span class="red error">
+                                                            {{ errors.twitter}}
+                                                        </span>
+                                                    </li>
+                                                    <li class="profile-info-item profile-social-input qa-automation-facebook">
+                                                        <i class="profile-info-icon icon-social-facebook"></i>
+                                                        {{facebook " "}} {{input type="text" value=social.facebook maxlength="50"}}
+                                                        <span class="red error">
+                                                            {{ errors.facebook}}
+                                                        </span>
+                                                    </li>
+                                                    <li class="profile-info-item profile-social-input qa-automation-linkedin">
+                                                        <i class="profile-info-icon icon-social-linkedin"></i>
+                                                        {{linkedin " "}} {{input type="text" value=social.linkedin maxlength="100"}}
+                                                        <span class="red error">
+                                                            {{ errors.linkedin}}
+                                                        </span>
+                                                    </li>
+                                                    {{#if joiningDate}}
+                                                        <li class="profile-info-item">
+                                                            <i class="profile-info-icon icon-calendar-empty"></i> Joined
+                                                            on {{joiningDate}}
+                                                        </li>
+                                                    {{/if}}
+                                                </ul>
+                                            </div>
+
+                                        {{else}}
+
+                                            <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+                                                <ul class="profile-info-list">
+                                                    {{#if location.address}}
+                                                        <li class="profile-info-item qa-automation-address">
+                                                            <i class="profile-info-icon icon-home"></i>
+                                                            <span class="profile-info-text">{{location.address}}</span>
+                                                        </li>
+                                                    {{/if}}
+                                                    {{#if cityOrCountry}}
+                                                        <li class="profile-info-item qa-automation-location">
+                                                            <i class="profile-info-icon icon-location-pin center-marker"></i>
+                                                            <span class="profile-info-text">{{location.city}}{{isCommaRequired}}{{location.country}}</span>
+                                                        </li>
+                                                    {{/if}}
+                                                    {{#if contactNumber}}
+                                                        <li class="profile-info-item qa-automation-contactNumber">
+                                                            <i class="profile-info-icon icon-phone"></i>
+                                                            <span class="profile-info-text">{{contactNumber}}</span>
+                                                        </li>
+                                                    {{/if}}
+                                                </ul>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+                                                <ul class="profile-info-list">
+                                                    {{#if email}}
+                                                        <li class="profile-info-item profile-info-link">
+                                                            <i class="profile-info-icon icon-envelope-closed"></i>
+                                                            <a class="profile-info-text" {{bindAttr href='mailToEmail'}}>
+                                                                <span>{{email}}</span>
+                                                            </a>
+                                                        </li>
+                                                    {{/if}}
+                                                    {{#if social.twitter}}
+                                                        <li class="profile-info-item qa-automation-twitter">
+                                                            <i class="profile-info-icon icon-social-twitter"></i>
+                                                            <span class="profile-info-text">{{twitter social.twitter}}</span>
+                                                        </li>
+                                                    {{/if}}
+                                                    {{#if social.facebook}}
+                                                        <li class="profile-info-item qa-automation-facebook">
+                                                            <i class="profile-info-icon icon-social-facebook"></i>
+                                                            <span class="profile-info-text">{{facebook social.facebook}}</span>
+                                                        </li>
+                                                    {{/if}}
+                                                    {{#if social.linkedin}}
+                                                        <li class="profile-info-item qa-automation-linkedin">
+                                                            <i class="profile-info-icon icon-social-linkedin"></i>
+                                                            <span class="profile-info-text">{{linkedin social.linkedin}}</span>
+                                                        </li>
+                                                    {{/if}}
+                                                    {{#if joiningDate}}
+                                                        <li class="profile-info-item">
+                                                            <i class="profile-info-icon icon-calendar-empty"></i>
+                                                            <span class="profile-info-text">Joined on {{joiningDate}}</span>
+                                                        </li>
+                                                    {{/if}}
+                                                </ul>
+                                            </div>
+                                        {{/if}}
+                                    </div>
+                                </div>
+                                <!-- /widget-main -->
+                            </div>
+                        </div>
+                        <!-- /widget-body -->
+                    </div>
+                    <!-- /widget-box -->
+
+
+                    <div class="widget-box no-border no-border profile-section-expertise" id="expertise-panel">
+                        <div class="widget-header widget-padding bborder row-header">
+                            <h4 class="widget-header-title" data-icon-before="tag"> Expertise</h4>
+
+                            <div class="widget-toolbar">
+                                {{#if isCurrentUser}}
+                                    <a href="#" class="edit-save-buttons edit-tags">
+                                        {{#if editSelfTaggedExpertiseMode}}
+                                            <button class="btn save-button" data-icon-before="save" alt="Save"
+                                                    data-rel="tooltip"
+                                                    data-original-title="Save" {{action doneWithSelfTaggedExpertise}}></button>
+                                        {{else}}
+                                            <button class="btn edit-button" data-icon-before="pencil-thick" alt="Edit"
+                                                    data-rel="tooltip"
+                                                    data-original-title="Edit" {{action editSelfTaggedExpertise}}></button>
+                                        {{/if}}
+                                    </a>
+                                {{else}}
+                                    <a href="#" class="edit-save-buttons edit-tags">
+                                        {{#if addLearnerTaggedExpertiseMode}}
+                                            <button class="btn save-button" data-icon-before="save" alt="Save"
+                                                    data-original-title="Save" {{action doneWithLearnerTaggedExpertise}}></button>
+                                        {{else}}
+                                            <button class="btn add-tags-button" data-icon-before="tag-plus"
+                                                    alt="Add Tags"
+                                                    data-original-title="Add Tags" {{action initiateLearnerTaggedExpertise}}></button>
+                                        {{/if}}
+                                    </a>
+                                {{/if}}
+
+                                <a class="btn"
+                                   data-toggle="collapse"
+                                   href="#expertise-inner"
+                                   aria-expanded="true"
+                                   aria-controls="expertise-inner"></a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-body-inner collapse in" id="expertise-inner" aria-expanded="true">
+                                <div class="widget-main container">
+                                    <div class="row existing-tags">
+                                        <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12 admin-assigned-tags"
+                                             id="qa-automation-admin-tag-expertise">
+                                            <ul class="item-tags" data-icon-before="buildings">
+                                                {{endorsement-link attributeType="expertise" attributes=adminAssignedExpertise userId=username shortName=shortName isCurrentUser=isCurrentUser}}
+                                            </ul>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12 self-assigned-tags"
+                                             id="qa-automation-user-tag-expertise">
+                                            <ul class="item-tags" data-icon-before="user-group3">
+                                                {{endorsement-link attributeType="expertise" attributes=selfTaggedExpertise userId=username shortName=shortName isRemoveEnabled=editSelfTaggedExpertiseMode removeAction="removeSelfAssignedExpertise" isCurrentUser=isCurrentUser}}
+                                            </ul>
+                                            <div class="expertise-input-box" id="expertise-input-box">
+                                                {{#if isCurrentUser}}
+                                                    {{#if editSelfTaggedExpertiseMode}}
+                                                        {{bootstrap-tags-input remoteSourceConfig=expertiseAutoSuggest value=emptyArray reset=reset componentId="selfTaggedExpertise" freeInput=false placeHolderText="Start typing to choose an Area of Expertise..." addItemAction="addExpertise" minCharsForSearch=1}}
+                                                    {{/if}}
+                                                {{else}}
+                                                    {{#if addLearnerTaggedExpertiseMode}}
+                                                        {{bootstrap-tags-input remoteSourceConfig=expertiseAutoSuggest value=emptyArray reset=reset componentId="learnerTaggedExpertise" freeInput=false placeHolderText="Start typing to choose an Area of Expertise..." addItemAction="addLearnerExpertise" minCharsForSearch=1}}
+                                                    {{/if}}
+                                                {{/if}}
+                                                <div class="error">{{errorMessage}}</div>
+                                                <div class="success">{{successMessage}}</div>
+                                            </div>
+                                            <button type="submit"
+                                                    class="btn btn-primary expertise-done hide" {{action doneWithLearnerTaggedExpertise}}>
+                                                Done
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /widget-main -->
+                            </div>
+                        </div>
+                        <!-- /widget-body -->
+                    </div>
+                    <!-- /widget-box -->
+
+                    <div class="widget-box no-border profile-section-biography qa-automation-biography-section"
+                         id="biography">
+                        <div class="widget-header widget-padding bborder row-header">
+                            <h4 class="widget-header-title" data-icon-before="file-pen">Biography</h4>
+
+                            <div class="widget-toolbar">
+                                {{#if isCurrentUser}}
+                                    <a href="javascript:void(0);" class="edit-save-buttons edit-bio">
+                                        {{#if editBiographyMode}}
+                                            <button class="btn save-button" data-icon-before="save" alt="Save"
+                                                    data-rel="tooltip"
+                                                    data-original-title="Save" {{action saveBiography}}></button>
+                                        {{else}}
+                                            <button class="btn edit-button" data-icon-before="pencil-thick" alt="Edit"
+                                                    data-rel="tooltip"
+                                                    data-original-title="Edit" {{action editBiography}}></button>
+                                        {{/if}}
+                                    </a>
+                                {{/if}}
+                                <a class="btn"
+                                   data-toggle="collapse"
+                                   href="#biography-inner"
+                                   aria-expanded="true"
+                                   aria-controls="biography-inner"></a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-body-inner collapse in" id="biography-inner" aria-expanded="true">
+                                <div class="widget-main container">
+                                    <div class="row padding-12 qa-automation-biography">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="bio-text">
+                                            {{#if editBiographyMode}}
+                                                {{text-area currentText=description rows=6 maxLength=1000}}
+                                                <span style="color:red;">{{ errors.biography}}</span>
+                                            {{else}}
+                                                {{description}}
+                                            {{/if}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /widget-main -->
+                            </div>
+                        </div>
+                        <!-- /widget-body -->
+                    </div>
+                    <!-- /widget-box -->
+
+
+                    <div class="widget-box profile-section-additional-info qa-automation-additional-info-section"
+                         id="additional-info">
+                        <div class="widget-header widget-padding bborder row-header">
+                            <h4 class="widget-header-title" data-icon-before="info-circle"> Additional Info</h4>
+
+                            <div class="widget-toolbar">
+                                {{#if isCurrentUser}}
+                                    <a href="javascript:void(0);" class="edit-save-buttons edit-additional-info">
+                                        {{#if editAdditionalInfoMode}}
+                                            <button class="btn save-button" data-icon-before="save" alt="Save"
+                                                    data-rel="tooltip"
+                                                    data-original-title="Save" {{action saveAdditionalInfo}}></button>
+                                        {{else}}
+                                            <button class="btn edit-button" data-icon-before="pencil-thick" alt="Edit"
+                                                    data-rel="tooltip"
+                                                    data-original-title="Edit" {{action editAdditionalInfo}}></button>
+                                        {{/if}}
+                                    </a>
+                                {{/if}}
+                                <a class="btn"
+                                   data-toggle="collapse"
+                                   href="#additionalinfo-inner"
+                                   aria-expanded="true"
+                                   aria-controls="additionalinfo-inner"></a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-body-inner collapse in" id="additionalinfo-inner" aria-expanded="true">
+                                <div class="widget-main">
+                                    {{#if editAdditionalInfoMode}}
+                                        <ul class="profile-info-list profile-info-stacked">
+
+                                            <li class="profile-info-item qa-automation-project-history">
+                                                <i class="profile-info-icon icon-checkmark-rounded-square"></i>
+                                                <span class="row-text"><strong>Project History:</strong></span>
+                                                {{text-area currentText=projectHistory rows=2 maxLength=200}}
+                                                <span style="color:red;">{{errors.projectHistory}}</span>
+                                            </li>
+
+                                            <li class="profile-info-item qa-automation-job-history">
+                                                <i class="profile-info-icon icon-buildings"></i>
+                                                <span class="row-text"><strong>Job History:</strong></span>
+                                                {{text-area currentText=jobHistory rows=2 maxLength=200}}
+                                                <span style="color:red;">{{errors.jobHistory}}</span>
+                                            </li>
+
+                                            {{#if preferences.Collaboration}}
+                                                <li class="profile-info-item qa-automation-community">
+                                                    <i class="profile-info-icon icon-community-light"></i>
+                      <span class="row-text"><strong>Communities:</strong>
+                          {{#if groupsAvailable}}
+                              {{#each group in groups}}
+                                  {{#link-to "community.details" group.id}}
+                                      <strong>
+                                          {{group.name}}
+                                          {{#unless group.isLast}},{{/unless}}
+                                      </strong>
+                                  {{/link-to}}
+                                  {{#if group.isLast}}
+                                      ...
+                                  {{/if}}
+                              {{/each}}
+                          {{else}}
+                              Loading...
+                          {{/if}}
+                      </span>
+                                                </li>
+                                            {{/if}}
+                                            <li class="profile-info-item qa-automation-education">
+                                                <i class="profile-info-icon icon-certificate-award"></i>
+                                                <span class="row-text"><strong>Education:</strong></span>
+                                                {{text-area currentText=education rows=2 maxLength=200}}
+                                                <span style="color:red;">{{ errors.education}}</span>
+                                            </li>
+                                        </ul>
+
+                                    {{else}}
+
+                                        <ul class="profile-info-list profile-info-stacked">
+
+                                            <li class="profile-info-item qa-automation-project-history">
+                                                <i class="profile-info-icon icon-checkmark-rounded-square"></i>
+                                                <span class="row-text"><strong>Project
+                                                    History:</strong> {{projectHistory}}</span>
+                                            </li>
+                                            <li class="profile-info-item qa-automation-job-history">
+                                                <i class="profile-info-icon icon-buildings"></i>
+                                                <span class="row-text"><strong>Job
+                                                    History:</strong> {{jobHistory}}</span>
+                                            </li>
+
+                                            {{#if preferences.Collaboration}}
+                                                <li class="profile-info-item qa-automation-community">
+                                                    <i class="profile-info-icon icon-community-light"></i>
+                      <span class="row-text"><strong>Communities:</strong>
+                          {{#if groupsAvailable}}
+                              {{#each group in groups}}
+                                  {{#link-to "community.details" group.id}}
+                                      <strong>
+                                          {{group.name}}
+                                          {{#unless group.isLast}},{{/unless}}
+                                      </strong>
+                                  {{/link-to}}
+                                  {{#if group.isLast}}
+                                      ...
+                                  {{/if}}
+                              {{/each}}
+                          {{else}}
+                              Loading...
+                          {{/if}}
+                      </span>
+
+                                                </li>
+                                            {{/if}}
+
+                                            <li class="profile-info-item qa-automation-education">
+                                                <i class="profile-info-icon icon-certificate-award"></i>
+                                                <span class="row-text"><strong>Education:</strong> {{education}}</span>
+                                            </li>
+                                        </ul>
+                                    {{/if}}
+                                </div>
+                                <!-- /widget-main -->
+                            </div>
+                        </div>
+                        <!-- /widget-body -->
+                    </div>
+                    <!-- /widget-box -->
+
+
+                    <!-- Recommendations -->
+                    {{#if isCurrentUser}}
+                        {{#if approvedRecommendations}}
+                            <div class="widget-box profile-section-recommendations" id="recommendations">
+                                <div class="widget-header widget-padding bborder row-header">
+                                    <h4 class="widget-header-title" data-icon-before="file-thumbs-up">
+                                        Recommendations</h4>
+
+                                    <div class="widget-toolbar hide">
+                                        <a href="#" class="edit-save-buttons edit-recommendations">
+                                            <img class="save-button" src="assets/images/save-button.png" alt="Save"/>
+                                            <button class="btn edit-button" data-icon-before="pencil-thick"
+                                                    alt="Edit"></button>
+                                        </a>
+                                        <a class="btn"
+                                           data-toggle="collapse"
+                                           href="#recommendations-current-user-inner"
+                                           aria-expanded="true"
+                                           aria-controls="recommendations-current-user-inner"></a>
+                                    </div>
+                                </div>
+                                <div class="widget-body">
+                                    <div class="widget-body-inner collapse in" id="recommendations-current-user-inner"
+                                         aria-expanded="true">
+                                        <div class="widget-main container">
+                                            {{#each recommendation in approvedRecommendations}}
+                                                <div class="row user-existing-recd padding-12">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 user-recd-person">
+                                                        <div class="profile-image-wrap">
+                                                            {{avatarCommunityImgWithGivenUrl recommendation.recommendedByShortName recommendation.recommendedBy recommendation.recommendedByImageUrl}}
+                                                            {{!--<img src="assets/avatars/user1.png" alt="" class="nav-user-photo" />--}}
+                                                            <span class="user-profile-status">
+                                          {{#if recommendation.recommendedByJabberInfo}}
+                                              {{render "jabberStatusPill" recommendation.recommendedByJabberInfo}}
+                                          {{/if}}
+                                                                <i class="icon-caret-down icon-only leftmove"></i>
+                                      </span>
+                                      <span class="user-profile-text">
+                                          <span class="user-profile-name">{{profileLink recommendation.recommendedByShortName recommendation.recommendedBy}}</span>
+                                          <span class="user-profile-email eclipse-text">{{recommendation.recommendedBy}}</span>
+                                          <span class="user-recd-date-likes">{{formatDate recommendation.recommendedOn "MMM DD, YYYY"}}
+                                              <i class="icon-thumbs-up hide"></i> <span
+                                                      class="like-count hide">26</span></span>
+                                      </span>
+                                                        </div>
+                                                        <div class="user-recd-text">
+                                                            <div class="inner-recd-text">
+                                                                <i class="icon-caret-left"></i>
+
+                                                                <p>{{recommendation.message}}</p>
+                                                            </div>
+                                                            <div class="inner-approval hide">
+                                                                <i class="icon-remove"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {{/each}}
+                                        </div>
+                                        <!-- /widget-main -->
+                                    </div>
+                                </div>
+                                <!-- /widget-body -->
+                            </div>
+                            <!-- /widget-box -->
+                        {{/if}}
+
+                        <!-- Recommendations -->
+                    {{else}}
+                        <div class="widget-box profile-section-recommendations" id="recommendations">
+                            <div class="widget-header widget-padding bborder row-header">
+                                <h4 class="widget-header-title" data-icon-before="file-thumbs-up"> Recommendations</h4>
+
+                                <div class="widget-toolbar">
+                                    <a class="btn"
+                                       data-toggle="collapse"
+                                       href="#recommendations-other-user-inner"
+                                       aria-expanded="true"
+                                       aria-controls="recommendations-other-user-inner"></a>
+                                </div>
+                            </div>
+                            <div class="widget-body">
+                                <div class="widget-body-inner collapse in" id="recommendations-other-user-inner"
+                                     aria-expanded="true">
+                                    <div class="widget-main container">
+                                        {{#each recommendation in approvedRecommendations}}
+                                            <div class="row user-existing-recd padding-12">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 user-recd-person">
+                                                    <div class="profile-image-wrap">
+                                                        {{avatarCommunityImgWithGivenUrl recommendation.recommendedByShortName recommendation.recommendedBy recommendation.recommendedByImageUrl}}
+                                                        <span class="user-profile-status">
+                                          {{#if recommendation.recommendedByJabberInfo}}
+                                              {{render "jabberStatusPill" recommendation.recommendedByJabberInfo}}
+                                          {{/if}}
+                                                            <i class="icon-caret-down icon-only leftmove"></i>
+                                      </span>
+                                      <span class="user-profile-text">
+                                          <span class="user-profile-name">{{profileLink recommendation.recommendedByShortName recommendation.recommendedBy}}</span>
+                                          <span class="user-profile-email eclipse-text">{{recommendation.recommendedBy}}</span>
+                                          <span class="user-recd-date-likes">{{formatDate recommendation.recommendedOn "MMM DD, YYYY"}}
+                                              <i class="icon-thumbs-up hide"></i> <span
+                                                      class="like-count hide">26</span></span>
+                                      </span>
+                                                    </div>
+                                                    <div class="user-recd-text">
+                                                        <div class="inner-recd-text">
+                                                            <i class="icon-caret-left"></i>
+
+                                                            <p>{{recommendation.message}}</p>
+                                                        </div>
+                                                        <div class="inner-approval hide">
+                                                            <i class="icon-remove"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {{/each}}
+
+                                        <div class="row user-add-recd padding-12">
+                                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 user-recd-comment">
+                                                <i class="icon-comment-caret"></i>
+
+                                                <div class="profile-image-wrap">
+                                                    {{avatarCommunityImg loggedInShortName loggedInUsername}}
+                                                </div>
+                                                {{textarea placeholder="Write a Recommendation" id="recommendation" class="user-recd-input" value=recommendation name="user-recommendation-input" cols="30" rows="3" maxlength="1000"}}
+
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                <button type="button"
+                                                        class="btn btn-primary btn-reject" {{action "addRecommendation" on="click"}}>
+                                                    <span class="buttonText">Submit</span>
+                                                </button>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 error recommendationErrorMessage">{{recommendationErrorMessage}}</div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 success recommendationSuccessMessage">{{recommendationSuccessMessage}}</div>
+                                        </div>
+
+                                    </div>
+                                    <!-- /widget-main -->
+                                </div>
+                            </div>
+                            <!-- /widget-body -->
+                        </div>
+                        <!-- /widget-box -->
+                    {{/if}}
+
+                </div>
+                <!--/#profile-->
+            </div>
+            <!--/.tab-content-->
+        </div>
+    </div>
+</div>

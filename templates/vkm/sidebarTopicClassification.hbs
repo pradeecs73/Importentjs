@@ -1,0 +1,30 @@
+<div id="panelOne" class="panel ">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <span data-toggle="collapse" data-parent="#detailAccordion" data-panel="#panelOne" class="collapsed">
+        	<i class="icon-folder-structure"></i>
+          	Topic Classification
+        </span>
+      </h4>
+    </div>
+    <div class="panel-collapse collapse in">
+      <div class="panel-body">
+        <div class="sub-panel">
+        	<div class="sub-panel-content">
+        		{{#if relatedTopicsClass}}
+	        		<ul id="topicClassi" class="sub-panel-list sub-topics-list">
+	        			{{#each topicClass in relatedTopicsClass}}
+	        				<!--<li><a href="javascript:void(0)"> {{topicClass}}</a></li>-->
+	        				<li>{{topicClass}}</li>
+	        			{{/each}}				        			
+	        		</ul>
+	        	{{else}}
+	        		<div class="missing-data-message">
+  						<p class="error-message"><em>No Topics to display.</em></p>
+  					</div>
+  				{{/if}}
+        	</div>
+        </div>
+      </div>
+    </div>
+</div>

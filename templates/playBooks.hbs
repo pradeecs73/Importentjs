@@ -1,0 +1,176 @@
+<div class="page-content communities list-grid-page no-padding">
+    <div {{ bind-attr class=":widget-body :list-with-tags isGridView:grid-view:list-view"}}>
+        <div class="container header-panel">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h1 class="eclipse-text" {{bind-attr title=pageTitle}}>PlayBooks</h1>
+                </div>
+            </div>
+        </div>
+        <div class="filter-wrapper">
+            <div class="filters-panel has-sorting">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                    <div class="row">
+                        <div id="view-option-buttons" class="col-lg-4 col-md-5 col-sm-4 col-xs-6 layout-buttons">
+                            <a id="catalog-grid-view" {{ bind-attr class=":icon-grid-layout :pull-left isGridView:active" }} {{action toggleView "grid-view" target=view}}></a>
+                            <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action toggleView "list-view" target=view}}></a>
+
+                            <div class="dropdown sorting-dropdown" data-action="sort" id="playBooksSortingDropdownId">
+                                <a href="#" class="sorter-toggle dropdown-toggle" id="change-dir" data-toggle="dropdown" data-icon-before="sort-descending">
+                                    <span class="icon-caret-down"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" id='playBooksSortingDropdownId'>
+                                    <li>
+                                        <a href="#" id="name" {{action 'getSortedData'  "name" '#sortplayBooks'}} data-sub-action="f_name" data-sort-direction="asc" data-icon-after="sort-ascending">Name</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="selected" id="createdOn" {{action 'getSortedData'  "createdOn" '#sortplayBooks'}} data-sub-action="f_size" data-sort-direction="asc" data-icon-after="sort-ascending">Created Date</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" d="category" {{action 'getSortedData'  "category.name" '#sortplayBooks'}} data-sub-action="f_modf" data-sort-direction="asc" data-icon-after="sort-ascending">Category</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" id="membersCount" {{action 'getSortedData'  "membersCount" '#sortplayBooks'}} data-sub-action="f_upld" data-sort-direction="desc" data-icon-after="sort-ascending"># of Members</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" id="type" {{action 'getSortedData'  "type" '#sortplayBooks'}} data-sub-action="f_type" data-sort-direction="asc" data-icon-after="sort-ascending">Type</a>
+                                    </li>
+                                </ul>
+                            </div> 
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-8 col-xs-6">
+                            {{visual-search componentId='fileCatalogFilterBox' facets=allFacets filters=filters searchAction='filter' placeHolderText='Filter by Type'}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 search-add-wrap">
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-10 form-wrap col-xs-10">
+                            <div class="form-search">
+                                <i class="icon-search" {{action 'search'}}></i>
+                                {{input id="documentCatalogSearchBox" class="form-control" value=searchBoxText placeholder="Search by PlayBook attributes" type="text" action='search'}}
+                            </div>
+                        </div>
+                        {{#if isUserHasAccessToCreate}}
+                        <span {{bind-attr class=":pull-right newPath:active"}}> {{#link-to "playBooks.create" (query-params from=routeName) data-toggle="tab" data-target="#playBooks-outlet"}} 
+                            <span class=""> 
+                                <i data-rel="tooltip" data-original-title="Create PlayBook" data-placement="left" data-icon-before="plus-thin" class="btn"></i>
+                            </span>
+                        {{/link-to}}    
+                        </span>
+                        {{/if}}                        
+                    </div>
+                </div>
+            </div>
+            <div class="filters-panel has-filter-list">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 filter-items-wrapper">
+                <ul class="horizontal-list">
+                        <li class="filter-by-title">Filter By: </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton checked="checked" name="selectionTest" selectionBinding="filter" value="business"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">Business</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton checked="checked" name="selectionTest" selectionBinding="filter" value="sales"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">Sales</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="filter" value="technical"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">Technical</label>
+                        </li>
+                    </ul>
+                    
+                </div>
+            </div>
+        </div>
+
+        {{#if allPlaybooks}}
+        <div {{bindAttr class=":catalog isGridView:grid:list"}}>
+            <div class="container header list-headings">
+                <ul>
+                    <li class="thumb"></li>
+                    <li class="name"><h5>Name</h5></li>
+                    <li class="actions"><h5>Action</h5></li>
+                </ul>
+            </div> 
+            <div class="widget-body-inner">
+                <div class="widget-main clearfix">           
+                  <ul class="communities items">
+                    {{#if isGridView}}
+                      {{#each allPlaybooks itemController="playBooks"}}
+                        <li {{bindAttr class=":withPopOver :col-sm-4 :col-md-4 :col-lg-3 active::deactivated"}} data-rel="popover" data-container="body" data-toggle="popover" data-placement="auto right" data-original-title="" title="">
+                          <div class="grid-item">
+                            <span class="thumb">
+                              <img src='assets/images/thumb_group_default.jpg' width="100" class="round-border"/>
+                            </span>
+                            <span class="summary">
+                            <span class="name">
+                              {{#link-to "playBook" _id}}{{name}}{{/link-to}}
+                            </span>
+                            <span class="description">
+                                  {{{ellipsis description 150}}}
+                            </span>
+                            
+                            </span>
+                        <span class="actions">
+                          {{#link-to "playBook" _id class="pull-right" target="_self"}}
+                              <span class="btn view-file" data-icon-before="glasses" data-rel="tooltip" data-original-title="View"></span>
+                          {{/link-to}}
+
+                            {{#if isEditable}}
+                                {{#link-to "playBook.edit" _id class="icon-edit blue bigger-160 pull-right align-icon-to-btn"}}{{/link-to}}
+                            {{/if}}
+                        </span>
+</div>
+{{ view App.playBookPopOver }}
+
+                        </li>
+                      {{/each}}
+                    {{else}}
+                      {{#each allPlaybooks itemController="playBooks"}}
+                          <li {{bindAttr class="active::deactivated"}} >
+                            <div class="list-item">
+                              <span class="col-1 thumb">
+                                <img src='assets/images/thumb_group_default.jpg' width="50" class="round-border"/>
+                              </span>
+                              <span class="col-2 summary">
+                              <span class="name"> 
+                                  {{#link-to "playBook" id}}{{jobFamilyName}}{{/link-to}}
+                              </span>
+                              <span class="description">
+                                  {{{ellipsis jobFamilyDescription 250}}}
+                              </span>                             
+                              </span>                              
+                              <span class="col-5 actions">
+                                {{#link-to "playBook.details" _id class="pull-right" target="_self"}}
+                                    <span class="btn view-file" data-icon-before="glasses" data-rel="tooltip" data-original-title="View"></span>
+                                {{/link-to}}
+
+                                  {{#if isEditable}}
+                                      {{#link-to "playBook.edit" _id class="icon-edit blue bigger-160 pull-right align-icon-to-btn"}}{{/link-to}}
+                                  {{/if}}
+                              </span>
+                          </div>
+                                                    </li>
+                      {{/each}}
+                    {{/if}}
+                  </ul>
+              </div>
+          </div>
+          <div class="col-md-12">
+              <div>
+                  {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber }}
+              </div>
+          </div>      
+
+        </div>
+        {{else}}
+        
+        <div class="no-value"> No results found </div>
+        {{/if}}
+
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="tab-content no-border no-padding">
+    <div id="blogs-outlet" class="tab-pane in active">                                              
+        <div class="message-container">
+            <div class="message-list-container">
+                    {{#each itemController="blog"}}
+                        <div class="message-item no-border no-padding message-unread">
+                            <div class="itemdiv commentdiv profile-activity clearfix">
+                                <div class="body" style="margin:5px !important">
+                                    {{avatarMini authorName author}}
+                                    <a class="user" href="#"><span class="text">{{#link-to "blog" this._id}} {{title}} {{/link-to}} </span></a><br/>
+                                    <span class="author_name">{{profileLink authorName author}} <i class="icon-time orange bigger-110"></i> {{formatDate createDate "DD MMM YYYY"}}</span>
+                                    <div class="text grey"><i class="icon-quote-left"></i> {{{ellipsis content.content 150}}}</div>
+                                     <div class="text grey">Tags: {{tags}}</div>
+                                     <div class="pull-left status-buttons grey">
+                                            <span>
+                                                    <i class="icon-thumbs-up icon-1x blue"></i> {{stats.likes}} likes
+                                           </span>                
+                                           <span>
+                                                   <i class="icon-eye-open icon-1x purple"></i> {{views.length}} views
+                                           </span>                                                                                                                                                
+                                           <span>
+                                                   <i class="icon-comments-alt icon-1x red"></i> {{stats.comments}} comments
+                                           </span>
+                                    </div>
+                                   {{#if isSharedTabSelected}}
+                                        {{#if isUserHasEditPermission}}
+                                            <div class="pull-right action-buttons"><a class="blue">{{#link-to "blog.edit" this}}<i class="icon-pencil bigger-125" data-rel="tooltip"  data-original-title="Edit Blog"></i>{{/link-to }}</a> <a {{action "delete" this "blogs.shared"}} class="red"> <i class="icon-remove bigger-125" data-rel="tooltip"  data-original-title="Delete Blog"></i> </a> </div>
+                                        {{/if}}
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+            <!-- /.tab-pane --> 
+        </div>
+        <!-- /.message-list-container --> 
+    </div>
+    <!-- /.tab-pane --> 
+</div>

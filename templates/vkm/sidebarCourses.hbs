@@ -1,0 +1,14 @@
+<div class="topic-section topic-overview-section" data-topic-id="46" data-topic-connection="courses" data-topic-prefix="course">
+	<h4 class="topic-heading display-full-topic" data-icon-before="book-open-user" data-icon-after="angle-right">Related Courses</h4>
+		{{#if relatedCourses}}
+			<ul class= "topic-item-list topic-preview-list">
+				{{#each course in relatedCourses}}
+					<li><a title="{{unbound course.courseName}}" href="#/learningCourse/{{unbound course.courseId}}">{{course.courseName}}</a></li>
+				{{/each}}
+			</ul>
+		{{else}}
+			<ul class="missing-data-message">
+				<li><em>No Courses to Display</em></li>
+			</ul>
+		{{/if}}
+</div>

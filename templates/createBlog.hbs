@@ -1,0 +1,234 @@
+<style>
+  .typeahead {
+    width:100%;
+    height:40px;
+  }
+  .select2-container .select2-choice .select2-arrow b:before{
+    content: "" !important;
+  }
+  .select2-search:after{
+   content: "" !important;
+  }
+  .select2-container .select2-choice abbr:before{
+	content:"" !important;
+  }
+  .select2-search-choice-close:before{
+    content:"" !important;
+  }
+  .select2-container .select2-choice abbr,
+  .select2-search-choice-close {
+   background: url("assets/css/img/select2.png") right top no-repeat !important;
+  }
+  .select2-container .select2-choice .select2-arrow b {
+   background: none !important;
+  }
+</style>
+
+<div id="id-message-new-navbar" class="message-navbar align-center clearfix hidden-xs" style="display: block;">
+	<div class="message-bar"> </div>
+	<div class="message-item-bar">
+	<!--
+		<div class="messagebar-item-left">
+				<a href="#" {{action "clear"}}  class="btn-back-message-list no-hover-underline"> <i class="icon-angle-left blue bigger-110 middle"></i> <b class="middle bigger-110">Back</b> </a>
+		</div>
+	-->
+	</div>
+</div>
+
+<form id="id-message-form" class="form-horizontal message-form clearfix blog-editing" {{action "createBlog" on="submit"}}>
+<div class="padding-left-20 col-md-4"><span class="asterisk">*</span> Data Required</div>
+<div class="post-form-blog-question">
+	<div class="col-md-12 no-padding">
+		<div class="col-md-8">
+
+			<div class="form-group">
+				<label class="col-md-2 control-label no-padding-right" for="form-field-subject">Title<span class="asterisk">*</span>:</label>
+				<div class="col-md-10">
+					<div class="input-icon block  no-padding">
+						{{input maxlength="100" type="text" class="col-md-12 col-sm-12  col-xs-12" value=title  placeholder="Title"  title="Specify at least 3 lettered title"}}
+						{{#if errors.title}}
+								<span style="color:red;"> {{errors.title}}</span>
+						{{/if}}
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label no-padding-right"> <span class="inline space-24 hidden-480"></span> Content<span class="asterisk">*</span>: </label>
+				<div class="col-md-10">
+				<div class="blockQuoteHide">
+					 <div class="note-editable wysiwyg-editor wysiwyg-editor-height blog-tabtext" id="wysiwyg-editor" contenteditable="true">
+					 			{{{unbound  content.content}}}
+					 </div>
+					 	{{#if errors.content}}
+								<span style="color:red;">{{errors.content}}</span>
+						{{/if}}
+				</div>
+				</div>
+			</div>
+
+				<div class="form-group ctrl-input-length">
+					<label class="col-md-2 control-label no-padding-right" for="tagsField">Tag input:</label>
+					<div class="col-md-10">
+                        {{#if allTagsLoaded}}
+                            {{bootstrap-tags-input source=allTags value=tags componentId="tagsField" placeHolderText="Enter tags ..." forceLowerCase=true}}
+                        {{/if}}
+					</div>
+				</div>
+				<div class="form-group ctrl-input-length">
+				<label class="col-md-2 control-label no-padding-right" for="form-field-subject">Share:</label>
+				<div class="col-md-10 col-xs-12 col-sm-12">
+					<div class="input-icon block no-padding bootstrap-tagsinput-cus">
+						<div class="input-group"> <span class="input-group-addon"> <i class="icon-arrow-share"></i> </span>
+						{{bootstrap-tags-input remoteSourceConfig=usersAndGroupsForAutoSuggest  value=share freeInput=false componentId="form-field-mask-2" placeHolderText="Enter user/community name"}}
+						</div>
+						{{#if errors.share}}
+								<span style="color:red;">{{errors.share}}</span>
+						{{/if}}
+					</div>
+				</div>
+			</div>
+			<div class="form-group ctrl-input-length">
+				<label class="col-md-2 control-label no-padding-right" for="form-field-subject">Attach:</label>
+				<div class="col-md-10 col-xs-12 col-sm-12">
+					<div class="attach-files-wrap block no-padding">
+						<div class="uploader-input-wrap input-group first-group">
+							<span class="input-group-addon"><i class="icon-paperclip"></i></span>
+							<div class="uploader-inner-wrap clearfix">
+
+							{{#each listarray in fileuploadMetaData.files}}
+        						<span class="uploaded-file-tag pull-left"><span class="inner-info"><i class="icon-file {{unbound listarray.type}}-file-icon"></i><span class="filename">{{listarray.fName}}</span><span class="file-size">({{listarray.size}})</span>
+        						<i class="icon-remove bigger-125 red" data-rel="tooltip"  data-original-title="Remove Attachment" {{ action deleteAttachment  listarray.fName listarray.id}}></i>	
+        						</span>
+        						
+       							 </span>
+       						 {{/each}}	
+							{{input class="tt-hint pull-left" type="file" autocomplete="off" spellcheck="off"}}
+							<button  class="btn btn-sm btn-primary pull-right" data-dismiss="modal" data-target="#fileuploadPost"{{action beforeUpload thisblog target="view"}} data-toggle="modal"> Attach Files</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+					<label class="col-md-3 control-label no-padding-right" for="form-field-subject">Category<span class="asterisk">*</span>:</label>
+					<div class="col-md-9">
+					<div class="input-icon block no-padding">
+								{{view Ember.Select
+										prompt="Please choose one"
+										contentBinding=postsCategories
+										classNames="form-control"
+										optionValuePath="content._id"
+										optionLabelPath="content.name"
+										id="categorySelector"
+										valueBinding=selectedCategory
+								}}
+					</div>
+						{{#if errors.category}}
+								<span style="color:red;">{{errors.category}}</span>
+						{{/if}}
+					</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label no-padding-right" for="form-field-subject">Scope<span class="asterisk">*</span>:</label>
+				<div class="col-md-9">
+					<div class="input-icon block no-padding">
+								{{view Ember.Select
+									contentBinding=scopes
+									classNames="form-control"
+									optionValuePath="content.value"
+									optionLabelPath="content.label"
+									valueBinding="controller.selected"
+									id="scopeSelector"}}
+					</div>
+					 	{{#if errors.scope}}
+								<span style="color:red;">{{errors.scope}}</span>
+						{{/if}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label no-padding-right" for="form-field-subject">Status<span class="asterisk">*</span>:</label>
+				<div class="col-md-9">
+					<div class="input-icon block no-padding">
+									{{view Ember.Select
+											contentBinding=statuses
+											classNames="form-control"
+											optionValuePath="content.value"
+											optionLabelPath="content.label"
+											id="statusSelector"
+											valueBinding="controller.selectedName"
+									}}
+					</div>
+							{{#if errors.status}}
+									<span style="color:red;">{{errors.status}}</span>
+							{{/if}}
+				</div>
+			</div>
+			 {{#if userHasBloggerProxyAccess}}
+				 <div class="form-group">
+					<label class="col-md-3 control-label no-padding-right" for="form-field-subject">
+					Owner:</label>
+						<div class="col-md-9">
+						<div class="input-icon block no-padding">
+							 {{input type="text" id="blogProxyUserList" class="typeahead"}}
+	                         {{#if errors.members}}<span style="color:red;">{{errors.members}}</span>{{/if}}
+						</div>
+					</div>
+				</div>
+			{{/if}}	
+			<div class="form-group">
+				<label class="col-md-3 control-label no-padding-right" for="form-field-subject">Permissions:</label>
+				<div class="col-md-9">
+					<div class="input-icon block  no-padding">
+						<label>
+							{{view Ember.Checkbox checkedBinding="isCommentPermissionChecked" name="form-field-checkbox" }}
+								<span class="lbl"></span> Comment 
+						</label>
+						<br>
+						<label>
+							{{view Ember.Checkbox checkedBinding="isSharePermissionChecked" name="form-field-checkbox" }}
+							<span class="lbl"></span> Share
+						</label>
+					</div>
+				</div>
+			</div>
+
+		</div>
+      	<div class="col-md-12">
+			<div class="align-right">
+				<button id="id-add-attachment" type="submit" class="btn btn-sm btn-primary">  {{mode}} </button>
+				<button id="id-add-attachment" type="reset"  {{action "clear"}} class="btn btn-sm btn-primary"> Cancel </button>
+			</div>
+			<div class="clearfix space"></div>
+		</div>
+	</div>
+	<div>
+	{{view view.fileuploaDialogView}}
+	</div>
+</div>
+</form>
+
+
+<div class="modal shareModal" style="display:none;" id="fileTypesSupported" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close white" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h4 class="modal-title" id="myModalLabel">Message: Supported File Types </h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="input-group" style="margin-left:13px;">
+                      <span class="input-group-btn">
+                        <h4>The file type is not supported. </h4>                         
+                        </span>
+                      </span>
+                    </div>
+                  <div>
+                  <div class="modal-footer">
+                      <button  data-dismiss="modal" class="btn btn-sm btn-primary"> <i class="icon-remove"></i> Ok </button>
+                  </div>
+      </div>
+  </div>
+</div>

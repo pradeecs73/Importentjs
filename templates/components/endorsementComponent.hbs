@@ -1,0 +1,28 @@
+<span class="hide">{{dummyProperty}}</span>
+{{#each attributeDetails itemController="endorsementItem"}}
+<li {{bind-attr class="parentController.isRemoveEnabled:removable-tag"}}>
+    <div class="endorsement-container">
+      <div class="endorsement-div">
+        {{#if showCount}}
+        <span class="endorsement-count"><strong>{{model.endorsementCount}}</strong></span>
+        {{/if}}
+        <span class="endorsement-label" data-rel="tooltip" {{bind-attr data-original-title="model.name"}}>{{model.name}}</span>
+        {{#if isNotLoggedInUser}}
+            {{#if model.isUserEndorsed}}
+              <span {{bind-attr class=":endorsement-action :cursor-pointer inProgress:hide"}} {{action "removeEndorsement"}}>
+                    <i class="icon-minus-thin"></i>
+              </span>
+            {{else}}
+              <span {{bind-attr class=":endorsement-action :cursor-pointer inProgress:hide"}} {{action "addEndorsement"}}>
+                <i class="icon-plus-thin"></i>
+              </span>
+            {{/if}}
+        {{else}}
+            {{#if parentController.isRemoveEnabled}}
+                <span class="endorsement-action cursor-pointer" {{action "removeExpertise"}}><i class="icon-minus-thin"></i></span>
+            {{/if}}
+        {{/if}}
+      </div>
+    </div>
+</li>
+{{/each}}

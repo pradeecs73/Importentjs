@@ -1,0 +1,14 @@
+<div class="page-header">
+    <h1> Operation Admin </h1>
+</div>
+
+<div>
+    <span {{bind-attr class="success:green:red"}} > {{errors.statusMessage}} </span><br/>
+    From Date Time(UTC/GMT) {{input type="dateTime" value=fromDateTime placeholder="YYYY-MM-DD HH:MM"}}
+    To Date Time(UTC/GMT) {{input type="dateTime" value=toDateTime placeholder="YYYY-MM-DD HH:MM"}}<br />
+    <button type="submit" class="btn btn-sm btn-primary"  {{action migrate 'userpi' 'users'}}> <i class="icon-upload-alt bigger-140"></i>Migrate Users</button>
+    <button type="submit" class="btn btn-sm btn-primary"  {{action migrate 'contentstore'}}> <i class="icon-upload-alt bigger-140"></i>Migrate Documents</button>
+    <button type="submit" class="btn btn-sm btn-primary"  {{action migrate 'groups'}}> <i class="icon-upload-alt bigger-140"></i>Migrate Communities</button>
+    <button type="submit" class="btn btn-sm btn-primary"  {{action migrate 'cclom'}}> <i class="icon-upload-alt bigger-140"></i>Migrate Posts</button>
+    <button type="submit" class="btn btn-sm btn-primary"  {{action migrate 'userpi' 'expertise'}}> <i class="icon-upload-alt bigger-140"></i>Migrate Expertise</button>
+</div>

@@ -1,0 +1,68 @@
+<div class="">
+
+	<!-- BREADCRUMBS -->
+	<!-- <div id="breadcrumb">
+		<ul class="vkm-breadcrumb">
+			<li>
+				<i class="icon-home"></i>
+				{{#link-to 'map'}}My Knowledge Map{{/link-to}}
+			</li>
+			<li class="active">Knowledge Topics</li>
+		</ul>
+	</div>	 -->		
+
+	<!-- PAGE CONTENT -->
+	<div class="page-content vkm-topics-page clearfix" id="pageContent">
+
+		<!-- INNER CONTENT -->
+		<div class="widget-body">
+
+			<div class="widget-body-inner">
+
+				<div class="topic-overview-wrap">
+
+					<h3 class="topic-overview-heading">Knowledge Topics</h3>
+					<div class="topic-overview-content clearfix">
+						<div class="topic-image">
+							<img class="topic-image" onerror="this.src='assets/images/topics/topic-default.jpg'" src="this.src='assets/images/topics/topic-default.jpg'" alt="" />
+						</div>
+						<div class="topic-title-description">
+							<div id="topicTitle"><h2>{{skillLabel}}</h2></div>
+							<p></p>
+						</div>
+					</div>
+					<div class="related-topic-list clearfix">
+						<h4>Related Topics</h4>
+
+						{{#if relatedTopics}}
+							<ul id="relatedTopicList">	
+							{{#each topic in relatedTopics}}
+								<li>{{topic}}</li>
+				            {{/each}}
+							</ul>
+						{{else}}
+							<div class="missing-data-message">
+								<p class="error-message"><em>No Related Topics to display.</em></p>
+							</div>
+						{{/if}}
+					</div>
+
+				</div>
+
+				<!-- Accordion Panels -->
+				<div class="panel-group" id="topicDetailAccordion">
+				 
+				 {{view App.TopicPeopleView}}
+				 {{view App.TopicCoursesView}}
+	             {{view App.TopicCommunityView}}
+	             {{view App.TopicAssetsView}}
+		          
+				</div>	
+
+			</div>
+
+		</div>
+
+	</div><!--/.page-content -->	
+		
+</div><!--/.main-content -->	  

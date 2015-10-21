@@ -1,0 +1,7 @@
+{{#if isFileViewable}}
+    {{#if isReaderDelivered}}
+        <a {{action openReaderIfFileAvailable}} class="btn btn-sm btn-primary view-file ui-selectee" data-rel="tooltip" data-original-title="View">
+            {{yield}}
+        </a>
+    {{/if}}
+{{/if}}

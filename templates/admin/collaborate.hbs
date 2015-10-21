@@ -1,0 +1,26 @@
+<div class="page-header">
+    <h1> Collaborate </h1>
+</div>
+
+<div class="tabbable toggle_view admin-tabs">
+
+    <ul class="nav nav-tabs padding-left-18 tab-size-bigger" id="adminTab">
+        <li class="active">
+            {{#link-to 'collaborate.categories' activeClass='active'}}
+                <i class="activities hide"></i> <span class="menu-text">Categories</span>
+            {{/link-to}}
+        </li>
+
+        <li>
+            {{#link-to 'collaborate.blogProxyAssignment'}}
+                <i class="activities hide"></i> <span class="menu-text">Blog Proxy Roles</span>
+            {{/link-to}}
+        </li>
+    </ul>
+
+    <div class="tab-content no-border" id="admin-outlet">
+        <div class="message-container"></div>
+        {{outlet}}
+    </div>
+
+</div>

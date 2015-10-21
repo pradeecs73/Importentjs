@@ -1,0 +1,39 @@
+<div id="panelOne" class="panel active">
+<div class="panel-heading">
+    <h4 class="panel-title">
+      <span data-parent="#topicDetailAccordion" data-panel="#panelOne">
+        Knowledgeable People <span class="panel-counter">({{peopleCount}})</span>
+      </span>
+    </h4>
+</div>
+<div id="peoplePanel" class="panel-collapse collapse in">
+  <div class="panel-body">
+    <div class="sub-panel">
+
+      <div class="sub-panel-content">
+
+        <div class="sub-panel-list people-list">
+              
+        <!-- KNOWLEDGE PERSON TEMPLATE -->
+        {{#if topicPeople}}
+          <div class="widget-main clearfix">
+            {{#each people in topicPeople}} 
+                {{render "userItem" people}}
+            {{/each}}
+								
+          </div>  
+        {{else}}
+          <div class="missing-data-message">
+            <p class="error-message"><em>No Knowledgeable People to display.</em></p>
+          </div>
+        {{/if}}
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+  

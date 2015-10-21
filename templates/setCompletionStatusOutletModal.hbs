@@ -1,0 +1,48 @@
+        <!-- Set Completion Status -->
+    <div class="modal fade" id="setCompletionStatusOutletModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Set Completion Status</h4>
+          </div>
+
+          <div class="widget-body">
+            <div class="clearfix">
+              <div class="space"></div>
+            </div>
+            <div class="col-md-12">
+              <div>
+                <label><strong>Simple Completion Question</strong></label>
+              </div>
+              <div>
+                <label>Was this training useful?</label>
+              </div>
+              <div>
+                <label>Simple Completion Answer (Select the correct response): </label>
+              </div>
+              <div>
+                <input type="radio" checked="" value="yes" class="radio-inline" id="simple-question-answer-yes" name="simple-question-answer">&nbsp;Yes
+                <input type="radio" value="no" class="radio-inline" id="simple-question-answer-no" name="simple-question-answer">&nbsp;No
+              </div>
+            </div>
+            <div class="clearfix">
+              <div class="space"></div>
+            </div>
+            <div class="clearfix">
+              <div class="space"></div>
+            </div>
+          </div>
+          <input type="hidden"  {{bindAttr value=setCompletionStatusContent.learninPlanId}} id="learninPlanIdInCompletionStatus">
+
+          <input type="hidden"  {{bindAttr  value=setCompletionStatusContent.assetid}} id="learningAssetIdForSetCompletionDate">          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" {{action saveSetCompletionStatus  on="click"}}>Update</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.Set Completion Status -->

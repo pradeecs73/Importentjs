@@ -1,0 +1,154 @@
+<div id="messageDiv" class="alert alert-block">
+    <p></p>
+</div>
+<div class="admin-ui admin-tab-roles">
+  <div class="widget-body no-border" id="admin-lists">
+    <div class="widget-body-inner">
+      <div class="widget-main clearfix">
+    
+        {{#if is__roles_RolesManagement}}
+        <div class="admin-filters-panel">
+            <div class="container">
+                <div class="row list-grid-page">
+                    <div class="col-lg-6 col-md-6 col-sm-2 col-xs-2">
+                        <div id="toggle_view" class="clearfix toggle-view-container layout-buttons">
+                            {{sorting-link sortableFields=sortableFields sortBy=sortField sortOrder=sortOrder updateSortByAction='updateSortBy' toggleSortOrderAction='toggleSortOrder'}}
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-5 col-sm-8 col-xs-8">
+                        <div class="form-wrap form-search">
+                            <!-- <i class="icon-search" {{action 'searchByUsername'}}></i> -->
+                            {{visual-search componentId='roleFilterBox' facets=allFacets filters=filters searchAction='filter' placeHolderText='Filter by Status, Type'}}
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2">
+                        <button class="btn upload-btn" type="button" data-icon-before="plus-thin"
+                            data-dismiss="modal" data-toggle="modal" data-rel="tooltip" data-original-title="Create"
+                            data-target="#addRole"{{action 'createRoleModal'}}>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div><!--/admin-filters-panel-->
+        
+        <div class="admin-table-wrap-outer">
+          <div class="admin-table-wrap-inner">
+            <div class="admin-table-content">
+          
+              <div class="list-headings">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-15">
+                        <h5>Name</h5>
+                    </div>
+                    <div class="col-20">
+                        <h5>Date Created</h5>
+                    </div>
+                    <div class="col-20">
+                        <h5>Date Modified</h5>
+                    </div> 
+                    <div class="col-20 eclipse-text">
+                        <h5 class="eclipse-text">Last Activated / Deactivated</h5>
+                    </div>
+                    <div class="col-10">
+                        <h5>Status</h5>
+                    </div>
+                    <div class="col-15">
+                        <h5>Actions</h5>
+                    </div>
+                  </div>
+                </div>
+              </div><!--/list-headings-->
+
+
+              <div id="expertise-topics" class="list-container">
+                {{#each role in model.roles itemController="adminRoleItem"}}
+                <div class="item-wrap container">
+                    <div class="row">
+                    
+                        <div class="col-15">
+                            <span class="info-label">Role</span>
+                            <p class="item-name eclipse-text">{{role.name}}</p>
+                        </div>
+                        <div class="col-20">
+                            <span class="info-label">Last Update</span>
+                            <p class="item-updated-date">{{formatDate role.createdOn "MMMM DD, YYYY HH:mm:ss"}}</p>
+                        </div>
+                        <div class="col-20">
+                            <span class="info-label">Last Update</span>
+                            <p class="item-updated-date">{{formatDate role.modifiedOn "MMMM DD, YYYY HH:mm:ss"}}</p>
+                        </div>
+                        <div class="col-20">
+                            <span class="info-label">Last Activated / Deactivated</span>
+                            <p class="item-created-by eclipse-text">{{formatDate role.statusChangedOn "MMMM DD, YYYY HH:mm:ss"}}</p>
+                        </div>
+                        <div class="col-10">
+                            <span class="info-label">Status</span>
+                            {{role.status}}
+                        </div>
+                        <div class="col-15">
+                            <span class="info-label">Actions</span>
+
+                            <div class="actions-wrap">
+
+                                <span class="eye-open"></span>
+
+                                {{#unless isSystemRole}}
+                                    {{#if isActive}}
+
+                                        <!--<span class="icon-remove" {{action 'deActivateRoleModal'}}></span>-->
+                                        <button class="btn icon-x-thin red" data-icon-before="icon-x-thin"
+                                                type="button" data-dismiss="modal"
+                                                data-toggle="modal" data-rel="tooltip"
+                                                data-original-title="Deactivate Role"
+                                                data-target="#deleteRole" {{action 'deActivateRoleModal' role}}>
+                                        </button>
+
+                                        <button class="btn icon-pencil expertise-action expertise-action-edit" data-icon-before="icon-pencil" type="button" 
+                                              data-dismiss="modal"
+                                              data-toggle="modal" data-rel="tooltip"
+                                              data-original-title="Edit Permissions"
+                                              data-target="#editPermissions" {{action 'createEditPermissionModal' model}}></button>
+
+                                    {{else}}
+                                        <button class="btn icon-checkmark-rounded expertise-action green expertise-action-edit" data-icon-before="icon-checkmark-rounded" type="button" {{action 'activateRole' }}></button>
+                                    {{/if}}
+
+                                    <button class="btn view-file" data-icon-before="trash-o"
+                                            type="button" data-dismiss="modal"
+                                            data-toggle="modal" data-rel="tooltip"
+                                            data-original-title="Delete Role"
+                                            data-target="#deleteRole" {{action 'deleteRoleModal' role}}>
+                                    </button>
+
+                                {{/unless}}
+                                {{#if isSystemRole}}
+                                    <button class="btn view-file" data-icon-before="glasses"
+                                            type="button" data-dismiss="modal"
+                                            data-toggle="modal" data-rel="tooltip"
+                                            data-original-title="View Permissions"
+                                            data-target="#viewPermissions" {{action 'createViewPermissionModal' role}}>
+                                    </button>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+              </div>
+
+            </div><!--/admin-table-wrap-content-->
+          </div><!--/admin-table-wrap-inner-->
+        </div><!--/admin-table-wrap-outer-->
+
+        {{pagination-link action='gotoPage' totalResults=model.totalResults pageNumber=pageNumber}}
+        
+        {{else}}
+            <h3>You may not have permission to perform operations in this tab</h3>
+            <h5>If you were looking to perform administrative operations, please look at other tabs</h5>
+        {{/if}}
+    
+      </div>
+    </div>
+  </div>
+</div>

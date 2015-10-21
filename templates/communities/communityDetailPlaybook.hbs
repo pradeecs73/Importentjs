@@ -1,0 +1,19 @@
+  <div class="widget-box transparent">
+      <div class="widget-header no-padding">
+          <div class="no-border">
+              <ul class="nav nav-tabs padding-left-18 tab-size-bigger" id="myTab">
+                  {{#link-to "community.foundational" data-target="#playbook-outlet" tagName="li"}}
+                  <a>Foundational</a> {{/link-to}}
+                  {{#link-to "community.specialized" data-target="#playbook-outlet" tagName="li"}}
+                  <a>Specialized</a> {{/link-to}}
+                  <!-- addition of all activities tab-->
+                  {{#link-to "community.transformational" data-target="#playbook-outlet" tagName="li"}}
+                  <a>Transformational</a> {{/link-to}}
+              </ul>
+          </div>
+      </div>
+  </div>
+  <div class="tab-content no-border" id="playbook-outlet">
+          <div class="message-container"></div>
+          {{outlet}}
+  </div>

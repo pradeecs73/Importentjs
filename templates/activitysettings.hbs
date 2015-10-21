@@ -1,0 +1,1484 @@
+<div id="user-activity" class="page-content user-profile-page profile-activity-wrap">
+
+  	<div class="widget-body list-with-tags" id="profile-layout">
+    	<div class="container header-panel">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <h1 class="eclipse-text">Activity Stream Preferences</h1>
+        </div>
+      </div>
+    	</div>
+
+		<div class="tabbable">
+			<ul class="nav nav-tabs padding-left-18 tab-size-bigger" id="myTab">
+				<li>
+		            {{#link-to "profile.my" data-toggle="tab" data-target="#profile"}}Profile {{/link-to}}
+		        </li>
+		        <li>
+		          {{#link-to "profile.myactivity" data-toggle="tab" data-target="#activity"}}
+		          My Activities {{/link-to}}
+		        </li>
+    {{#if preferences.FormalLearning}}
+		        <li>
+		          {{#link-to "profile.myrecentlearnings" data-toggle="tab" data-target="#rl"}}
+		          Recent Learnings {{/link-to}}
+		        </li>	
+		        <li>
+		          {{#link-to "profile.myprescribedlearningplans" data-toggle="tab" data-target="#plp"}}
+		          Prescribed Learning Plans {{/link-to}}
+		        </li>
+    {{/if}}
+		         <li class="active">
+		          {{#link-to "profile.activitysettings" data-toggle="tab" data-target="#notificationsSettings"}}
+		          Activity Stream Preferences  {{/link-to}}
+		        </li>
+			</ul>
+			<div class="tab-content profile-activity-settings">
+				<div id="notificationsSettings" class="tab-pane in active">
+					
+					<div class="widget-box">
+						<div class="widget-header widget-padding bborder row-header">
+							<h4 class="widget-header-title" data-icon-before="gear"> Activity Stream View Preferences</h4>
+							 <div class="widget-toolbar">
+				              	<div class="widget-selectall">
+									<label class="inline">
+										<input type="checkbox" class="myviewSelectAll">
+										<span class="lbl"></span>
+									</label>
+									<span data-original-title="The items selected below will be displayed in your Activity Stream"   data-rel="tooltip" style="cursor: pointer; position: relative;" class="text-label">
+										My View
+									</span>
+				              	</div>	
+				            </div>
+						</div>
+						<div class="widget-body">
+							<div class="widget-body-inner" style="display: block;">
+								<div class="widget-main">
+					
+									<div class="notificationPreferenceSetting-custom-class">
+										<div class="clearfix"></div>
+										<div class="alert alert-danger" style="display:none;" id="faildToSave">
+											<button data-dismiss="alert" class="close" type="button">
+												<i class="icon-remove"></i>
+											</button>
+											<i class="icon-remove"></i>
+											<strong>Oh snap!</strong>
+											Failed to save your preferences.
+											<br>
+										</div>
+										<div class="clearfix"></div>
+										<div class="alert alert-danger" style="display:none;" id="faildToAccessDb">
+											<button data-dismiss="alert" class="close" type="button">
+												<i class="icon-remove"></i>
+											</button>
+											<strong>Oh snap! &nbsp;&nbsp;</strong>
+											We are unable to access your settings, please try it later.
+											<br>
+										</div>
+
+										<div class="clearfix"></div>
+										<div class="alert alert-warning" style="display:none;" id="pleaseSelectAtLeast">
+											<button data-dismiss="alert" class="close" type="button">
+												<i class="icon-remove"></i>
+											</button>
+											<i class="icon-check"></i>
+											<strong>Warning! &nbsp;&nbsp;</strong>
+											Please select at least one activity.
+											<br>
+										</div>
+										<div class="clearfix"></div>
+										<div class="alert alert-info" style="display:none;" id="successfullySaved">
+											<button data-dismiss="alert" class="close" type="button">
+												<i class="icon-remove"></i>
+											</button>
+											<i class="icon-ok"></i>
+											Successfully saved your preferences.
+											<br>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+								<!-- /widget-main -->
+							</div>
+						</div><!-- /widget-body -->
+					</div><!-- /widget-box -->
+
+
+					<!-- Learning Panel -->
+		          	<div class="widget-box my-content-activity-wrap" id="my-content-activity-wrap">
+			            <div class="widget-header widget-padding bborder row-header">
+			              	<h4 class="widget-header-title" data-icon-before="user-group2"> Learning</h4>
+
+				            <div class="widget-toolbar">
+
+				              	<div class="widget-selectall" style="margin-right: 75px;">
+									<label class="inline">
+										<input type="checkbox" class="activitySectionAll courseAll">
+										<span class="lbl"></span>
+									</label>
+				              	</div>	
+
+				              	<a class="btn collapsed" data-toggle="collapse" href="#my-content-activity-inner" aria-expanded="true" aria-controls="my-content-activity-inner"></a>
+				            </div>
+			            </div>
+			            <div class="widget-body">
+			                <div class="widget-body-inner collapse in" id="my-content-activity-inner" aria-expanded="true">
+				                <div class="widget-main">
+
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="table-responsive">
+												<table class="table table-striped table-hover" id="sample-table-1">
+													<tbody>
+														<tr>
+															<td>
+																Enroll a Course
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="course"  id="course-enroll"  value="enroll" class="activityPreference course" data-index="2">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr class="trBorder">
+															<td>
+																Rate a Course
+															</td>
+															<td class="center">
+																<label>
+																	<input type="checkbox" data-param-keys="course" id="course-rate" value="rate" class="activityPreference course" data-index="2.11">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr class="trBorder">
+															<td>
+																Like a Course
+															</td>
+															<td class="center">
+																<label>
+																	<input type="checkbox" data-param-keys="course" id="course-like" value="like" class="activityPreference course" data-index="2.1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr class="trBorder">
+															<td>
+																UnRate a Course
+															</td>
+															<td class="center">
+																<label>
+																	<input type="checkbox" data-param-keys="course" id="course-un-rate" value="un-rate" class="activityPreference course" data-index="2.2">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr class="trBorder">
+															<td>
+																UnLike a Course
+															</td>
+															<td class="center">
+																<label>
+																	<input type="checkbox" data-param-keys="course"  id="course-un-like" value="un-like" class="activityPreference course" data-index="2.3">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr class="trBorder">
+															<td>
+																UnFavorite a Course
+															</td>
+															<td class="center">
+																<label>
+																	<input type="checkbox" data-param-keys="course" id="course-un-favorite" value="un-favorite" class="activityPreference course" data-index="2.3.1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr class="trBorder">
+															<td>
+																Favorite a Course
+															</td>
+															<td class="center">
+																<label>
+																	<input type="checkbox" data-param-keys="course" id="course-favorite" value="favorite" class="activityPreference course" data-index="2.4">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr class="trBorder">
+															<td>
+																Follow a Course
+															</td>
+															<td class="center">
+																<label>
+																	<input type="checkbox" data-param-keys="course" id="course-follow" value="follow" class="activityPreference course" data-index="3">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr class="trBorder">
+															<td>
+																UnFollow a course
+															</td>
+															<td class="center">
+																<label>
+																	<input type="checkbox" data-param-keys="course" id="course-un-follow" value="un-follow" class="activityPreference course" data-index="4">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr class="trBorder">
+															<td>
+																Share a Course
+															</td>
+															<td class="center">
+																<label>
+																	<input type="checkbox" data-param-keys="course" id="course-share" value="share" class="activityPreference course" data-index="5">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr class="trBorder">
+															<td>
+																Comment on Course
+															</td>
+															<td class="center">
+																<label>
+																	<input type="checkbox" data-param-keys="course" id="course-comment" value="comment" class="activityPreference course" data-index="6">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr class="trBorder">
+															<td>
+																Completing a Course
+															</td>
+															<td class="center">
+																<label>
+																	<input type="checkbox" data-param-keys="course" id="course-complete" value="complete" class="activityPreference course" data-index="6">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr class="trBorder">
+															<td>
+																Launch a course
+															</td>
+															<td class="center">
+																<label>
+																	<input type="checkbox" data-param-keys="course" id="course-launch" value="launch" class="activityPreference course" data-index="6">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr class="trBorder">
+															<td>
+																Register for Prescribed Learning plan
+															</td>
+															<td class="center">
+																<label>
+																	<input type="checkbox" data-param-keys="plp" id="plp-Register" value="Register" class="activityPreference course plp" data-index="6">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr class="trBorder">
+															<td>
+																Drop for Prescribed Learning plan
+															</td>
+															<td class="center">
+																<label>
+																	<input type="checkbox" data-param-keys="plp" id="plp-Unregister"  value="Unregister" class="activityPreference course plp" data-index="6">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+				                </div>
+				                <!-- /widget-main -->
+			                </div>
+			            </div>
+			            <!-- /widget-body -->
+		          	</div>
+		          	<!-- /widget-box -->
+
+
+		          	<!-- Communities Panel -->
+
+		          	<div class="widget-box expert-discovery-activity-wrap" id="community-activity-wrap">
+			            <div class="widget-header widget-padding bborder row-header">
+			              	<h4 class="widget-header-title" data-icon-before="user-group2"> Communities </h4>
+
+				            <div class="widget-toolbar">
+
+				              	<div class="widget-selectall" style="margin-right: 75px;">
+									<label class="inline">
+										<input type="checkbox" class="activitySectionAll comunitiesAll">
+										<span class="lbl"></span>
+									</label>
+				              	</div>	
+
+				              	<a class="btn collapsed" data-toggle="collapse" href="#community-activity-inner" aria-expanded="true" aria-controls="expert-discovery-activity-inner"></a>
+				            </div>
+			            </div>
+			            <div class="widget-body">
+			                <div class="widget-body-inner collapse in" id="community-activity-inner" aria-expanded="true">
+				                <div class="widget-main">
+									
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="table-responsive">
+												<table class="table table-striped table-hover">
+													<tbody>
+														<tr>
+															<td>
+																Create a Community
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="community" id="community-create" value="create" class="activityPreference community" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Edit a Community
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="community" id="community-edit" value="edit" class="activityPreference community" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Rate a Community
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="community" id="community-rate"  value="rate" class="activityPreference community" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Unrate a community
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="community" id="community-un-rate" value="un-rate" class="activityPreference community" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Like a Community
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="community" id="community-like"  value="like" class="activityPreference community" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Unlike a community
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="community"  id="community-un-like"   value="un-like" class="activityPreference community" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Follow a Community
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="community" id="community-follow" value="follow" class="activityPreference community" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+
+				                </div>
+				                <!-- /widget-main -->
+			                </div>
+			            </div>
+			            <!-- /widget-body -->
+		          	</div>
+		          	<!-- /widget-box -->
+
+		          	<!-- Blogs Panel -->
+		          	<div class="widget-box expert-discovery-activity-wrap" id="blog-activity-wrap">
+			            <div class="widget-header widget-padding bborder row-header">
+			              	<h4 class="widget-header-title" data-icon-before="user-group2"> Blogs</h4>
+
+				            <div class="widget-toolbar">
+
+				              	<div class="widget-selectall" style="margin-right: 75px;">
+									<label class="inline">
+										<input type="checkbox" class="activitySectionAll blogsAll">
+										<span class="lbl"></span>
+									</label>
+				              	</div>	
+
+				              	<a class="btn collapsed" data-toggle="collapse" href="#blog-activity-inner" aria-expanded="true" aria-controls="expert-discovery-activity-inner"></a>
+				            </div>
+			            </div>
+			            <div class="widget-body">
+			                <div class="widget-body-inner collapse in" id="blog-activity-inner" aria-expanded="true">
+				                <div class="widget-main">
+									
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="table-responsive">
+												<table class="table table-striped table-hover">
+													<tbody>
+														<tr>
+															<td>
+																Create a Blog
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="blog" id="blog-create"  value="create" class="activityPreference blog" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																View a Blog
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="blog" id="blog-view"  value="view" class="activityPreference blog" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Edit a Blog
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="blog" id="blog-edit"  value="edit" class="activityPreference blog" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Rate a Blog
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="blog" id="blog-rate" value="rate" class="activityPreference blog" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																UnRate a Blog
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="blog" id="blog-un-rate"  value="un-rate" class="activityPreference blog" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Like a Blog
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="blog" id="blog-like" value="like" class="activityPreference blog" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Unlike a Blog
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="blog" id="blog-un-like" value="un-like" class="activityPreference blog" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Favorite a Blog
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="blog" id="blog-favorite" value="favorite" class="activityPreference blog" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																UnFavorite a Blog
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="blog" id="blog-un-favorite" value="un-favorite" class="activityPreference blog" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Follow a Blog
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="blog" id="blog-follow" value="follow" class="activityPreference blog" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Unfollow a Blog
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="blog" id="blog-un-follow" value="un-follow" class="activityPreference blog" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Share a Blog
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="blog" id="blog-share" value="share" class="activityPreference blog" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Comment a Blog
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="blog" id="blog-comment"  value="comment" class="activityPreference blog" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Delete a Blog
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="blog"  id="blog-delete" value="delete" class="activityPreference blog" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+				                </div>
+				                <!-- /widget-main -->
+			                </div>
+			            </div>
+			            <!-- /widget-body -->
+		          	</div>
+		          	<!-- /widget-box -->
+
+		          	<!-- Wikis Panel -->
+		          	<div class="widget-box expert-discovery-activity-wrap" id="wiki-activity-wrap">
+			            <div class="widget-header widget-padding bborder row-header">
+			              	<h4 class="widget-header-title" data-icon-before="user-group2"> Wikis</h4>
+				            <div class="widget-toolbar">
+				              	<div class="widget-selectall" style="margin-right: 75px;">
+									<label class="inline">
+										<input type="checkbox" class="activitySectionAll wikiAll">
+										<span class="lbl"></span>
+									</label>
+				              	</div>	
+
+				              	<a class="btn collapsed" data-toggle="collapse" href="#wiki-activity-inner" aria-expanded="true" aria-controls="expert-discovery-activity-inner"></a>
+				            </div>
+			            </div>
+			            <div class="widget-body">
+			                <div class="widget-body-inner collapse in" id="wiki-activity-inner" aria-expanded="true">
+				                <div class="widget-main">
+									
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="table-responsive">
+												<table class="table table-striped table-hover">
+													<tbody>
+														<tr>
+															<td>
+																Create a Wiki
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="wiki" id="wiki-create" value="create" class="activityPreference wiki" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																View a Wiki
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="wiki" id="wiki-view" value="view" class="activityPreference wiki" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Edit a Wiki
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="wiki" id="wiki-edit" value="edit" class="activityPreference wiki" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Rate a Wiki
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="wiki" id="wiki-rate"  value="rate" class="activityPreference wiki" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Like a Wiki
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="wiki"  id="wiki-like" value="like" class="activityPreference wiki" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Favorite a Wiki
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="wiki" id="wiki-favorite" value="favorite" class="activityPreference wiki" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																UnRate a Wiki
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="wiki" id="wiki-un-rate" value="un-rate" class="activityPreference wiki" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																UnLike a Wiki
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="wiki" id="wiki-un-like" value="un-like" class="activityPreference wiki" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																UnFavorite a Wiki
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="wiki" id="wiki-un-favorite"  value="un-favorite" class="activityPreference wiki" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Follow a Wiki
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="wiki" id="wiki-follow" value="follow" class="activityPreference wiki" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																UnFollow a Wiki
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="wiki" id="wiki-un-follow"  value="un-follow" class="activityPreference wiki" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Share a Wiki
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="wiki" id="wiki-share" value="share" class="activityPreference wiki" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Comment Wiki
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="wiki"  id="wiki-comment" value="comment" class="activityPreference wiki" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Delete a Wiki
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="wiki" id="wiki-delete" value="delete" class="activityPreference wiki" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+
+				                </div>
+				                <!-- /widget-main -->
+			                </div>
+			            </div>
+			            <!-- /widget-body -->
+		          	</div>
+		          	<!-- /widget-box -->
+
+		          	<!-- Discussion Forum Panel -->
+		          	<div class="widget-box expert-discovery-activity-wrap" id="discussion-forum-activity-wrap">
+			            <div class="widget-header widget-padding bborder row-header">
+			              	<h4 class="widget-header-title" data-icon-before="user-group2"> Discussion Forum</h4>
+
+				            <div class="widget-toolbar">
+
+				              	<div class="widget-selectall" style="margin-right: 75px;">
+									<label class="inline">
+										<input type="checkbox" class="activitySectionAll forumAll">
+										<span class="lbl"></span>
+									</label>
+				              	</div>	
+
+				              	<a class="btn collapsed" data-toggle="collapse" href="#discussion-forum-activity-inner" aria-expanded="true" aria-controls="expert-discovery-activity-inner"></a>
+				            </div>
+			            </div>
+			            <div class="widget-body">
+			                <div class="widget-body-inner collapse in" id="discussion-forum-activity-inner" aria-expanded="true">
+				                <div class="widget-main">
+									
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="table-responsive">
+												<table class="table table-striped table-hover">
+													<tbody>
+														<tr>
+															<td>
+																Create a Discussion Forum Question
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="forum"  id="forum-create"  value="create" class="activityPreference forum" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																View a  Discussion Forum Question
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="forum" id="forum-view" value="view" class="activityPreference forum" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Edit a  Discussion Forum Question
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="forum" id="forum-edit" value="edit" class="activityPreference forum" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Rate a  Discussion Forum Question
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="forum" id="forum-rate" value="rate" class="activityPreference forum" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Like a  Discussion Forum Question
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="forum" id="forum-like" value="like" class="activityPreference forum" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Favorite a  Discussion Forum Question
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="forum" id="forum-favorite" value="favorite" class="activityPreference forum" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																UnRate a  Discussion Forum Question
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="forum" id="forum-un-rate" value="un-rate" class="activityPreference forum" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																UnLike a  Discussion Forum Question
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="forum"  id="forum-un-like" value="un-like" class="activityPreference forum" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																UnFavorite a  Discussion Forum Question
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="forum" id="forum-un-favorite" value="un-favorite" class="activityPreference forum" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Follow a  Discussion Forum Question
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="forum" id="forum-follow" value="follow" class="activityPreference forum" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Unfollow a  Discussion Forum question
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="forum" id="forum-un-follow" value="un-follow" class="activityPreference forum" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Share a  Discussion Forum Question
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="forum" id="forum-share" value="share" class="activityPreference forum" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Comment on  Discussion Forum Question
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="forum" id="forum-comment" value="comment" class="activityPreference forum" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Delete a  Discussion Forum Question
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="forum" id="forum-delete" value="delete" class="activityPreference forum" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+
+				                </div>
+				                <!-- /widget-main -->
+			                </div>
+			            </div>
+			            <!-- /widget-body -->
+		          	</div>
+		          	<!-- /widget-box -->
+
+		          	<!-- Expert Discovery Panel -->
+		          	<div class="widget-box expert-discovery-activity-wrap" id="expert-discovery-activity-wrap">
+			            <div class="widget-header widget-padding bborder row-header">
+			              	<h4 class="widget-header-title" data-icon-before="user-group2"> Expert Discovery</h4>
+
+				            <div class="widget-toolbar">
+
+				              	<div class="widget-selectall" style="margin-right: 75px;">
+									<label class="inline">
+										<input type="checkbox" value="formalLearning" data-param-keys="formalLearning" class="activitySectionAll expertDiscoveryAll">
+										<span class="lbl"></span>
+									</label>
+				              	</div>	
+
+				              	<a class="btn collapsed" data-toggle="collapse" href="#expert-discovery-activity-inner" aria-expanded="true" aria-controls="expert-discovery-activity-inner"></a>
+				            </div>
+			            </div>
+			            <div class="widget-body">
+			                <div class="widget-body-inner collapse in" id="expert-discovery-activity-inner" aria-expanded="true">
+				                <div class="widget-main">
+									
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="table-responsive">
+												<table class="table table-striped table-hover">
+													<tbody>
+														<tr>
+															<td>
+																Tagging an Expertise against a Learner - By Admin & aNother user
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="expertise" id="expertise-tagging" value="tagging" class="activityPreference expertDiscovery" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Recommending a Learner
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="user" id="user-recommend" value="recommend" class="activityPreference expertDiscovery" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																View a Learner's Profile
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="profile"  id="profile-view" value="view" class="activityPreference expertDiscovery" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Endorsing an expertise
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="user" id="user-endorse" value="endorse" class="activityPreference expertDiscovery" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Approve a Recommendation
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="user" id='user-approve' value="approve" class="activityPreference expertDiscovery" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Reject a Recommendation
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="user" id="user-reject" value="reject" class="activityPreference expertDiscovery" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Approving a learner endorsed expertise
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="expertise" id="expertise-approve" value="approve" class="activityPreference expertDiscovery" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Rejecting a learner endorsed expertise
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="expertise" id="expertise-reject" value="reject" class="activityPreference expertDiscovery" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Follow a User
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="user" id="user-follow" value="follow" class="activityPreference expertDiscovery" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																UnFollow a User
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="user" id="user-un-follow" value="un-follow" class="activityPreference expertDiscovery" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Self tagging an expertise
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="expertise" id="expertise-self-add" value="self-add" class="activityPreference expertDiscovery" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Add area of Expertise
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="expertise" id="expertise-add" value="add" class="activityPreference expertDiscovery" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Edit area of Expertise
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="expertise" id="expertise-update" value="update" class="activityPreference expertDiscovery" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Delete area of Expertise
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="expertise" id="expertise-remove" value="remove" class="activityPreference expertDiscovery" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Edit/Update a Profile
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="profile" id="profile-edit" value="edit" class="activityPreference expertDiscovery" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+				                </div>
+				                <!-- /widget-main -->
+			                </div>
+			            </div>
+			            <!-- /widget-body -->
+		          	</div>
+		          	<!-- /widget-box -->
+
+		          	<!-- Collection Panel -->
+		          	<div class="widget-box expert-discovery-activity-wrap" id="collection-activity-wrap">
+			            <div class="widget-header widget-padding bborder row-header">
+			              	<h4 class="widget-header-title" data-icon-before="user-group2"> Collections </h4>
+
+				            <div class="widget-toolbar">
+
+				              	<div class="widget-selectall" style="margin-right: 75px;">
+									<label class="inline">
+										<input type="checkbox" value="collectionAll"  data-param-keys="collection" id="collection-collectionAll" class="activitySectionAll collectionAll">
+										<span class="lbl"></span>
+									</label>
+				              	</div>	
+
+				              	<a class="btn collapsed" data-toggle="collapse" href="#collection-activity-inner" aria-expanded="true" aria-controls="expert-discovery-activity-inner"></a>
+				            </div>
+			            </div>
+			            <div class="widget-body">
+			                <div class="widget-body-inner collapse in" id="collection-activity-inner" aria-expanded="true">
+				                <div class="widget-main">
+									
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="table-responsive">
+												<table class="table table-striped table-hover">
+													<tbody>
+														<tr>
+															<td>
+																Share a Collection
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="collection" id="collection-share" value="share" class="activityPreference collection" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+				                </div>
+				                <!-- /widget-main -->
+			                </div>
+			            </div>
+			            <!-- /widget-body -->
+		          	</div>
+		          	<!-- /widget-box -->
+		          	<!-- Notes Panel -->
+		          	<div class="widget-box expert-discovery-activity-wrap" id="notes-activity-wrap">
+			            <div class="widget-header widget-padding bborder row-header">
+			              	<h4 class="widget-header-title" data-icon-before="user-group2"> Notes </h4>
+
+				            <div class="widget-toolbar">
+
+				              	<div class="widget-selectall" style="margin-right: 75px;">
+									<label class="inline">
+										<input type="checkbox" value="collections"  data-param-keys="collections" class="activitySectionAll noteAll">
+										<span class="lbl"></span>
+									</label>
+				              	</div>	
+
+				              	<a class="btn collapsed" data-toggle="collapse" href="#notes-activity-inner" aria-expanded="true" aria-controls="expert-discovery-activity-inner"></a>
+				            </div>
+			            </div>
+			            <div class="widget-body">
+			                <div class="widget-body-inner collapse in" id="notes-activity-inner" aria-expanded="true">
+				                <div class="widget-main">
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="table-responsive">
+												<table class="table table-striped table-hover">
+													<tbody>
+														<tr>
+															<td>
+																Share a Note
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="note" id="note-share" value="share" class="activityPreference note" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+				                </div>
+				                <!-- /widget-main -->
+			                </div>
+			            </div>
+			            <!-- /widget-body -->
+		          	</div>
+		          	<!-- /widget-box -->
+
+		          	<!-- Files Panel -->
+		          	<div class="widget-box expert-discovery-activity-wrap" id="files-activity-wrap">
+			            <div class="widget-header widget-padding bborder row-header">
+			              	<h4 class="widget-header-title" data-icon-before="user-group2"> Files</h4>
+
+				            <div class="widget-toolbar">
+
+				              	<div class="widget-selectall" style="margin-right: 75px;">
+									<label class="inline">
+										<input type="checkbox" class="activitySectionAll kcAll">
+										<span class="lbl"></span>
+									</label>
+				              	</div>	
+
+				              	<a class="btn collapsed" data-toggle="collapse" href="#files-activity-inner" aria-expanded="true" aria-controls="expert-discovery-activity-inner"></a>
+				            </div>
+			            </div>
+			            <div class="widget-body">
+			                <div class="widget-body-inner collapse in" id="files-activity-inner" aria-expanded="true">
+				                <div class="widget-main">
+									
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="table-responsive">
+												<table class="table table-striped table-hover">
+													<tbody>
+														<tr>
+															<td>
+																Uploading a File
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="file" id="file-upload" value="upload" class="activityPreference file kc" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Rate a File
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="document" id="document-rate" value="rate" class="activityPreference document kc" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Unrate a File
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="document" id="document-un-rate" value="un-rate" class="activityPreference document kc" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Like a File
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="document" id="document-like" value="like" class="activityPreference document kc" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Unlike a File
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="document" id="document-un-like"  value="un-like" class="activityPreference document kc" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Favorite a File
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="document" id="document-favorite" value="favorite" class="activityPreference document kc" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Unfavorite a File
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="document" id="document-un-favorite" value="un-favorite" class="activityPreference document kc" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Follow a File
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="document" id="document-follow" value="follow" class="activityPreference document kc" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Unfollow a File
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="document" id="document-un-follow"  value="un-follow" class="activityPreference document kc" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																Share a File
+															</td>
+															<td class="center" style="width:20%;">
+																<label>
+																	<input type="checkbox" data-param-keys="document" id="document-share" value="share" class="activityPreference document  kc" data-index="1">
+																	<span class="lbl"></span>
+																</label>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+
+				                </div>
+				                <!-- /widget-main -->
+			                </div>
+			            </div>
+			            <!-- /widget-body -->
+		          	</div>
+		          	<!-- /widget-box -->
+
+					<!-- SAVE CHANGES -->
+					<div class="widget-box save-changes-wrapper">
+						<div class="widget-body">
+							<div class="widget-body-inner" style="display: block;">
+								<div class="widget-main container">
+									<div class="activity-settings-section no-border clearfix">
+										<div class="pull-right">
+											<button class="btn btn-primary btn-icon-text saveActivityPreferences">
+												<i class="icon-save"></i> Save Changes
+											</button>
+											 <button id="id-add-attachment" type="button" class="btn btn-sm btn-primary cancelActivityPrefences" > <i class="icon-x-thick"></i> Cancel </button>
+										</div>
+									</div>
+								</div>
+								<!-- /widget-main -->
+							</div>
+						</div><!-- /widget-body -->
+					</div><!-- /widget-box -->
+					
+				</div>
+			</div>
+		</div>
+  	</div>
+</div>		

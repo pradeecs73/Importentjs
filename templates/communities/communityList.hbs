@@ -1,0 +1,52 @@
+<div class="list-item">
+    <span class="col-1 thumb">
+      <img src='assets/images/thumb_group_default.jpg' width="50" class="round-border"/>
+	  <div class="name title-mobile">
+          {{#link-to "community.details" _id}}{{name}}{{/link-to}}
+      </div>
+    </span>
+    <span class="col-2 summary">
+      <span class="name">
+          {{#link-to "community.details" _id}}{{name}}{{/link-to}}
+      </span>
+      <span class="description">
+          {{{ellipsis description 250}}}
+      </span>
+      <span class="creator">
+        <label>Created by</label><span>{{profileLink creatorShortName creator}}</span>
+      </span>
+      <span>
+          {{#each tags}}
+              <span>{{tagsellipsis this}}</span>
+          {{/each}}
+      </span>
+    </span>
+    <span class="col-3 members">
+      <label>Members</label>
+      <span>
+          {{#if active}}
+              {{membersCount}}
+          {{else}}
+              1 {{!-- {{oldMembers.length}} --}}
+          {{/if}}
+      </span>
+    </span>
+    <span class="col-4 type">
+      <label>Type</label><span>{{type}}</span>
+    </span>
+    <span class="col-4 type category">
+      <label>Category</label><span>{{category.name}}</span>
+    </span>
+    <span class="col-4 type createdon">
+      <label>Created On</label><span>{{formatDate createdOn  "DD MMM YYYY"}}</span>
+    </span>
+    <span class="col-5 actions">
+      {{#link-to "community.details" _id class="pull-right" target="_self"}}
+          <span class="btn view-file" data-icon-before="glasses" data-rel="tooltip" data-original-title="View"></span>
+      {{/link-to}}
+
+        {{#if isEditable}}
+            {{#link-to "community.edit" _id class="icon-edit blue bigger-160 pull-right align-icon-to-btn"}}{{/link-to}}
+        {{/if}}
+    </span>
+</div>

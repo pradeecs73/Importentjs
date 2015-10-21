@@ -1,0 +1,33 @@
+<!-- Modal -->
+<div class="modal-header modal-create-header clearfix">
+  <button type="button" class="close font-25" data-dismiss="modal" {{action closeNewkotgShareModal}}>
+      <i class="icon-remove white"></i>
+  </button>
+  <h4 class="modal-title">Share</h4>
+</div>
+
+<div class="modal-body page-padding padding-bottom-10">
+	{{#if shareMessage}}
+		<div class="alert alert-danger">{{shareMessage}}</div>
+	{{/if}}
+	<div class="form-group clearfix">
+		<div class="col-md-1 no-padding-right align-right icon-user" for="form-field-share" style="font-size:30px"></div>
+		<div class="col-md-11 word-break-custom">
+			{{bootstrap-tags-input remoteSourceConfig=usersForAutoSuggest freeInput=false componentId="kotgSharesField" placeHolderText="Enter username"}}
+		</div>
+	</div>
+<!-- 	<div class="form-group clearfix">
+		<div class="col-md-1 no-padding-right align-right icon-info-circle" for="form-field" style="font-size:30px"></div>
+		<div class="col-md-11">
+			{{textarea placeholder="Type a message" id="form-field-8" class="form-control textarea-no-resize" value=shareComment}}
+		</div>
+	</div>
+ -->	
+	<div class="clearfix space-2"></div>
+	<div {{bind-attr class=":modal-footer isSharing:active-loading"}}>
+		<button type="button" class="btn btn-sm btn-primary" data-dismiss="modal" {{action closeNewkotgShareModal}}>Cancel</button>
+		<button type="button" class="btn btn-sm btn-primary" {{action "share"}}>Share</button>
+		<span class="loading"></span>
+	</div>
+</div>
+<!-- Modal -->

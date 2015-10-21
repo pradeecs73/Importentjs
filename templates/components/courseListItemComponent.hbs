@@ -1,0 +1,58 @@
+{{#if course.isUserEnroled}}
+    {{#if course.isElearning}}
+		{{#if course.pendingApproval}}
+			Pending Approval
+		{{else}}
+			<div class="tc-actions-section">
+				<div class="tclaunch-icon">
+					<a href="{{unbound course.launchUrl}}" {{action "onLaunch" course}}>Launch</a>
+				</div>
+			</div>
+		{{/if}}
+    {{/if}}
+
+    {{#if course.isQuiz}}
+		{{#if course.pendingApproval}}
+			Pending Approval
+		{{else}}
+			<div class="tc-actions-section">
+				<div class="tclaunch-icon">
+					<a {{action "transition" course}}>Launch</a>
+				</div>
+			</div>
+		{{/if}}
+    {{/if}}
+
+    {{#if course.isScorm}}
+		{{#if course.pendingApproval}}
+			Pending Approval
+		{{else}}
+			<div class="tc-actions-section">
+				<div class="tclaunch-icon">
+					<a id="tc-scorm2" href="{{unbound course.launchUrl}}" {{action "onLaunch" course}}>Launch</a>
+				</div>
+			</div>
+		{{/if}}
+    {{/if}}
+
+    {{#if course.completed}}
+    {{else}}
+        <span class="drop-icon-space">
+            <a data-dismiss="modal" data-target="#dropModal{{unbound course.id}}" data-toggle="modal">Drop</a>
+        </span>
+    {{/if}}
+{{else}}
+    {{#if course.completed}}
+    {{else}}
+        <div class="tc-actions-section">
+            <div class="tclaunch-icon">
+                {{#if course.visible}}
+                    <a data-dismiss="modal" data-target="#registerModal{{unbound course.id}}" data-toggle="modal">Register</a>
+                {{else}}
+                    <a {{ action "disabledCourse" on="click"}}>Register</a>
+                {{/if}}
+            </div>
+        </div>
+    {{/if}}
+
+{{/if}}

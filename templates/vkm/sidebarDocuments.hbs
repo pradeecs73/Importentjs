@@ -1,0 +1,15 @@
+<div class="topic-section topic-overview-section" data-topic-id="46" data-topic-connection="files" data-topic-prefix="file">
+	<h4 class="topic-heading display-full-topic" data-icon-before="file-stack-filled" data-icon-after="angle-right">Related Files</h4>
+		{{#if relatedDocuments}}
+			<ul class= "topic-item-list topic-preview-list">
+				{{#each document in relatedDocuments}}
+					<li><a title="{{unbound document.assetTitle}}" href="#/document/{{unbound document.assetURL}}/shared">{{document.assetTitle}}</a>
+					</li>
+				{{/each}}
+			</ul>
+		{{else}}
+			<ul class="missing-data-message">
+				<li><em>No Files to Display</em></li>
+			</ul>
+		{{/if}}
+</div>

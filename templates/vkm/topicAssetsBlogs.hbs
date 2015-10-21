@@ -1,0 +1,68 @@
+<div class="sub-panel-content-inner sub-panel-available">
+	<h5><a href="javascript:void(0)">Blogs <span class="panel-blog-counter-assets">({{assetsBlogsCount}})</span></a></h5>
+
+	<div class="sub-panel-list-wrap slide-wrapper" id="blog-slider">
+		<div class="slider-controls">
+    		<a href="javascript:void(0)" class="icon-caret-left slider-nav-left disabled"></a>
+    		<a href="javascript:void(0)" class="icon-caret-right slider-nav-right disabled"></a>	
+		</div>
+		<div class="sub-panel-list sub-blogs-list slider-contents">
+			<div class="slider-inner-contents" id="slider-inner-blog">
+				{{#if topicAssetsBlogs}}
+				{{#each blog in topicAssetsBlogs}}
+				<div class="knowledge-asset-item">
+	    				<div class="knowledge-item-inner">
+	    					<div class="asset-summary clearfix">
+	    						<a class="asset-title" href="#/blog/{{unbound blog.assetURL}}"><h5>{{blog.assetTitle}}</h5></a>
+	    						<p class="asset-decription">{{blog.authorName}}</p>
+	    					</div>
+	    					<ul class="asset-info">
+	    						<li class="asset-date">
+	    							<i class="icon-clock"></i>
+	    							<span class="asset-date time">{{blog.creationDate}}</span>
+	    						</li>
+	    						<li class="asset-interaction-info enabled">
+					        		<ul>
+					        			<li>
+					        				{{#if blog.likesNo}}
+						        				<a class="icon-thumbs-up asset-like" href="javascript:void(0)"> 
+						        				<span class="like-counter">{{blog.likesNo}}</span></a>
+						        			{{else}}
+						        				<a class="icon-thumbs-up asset-like" href="javascript:void(0)"> 
+						        				<span class="like-counter">0</span></a>
+						        			{{/if}}
+					        			</li>
+					        			<li>
+					        				{{#if blog.sharedNo}}
+						        				<a class="asset-comment icon-arrow-share" href="javascript:void(0)">
+						        				<span class="share-counter">{{blog.sharedNo}}</span></a>
+						        			{{else}}
+						        				<a class="asset-comment icon-arrow-share" href="javascript:void(0)">
+					        					<span class="share-counter">0</span></a>
+					        				{{/if}}
+
+					        			</li>
+					        			<li>
+					        				{{#if blog.favoredNo}}
+						        				<a class="icon-star asset-favorite" href="javascript:void(0)">
+						        				<span class="favorite-counter">{{blog.favoredNo}}</span></a>
+						        			{{else}}
+							        			<a class="icon-star asset-favorite" href="javascript:void(0)">
+						        				<span class="favorite-counter">0</span></a>
+						        			{{/if}}
+					        			</li>
+					        		</ul>
+	    						</li>
+	    					</ul>
+	    				</div>
+	    			</div>
+	    		{{/each}}
+    			{{else}}
+    				<div class="missing-data-message">
+  						<p class="error-message"><em>No Blogs to display.</em></p>
+  					</div>
+				{{/if}}
+			</div>
+		</div>
+	</div>
+</div>

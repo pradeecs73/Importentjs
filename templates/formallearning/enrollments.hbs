@@ -1,0 +1,185 @@
+<div class="page-content list-grid-page training-catalog my-enrollments no-padding">
+
+    <div {{ bind-attr class=":widget-body :list-with-tags isGridView:grid-view:list-view"}}>
+
+        <div class="container header-panel">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    {{#if reporteesUsername}}
+                    <h1 class="eclipse-text">Enrollments of {{reporteesUsername}}</h1>
+                    {{else}}
+                    <h1 class="eclipse-text">My Enrollments</h1>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions status message -->
+        <div {{bind-attr class="showMessage::hide"}}>
+            <div class="alert alert-block alert-danger">
+                <span>
+                    Due to some unexpected errors course details cannot be displayed.
+                </span>
+            </div>
+        </div>
+
+        <div id="status-message-div" class="alert alert-block alert-success hide">
+            <div>
+                <span id="status-message-text"></span>
+            </div>
+        </div>
+        <!-- //Actions status message -->
+
+        <!--Search catalog section -->
+        {{#unless reporteesUsername}}
+        <div class="filter-wrapper">
+            <div class="filters-panel has-sorting">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                    <div class="row">
+                        <div id="view-option-buttons" class="col-lg-4 col-md-5 col-sm-4 col-xs-5 layout-buttons">
+                            <a id="catalog-grid-view" {{ bind-attr class=":icon-grid-layout :pull-left isGridView:active" }} {{action toggleView "grid-view" target=view}}></a>
+                            <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action toggleView "list-view" target=view}}></a>
+							<!--Start sorting-->
+								{{sorting-link sortableFields=sortableFields sortBy=sortByName sortOrder=sortOrder updateSortByAction='updateSortBy' toggleSortOrderAction='toggleSortOrder'}}
+						<!--End sorting-->
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-8 col-xs-7">
+							{{visual-search componentId='search_box_container2' facets=allFacets filters=filters searchAction='filter' placeHolderText='Filter By Categories / Type'}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 search-add-wrap">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-wrap col-xs-12">
+                            <div class="form-search">
+                                <i class="icon-search" {{action 'search'}}></i>
+                                {{input type="text" size="40" placeholder="Search By Title , Description"  value=searchText class="form-control input-mask-date width2x no-shadow-input" action="search" on="enter"}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				<div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">  
+					{{report-generator serviceFunction=getEnrolledCourses searchFilters=searchFilters dataKey="courses" countKey="total" reportType="csv" JSONFormatfunction=formatCourseJSON reportFileName="MyEnrolmentReport"}}
+				</div>
+            </div>
+        </div>
+        {{/unless}}
+        <div class="sortCatalogCustom">
+            <div class="table-top-header training-catalog-bordertop">
+                <div class="col-sm-12">
+				    {{#unless reporteesUsername}}
+					 <div  class="col-lg-6 col-md-6 col-sm-4 col-xs-12">
+						<form {{action filterByStartAndEndDate on="submit"}}>						
+							<div class="col-sm-12 dateRages">
+								<div class="date-range-title date-title">Date Range:</div>
+								<div class="range-date"><div class="input-group date" data-provide="datepicker">{{input class="date-picker-input"  placeholder="start date" valueBinding="startDate" }}<i class="btn icon-calendar learning_calendar_btn"></i>
+								</div></div>
+								<div class="date-until-title date-title">Until:</div>
+								<div class="range-date"><div class="input-group date" data-provide="datepicker">{{input class="date-picker-input"  placeholder="end date" valueBinding="endDate" }}<i class=" btn icon-calendar learning_calendar_btn"></i>
+								</div></div>
+								<div class="date-range-button"><button>Filter</button></div>
+							</div>
+						 <form>
+					 </div>
+					{{/unless}}
+                    <div class="clearfix pull-right align-right">
+                        <label class="grey pull-left"><b>Filter By: </b></label>
+                        <div class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="sort" value="progress"}}
+                            <span class="lbl"></span>
+                            <label class="grey"> Active</label>
+                        </div>
+                        <div class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="sort" value="completed"}}
+                            <span class="lbl"></span>
+                            <label class="grey"> Completed</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- //Actions status message -->
+
+    <!-- Check if Courses Exist -->
+    {{#if courses.length}}
+
+        {{#unless isGridView}}
+            <!-- Show List View Headings -->
+            <div class="sortCatalogCustom">
+                <div class="list-headings">
+                    <div class="col-sm-6 tc-course-section">
+                        <h5 class="bold"> Name </h5>
+                    </div>
+                    <div class="col-sm-4 tc-type">
+                        <h5 class="bold"> 
+						{{#if enrolled}}
+							Completed Date
+							{{else}}
+							Enrolled Date
+						{{/if}}
+						</h5>
+                    </div>
+                    <div class="col-sm-2 tc-actions">
+                    {{#unless reporteesUsername}}
+                        <h5 class="bold"> Actions </h5>
+                    {{/unless}}
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        {{/unless}}
+        <!--// end: List Headings -->
+		<div class="sortCatalogCustomHeader">
+
+			{{#each course in courses}}
+
+				{{#if course.name}}
+
+                    {{render "courseItem" course}}
+	                <!-- modal data for DROP -->
+	                <div class="modal fade" id="dropModal{{unbound course.id}}{{unbound course.categoryid}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	                    <div class="modal-dialog">
+	                        <div class="modal-content">
+	                            <div class="modal-header">
+	                                <button type="button" class="close white" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                                <h4 class="modal-title" id="myModalLabel"> Drop Learning Enrollment</h4>
+	                            </div>
+	                            <div class="modal-body">
+	                                <div class="modal-section">
+	                                    <p class="gray-text"> Please confirm you want to drop this learning offering. Some dropped offerings may still be charged to your department. Please review the official drop policy to learn about all effects, costs, and consequences associated with dropping.</p>
+	                                </div>
+	                            </div>
+	                            <div class="modal-footer">
+	                                <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal"> Cancel </button>
+	                                <a href="#" {{ action "unEnrollCourse" course.id on="click"}}>
+	                                    <button type="button" class="btn btn-sm btn-primary"  data-dismiss="modal"> Drop Enrollment </button>
+	                                </a>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <!-- modal data for DROP //-->
+
+	            {{/if}}
+
+            {{/each}}
+
+		</div><!--/.course data-->
+
+		<div class="tc-pagination">
+			<div>
+				{{view App.PaginationView controllerBinding="courses"}}
+			</div>
+		</div>
+
+    <!-- if courses.length == false: -->
+    {{else}}
+
+         <div class="no-value">No courses to display</div>
+
+    {{/if}}
+    <!--// courses.length -->
+
+	</div><!--/ .widget-body-->
+</div><!--/.page-content -->

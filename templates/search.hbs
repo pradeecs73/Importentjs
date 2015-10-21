@@ -1,0 +1,94 @@
+<link href="assets/css/app/search-results.css" rel="stylesheet" />
+
+<div class="page-content search-page list-grid-page no-padding">
+    <div class="widget-body">
+
+        <div class="container header-panel search-page-title">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h1 class="eclipse-text">Find Answers</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-box transparent search-results-wrap">
+            <div class="widget-header no-padding">
+                <div class="no-border">
+                    <ul class="nav nav-tabs" id="myTab">
+                        {{#if preferences.KC}}
+                        <li class="active">
+                            <a data-toggle="tab" href="#home">Files
+                                <span class="badge badge-info"> {{files.totalResults}}</span>
+                            </a>
+                        </li>
+                        {{/if}}
+                        {{#if preferences.Collaboration}}
+                        <li class="">
+                            <a data-toggle="tab" href="#posts">Posts
+                                <span class="badge badge-info">{{posts.totalResults}}</span>
+                            </a>
+                        </li>
+                        {{/if}}
+                        {{#if preferences.Collaboration}}
+                        <li class="">
+                            <a data-toggle="tab" href="#groups">Communities
+                                <span class="badge badge-info">{{groups.totalResults}}</span>
+                            </a>
+                        </li>
+                        {{/if}}
+                        <li class="">
+                            <a data-toggle="tab" href="#users">Users
+                                <span class="badge badge-info">{{users.totalResults}}</span>
+                            </a>
+                        </li>
+
+                        {{#if preferences.FormalLearning}}
+                        <li class="">
+                            <a data-toggle="tab" href="#trainingCatalog">Training Catalog
+                                <span class="badge badge-info">{{courses.totalResults}}</span>
+                            </a>
+                        </li>
+                        {{/if}}
+
+                        {{#if preferences.KOTG}}
+                        <li class="">
+                            <a data-toggle="tab" href="#otg">On The GO
+                                <span class="badge badge-info">{{otg.totalResults}}</span>
+                            </a>
+                        </li>
+                        {{/if}}
+                    </ul>
+                </div>
+
+            </div><!--/.widget-header-->
+            <div class="widget-body clearfix">
+                <div class="widget-main no-padding">
+                    <div class="tab-content">
+                        {{#if preferences.KC}}
+                            {{render "documentsSearch" files}}
+                        {{/if}}
+
+                        {{#if preferences.Collaboration}}
+                            {{render "postsSearch" posts}}
+                        {{/if}}
+
+                        {{#if preferences.Collaboration}}
+                            {{render "groupsSearch" groups}}
+                        {{/if}}
+
+                        {{render "usersSearch" users}}
+
+                        {{#if preferences.FormalLearning}}
+                            {{render "coursesSearch" courses}}
+                        {{/if}}
+
+                        {{#if preferences.KOTG}}
+                            {{render "otgSearch" otg}}
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!--/.widget-body-->
+</div>

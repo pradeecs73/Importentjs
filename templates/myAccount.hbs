@@ -1,0 +1,316 @@
+<div class="container header-panel my-files-page-title">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <h1>My Account</h1>
+        </div>
+    </div>
+</div>
+<!-- Actions status message -->
+<div {{bind-attr class="showMessage::hide"}}>
+    <div class="alert alert-block alert-danger">
+        <span>
+            Due to some unexpected errors course details cannot be displayed.
+        </span>
+    </div>
+</div>
+
+<div id="status-message-div" class="alert alert-block alert-success hide">
+    <div>
+        <span id="status-message-text"></span>
+    </div>
+</div>
+<!-- //Actions status message -->
+<div class="eLearningCustom details-page community-detail-page">
+    <!--<div class="widget-box transparent">-->
+        <!--<div class="widget-header widget-header-flat widget-padding bborder row-header">-->
+            <!--<h5 data-icon-before="file-lines-o">-->
+                <!--CLKS Account-->
+            <!--</h5>-->
+
+            <!--<span class="widget-toolbar">           -->
+                <!--<div data-parent="#accordion" data-action="collapse" class="accordion-toggle collapsed">-->
+                    <!--<i class="icon-caret-up"></i>-->
+                <!--</div>-->
+            <!--</span>-->
+        <!---->
+        <!--</div>-->
+        <!--<div id="documentDescription" class="panel-collapse collapse in widget-body">-->
+            <!--<div class="widget-body-inner">-->
+                <!--<div class="widget-main">-->
+                    <!--<div class="widget-body page-padding">-->
+                        <!--<div class="file-panel-content qa-automation-file-description">-->
+
+                            <!--<fieldset>-->
+
+                                <!--<div class="row clearfix">-->
+                                    <!--<div class="col-sm-1 text-right header-icon no-padding">-->
+                                        <!--<span class="icon-user"></span>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-11 ">-->
+                                        <!--CLKS Username-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
+                                <!--<div class="row clearfix">-->
+                                    <!--<div class="col-sm-1 text-right header-icon no-padding">-->
+                                        <!---->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-10 ">-->
+                                        <!--<input type="text form-input" name="clksusername">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
+                                <!--<div class="row clearfix margin-top-10">-->
+                                    <!--<div class="col-sm-1 text-right header-icon no-padding">-->
+                                        <!--<span class="icon-user icon"></span>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-10 ">-->
+                                        <!--Password-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
+                                <!--<div class="row clearfix">-->
+                                    <!--<div class="col-sm-1 text-right header-icon no-padding">-->
+                                        <!---->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-10 ">-->
+                                        <!--<input type="password form-input" name="clkspassword">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
+                                <!--<div class="row clearfix margin-top-10">-->
+                                    <!--<div class="col-sm-1 text-right header-icon no-padding">-->
+        		                        <!--<label>-->
+        				                    <!--<input class="ccks" type="checkbox" name="form-field-checkbox">-->
+        				                    <!--<span class="lbl"> </span>-->
+        				                <!--</label>-->
+                                        <!---->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-10 ">-->
+                                        <!--Activate CLKS Master Account Single Sign In<br />-->
+                                        <!--<span>(Click this box if you have a unified username and password for all your services)</span>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
+                                <!--<div class="row clearfix">-->
+                                    <!--<div class="col-sm-9 col-xs-9 no-padding">-->
+                                        <!---->
+                                    <!--</div>-->
+                                    <!--<div class="col-sm-3 col-xs-3 text-right">-->
+                                        <!--<button type="submit" class="btn btn-primary">Sign In</button>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</fieldset>-->
+                            <!---->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    {{#if isWebexEnabled}}
+    <div class="widget-box transparent">
+        <div class="widget-header widget-header-flat widget-padding bborder row-header">
+            <h5 data-icon-before="file-lines-o">
+                WebEx Account
+            </h5>
+
+            <span class="widget-toolbar">           
+                <div data-parent="#accordion" data-action="collapse" class="accordion-toggle collapsed">
+                    <i class="icon-caret-up"></i>
+                </div>
+            </span>
+        
+        </div>
+        <div id="documentDescription" class="panel-collapse collapse in widget-body">
+            <div class="widget-body-inner">
+                <div class="widget-main">
+                    <div class="widget-body page-padding">
+                        <div class="file-panel-content qa-automation-file-description">
+
+                            <fieldset>
+
+                                <div class="row clearfix">
+                                    <div class="col-sm-1 text-right header-icon no-padding">
+                                        <span class="icon-webex icon"></span>
+                                    </div>
+                                    <div class="col-sm-10 ">
+                                        WebEx Username
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-sm-1 text-right header-icon no-padding">
+                                        
+                                    </div>
+                                    <div class="col-sm-10 ">
+                                        {{input type="text" class="form-input" name="webexusername" value=model.webexId}}
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix margin-top-10">
+                                    <div class="col-sm-1 text-right header-icon no-padding">
+                                        <span class="icon-user icon"></span>
+                                    </div>
+                                    <div class="col-sm-10 ">
+                                        Password
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-sm-1 text-right header-icon no-padding">
+                                        
+                                    </div>
+                                    <div class="col-sm-10 ">
+                                        {{input type="password" class="form-input" name="webexpassword" value=model.webexPassword}}
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-sm-9 col-xs-9 no-padding">
+                                        
+                                    </div>
+                                    <div class="col-sm-3 col-xs-3 text-right">
+                                        {{#if isWebexUpdateIdle}}
+                                            <button type="submit" class="btn btn-primary" {{action "updateWebexDetails"}}>Submit</button>
+                                        {{/if}}
+                                        {{#if isWebexConnecting}}
+                                            <!-- Updating state for button -->
+                                            <button type="submit" class="btn btn-primary disabled"><i class="icon-spin-button-center icon-spinner-dots"></i> Connecting...</button>
+                                        {{/if}}
+                                        {{#if isWebexUpdating}}
+                                            <!-- Updating state for button -->
+                                            <button type="submit" class="btn btn-primary disabled"><i class="icon-spin-button-center icon-spinner-dots"></i> Updating...</button>
+                                        {{/if}}
+                                    </div>
+                                </div>
+                                {{#if webexError}}
+                                    <span class="error">{{webexMessage}}</span>
+                                {{else}}
+                                    <span>{{webexMessage}}</span>
+                                {{/if}}
+
+                            </fieldset>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+    {{#if isJabberEnabled}}
+    <div class="widget-box transparent">
+        <div class="widget-header widget-header-flat widget-padding bborder row-header">
+            <h5 data-icon-before="file-lines-o">
+                Jabber Account
+            </h5>
+
+            <span class="widget-toolbar">           
+                <div data-parent="#accordion" data-action="collapse" class="accordion-toggle collapsed">
+                    <i class="icon-caret-up"></i>
+                </div>
+            </span>
+        
+        </div>
+        <div id="documentDescription" class="panel-collapse collapse in widget-body">
+            <div class="widget-body-inner">
+                <div class="widget-main">
+                    <div class="widget-body page-padding">
+                        <div class="file-panel-content qa-automation-file-description">
+
+                            <fieldset>
+
+                                <div class="row clearfix">
+                                    <div class="col-sm-1 text-right header-icon no-padding">
+                                        <span class="icon-chat-square icon"></span>
+                                    </div>
+                                    <div class="col-sm-10 ">
+                                        Jabber Username
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-sm-1 text-right header-icon no-padding">
+                                        
+                                    </div>
+                                    <div class="col-sm-10 ">
+                                        {{input type="text" class="form-input" name="jabberusername" value=model.jabberUsername}}
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix margin-top-10">
+                                    <div class="col-sm-1 text-right header-icon no-padding">
+                                        <span class="icon-user icon"></span>
+                                    </div>
+                                    <div class="col-sm-10 ">
+                                        Password
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-sm-1 text-right header-icon no-padding">
+                                        
+                                    </div>
+                                    <div class="col-sm-10 ">
+                                        {{input type="password" class="form-input" name="jabberpassword" value=model.jabberPassword}}
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-sm-9 col-xs-9 no-padding">
+
+                                    </div>
+                                    <div class="col-sm-3 col-xs-3 text-right">
+                                        {{#if isJabberUpdateIdle}}
+                                            <button type="submit" class="btn btn-primary" {{action "updateJabberDetails"}}>Submit</button>
+                                        {{/if}}
+                                        {{#if isJabberConnecting}}
+                                            <!-- Connecting state for button -->
+                                            <button type="submit" class="btn btn-primary disabled"><i class="icon-spin-button-center icon-spinner-dots"></i> Connecting...</button>
+                                        {{/if}}
+                                        {{#if isJabberUpdating}}
+                                            <!-- Connecting state for button -->
+                                            <button type="submit" class="btn btn-primary disabled"><i class="icon-spin-button-center icon-spinner-dots"></i> Updating...</button>
+                                        {{/if}}
+                                    </div>
+                                </div>
+                                {{#if jabberError}}
+                                    <span class="error">{{jabberMessage}}</span>
+                                {{else}}
+                                    <span>{{jabberMessage}}</span>
+                                {{/if}}
+
+
+                            </fieldset>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

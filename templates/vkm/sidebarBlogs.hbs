@@ -1,0 +1,15 @@
+<div class="topic-section topic-overview-section" data-topic-id="46" data-topic-connection="blogs" data-topic-prefix="blog">
+	<h4 class="topic-heading display-full-topic" data-icon-before="blog" data-icon-after="angle-right">Related Blogs</h4>
+		{{#if relatedBlogs}}
+			<ul class= "topic-item-list topic-preview-list">
+				{{#each blog in relatedBlogs}}
+					<li><a title="{{unbound blog.assetTitle}}" href='#/blog/{{unbound blog.assetURL}}'>{{blog.assetTitle}}</a>
+					</li>
+				{{/each}}
+			</ul>
+		{{else}}
+			<ul class="missing-data-message">
+				<li><em>No Blogs to Display</em></li>
+			</ul>
+		{{/if}}
+</div>

@@ -1,0 +1,25 @@
+<div class="row widget-container" id="rss-feed-box" style="margin: 10px;">
+    <div class="page-header">
+        <h1>Rss Feeds</h1>
+    </div>
+    <div class="well">
+        <i class="pull-right btn-new-community rss-add"></i>
+        <div class="pull-right">
+            <form class="form-search">
+            <span class="input-icon">
+              <input id="nav-search-input" class="nav-search-input" type="text" autocomplete="off" placeholder="Search RSS Feed..."></input>
+              <i class="icon-search nav-search-icon"></i>
+            </span>
+            </form>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="text-center center centered">
+        <div style="width: 291px; border-bottom: 1px solid #ccc; margin:50px auto 10px;">
+            <i class="icon-rss" style="font-size: 152px;"></i><br>
+            <h4>No Feeds available</h4>
+            <span class="help-block">Please enter new feed</span>
+        </div>
+        <button id="id-btn-dialog2" class="btn btn-info" {{action 'openCreateRssfeedModal'}}>Add New Feed</button>
+    </div>
+</div>

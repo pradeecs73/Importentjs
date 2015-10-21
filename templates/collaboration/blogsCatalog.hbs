@@ -1,0 +1,277 @@
+<div class="page-content list-grid-page blogs no-padding">
+    <div {{ bind-attr class=":widget-body :list-with-tags isGridView:grid-view:list-view :clearfix"}}>
+        <div class="container header-panel">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h1 class="eclipse-text" {{bind-attr title=pageTitle}}>Blogs</h1>
+                </div>
+            </div>
+        </div>
+
+        <div id="blogsDelMessage" {{bind-attr class="showMessage::hide"}}>
+            <div class="alert alert-block alert-success">
+                <button type="button" class="close" data-dismiss="alert">
+                <i class="icon-remove"></i>
+                </button>
+                <p>
+                    <i class="icon-ok"></i> You have successfully deleted the blog.
+                </p>
+            </div>
+        </div> 
+
+        {{view view.confirmModelDialogView}}
+
+        <div class="filter-wrapper">
+            <div class="filters-panel has-sorting">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                    <div class="row">
+                        <div id="view-option-buttons" class="col-lg-4 col-md-5 col-sm-4 col-xs-6 layout-buttons">
+                            <a id="catalog-grid-view" {{ bind-attr class=":icon-grid-layout :pull-left isGridView:active" }} {{action toggleView "grid-view" target=view}}></a>
+                            <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action toggleView "list-view" target=view}}></a>
+                            {{sorting-link sortableFields=sortableFields sortBy=sortBy sortOrder=sortOrder updateSortByAction='updateSortBy' toggleSortOrderAction='toggleSortOrder'}}
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-8 col-xs-6">
+                            {{visual-search componentId='fileCatalogFilterBox' facets=allFacets filters=filters searchAction='filter' placeHolderText='Filter by Scope, Status, # of comments'}}
+							<!-- <div id="VS">
+								<div id="search_box_container2"></div>
+							</div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 search-add-wrap">
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-10 form-wrap col-xs-10">
+                            <div class="form-search">
+                                <i class="icon-search" {{action 'search'}}></i>
+                                {{input id="documentCatalogSearchBox" class="form-control" value=searchBoxText placeholder="Search By Title, Description" type="text" action='search'}}
+                            </div>
+                           <!--  <div class="form-search">
+                                <i class="icon-search" {{action 'search'}}></i>
+                                {{input class="form-control" value=searchText placeholder="Search By Title, Description" type="text" action='search' on='enter'}}
+                            </div> -->
+                        </div>
+                        {{#if isUserHasAccessToCreate}}
+                        <span {{bind-attr class=":li-new-mail :pull-right newPath:active"}}> 
+                            {{#link-to "blogs.new" (query-params chatSession="" session="" chatRoom="" communityId="") class="btn-new-mail createNew-icon-right"  data-target="#blogs-outlet"}} 
+                            <span class=""> 
+                                <i data-rel="tooltip" data-original-title="Add Blog" data-placement="left" data-icon-before="plus-thin" class="btn"></i>
+                            </span>{{/link-to}}
+                        </span>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+            <div class="filters-panel has-filter-list">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 filter-items-wrapper">
+
+                    <ul class="horizontal-list">
+                        <li class="filter-by-title">Filter By: </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton checked="checked" name="selectionTest" selectionBinding="filter" value="my"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">My Blogs</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="filter" value="recent"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">All Blogs</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="filter" value="shared"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">Shared</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="filter" value="liked"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">My Likes</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="filter" value="favorite"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">My Favorites</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="filter" value="followed"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">Followed by Me</label>
+                        </li>
+                    </ul>
+                    <select class="filter-items-dropdown" name="" id="">
+                        <option>Filter By</option>
+                        <option value="my">My Blogs</option>
+                        <option value="recent">All Blogs</option>
+                        <option value="shared">Shared</option>
+                        <option value="liked">My Likes</option>
+                        <option value="favorite">My Favorites</option>
+                        <option value="followed">Followed by Me</option>
+                    </select>
+
+                </div>
+            </div>
+        </div>        
+<!--/#blogs-outlet-->
+        <div id="blogs-outlet" style="padding-top: 10px;" data-bindattr-14="14">
+            {{#if isGridView}}
+            {{#each thisblog in allPosts itemController="blogs.index"}}         
+            <div class="col-sm-4 col-md-4 col-lg-3 trng-catlogue-gridView ">
+                <div class="kc-grid withPopOver postGrid" data-rel="popover" data-container="body" data-toggle="popover" data-placement="auto right">
+                    <div class="category-description-block position-relative">
+                    
+                        <h2 class="grid-header clearfix">
+                            <span class="category-image">
+                                {{avatarMini thisblog.authorName thisblog.author}}
+                            </span>
+                            <span class="">
+                                <a class="user" href="#">
+                                    <span class="text">{{#link-to "blog" thisblog._id}} {{ellipsis thisblog.title 80}} {{/link-to}} </span>
+                                </a>
+                            </span>                            
+                        </h2>
+
+
+                        <div class="grid-sub-section grey">
+                            <div>
+                                <span class="blog_info">Status: </span>
+                                <span > {{thisblog.status}}</span>
+                            </div>
+                            <div>
+                                <span class="blog_info">Created: </span>
+                                <span class="author_name ">
+                                    <i class="icon-time orange bigger-110"></i> {{formatDate thisblog.createDate  "DD MMM YYYY"}}
+                                </span>
+                            </div>
+                        </div><!--/.grid-sub-section--> 
+                        
+                        <div class="grid-sub-section">
+                            <i class="icon-quote-left"></i> {{ellipsis thisblog.content.content 168}}
+                            <div >
+                                <div class="pull-right blog_read_more">{{#link-to "blog" thisblog._id}} Read More {{/link-to}}</div>
+                            </div>
+                        </div><!--/.grid-sub-section-->     
+                        
+                        <div class="grid-sub-section grey views-font-size">
+                            <div>
+                                <span class="grid-title">
+                                     <i class="icon-user grey bigger-125"></i> {{profileLink thisblog.authorName thisblog.author}}
+                                </span>
+                            </div>
+                            <div class="status-buttons">
+                                <span> 
+                                    <i class="icon-thumbs-up bigger-150 grey"></i> {{stats.likes}} 
+                                </span>
+                                <span> 
+                                    <i class="icon-eye bigger-150 grey"></i> {{viewsCount}} 
+                                </span>                 
+                            </div>       
+                        </div><!--/.grid-sub-section--> 
+
+                        <div class="grid-sub-section last">
+                            <div class="document-upload-date">
+                                <!-- <div class="pull-left" style="font-weight:normal">
+                                    <span {{bind-attr class=":label :arrowed isDraft:label-yellow isPublished:label-success:lebel-blue" }}>{{thisblog.status}}</span>
+                                    <i {{bind-attr class=":bigger-125 :grey isPublic:icon-globe:icon-lock" data-original-title="scope"}} title=""></i>
+                                </div> -->
+                                  {{#if thisblog.isUserHasAccessToDelete}}
+                                    <!--     <div class="pull-right action-buttons">
+                                            <a class="blue">
+                                                {{#link-to "blog.edit" thisblog  class="blue"}} 
+                                                <i class="icon-pencil bigger-125"></i> {{/link-to}}
+                                            </a>
+                                            <a data-dismiss="modal" data-target="#deletePost" {{action beforeDelete thisblog target="view"}} data-toggle="modal" class="red"> 
+                                                <i class="icon-remove bigger-125"></i>
+                                            </a>
+                                         </div> -->
+                                   {{/if}}  
+                                <div class="clearfix"></div>
+                            </div><!--/.document-upload-date-->
+                    
+                        </div><!--/.grid-sub-section last-->
+                      </div><!--/.category-description-block-->
+                 </div><!-- /.kc-grid-->
+            </div><!--/.col-sm-4-->
+            {{/each}}
+
+            {{else}}
+            
+		{{#each thisblog in allPosts itemController="blogs.index"}}
+            <div class="message-item no-border no-padding message-unread">
+                <div class="itemdiv commentdiv profile-activity clearfix">
+                    <div class="body" style="margin:5px !important">
+                        <div class="pull-left"> {{avatarMini thisblog.authorName thisblog.author}}</div>                        
+                        
+                        <a class="user " href="#">
+                            <span class="text">{{#link-to "blog" thisblog._id}} {{thisblog.title}} {{/link-to}}</span>
+                        </a>
+                        <span class="author_name">{{profileLink thisblog.authorName thisblog.author}}</span>
+                        <div class=" pull-left summaryText">
+                            <span class="bold">Summary:</span> {{{ellipsis thisblog.content.content 300}}}
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="pull-left grey" style="margin-left:50px;">                    
+                            {{#if thisblog.files}}
+                                <i data-icon="'" class="icon"></i>
+                                {{#each file in thisblog.files}}
+                                    {{#ifchecklength}}
+                                        <span class="tag">
+                                            <a target="_blank" {{action downloadAttachFile file.fName thisblog._id }}> {{unbound file.fName}} </a>
+                                        </span>
+                                    {{/ifchecklength}}
+                                {{/each}}
+                                {{#checktotalLen thisblog.files}}
+                                <span class="tag">{{#link-to "blog" thisblog._id}}More{{/link-to}}</span>
+                                {{/checktotalLen}}
+                            {{/if}}     
+                        </div>
+                        <div class="clearfix"></div>   
+
+                        <div class="tagGroup pull-left grey" style="margin-left:50px;">
+                            {{#if thisblog.tags}}
+                                <i class="middle icon-tag grey"></i>                           
+                                {{{tagsellipsis thisblog.tags}}}
+                            {{else}}
+                                <span></span>
+                            {{/if}}   
+                        </div>
+
+                        <div class="pull-left status-buttons " style="clear:both"></div>
+                        
+                         <div class="pull-left status-buttons ">
+                            <span>
+                                <i class="icon-thumbs-up bigger-150"></i> {{stats.likes}} 
+                            </span>               
+                            <span>
+                                <i class="icon-eye icon-1x bigger-150"></i> {{viewsCount}} 
+                            </span>
+                            <span>Created: <i class="orange icon-time bigger-110 pull-left"></i> 
+                                <span>{{#if thisblog.createDate}} {{formatDate  thisblog.createDate "DD MMM YYYY"}} {{else}}{{formatDate thisblog.updateDate "DD MMM YYYY"}}{{/if}}</span>
+                             </span>                                                                                                                                                                                                                                                  
+                       </div>
+                      {{#if thisblog.isUserHasAccessToDelete}}
+                            <div class="pull-right action-buttons">
+                                <a class="blue">
+                                    {{#link-to "blog.edit" thisblog  class="blue"}} 
+                                    <i class="icon-pencil bigger-125"></i> {{/link-to}}
+                                </a>
+                                <a data-dismiss="modal" data-target="#deletePost" {{action beforeDelete thisblog target="view"}} data-toggle="modal" class="red"> 
+                                    <i class="icon-remove bigger-125"></i>
+                                </a>
+                             </div>
+                       {{/if}}
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+
+            {{/if}}
+        </div><!--/#blogs-outlet-->        
+
+        <div class="col-md-12"> 
+	        <div>
+	            {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+	        </div>
+        </div>
+        <div class="no-value">{{model.status}}</div>
+    </div>
+</div>

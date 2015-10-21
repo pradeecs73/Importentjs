@@ -1,0 +1,208 @@
+<div {{ bind-attr class=":page-content :list-grid-page :tabbable :page_learning-plan isUpdate:update-learning-plan:create-learning-plan" }}>
+	<div class="container header-panel">
+		<div class="row">
+	        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				{{#if isUpdate}}
+					<h1 class="eclipse-text"> Update Learning Plan </h1>
+				{{else}}
+					<h1 class="eclipse-text"> Create Learning Plan </h1>
+				{{/if}}
+	        </div>		
+		</div>
+	</div>
+
+	<div {{bind-attr class="showMessage::hide"}}>
+		<div class="alert alert-block alert-success">
+			<button type="button" class="close" data-dismiss="alert">
+				<i class="icon-remove"></i>
+			</button>
+			<p>
+				<i class="icon-ok"></i>  Learning plan created successfully.
+			</p>
+		</div>
+	</div>
+
+	<div id="successMessageDiv" class="alert alert-block alert-success hide">
+		<button type="button" class="close">
+		<i class="icon-remove"></i>
+		</button>
+		<p>
+			<i class="icon-ok"></i> {{message}}
+		</p>
+	</div>
+
+	<div class="tab-content no-border active">
+		<div class="filter-wrapper searchCatalogCustom">
+			<div class="table-top-header container filters-panel has-sorting" style="border-top:none;margin-top:12px">
+				{{#if isUpdate}}
+				<div class="search-learning-bar">
+					<div id="toggle_view" class="col-lg-4 col-md-5 col-sm-4 col-xs-5 layout-buttons">
+						
+					</div>
+				</div>
+				{{/if}}
+				<div class="learning-calender-section row">
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 edit-title-LP-devices">
+						<label> Title: </label>
+						{{input class="enroll-act-section" type="text" id="form-field-mask-2" value=name placeholder="Learning Plan" maxlength="60"}}
+						{{#if errors.title}}
+						<span class="error-message">{{errors.title}}</span>
+						{{/if}}
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 CompletionGoalDate">
+						<div class="col-xs-3 date-title">Completion Goal Date:</div>
+						<div class="input-group date plp-date" data-provide="datepicker">{{input class="date-picker-input" valueBinding="ilpDate"}}<i class="btn icon-calendar "></i>
+						</div>
+						{{#if errors.date}}					
+						<span style="color:red;float:left;padding-left:6px">{{errors.date}}</span>
+						{{/if}}
+					</div>
+				</div>
+			</div>
+		</div>
+		{{#if isGridView}}
+		<div class="learningPlan-button-group"> 
+			{{#if isUpdate}}
+				<button id="update-ILP" class="btn btn-sm btn-primary" {{action "updateIndividualLearningPlan" learningPlanId name on="click"}}>Update Learning Plan</button>
+			{{/if}}
+		</div>
+		<div class="grid-view">
+			{{#each data in learning_items}}
+			<div class="col-sm-3">
+				<div class="kc-grid">
+					<h2 class="grid-header">
+						<div class="grid-title withoutlinktext">
+							{{#if data.courseId}}
+								{{#link-to "learningCourse" data.courseId}} {{data.fullName}} {{/link-to}}
+							{{else}} 
+								{{data.taskDesc}} 
+							{{/if}}
+						</div>
+					</h2>
+					<div class="grid-sub-section">
+						<span>Type :</span>
+						<span> 
+							{{#if data.courseId}}
+								{{data.courseType}}
+							{{else}} 
+								Task 
+							{{/if}}
+						</span>
+					</div>
+					<div class="grid-sub-section">
+						<span>Completion Status :</span>
+						<span> 
+							{{#if data.courseId}}
+								{{#if data.isCourseCompleted}}
+									Completed
+								{{else}}
+									{{#if data.courseCompleted}}
+										Registered
+									{{else}}
+										Not Registered
+									{{/if}}
+								{{/if}}
+							{{else}}
+								NA
+							{{/if}}
+						</span>
+					</div>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+		{{else}}
+		<div class="pull-right learningPlan-button-group"> 
+			{{#if isUpdate}}
+				<button id="update-ILP" class="btn btn-sm btn-primary" {{action "updateIndividualLearningPlan" learningPlanId name on="click"}}>Update Learning Plan</button>	
+			{{else}}
+				<button id="submit-ILP" class="btn btn-sm btn-primary" {{action "createIndividualLearningPlan" on="click"}}>Create Learning Plan</button>
+				<span>{{#link-to 'learningPlans' activeClass='active'}}
+						<button id="cancel-ILP" class="btn btn-sm btn-primary margin-right" >Back to Learning Plans</button>
+				</span>{{/link-to}}
+			{{/if}}
+		</div>
+
+		{{#if isUpdate}}
+			<div class="learning-padding table-header-bg" style="border-top:1px solid #DADADA;">
+				<div class="pull-left enroll-act-section col-xs-5 eclipse-text"> Enrollments and Activities <i class=""> </i> </div>
+				<div class="pull-left enroll-act-section col-xs-3"> Type </div>
+				<div class="pull-left enroll-act-section col-xs-3 eclipse-text"> Completion Status </div>
+			</div>
+			<div class="clearfix"></div>
+			{{#each data in learning_items}}
+				<div class="enrollAct-data no-background-lp">
+					<ul>
+						<li class="col-xs-5">
+							{{#if data.courseId}}
+								{{#link-to "learningCourse" data.courseId}} {{data.fullName}} {{/link-to}}
+							{{else}}
+								{{#if data.isEdit}}
+									{{input class="col-lg-12 enroll-input-text" type="text" id=data.id value=data.taskDesc maxlength="50"}}
+									{{#if errors.taskName}}
+										<span style="color:red;padding-left:6px;">{{errors.taskName}}</span>
+									{{/if}}
+								{{else}}
+									{{data.taskDesc}}
+								{{/if}}
+							{{/if}}
+						</li>
+						<li class="col-xs-3 learningPlan-type padding-LP-12">
+							{{#if data.courseId}}
+								{{data.courseType}}
+							{{else}} 
+								Task 
+							{{/if}}
+						</li>
+						<li class="col-xs-3 learningPlan-type">
+							{{#if data.courseId}}
+								{{#if data.isCourseCompleted}}
+									Completed
+								{{else}}
+									{{#if data.courseCompleted}}
+										Registered
+									{{else}}
+										Not Registered
+									{{/if}}
+								{{/if}}
+							{{else}}
+								NA
+							{{/if}}
+						</li>
+						{{#unless data.courseId}}
+							{{#if data.isEdit}}
+								<a id="update-{{unbound data.id}}" {{action "updateTask" data.id data.taskDesc}}>Update</a>
+							{{else}}
+								<a id="edit-{{unbound data.id}}" {{action "editTask" data.id data.taskDesc}}>Edit</a>
+							{{/if}}
+						{{/unless}}
+					</ul>
+				</div>
+			{{/each}}
+		{{/if}}
+		{{/if}}
+		{{#if isUpdate}}
+		<div class="add-learning-row col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="pull-left enroll-act-section col-lg-7">
+				{{input class="col-lg-12 enroll-input-text" type="text" id="form-field-mask-3" value=taskDesc placeholder="Create Task here..." maxlength="50"}}
+				{{#if errors.taskDesc}}
+					<div class="error-message" style="padding-top: 5px; font-weight:normal; font-size:12px; ">{{errors.taskDesc}}</div>
+				{{/if}}
+			</div>
+			<div class="pull-left enroll-act-section col-lg-3"> </div>
+			<div class="pull-right"> 
+				<span data-rel="tooltip" data-original-title="Create Task" data-placement="left" data-icon-before="checkmark-rounded-circle" class="bigger-160 pointer" {{action "createIndividualLearningPlanTask"   learningPlanId taskDesc on="click"}}> </span> 
+				<span data-rel="tooltip" data-original-title="Reset Task" data-placement="left"  class="bigger-160 pointer" data-icon-before="community-light" {{action "resetTask" on="click"}}> </span> 
+			</div>
+		</div>
+		<div class="visit-learningCatalog pull-left col-lg-12 margin-top-10">
+			{{#link-to 'catalog' activeClass='active'}}Visit Training Catalog to add more offerings to plan{{/link-to}}
+		</div>
+		<div class="pull-right learningPlan-button-group back-to-learning-plans">
+			{{#link-to 'learningPlans' activeClass='active'}}
+				<button id="cancel-ILP" class="btn btn-sm btn-primary margin-right" >Back to Learning Plans</button>
+			{{/link-to}}
+		</div>
+		{{/if}}
+	</div>
+</div>

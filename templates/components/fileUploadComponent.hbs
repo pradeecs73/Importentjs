@@ -1,0 +1,19 @@
+<div class="clearfix"></div>
+
+<div class="col-md-12 col-uploader-wrap uploader-empty clearfix no-padding">
+
+<div class="col-md-4 no-padding">
+<input type="file" id="files" class="btn" style="display:none" {{bind-attr name=name}} {{action on="change"}} {{bind-attr multiple=multiple}}/>
+     <span type="file" id="choosing-file" class="btn btn-sm btn-primary" data-toggle="tooltip" data-html="true" data-placement="bottom" {{action openFileUpload}}>
+        Choose Files
+        </span>
+</div>
+
+        <div class="col-md-6">
+        <span id="selected-file" style="font-size:14px; margin-top: 2px; display:inline-block;">No files has been selected</span>
+        </div>
+
+
+</div>
+
+    

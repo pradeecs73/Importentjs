@@ -1,0 +1,24 @@
+<div class="modal file-upload-modal" id="fileuploadPost" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+                  <div class="modal-header learningplanblue-header modal-create-header clearfix">
+                      <button type="button" class="close white" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h4 class="modal-title" id="myModalLabel">File Upload</h4>
+                  </div>
+                  <div class="modal-body">
+				    <span>Accepted:<strong>epub, pdf, doc, docx, ppt, pptx, xls, xlsx, png, jpg, jpeg</strong></span>
+                    <div class="input-group">						
+                      <span class="input-group-btn">
+                        <span>
+                          {{file-upload allowedFileTypes=allowedFileTypes name="files[]" maxFileSizeInMB=5 reset=resetFileChooser multiple="multiple"}}
+                        </span>
+                      </span>
+                    </div>
+                  <div>
+                  <div class="modal-footer">	
+                      <button type="reset" class="btn btn-primary" {{action cancelfilUpload target="view"}}>  Cancel </button>
+                      <button type="submit" class="btn btn-primary"{{action uploadFile target="view"}}> Attach File</button>
+                  </div>
+      </div>
+  </div>
+</div>

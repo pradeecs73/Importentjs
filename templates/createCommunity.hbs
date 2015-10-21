@@ -1,0 +1,188 @@
+    <div class="communities">
+        <div class="page-header">
+            <h1>{{title}}</h1>
+        </div>
+        <div id="id-message-new-navbar" class="message-navbar align-center hidden-xs clearfix">
+            <div class="message-bar"></div>
+            <div class="message-item-bar">
+                <div class="messagebar-item-left">
+                    <a {{ bind-attr href="fromRoute" }} class="btn-back-message-list no-hover-underline"> <i
+                            class="icon-angle-left blue bigger-110 middle"></i> <b class="middle bigger-110">Back</b>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="id-message-form" {{bindAttr class=":form-horizontal :message-form :clearfix createCommunity:add-form:edit-form"}}>
+            <div class="post-form-group">
+              <div class="padding-left-20"><span class="asterisk">*</span> Data Required</div>
+                <div class="col-md-12 no-padding">
+                    <div {{bindAttr class=":alert :alert-info displayDeactivateMessage::hide"}}>
+                        <b>Please Note: </b> This community will be deactivated when you click on the 'Update' button. Any other changes that you have made will not take effect.
+                    </div>
+                    <div class="col-md-8">
+                        {{#if createError}}
+                            <span style="color:red;"> {{createError}}</span>
+                        {{/if}}
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label no-padding-right" for="form-field-name">Name<span class="asterisk">*</span>:</label>
+
+                            <div class="col-md-10">
+                                <div class="block  no-padding">
+                                    {{input maxlength="50" type="text" class="col-md-12 col-sm-12 col-xs-12" value=name placeholder="Name" title="Specify at least 3 lettered title" disabled=deactivated}}
+                                    {{#if errors.name}}
+                                        <span style="color:red;"> {{errors.name}}</span>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                        <div><label class="col-md-2 control-label no-padding-right" for="form-field-name"> <span style="color:red;">Note<span class="asterisk">*</span>:</span></label>
+                            <div>
+                                    <label style="padding-top:7px; padding-left: 4px;"> For best performance, please  upload images with total size not exceeding  5MB.</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label no-padding-right"> <span
+                                    class="inline space-24 hidden-480"></span> Description<span class="asterisk">*</span>: </label>
+
+                            <div class="col-md-10" id="wysiwyg-editor-container">
+                                <div class="wysiwyg-editor wysiwyg-editor-height" id="wysiwyg-editor"
+                                     contenteditable="true">
+                                    {{{unbound  content.description}}}
+                                </div>
+                                {{#if errors.description}}
+                                    <span style="color:red;">{{errors.description}}</span>
+                                {{else}}
+                                    {{#if errors.descriptionSansHtml}}
+                                        <span style="color:red;">{{errors.descriptionSansHtml}}</span>
+                                    {{/if}}
+                                {{/if}}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                                <label class="col-md-2 control-label no-padding-right" for="categories">Category: <span class="asterisk">*</span></label>
+                                <div class="col-md-10">
+                                <div class="input-icon block no-padding">
+                                    {{view Ember.Select
+                                        prompt="Please choose one"
+                                        contentBinding=categories
+                                        classNames="form-control"
+                                        optionValuePath="content._id"
+                                        optionLabelPath="content.name"
+                                        id="categorySelector"
+                                        value=model.category
+                                        selection=model.category
+                                    }}
+                                </div>
+                                    {{#if errors.category}}
+                                            <span style="color:red;">{{errors.category}}</span>
+                                    {{/if}}
+                                </div>
+                        </div>
+                        <div class="form-group" id="qa-automation-tags">
+                            <label class="col-md-2 control-label no-padding-right" for="tagsField">Tags:</label>
+
+                            <div class="col-md-10 autocomplete-shrink-issue">
+                                {{#if allTagsLoaded}}
+                                        {{bootstrap-tags-input source=allTags value=tags componentId="tagsField" placeHolderText="Enter tags ..." forceLowerCase=true readonly=deactivated}}
+                                {{else}}
+                                        {{bootstrap-tags-input  value=tags componentId="tagsField" placeHolderText="Enter tags ..." forceLowerCase=true readonly=deactivated}}
+                                {{/if}}
+                                {{#if errors.tags}}<span style="color:red;">{{errors.tags}}</span>{{/if}}
+                            </div>
+                        </div>
+
+                        {{#unless createCommunity}}
+                            <div class="form-group" id="qa-automation-existing-members">
+                                <label class="col-md-2 control-label no-padding-right" for="form-field-members">Owner:</label>
+
+                                <div class="col-md-10">
+                                    <div class="block no-padding">
+                                            <span class="comma-separated-values form-value">{{creator}}</span>
+                                        {{!-- {{#if active }}
+                                            {{#each member in members}}
+                                            <span class="comma-separated-values form-value">{{member}}</span>
+                                        {{/each}}
+                                        {{else}}
+                                            {{#each member in oldMembers}}
+                                            <span class="comma-separated-values form-value">{{member}}</span>
+                                        {{/each}}
+                                        {{/if}}--}}    
+                                 </div>
+                                </div>
+                            </div>
+                        {{/unless}}
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label no-padding-right"
+                                   for="form-field-type">Type*:</label>
+
+                            <div class="col-md-10">
+                                {{view Ember.Select
+                                    contentBinding=types
+                                    content=types
+                                    value=type
+                                    id="communityTypeSelector"
+                                    classNames="form-control"
+                                    valueBinding="controller.communityType"
+                                }}
+                            </div>
+                        </div>
+                        {{#if createCommunity}}
+                                        <p></p>
+                        {{else}}
+                        <div class="form-group" id="qa-automation-members">
+                            <label class="col-md-2 control-label no-padding-right"
+                                   for="form-field-members">Members:</label>
+                            <div class="col-md-10 autocomplete-shrink-issue">
+                                <div class="block no-padding">
+                                       <a href="#" {{action "manageMembers" _id  on="click"}} > View / Add / Remove </a>
+                                </div>
+                            </div>
+                        </div>
+                        {{/if}}
+                    </div>
+                    {{#unless createCommunity}}
+<!--                         <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-md-9">
+                                    <label class="col-md-3 control-label no-padding-right" for="form-field-subject"></label>
+                                    <div class="input-icon block no-padding">
+                                        {{view Ember.Checkbox checkedBinding="model.active" name="form-field-checkbox" }}
+                                        <span class="lbl"> Activate </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="col-md-4 checkbox-text-inline">
+                            <label class="inline" for="form-field-subject">
+                                <input type="checkbox" class="cis" disabled="">
+                                {{view Ember.Checkbox checkedBinding="model.active" name="form-field-checkbox" }}
+                                <span class="lbl"></span>
+                            </label>
+                            <span class="text-label">
+                                Activated
+                            </span>
+                        </div>
+                        
+                    {{/unless}}
+                    <div class="col-md-12">
+                        <div class="align-right">
+                            <button id="qa-automation-add-button" type="submit"
+                                    class="btn btn-sm btn-primary" {{action "createCommunity"}}><i
+                                    class="icon-plus"></i> {{#if createCommunity}}Create{{else}}Update{{/if}}
+                            </button>
+                            <button id="qa-automation-cancel-button" type="reset"  {{action "clear" _id}}
+                                    class="btn btn-sm btn-primary"><i class="icon-x-thick"></i> Cancel
+                            </button>
+                        </div>
+                        <div class="clearfix space"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/jquery.*-autosize.min.js"></script>

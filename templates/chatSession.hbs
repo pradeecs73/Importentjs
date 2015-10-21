@@ -1,0 +1,100 @@
+<div class="position-relative individual-chat-container-box" {{bindAttr data-recency="rank"}}>
+<div class="widget-box chat col-md-3" {{bindAttr data-recency="rank"}}>
+
+
+
+
+    <div {{bindAttr class=":widget-header :class-head :clearfix unreadMessageAvailable:blink_me"}} {{action transitionChatSession}}>
+	        <span class="pull-left margin-left-6">
+	            <i {{bind-attr class=":middle :glyphicon :glyphicon-comment :bigger-180 status"}}></i>
+	        </span>
+	                              <span class="class-title">
+	                                  <h5>{{shortName}}</h5>
+	                              </span>
+        <span class="class-icon pull-left"><i class="icon-bars white bigger-175"></i></span>
+          <span class="class-icon pull-right" >
+              <button type="button" class="close" {{action closeChat}}>
+                  <i class="icon-remove white"></i>
+              </button>
+          </span>
+          <span class="class-icon pull-right" >
+              <button type="button" class="close">
+                  <i {{bindAttr class=":white chatSessionMaximized:icon-caret-down:icon-caret-up"}}></i>
+              </button>
+          </span>
+    </div>
+
+
+
+
+    <div class="widget-body js-widget-body" {{bindAttr id="jabberUsername"}}>
+      <div class="chat-action-items-bar grey">
+        <i class="icon-arrow-download grey close pull-right" {{action shareChat}} title="Save your chat"></i>
+        <div class="pull-right add-user-icon" title="Invite users to group chat" {{action initiateGroupChat}} {{bindAttr class="isSessionActive:show:hide"}}>
+            <i class="icon icon-user"></i>
+            <i class="icon icon-plus"></i>
+       </div>
+    {{#if isWebexEnabled}}
+       <i {{bindAttr class=":icon :icon-webex :pull-right isSessionActive:show:hide"}} {{action instantMeeting on="click" bubbles=false}} data-rel="tooltip" data-original-title="WebEx"></i>
+       <i {{bindAttr class=":icon-spin :icon-spinner :orange2 :bigger-110 :pull-right startingWebex:show:hide"}} style="margin-top: 2px;"></i>
+    {{/if}}
+       <div class="clearfix"></div>
+      </div>
+        <div class="widget-main no-padding">
+            <div class="chat-session js-chat-session" {{bindAttr id="jabberUsername"}}>
+                <div id="jabber-content">
+                    {{#each message in messages}}
+                        <div class="itemdiv dialogdiv">
+                            <div class="user">
+                                {{#if message.sent}}
+                                    {{avatarMini loggedInShortName loggedInUsername}}
+                                {{else}}
+                                    {{avatarMini shortName username}}
+                                {{/if}}
+                            </div>
+
+                            <div class="body">
+                                <div class="time">
+                                    <i class="icon-time"></i>
+                                    <span class="grey">{{formatDate message.time "h:mm:ss a"}}</span>
+                                </div>
+
+                                <div class="name">
+                                    {{#if message.sent}}
+                                        {{profileLink loggedInShortName loggedInUsername}}
+                                    {{else}}
+                                        {{profileLink shortName username}}
+                                    {{/if}}
+                                </div>
+                                <div class="chat-text">{{{message.body}}}</div>
+
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
+            <div class="jabber-status-message-container">
+                <span {{bindAttr class=":jabber-status-message :red isUserAway:show:hidden"}}>Oops! Looks like your friend has logged off Jabber. You may not be able to receive any further messages.</span>
+            </div>
+            <div class="jabber-status-message-container">
+                <span {{bindAttr class=":jabber-status-message :red isLoggedInUserAway:show:hidden"}}>Oops! Looks like you're offline on Jabber. Your friend may not be able to receive your messages.</span>
+            </div>
+            <div class="jabber-status-message-container">
+                <span {{bindAttr class=":jabber-status-message :grey isComposing:show:hidden"}}>{{shortName}} is typing...</span>
+            </div>
+
+            <div class="form-actions">
+                <div class="input-group">
+                    {{input type="text" placeholder="Type your message here ..." class="form-control" name=jabberUsername value=messageToSend action="sendMessage" onEvent="keypress"}}
+                    <span class="input-group-btn">
+	                      <button class="btn btn-sm cis-bg-color btn-info no-radius" type="button" {{action sendMessage}}>
+                              <i class="icon-arrow-share"></i>
+                          </button>
+	                  </span>
+                </div>
+            </div>
+        </div><!-- /widget-main -->
+    </div><!-- /widget-body -->
+</div><!-- /widget-box -->
+</div>

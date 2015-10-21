@@ -1,0 +1,326 @@
+<link rel="stylesheet" href="assets/css/app/page_activity.css" />
+
+<div class="page-content list-grid-page activityStream no-padding">
+
+	<div {{ bind-attr class=":widget-body :list-grid-box :list-with-tags isGridView:grid-view:list-view"}}>
+
+		<div class="container header-panel">
+		    <div class="row">
+		        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<h1 class="eclipse-text">Activity Stream {{!<span data-rel="tooltip" title="" data-original-title="View Activity Status">
+						<a href='javascript:;' style='text-decoration:none'>
+							<i class="blue icon-question-circle bigger-120" href="#modal-table" role="button"  data-toggle="modal" ></i>
+						</a></span>}}
+					</h1>
+		        </div>
+		    </div>
+		</div>
+
+		<div class="searchCatalogCustom clearfix">
+			<div id="successMessageDiv" class="alert alert-block alert-success hide">
+				<button type="button" class="close" data-dismiss="alert">
+					<i class="icon-remove"></i>
+				</button>
+				<p><i class="icon-ok"></i> message</p>
+			</div>
+
+		    <div class="filters-panel first-panel has-sorting">				            
+                <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12">
+                    <div class="row">
+                        <div id="view-option-buttons" class="col-xs-2 layout-buttons">
+                            <a id="catalog-grid-view" {{ bind-attr class=":icon-grid-layout :pull-left isGridView:active" }} {{action toggleView "grid-view" target=view}}></a>
+                            <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action toggleView "list-view" target=view}}></a>
+
+                        </div>
+                        <div class="col-lg-10 col-md-9 col-sm-10 col-xs-10">
+                            {{!-- {{visual-search componentId='fileCatalogFilterBox' facets=allFacets filters=filters searchAction='filter' placeHolderText='Filter by Type'}} --}}
+							<div id="activityStreamView"></div>
+                        </div>
+                    </div>
+                </div>
+
+	            <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 search-add-wrap">
+	                <div class="row">
+	                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-wrap">
+	                        <div class="form-search">
+	                            <i class="icon-search" {{action 'search'}}></i>
+                            
+								{{input value=filter  class="form-control" placeholder="Search activities"}}	                            
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+		    </div>	
+		</div>
+	<div style="clear:both"></div>
+	{{#if isGridView}}
+		{{#each formattedActivities}}
+        <div class="widget-box transparent" id="recent-box">
+            <div class="widget-header widget-header-flat widget-padding bborder row-header">
+                <h4 class="lighter">{{this.dateKey}}</h4>
+                <div class="widget-toolbar"> 
+                    <a {{bindAttr href="url"}} {{action "reload" on='click'}} data-icon-before="refresh" data-action="reload"></a>
+                    <a data-toggle="collapse" data-parent="#recent-box" href="#activity-panel{{unbound this.dateKey}}"></a> 
+                </div>
+            </div>
+			<div class="collapse in" id="activity-panel{{unbound this.dateKey}}">
+				<div class="widget-body">
+					<div class="widget-body-inner" style="display: block;">
+						<div class="widget-main no-padding" style="margin-top:10px">
+							{{#each  activities}}
+								<div class="col-sm-4 col-md-4 col-lg-3">
+									<div class="kc-grid withPopOver" data-rel="popover" data-container="body" data-toggle="popover" data-placement="auto right">
+										<div class="category-description-block position-relative">
+											<h2 class="grid-header" style="height:60px">
+												<div class="category-image">
+												   <a href="#/profile">{{avatarMini actor.displayName actor.id}}</a>
+												</div>
+											</h2><!-- /.grid-header-->
+										   
+											<div class="grid-sub-section grey" style="max-height: 165px;min-height: 165px;">
+											  {{unbound formActivityStreamDisplayTitle title object.displayName  object.url object.objectType object.id actor.id  actor.displayName}}
+												<div class="name">
+													{{#if ellipsisedContent}}
+													{{removeHTMLTagsForEllipsisDisplay ellipsisedContent}}
+													{{/if}}    
+												</div>
+											</div><!--/.grid-sub-section-->
+											<div class="grid-sub-section last blue">
+												 <span class="label label-info arrowed arrowed-in-right"><i class='icon-time bigger-110'>&nbsp;</i>
+												 {{dateConvertUnixTimestampAndInGMTFormat published}}</span>
+											</div><!--/.grid-sub-section last-->
+										</div><!--/.category-description-block-->
+									</div><!-- /.kc-grid-->
+								</div><!--/.col-sm-4-->
+							{{/each}}
+						</div>
+					</div>
+				</div>
+			</div><!--/.Collapse panel-->
+        </div><!--/.widget-box-->
+		<div style="clear:both"></div>
+		{{/each}}
+
+	{{else}}
+
+	{{#each formattedActivities}}
+        <div class="widget-box transparent" id="recent-box">
+            <div class="widget-header widget-header-flat widget-padding bborder row-header">
+                <h4 class="lighter">{{this.dateKey}}</h4>
+                <div class="widget-toolbar"> 
+                    <a {{bindAttr href="url"}} {{action "reload" on='click'}} data-icon-before="refresh" data-action="reload"></a>
+                    <a data-toggle="collapse" data-parent="#recent-box" href="#activity-panel{{unbound this.dateKey}}"></a> 
+                </div>
+            </div>
+			<div class="collapse in" id="activity-panel{{unbound this.dateKey}}">
+				<div class="widget-body">
+					<div class="widget-body-inner" style="display: block;">
+						<div class="widget-main no-padding">
+							<table class="table table-striped">
+							<tbody>
+								{{#each  activities}}
+								<tr>
+									<td class="activity-image-width activity-data-grid">
+										<div class="user">
+											<a href="#">
+											{{avatarMini actor.displayName actor.id}}
+											</a>
+										</div>
+									</td>
+									<td class="description-width activity-data-grid">
+										<div class="desciption">
+											<div class="body">
+												{{unbound formActivityStreamDisplayTitle title object.displayName  object.url object.objectType object.id actor.id  actor.displayName}}
+											</div>
+										</div>
+										<div class="name">
+										{{#if ellipsisedContent}}
+											{{removeHTMLTagsForEllipsisDisplay ellipsisedContent}}
+										{{/if}}	
+										</div>
+									</td>
+									<td class="activity-data-grid">
+										<span class="widget-toolbar no-border blue">
+										 <span class="label label-info arrowed arrowed-in-right"><i class='icon-time bigger-110'>&nbsp;</i>
+										 {{dateConvertUnixTimestampAndInGMTFormat published }}</span>
+										</span>
+									</td>
+								</tr>
+								{{/each}}
+							</tbody>
+						</table>
+						</div>
+					</div>
+				</div>
+			</div><!--/.Collapse panel-->
+        </div><!--/.widget-box-->
+		<div style="clear:both"></div>
+		{{/each}}
+
+	{{/if}}
+
+		<div class="activity-stream-status padding-10" style="font-size: 14px; text-align: center; font-style: italic; color: #888; clear:both; border-top:1px solid #e2e2e2;">{{status}}</div>
+
+	</div><!--/.widget-body-->
+
+</div><!--/.page-content-->
+
+{{!-- modal-content --}}
+<div id="modal-table" class="modal fade" tabindex="-1">
+	<div class="modal-dialog" style="left:auto !important">
+		<div class="modal-content">
+			<div class="modal-header no-padding">
+				<div class="table-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						<span class="white">&times;</span>
+					</button>
+					List of "Activity Stream"
+				</div>
+			</div>
+			<div class="modal-body no-padding">
+				<table class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
+					<thead>
+						<tr>
+							<th>Activity</th>
+							<th>
+								<i class="icon-time bigger-110"></i>
+								Capture Status
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>View forum</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>
+						<tr>
+							<td>Reply to forum</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>
+						<tr>
+							<td>Create forum</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>
+						<tr>
+							<td>Rate a forum</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>
+						<tr>
+							<td>Mark a forum as favorite</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>
+						<tr>
+							<td>Follow a forum</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>
+						<tr>
+							<td>Like a forum</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>
+						<tr>
+							<td>View blog</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>
+						<tr>
+							<td>Reply to blog</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>
+						<tr>
+							<td>Create blog</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>
+						<tr>
+							<td>Rate a blog</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>
+						<tr>
+							<td>Mark a blog as favorite</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>
+						<tr>
+							<td>Follow a blog</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>
+						<tr>
+							<td>Like  a blog</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>
+						<tr>
+							<td>Create a course</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>
+						<tr>
+							<td>Rate  a course</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>
+						<tr>
+							<td>Follow a course</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>
+						<tr>
+							<td>Like  a course</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>
+						<tr>
+							<td>View a course</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>				
+						<tr>
+							<td>Enroll a course</td>
+							<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+						</tr>
+		                <tr>
+		                    <td>Create a community</td>
+		                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+		                </tr>
+		                <tr>
+		                    <td>Edit a community</td>
+		                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+		                </tr>
+		                <tr>
+		                    <td>Join a community</td>
+		                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+		                </tr>
+		                <tr>
+		                    <td>View a community</td>
+		                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+		                </tr>
+		                <tr>
+		                    <td>Like a community</td>
+		                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+		                </tr>
+		                <tr>
+		                    <td>Follow a community</td>
+		                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+		                </tr>
+		                <tr>
+		                    <td>Rate a community</td>
+		                    <bradtd><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+		                </tr>
+		                <tr>
+		                    <td>Mark a community as favorite</td>
+		                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+		                </tr>
+		                <tr>
+		                    <td>Like a document</td>
+		                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+		                </tr>
+		                <tr>
+		                    <td>Follow a document</td>
+		                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+		                </tr>
+		                <tr>
+		                    <td>Rate a document</td>
+		                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+		                </tr>
+		                <tr>
+		                    <td>Mark a document as favorite</td>
+		                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+		                </tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{{!-- /.modal-content --}}

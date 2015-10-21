@@ -1,0 +1,70 @@
+<div id="messageDiv" class="alert alert-block">
+    <p></p>
+</div>
+<div class="admin-ui admin-tab-registrations">
+  <div class="widget-body no-border" id="admin-lists">
+    <div class="widget-body-inner">
+      <div class="widget-main clearfix">
+    
+        {{#if is__tenant_ViewLicenseBatches}}
+        
+        <div class="admin-table-wrap-outer">
+          <div class="admin-table-wrap-inner">
+            <div class="admin-table-content">
+          
+              <div class="list-headings">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-xs-4">
+                        <h5>License Batch Id</h5>
+                    </div>
+                    <div class="col-xs-2">
+                        <h5>License Count</h5>
+                    </div>
+                    <div class="col-xs-3">
+                        <h5>Start Date</h5>
+                    </div>
+                    <div class="col-xs-3">
+                        <h5>End Date</h5>
+                    </div>
+                  </div>
+                </div>
+              </div><!--/list-headings-->
+
+
+              <div id="expertise-topics" class="list-container">
+                {{#each licenseBatch in model }}
+                <div class="item-wrap container">
+                  <div class="row">
+                    <div class="col-xs-4">
+                      <p class="eclipse-text">{{licenseBatch.licenseBatchId}}</p>
+                    </div>
+                    <div class="col-xs-2">
+                      <p class="eclipse-text">{{licenseBatch.licenseCount}}</p>
+                    </div>
+
+                    <div class="col-xs-3">
+                      <p class="eclipse-text">{{formatDate licenseBatch.startDate "MMMM DD, YYYY HH:mm:ss"}}</p>
+                    </div>
+                    <div class="col-xs-3">
+                      <p class="eclipse-text">{{formatDate licenseBatch.endDate "MMMM DD, YYYY HH:mm:ss"}}</p>
+                    </div>
+                  </div>
+                </div>
+                {{/each}}
+              </div>
+
+            </div><!--/admin-table-wrap-content-->
+          </div><!--/admin-table-wrap-inner-->
+        </div><!--/admin-table-wrap-outer-->
+
+        {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+        {{else}}
+            <h3>You may not have permission to perform operations in this tab</h3>
+            <h5>If you were looking to perform administrative operations, please look at other tabs</h5>
+        {{/if}}
+    
+      </div>
+    </div>
+  </div>
+</div>

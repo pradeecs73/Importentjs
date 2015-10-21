@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>We - Dashboard Page</title>
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<meta name="description" content="overview &amp; stats" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<link href="assets/css/externals.css" rel="stylesheet" />
+		<link href="assets/css/application.css" rel="stylesheet" />
+		<script src='assets/js/jquery-1.10.2.min.js'></script>
+		<script src="assets/js/jquery-ui-1.10.3.full.min.js"></script>
+		<script src="assets/js/jquery.easy-pie-chart.min.js"></script>
+		<script src="assets/js/jquery.sparkline.min.js"></script>
+		<script src="assets/js/bootstrap.min.js"></script>
+		<script src="assets/js/typeahead.js"></script>
+		<script src="assets/js/bootstrap-tagsinput.min.js"></script>
+		<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="assets/js/jquery.slimscroll.min.js"></script>
+		<script src="assets/js/flot/jquery.flot.min.js"></script>
+		<script src="assets/js/flot/jquery.flot.pie.min.js"></script>
+		<script src="assets/js/flot/jquery.flot.resize.min.js"></script>
+		<script src="//vjs.zencdn.net/4.3/video.js"></script>
+		<script src="assets/js/fullcalendar.min.js"></script>
+		<script src="assets/js/bootbox.min.js"></script>
+		<script src="assets/js/fuelux/data/fuelux.tree-sampledata.js"></script>
+		<script src="assets/js/fuelux/fuelux.tree.min.js"></script>
+		<script src="assets/js/dropzone.min.js"></script>
+		<script src="assets/js/bootstrap-tag.min.js"></script>
+		<script src="assets/js/jquery.hotkeys.min.js"></script>
+		<script src="assets/js/bootstrap-wysiwyg.min.js"></script>
+		<script src="assets/js/jquery.gritter.min.js"></script>
+		<script src="assets/js/select2.min.js"></script>
+		<script src="assets/js/date-time/bootstrap-datepicker.min.js"></script>
+		<script src="assets/js/fuelux/fuelux.spinner.min.js"></script>
+		<script src="assets/js/x-editable/bootstrap-editable.min.js"></script>
+		<script src="assets/js/x-editable/cis-editable.min.js"></script>
+		<script src="assets/js/jquery.maskedinput.min.js"></script>
+		<script src="assets/js/jquery.raty.min.js"></script>
+		<script src="assets/js/jquery.cookie.js"></script>
+		<script src="assets/js/d3.v3.min.js"></script>
+		<script src="assets/js/chosen.jquery.min.js"></script>
+		<script src="assets/js/cis.min.js"></script>
+		<script src="assets/js/cis-elements.min.js"></script>
+		<script src="assets/js/cis-extra.min.js"></script>
+		<script src="assets/js/vs/jquery.ui.core.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vs/jquery.ui.widget.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vs/jquery.ui.position.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vs/jquery.ui.menu.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vs/jquery.ui.autocomplete.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vs/underscore-1.5.2.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vs/backbone-1.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vs/visualsearch.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vs/search_box.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vs/search_facet.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vs/search_input.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vs/search_facets.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vs/search_query.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vs/backbone_extensions.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vs/hotkeys.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vs/jquery_extensions.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vs/search_parser.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vs/inflector.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vs/templates.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/jquery.timer.js"></script>
+		<script src="assets/js/jquery.timer.script.js"></script>
+		<script src="assets/js/fuelux/fuelux.wizard.min.js"></script>
+		<script src="assets/js/socket.io.js"> </script>
+		<script src="assets/js/jquery.dataTables.min.js"></script>
+		<script src='assets/js/kotg/ueditor.all.js'></script>
+		<script src='assets/js/kotg/ueditor.config.js'></script>
+		<script src='assets/js/kotg/ueditor.parse.js'></script>
+		<!--[if IE 7]>
+		<link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+		<!--[if lte IE 8]>
+		<link rel="stylesheet" href="assets/css/cis-ie.min.css" />
+		<![endif]-->
+		<!--[if lte IE 8]>
+		<script src="assets/js/excanvas.min.js"></script>
+		<![endif]-->
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+		<script src="assets/js/html5shiv.js"></script>
+		<script src="assets/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body id="we-dashboard" class="dashboard-page navbar-fixed skin-4">
+		<div id="navbar" class="navbar navbar-invers navbar-fixed-top">
+			<div id="navbar-container" class="navbar-container">
+            	<div class="col-xs-1 col-md-1 navbar-shown-tablet navbar-darkborder-tablet responsive-left-padding text-center responsive-left-margin-tablet">
+					<div class="btn-group navbar-togglebutton">
+						<a class="btn dropdown-toggle navbar-button" id="mobileMenuToggle" href="#">
+							<i class="icon-reorder bigger-150"></i>
+						</a>
+					</div>
+                </div>
+				<div class="navbar-header col-xs-1 col-md-1 navbar-lightborder-tablet">
+					<a href="#">
+						<div class="navbar-header logoCiscoBrand"> </div>
+					</a>
+				</div>
+
+            	<div class="col-xs-1 col-md-1 navbar-shown navbar-margin pull-right navbar-lightborder text-center responsive-left-padding">                
+					<div class="btn-group">
+						<a class="btn dropdown-toggle navbar-button" id="mobileSearchToggle" href="#">
+							<i class="icon-search bigger-150"></i>
+						</a>
+					</div>
+                </div>
+				<div role="navigation" class="col-xs-7 col-md-3 width-240 pull-right no-padding navbar-margin navbar-darkborder">
+					<ul class="nav cis-nav pull-right">
+						
+						<li> 
+							<script type="text/x-placeholder" id="metamorph-1-start"></script>
+							<div class="ember-view" id="ember684">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									<i class="icon-warning-sign white bigger-190 top-5 left-8"></i> 
+									<span class="badge badge-summary navbar-badge navbar-shoulder">
+										<script type="text/x-placeholder" id="metamorph-3-start"></script><script type="text/x-placeholder" id="metamorph-2-start"></script> <script type="text/x-placeholder" id="metamorph-4-start"></script>8<script type="text/x-placeholder" id="metamorph-4-end"></script><script type="text/x-placeholder" id="metamorph-2-end"></script><script type="text/x-placeholder" id="metamorph-3-end"></script>
+									</span>
+								</a>
+
+								<ul class="pull-right dropdown-navbar navbar-drop navbar-notifications dropdown-menu dropdown-caret dropdown-close">
+									
+									<li class="dropdown-header">
+										<span><i class="icon-warning-sign"></i>Notifications <span class="badge badge-summary">8</span> </span>
+									</li>
+									<li>
+										<a href="#">Questions <span class="badge badge-notification">1</span></a>
+									</li>
+
+									<li>
+										<a href="#">Learning Plans <span class="badge badge-notification">4</span></a>
+									</li>
+
+									<li>
+										<a href="#">Courses <span class="badge badge-notification">1</span></a>
+									</li>
+
+									<li class="ember-view allnotifications loading last" id="ember802">
+										<a href="#">See all notifications <i class="icon-arrow-right"></i></a> 
+									</li>
+
+								</ul>
+							</div>
+							<script type="text/x-placeholder" id="metamorph-1-end"></script>
+						</li>
+
+						<li>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<i class="icon-comment white bigger-195 top-5 left-minus-12"></i>
+								<script type="text/x-placeholder" id="metamorph-10-start"></script>	
+								<i class="pill-icon status-available"></i><script type="text/x-placeholder" id="metamorph-10-end"></script>
+							</a>
+							<script type="text/x-placeholder" id="metamorph-15-start"></script>
+							<ul class="pull-right dropdown-navbar navbar-drop navbar-status dropdown-menu dropdown-caret dropdown-close">
+								
+								<script type="text/x-placeholder" id="metamorph-46-start"></script>
+								<li data-ember-action="20" class="dropdown-header status-current"> <span><i class="pill-icon status-available"></i> My Status </li></span>
+								<script type="text/x-placeholder" id="metamorph-46-end"></script>	
+
+								<script type="text/x-placeholder" id="metamorph-47-start"></script>
+								<li data-ember-action="20" class="status-available"> <a href="#"> <i class="pill-icon status-available"></i> Available </a> </li>
+								<script type="text/x-placeholder" id="metamorph-47-end"></script>
+
+								<script type="text/x-placeholder" id="metamorph-48-start"></script>
+								<li data-ember-action="20" class="status-away"> <a href="#"> <i class="pill-icon status-away"></i> Away </a> </li>
+								<script type="text/x-placeholder" id="metamorph-48-end"></script>
+
+								<script type="text/x-placeholder" id="metamorph-49-start"></script>	
+								<li data-ember-action="20" class="status-dont-disturb"> <a href="#"> <i class="pill-icon status-dont-disturb"></i> Do Not Disturb </a> </li>
+								<script type="text/x-placeholder" id="metamorph-49-end"></script>	
+
+								<script type="text/x-placeholder" id="metamorph-50-start"></script>
+								<li data-ember-action="20" class="last status-offline"> <a href="#"> Go Offline <i class="icon-arrow-right"></i> </a> </li>
+								<script type="text/x-placeholder" id="metamorph-50-end"></script>
+
+							</ul>
+							<script type="text/x-placeholder" id="metamorph-15-end"></script>
+						</li>
+
+						<li>
+							<div data-toggle="dropdown" class="pull-left dropdown-toggle avtar-container">
+								<script type="text/x-placeholder" id="metamorph-18-start"></script><a class="inline-block" href="#/profile"><img onerror="this.src='assets/avatars/noimage_mini.jpg'" src="assets/avatars/xkit_mini.jpg" alt="xkit's Photo" class="nav-user-photo pull-left"></a><script type="text/x-placeholder" id="metamorph-18-end"></script>
+								<a href="#">
+									<span class="user-info navbar-hidden-inline-block">
+										<small>Welcome,</small> <script type="text/x-placeholder" id="metamorph-19-start"></script>xkit<script type="text/x-placeholder" id="metamorph-19-end"></script> <i class="icon-caret-down"></i>
+									</span>
+								</a>
+							</div>
+
+							<ul class="user-menu pull-right dropdown-menu dropdown-navbar navbar-drop navbar-profile dropdown-caret dropdown-close">
+
+								<li class="dropdown-header">
+									<span><i class="glyphicon glyphicon-user"></i>Profile Menu </span>
+								</li>
+
+								<li class="ember-view" id="ember813">
+									<a href="#">Profile </a>
+								</li>
+
+								<li class="ember-view" id="ember815">
+									<a href="#">Admin Access </a>
+								</li>
+
+								<li class="ember-view logout last" id="ember817">
+									<a href="#" data-ember-action="9">Log Out <i class="icon-off"></i></a> 
+								</li>
+
+							</ul>
+
+						</li>
+					</ul>
+				</div>
+				<div class="navbar-header col-xs-3 col-md-3 width-185 no-padding pull-right navbar-margin navbar-hidden">
+					<div class="space-6"></div>
+					<form class="form-search col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding-right">
+						<div class="input-group">
+							<span class="input-group-btn">
+							<button data-ember-action="1" type="submit" class="searchCustomClass btn btn-default dropdown-toggle">
+							<i class="icon-search nav-search-icon"></i>
+							</button>
+							</span>
+							<input type="text" data-ember-action="3" id="top-nav-search-box" class="form-control input-mask-date" placeholder="Find Answers" data-bindattr-2="2">
+							<div id="searchError" class="popover fade bottom in" style="display: none;">
+								<div class="arrow"></div>
+								<div class="popover-content error">Please enter at least 3 valid characters.</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="navbar-header mobileNavSearch row-header bborder">
+					<form class="form-search col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding-right">
+				<div class="input-group">
+					<span class="input-group-btn">
+					<button data-ember-action="1" type="submit" class="searchCustomClass btn btn-default dropdown-toggle">
+					<i class="icon-search nav-search-icon"></i>
+					</button>
+					</span>
+					<input type="text" data-ember-action="3" id="top-nav-search-box" class="form-control input-mask-date" placeholder="Find Answers" data-bindattr-2="2">
+					<div id="searchError" class="popover fade bottom in" style="display: none;">
+						<div class="arrow"></div>
+						<div class="popover-content error">Please enter at least 3 valid characters.</div>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="main-container" id="main-container">
+			<div class="main-container-inner">
+				<div id="sidebar" class="sidebar">
+					<ul class="nav nav-list">
+						<li class="active">
+							<a class="dropdown-toggle" href="#"> <i class="icon-nav-home green menu-icon"></i> <span class="menu-text">Home</span> <span class="menuhead-right"><b class="arrow icon-minus"></b> <span></a>
+							<ul class="submenu">								<li> </li>
+								<li class="ember-view active" id="ember828">
+									<a style="cursor : pointer;" href="weDashboardPage.html">
+									<i class="dasher hide"></i>
+									<span class="menu-text"> Dashboard </span>
+									</a>
+								</li>
+								<li> 
+								</li>
+								<li class="ember-view" id="ember829">
+									<a style="cursor : pointer;" href="meWorkspacePage.html">
+									<i class="profile hide"></i> <span class="menu-text">Workspace</span>
+									</a>
+								</li>
+								<li>
+								</li>
+								<li class="ember-view" id="ember830">
+									<a>
+									<i class="membership hide"></i>
+									<span class="menu-text"> Activity Stream </span>
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="nav nav-list">
+						<li class="active">
+							<a class="dropdown-toggle" href="#"> <i class="icon-nav-learning green menu-icon"></i> <span class="menu-text">Learning</span> <span class="menuhead-right"><b class="arrow icon-minus"></b> <span> </a>
+							<ul class="submenu">
+
+								<li> 
+								</li>
+								<li class="ember-view" id="ember844">
+									<a style="cursor : pointer;" href="sampleTab.html">
+									<i class="blogger hide"></i> <span class="menu-text">Training Catalog</span>
+									</a>
+								</li>
+								<li> 
+								</li>
+								<li class="ember-view" id="ember857">
+									<a style="cursor : pointer;">
+									<i class="questioner hide"></i> <span class="menu-text">My Enrollments</span>
+									</a>
+								</li>
+								<li>
+								</li>
+								<li class="ember-view" id="ember870">
+									<a style="cursor : pointer;">
+									<i class="learning hide"></i>
+									<span class="menu-text"> Learning Plans </span>
+									</a>
+								</li>
+								<li>
+								</li>
+								<li class="ember-view" id="ember870">
+									<a style="cursor : pointer;">
+									<i class="learning hide"></i>
+									<span class="menu-text"> Shared Learning </span>
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="nav nav-list">
+						<li class="active">
+							<a class="dropdown-toggle" href="#"> <i class="icon-nav-knowledge green menu-icon"></i> <span class="menu-text">Knowledge Center</span> <span class="menuhead-right"><b class="arrow icon-minus"></b> <span> </a>
+							<ul class="submenu">
+
+								<li> 
+								</li>
+								<li class="ember-view" id="ember913">
+									<a href="#"> <i class="activities hide"></i> <span class="menu-text">Knowledge Library</span> </a>
+								</li>
+								<li>
+								</li>
+								<li class="ember-view" id="ember926">
+									<a>
+									<i class="connections hide"></i>
+									<span class="menu-text"> My Documents </span>
+									</a>
+								</li>
+								<li>
+								</li>
+								<li class="ember-view" id="ember933">
+									<a>
+									<i class="connections hide"></i>
+									<span class="menu-text"> My Tabs </span>
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="nav nav-list">
+						<li class="active">
+							<a class="dropdown-toggle" href="#"> <i class="icon-nav-collaborate-1 green menu-icon"></i> <span class="menu-text">Collaborate</span> <span class="menuhead-right"><b class="arrow icon-minus"></b> <span> </a>
+							<ul class="submenu">
+
+								<li> 
+								</li>
+								<li class="ember-view" id="ember913">
+									<a href="#"> <i class="activities hide"></i> <span class="menu-text">Communities</span> </a>
+								</li>
+								<li>
+								</li>
+								<li class="ember-view" id="ember926">
+									<a>
+									<i class="connections hide"></i>
+									<span class="menu-text"> My Memberships </span>
+									</a>
+								</li>
+								<li>
+								</li>
+								<li class="ember-view" id="ember933">
+									<a>
+									<i class="connections hide"></i>
+									<span class="menu-text"> Posts </span>
+									</a>
+								</li>
+								<li>
+								</li>
+								<li class="ember-view" id="ember946">
+									<a href="#"> <i class="pulse-icon hide"></i> <span class="menu-text">Questions</span> </a>
+								</li>
+								<li>
+								</li>
+								<li class="ember-view" id="ember960">
+									<a>
+									<i class="membership hide"></i>
+									<span class="menu-text"> Wiki Library </span>
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="nav nav-list">
+						<li class="active">
+							<a class="dropdown-toggle" href="#"> <i class="icon-nav-people green menu-icon"></i> <span class="menu-text">People</span> <span class="menuhead-right"><b class="arrow icon-minus"></b> <span> </a>
+							<ul class="submenu">
+								<li> 
+								</li>
+								<li class="ember-view" id="ember913">
+									<a href="#"> <i class="activities hide"></i> <span class="menu-text">All People</span> </a>
+								</li>
+								<li>
+								</li>
+								<li class="ember-view" id="ember926">
+									<a>
+									<i class="connections hide"></i>
+									<span class="menu-text"> Experts </span>
+									</a>
+								</li>
+								<li>
+								</li>
+								<li class="ember-view" id="ember933">
+									<a>
+									<i class="connections hide"></i>
+									<span class="menu-text"> My Contacts </span>
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="nav nav-list">
+						<li class="active">
+							<a class="dropdown-toggle" href="#"> <i class="icon-nav-onthego green menu-icon"></i> <span class="menu-text">On the Go Folder</span> <span class="menuhead-right"><b class="arrow icon-minus"></b> <span> </a>
+							<ul class="submenu">								
+								<li> 
+								</li>
+								<li class="ember-view" id="ember913">
+									<a href="#"> <i class="activities hide"></i> <span class="menu-text">My Collection</span> </a>
+								</li>
+								<li>
+								</li>
+								<li class="ember-view" id="ember926">
+									<a>
+									<i class="connections hide"></i>
+									<span class="menu-text"> Notes </span>
+									</a>
+								</li>
+								<li>
+								</li>
+								<li class="ember-view" id="ember933">
+									<a>
+									<i class="connections hide"></i>
+									<span class="menu-text"> Shared </span>
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="nav nav-list">
+						<li class="active">
+							<a class="dropdown-toggle" href="#"> <i class="icon-nav-organization green menu-icon"></i> <span class="menu-text">Organization</span> <span class="menuhead-right"><b class="arrow icon-minus"></b> <span> </a>
+							<ul class="submenu">
+								<li>
+								</li>
+								<li class="ember-view" id="ember973">				
+									<a href="#"> <i class="connections hide"></i> <span class="menu-text">My Team</span> </a> 
+								</li>
+								<li>
+								</li>
+								<li class="ember-view" id="ember973">				
+									<a href="#"> <i class="connections hide"></i> <span class="menu-text">My Organization</span> </a> 
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<!--div id="sidebar-collapse" class="sidebar-collapse"> <i data-icon2="icon-double-angle-right" data-icon1="icon-double-angle-left" class="icon-double-angle-left"></i> </div-->
+				</div>
+				<div class="main-content eLearningCustom">
+					<div id="breadcrumbs" class="arwbreadcrumb hidden-xs">
+						<ul class="breadcrumb">
+							<script type="text/x-placeholder" id="metamorph-23-start"></script>
+							<li><i class="icon-home home-icon"></i><a href="#">Home</a></li>
+							<li class="active">Dashboard</li>
+							<script type="text/x-placeholder" id="metamorph-23-end"></script>
+						</ul>
+					</div>
+					<!-- <div class="clearfix space"></div> -->
+					<div class="page-content">
+					
+						<div class="widget-body">
+
+				            <div class="widget-body-inner">
+				              	<div class="widget-main clearfix no-padding">
+				                	<div class="padding-12">
+				                  		<div id="home" class="tab-pane active"> 
+
+				                    		<!-- Start: Team Member Profiles -->
+									
+												<div id="dashboard-container" class="grid-view">
+													
+													<div id="dashboardCarousel" class="row hero">
+
+														<!-- Carousel starts -->
+														<div class="bs-example">
+    <div id="myCarousel" class="carousel slide" data-interval="3000" data-ride="carousel">
+    	<!-- Carousel indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+			<li data-target="#myCarousel" data-slide-to="3"></li>
+			<li data-target="#myCarousel" data-slide-to="1"></li>
+			<li data-target="#myCarousel" data-slide-to="2"></li>
+			<li data-target="#myCarousel" data-slide-to="3"></li>
+			<li data-target="#myCarousel" data-slide-to="4"></li>
+			<li data-target="#myCarousel" data-slide-to="5"></li>
+			<li data-target="#myCarousel" data-slide-to="6"></li>
+			<li data-target="#myCarousel" data-slide-to="7"></li>
+			<li data-target="#myCarousel" data-slide-to="8"></li>
+
+        </ol>   
+       <!-- Carousel items -->
+												<div class="carousel-inner">
+													<div class="active item">
+														<div id="carousel-hero" class="carousel-wrap">
+															<img src="assets/images/sample-dashboards/sample-me/weme_mainimg_01.png" class="sample-carousel-image" alt="" />
+														</div>
+													</div>
+													<div class="item">
+														<div id="carousel-hero" class="carousel-wrap">
+															<img src="assets/images/sample-dashboards/sample-me/weme_mainimg_02.png" class="sample-carousel-image" alt="" />
+														</div>
+													</div>
+													<div class="item">
+														<div id="carousel-hero" class="carousel-wrap">
+															<img src="assets/images/sample-dashboards/sample-me/weme_mainimg_03.png" class="sample-carousel-image" alt="" />
+														</div>
+													</div>
+													<div class="item">
+														<div id="carousel-hero" class="carousel-wrap">
+															<img src="assets/images/sample-dashboards/sample-me/weme_mainimg_04.png" class="sample-carousel-image" alt="" />
+														</div>
+													</div>
+													<div class="item">
+														<div id="carousel-hero" class="carousel-wrap">
+															<img src="assets/images/sample-dashboards/sample-me/weme_mainimg_05.png" class="sample-carousel-image" alt="" />
+														</div>
+													</div>
+													<div class="item">
+														<div id="carousel-hero" class="carousel-wrap">
+															<img src="assets/images/sample-dashboards/sample-me/weme_mainimg_06.png" class="sample-carousel-image" alt="" />
+														</div>
+													</div>
+													<div class="item">
+														<div id="carousel-hero" class="carousel-wrap">
+															<img src="assets/images/sample-dashboards/sample-me/weme_mainimg_07.png" class="sample-carousel-image" alt="" />
+														</div>
+													</div>
+													<div class="item">
+														<div id="carousel-hero" class="carousel-wrap">
+															<img src="assets/images/sample-dashboards/sample-me/weme_mainimg_08.png" class="sample-carousel-image" alt="" />
+														</div>
+													</div>
+													<div class="item">
+														<div id="carousel-hero" class="carousel-wrap">
+															<img src="assets/images/sample-dashboards/sample-me/weme_mainimg_09.png" class="sample-carousel-image" alt="" />
+														</div>
+													</div>
+												</div>
+
+        <!-- Carousel nav -->
+        <a class="carousel-control left" href="#myCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="carousel-control right" href="#myCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+    </div>
+</div>
+
+														<!-- End of Carousel -->
+														
+													</div>
+
+
+													<!-- MIDDLE BAR -->
+										            <div class="middleBar row-header profilebordertb">
+
+										            	<div class="row">
+
+											        		<div class="col-lg- col-md-2 col-sm-1 col-xs-hide"></div>
+
+															<div class="col-lg-8 col-md-8 col-sm-10 col-xs-12">
+																<div class="row">
+													        		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 form-image">
+																		
+																		<span>Find an Expert</span>
+																		<img class="show-desk-tab" src="assets/images/sample-dashboards/find-expert-icon.png" alt="" />
+																		<img class="show-mobile" src="assets/images/sample-dashboards/find-expert-icon.png" alt="" />
+													        		</div>																	
+																	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-wrap">
+																		<form class="form-search">
+																			<i class="icon-search nav-search-icon"></i>
+																			<input type="text" placeholder="Search expertise keywords" autocomplete="off">
+																		</form>																			
+																	</div>
+													        		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 button-wrap">
+																		<!-- <button type="button" class="btn btn-primary green"><span id="registerText">Add</span> </button> -->
+													        		</div>
+																</div>
+															</div>
+
+											        		<div class="col-lg-2 col-md-2 col-sm-1 col-xs-hide"></div>
+										            	</div>
+													
+										          	</div><!--/middleBar-->													
+
+													<div class="row pad-top-12 section-link-group">
+														<div class="section-link">
+															<div class="section-inner">
+																<div class="row">
+																	<img src="assets/images/sample-dashboards/sample-we/section1-image.jpg" class="section-image" alt="" />	
+																	<h3>Connect to Learning</h3>
+																	<p>Search the <strong>Training Catalog</strong> for offerings that support your growth.</p>
+																	<a href="/#/formalLearning/catalog" class="learn-more">Learn More</a>
+																</div>
+															</div>
+														</div>
+														<div class="section-link">
+															<div class="section-inner">
+																<div class="row">
+																	<img src="assets/images/sample-dashboards/sample-we/section2-image.jpg" class="section-image" alt="" />	
+																	<h3>Define Your Path</h3>
+																	<p>Personalize your own <strong>Learning Plans</strong> or add new Prescribed Plans.</p>
+																	<a href="/#/formalLearning/shared" class="learn-more">Learn More</a>
+																</div>
+															</div>
+														</div>
+														<div class="section-link">
+															<div class="section-inner">
+																<div class="row">
+																	<img src="assets/images/sample-dashboards/sample-we/section3-image.jpg" class="section-image" alt="" />	
+																	<h3>Share Knowledge</h3>
+																	<p>Find and share real-world, on-the-job experience in the <strong>Knowledge Center</strong>.</p>
+																	<a href="/#/documents/catalog" class="learn-more">Learn More</a>
+																</div>
+															</div>
+														</div>
+														<div class="section-link">
+															<div class="section-inner">
+																<div class="row">
+																	<img src="assets/images/sample-dashboards/sample-we/section4-image.jpg" class="section-image" alt="" />	
+																	<h3>Take It With You</h3>
+																	<p>Take learning with you while you are away with <strong>Cisco Mobile Knowledge</strong>.</p>
+																	<a href="#" class="learn-more">Learn More</a>
+																</div>
+															</div>
+														</div>
+
+													</div>
+
+													<div class="row lower-links pad-top-12">
+														<div class="col-lg-7 col-md-7 col-sm-6 col-xs-12 word-cloud">
+															<img src="assets/images/sample-dashboards/word-cloud.jpg" alt="" />
+															<a href="#">See More in Knowledge Visualization</a>
+														</div>
+														<div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 popular-files">
+															<h5><img src="assets/images/sample-dashboards/topics-icon.png" alt="" />Most Viewed Topics</h5>
+															<ul>
+																<li><a href="#">Certifications for Network Admin <span class="views">150 views</span></a></li>
+																<li><a href="#">Tips for Preparing Your Resume <span class="views">1030 views</span></a></li>
+																<li><a href="#">Taking the GMAT Exam <span class="views">360 views</span></a></li>
+																<li><a href="#">UX Design Resources <span class="views">1,265 views</span></a></li>
+															</ul>
+															<div class="link-wrap">
+																<a href="#" class="learn-more">Show More</a>
+															</div>
+															
+														</div>
+													</div>
+
+												</div>
+
+				                    		<!-- End: Dashboard Content --> 				                    		
+
+				                    	<!-- /search results --> 
+				                  		</div>
+				                	</div>
+				              	</div>
+				              	<!-- /widget-main --> 
+				            </div>
+            
+        				</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="assets/js/overall-responsive-functionality.js" type="text/javascript" charset="utf-8"></script>
+
+		<!--script type="text/javascript" src="assets/data/teamContacts.json"></script>
+		<script type="text/javascript" src="assets/js/listGridToggleSortFilter.js"></script-->
+
+		<script type="text/javascript">
+			$('body').on('click', function (e) {
+				$('[data-rel=popover]').each(function () {
+					// hide any open popovers when the anywhere else in the body is clicked
+					if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+						$(this).popover('hide');
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

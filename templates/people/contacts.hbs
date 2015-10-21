@@ -1,0 +1,86 @@
+<div class="page-content list-grid-page people contacts no-padding">
+    <div {{ bind-attr class=":widget-body :list-with-tags isGridView:grid-view:list-view"}}>
+        <div class="container header-panel">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h1 class="eclipse-text" {{bind-attr title=pageTitle}}>All People</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-wrapper">
+            <div class="filters-panel has-sorting">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                    <div class="row">
+                        <div id="view-option-buttons" class="col-lg-4 col-md-5 col-sm-4 col-xs-5 layout-buttons">
+                            <a id="catalog-grid-view" {{ bind-attr class=":icon-grid-layout :pull-left isGridView:active" }} {{action toggleView "grid-view" target=view}}></a>
+                            <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action toggleView "list-view" target=view}}></a>
+                            {{#if hasSearchText}}
+                                {{sorting-link sortableFields=sortableFieldsWithRelevance sortBy=sortBy sortOrder=sortOrder updateSortByAction='updateSortBy' toggleSortOrderAction='toggleSortOrder'}}
+                            {{else}}
+                                {{sorting-link sortableFields=sortableFields sortBy=sortBy sortOrder=sortOrder updateSortByAction='updateSortBy' toggleSortOrderAction='toggleSortOrder'}}
+                            {{/if}}
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-8 col-xs-7">
+                            {{visual-search componentId='peopleFilterBox' facets=allFacets filters=filters searchAction='filter' placeHolderText='Filter by Expertise, City, JobTitle, Organization'}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 search-add-wrap">
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-10 form-wrap col-xs-10">
+                            <div class="form-search">
+                                <i class="icon-search" {{action 'search'}}></i>
+                                {{input id="peopleSearchBox" class="form-control" value=searchBoxText placeholder="Search by Name, Expertise etc." type="text" action='search' on='enter'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="filters-panel has-filter-list">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 filter-items-wrapper">
+
+                    <ul class="horizontal-list">
+                        <li class="filter-by-title">Filter By: </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton checked="checked" name="selectionTest" selectionBinding="filter" value="all"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">All Contacts</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="filter" value="my"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">My Contacts</label>
+                        </li>
+                    </ul>
+                    <select class="filter-items-dropdown" name="" id="">
+                        <option>Filter By</option>
+                        <option value="all">All Contacts</option>
+                        <option value="my">My Contacts</option>
+                    </select>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="multi-contact-action">
+            {{ view App.MultiSelectWidgetView }}
+
+            {{#if allUsers}}
+
+                {{#each contact in allUsers}}
+                    {{render "userItem" contact}}
+                {{/each}}
+
+                <div class="clearfix"></div>
+                {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+
+            {{else}}
+                
+                <div class="no-value"> No results found</div>
+
+            {{/if}}
+        </div>
+
+    </div>
+</div>

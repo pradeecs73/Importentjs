@@ -1,0 +1,73 @@
+  <div class="widget-box transparent">
+      <div class="widget-header no-padding">
+          <div class="no-border">
+              <ul class="nav nav-tabs padding-left-18 tab-size-bigger" id="myTab">
+                  {{#link-to "community.foundational" tagName="li"}}
+                  <a>Foundational</a> {{/link-to}}
+                  {{#link-to "community.specialized"  tagName="li"}}
+                  <a>Specialized</a> {{/link-to}}
+                  <!-- addition of all activities tab-->
+                  {{#link-to "community.transformational"  tagName="li"}}
+                  <a>Transformational</a> {{/link-to}}
+              </ul>
+          </div>
+      </div>
+  </div>
+
+<div class="page-content communities list-grid-page no-padding">
+    <div class="widget-body list-with-tags list-view" data-bindattr-10="10">
+
+            <div class="container header list-headings">
+                <div class="row">
+                    <div class="col-sm-3 tc-course-section"><h5>Skill</h5></div>
+                    <div class="col-sm-2 tc-type"><h5>Skill Elements</h5></div>
+                    <div class="col-sm-3 tc-type"><h5>Offering</h5></div>
+                    <div class="col-sm-2 tc-type"><h5>Delivery Type</h5></div>
+                    <div class="col-sm-2 tc-actions"><h5>Actions</h5></div>
+                 </div>
+            </div> 
+            <div class="widget-body-inner">
+                <div class="widget-main clearfix container user-profile-page">           
+                  
+                    {{#if allSkills}}
+                       {{#each skill in allSkills}}
+                        <div class="row clearfix learning-plan-row" >
+                              <div class="col-sm-3">                              
+                                  <span class="name"> 
+                                    {{skill.skillName}}
+                                  </span>                              
+                                </div>
+                              <div class="col-sm-2 type">
+                                <span>
+                                  {{skill.skillsCategoryPillar}}
+                                </span>                     
+                              </div>  
+                              <div class="col-sm-3 type">
+                                <span>
+                                {{skill.fullname}}
+                                </span>                     
+                              </div> 
+                              <div class="col-sm-2">
+                                <span>
+                                {{skill.courseType}}
+                                </span>                     
+                              </div>   
+                              <div class="col-sm-2 actions">
+                                 {{#if skill.courseid}}
+                                {{#link-to "learningCourse" skill.courseid (query-params coursetype=skill.courseType) target="_self"}}
+                                  <span>Find More...</span>
+                                {{/link-to}}  
+                                {{else}}
+                                  <span>TBD</span>
+                                {{/if}}                                 
+                              </div>
+                           </div>
+                      {{/each}}
+                    {{else}}
+                    <div>No Skills Available</div>
+                    {{/if}}
+                 
+              </div>
+          </div>
+    </div>
+</div>

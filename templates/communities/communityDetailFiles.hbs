@@ -1,0 +1,96 @@
+
+
+<div id="library" class="tab-pane">
+   <div class="widget-box transparent">
+      <div class="widget-header widget-header-flat widget-padding bborder row-header">
+         <div class="searchCatalogCustom blog-catalogCustom pull-left">
+            <div id="toggle_view" class="clearfix toggle-view-container layout-buttons">
+               <div class="dropdown sorting-dropdown" data-action="sort" id="sortCommunitiesLibrary">
+                  <a href="#" class="sorter-toggle dropdown-toggle" id="change-dir" data-toggle="dropdown" data-icon-before="sort-descending">
+                  <span class="icon-caret-down"></span>
+                  </a>
+                  <ul class="dropdown-menu" role="menu" id='sortingDropdownIdLibrary'>
+                     <li><a id="titleLibrary" {{action 'getSortedDataByFiledType' "title" "Library" '#sortCommunitiesLibrary'}}>Name<i class="icon-sort-ascending icon-sorter pull-right"></i></a></li>
+                     <li><a id="sizeLibrary" {{action 'getSortedDataByFiledType' "createdBy" "Library" '#sortCommunitiesLibrary'}}>Author<i class="icon-sort-ascending icon-sorter pull-right"></i></a></li>
+                     <li><a id="documentTypeLibrary" {{action 'getSortedDataByFiledType' "documentType" "Library" '#sortCommunitiesLibrary'}}>Type<i class="icon-sort-ascending icon-sorter pull-right"></i></a></li>
+                     <li><a class="selected" id="uploadedOnLibrary" {{action 'getSortedDataByFiledType' "uploadedOn" "Library" '#sortCommunitiesLibrary'}}>Date Updated<i class="icon-sort-ascending icon-sorter pull-right"></i></a></li>
+                  </ul>
+               </div>
+               <h5 style="margin-top:-5px;margin-left:-80px;">File</h5>
+            </div>
+         </div>
+         <span class="widget-toolbar">
+            <!--div data-parent="#accordion" data-action="collapse" class="accordion-toggle collapsed">
+               <i class="icon-caret-up"></i>
+               </div-->
+         </span>
+         {{#if userHasAccessToCreatePostInDetailsPage}}
+         <a href="#" {{action "beforeUpload"}}><i data-rel="tooltip" data-original-title="Upload File" data-placement="left" {{bindAttr class=":icon-plus-thin :add-blog :pull-right :margin-top-5 active:show:hidden isMember:show:hidden"}}></i></a>
+         {{/if}}
+      </div>
+      <!--div id="communityLibrary" class="panel-collapse collapse in widget-body" -->
+      <div  id="communityFiles" class="panel-collapse collapse in widget-body">
+         <div class="row clearfix">
+            <div class="col-md-12">
+               <div class="form-group ctrl-input-length">
+                  <div class="col-md-10 col-xs-12 col-sm-12">
+                     <div class="attach-files-wrap block no-padding form-border">
+                        <div class="uploader-input-wrap input-group first-group">
+                           <span class="input-group-addon"><i class="icon-paperclip"></i></span>
+                           <div class="uploader-inner-wrap clearfix">
+                              {{#each listarray in fileuploadMetaData.files}}
+                              <span class="uploaded-file-tag pull-left"><span class="inner-info"><i class="icon-file {{unbound listarray.type}}-file-icon"></i><span class="filename">{{listarray.fName}}</span><span class="file-size">({{listarray.size}})</span>
+                              <i class="icon-remove bigger-125 red" data-rel="tooltip" data-original-title="Remove Attachment" {{ action deleteAttachment listarray.fName listarray.id}}></i>
+                              </span>
+                              </span>
+                              {{/each}}
+                              {{input class="form-control user-suggest hide" type="text" id="form-field-mask-2" value=upload}}
+                              {{#if userHasAccessToCreatePostInDetailsPage}}
+                              <button style="padding-top: 12px; padding-bottom: 11px; margin-right: -1px;display:none;" class="btn btn-primary pull-right uploadid" data-target="#fileuploadPost"{{action uploadFile}} disabled>Upload File</button>
+                              {{/if}}
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="widget-body details-table">
+            {{#if fileuploadlistData.files.length}}
+            <ul class="table-top-header">
+               <li class="col-sm-4">
+                  <label class="grey bold"> Name </label>
+               </li>
+               <li class="col-sm-4">
+                  <label class="grey bold"> Created Date </label>
+               </li>
+            </ul>
+            {{else}}
+            <ul class="table-top-header">
+               <li class="col-sm-4">
+                  <p class="no-records-found widget-padding">There are no files in this community.</p>
+               </li>
+            </ul>
+            {{/if}}
+            <div class="listing-file">
+               {{#each file in fileuploadlistData.files}}
+               <ul class="data-row clearfix">
+                  <li class="col-sm-4" {{action 'downloadAttachment' file.name file.id}}><a href="">
+                  {{file.name}} 
+                  </a>
+                  </li>  
+                  <li class="col-sm-4" ><a href="">
+                     {{from-now file.createdOn}}
+                     </a>
+                  </li>
+               </ul>
+               {{/each}}
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+</div>
+
+

@@ -1,0 +1,30 @@
+
+<div id="panelTwo" class="panel active">
+	<div class="panel-heading">
+	  <h4 class="panel-title">
+	    <span data-toggle="collapse" data-parent="#detailAccordion" data-panel="#panelTwo" class="collapsed">
+	    	<i class="icon-chain-linked"></i>
+	      	Related Topics
+	    </span>
+	  </h4>
+	</div>
+	<div class="panel-collapse collapse">
+	  <div class="panel-body">
+	    <div class="sub-panel">
+	    	<div class="sub-panel-content">
+	    		{{#if relatedTopics}}
+		    		<ul id="relatedTopicList" class="sub-panel-list sub-topics-list">
+		    			{{#each relatedTopic in relatedTopics}}
+		    				<li>{{relatedTopic}}</li>
+		    			{{/each}}
+		    		</ul>
+		    		{{else}}
+	    				<div class="missing-data-message">
+	  						<p class="error-message"><em>No Topics to display.</em></p>
+	  					</div>
+	    		{{/if}}
+	    	</div>
+	    </div>
+	  </div>
+	</div>
+</div>

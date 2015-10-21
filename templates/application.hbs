@@ -1,0 +1,38 @@
+{{outlet top-nav}}
+		
+<div class="main-container" id="main-container">
+	<div class="main-container-inner">
+		{{outlet left-nav}}
+		<div class="main-content">
+			{{outlet breadcrumbs}}
+            {{#if controller.currentFlashMessage.message}}
+                <span {{bind-attr class=":flashMessage controller.currentFlashMessage.type"}}>{{controller.currentFlashMessage.message}}</span>
+            {{/if}}
+			{{outlet}}
+			{{outlet modal}}
+    	</div>
+    </div>
+	
+</div>
+<script type="text/javascript">	
+	$('th input:checkbox').click(function(){
+		var checked_status = this.checked;
+		$(this).closest('table').find('input:checkbox').each(function(){
+			this.checked = checked_status;
+		});
+	})
+</script>
+
+<div class="chat-container-box">
+    {{#if jabberChatters.length}}
+        {{#each chat in jabberChatters}}
+            {{render "chatSession" chat}}
+        {{/each}}
+    {{/if}}
+
+    {{#if chatRooms.length}}
+        {{#each chatRoom in chatRooms}}
+            {{render "chatRoom" chatRoom}}
+        {{/each}}
+    {{/if}}
+</div>

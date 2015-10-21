@@ -1,0 +1,44 @@
+<ul class="nav nav-list">
+    <li class="active">
+        <button class="dropdown-toggle" data-icon-after="caret-right">
+            <i class="icon-community-light menu-icon"></i>
+            <span class="menu-text"> Collaborate</span>
+        </button>
+        <ul class="submenu">
+            <li id="_communities">
+                {{#link-to 'communities.all' (query-params filterType="all" filters="" searchText="" pageNumber=1) activeClass='active'}}
+                    <i class="activities hide"></i><span class="menu-text">Communities</span>
+                {{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'communities.my' (query-params filterType="all" filters="" searchText="" pageNumber=1) activeClass='active'}}
+                    <i class="connections hide"></i>
+                    <span class="menu-text">My Communities</span>
+                {{/link-to}}
+            </li>
+            <li id="_blogs">
+                {{#link-to 'blogs' activeClass='active'}}
+                    <i class="connections hide"></i>
+                    <span class="menu-text">Blogs</span>
+                {{/link-to}}
+            </li>
+            <li id="_questions">
+                {{#link-to 'questions' activeClass='active'}}
+                    <i class="pulse-icon hide"></i><span class="menu-text">Discussions</span>
+                {{/link-to}}
+            </li>
+            <li id="_wikis">
+                {{#link-to 'wikis' activeClass='active'}}
+                    <i class="membership hide"></i>
+                    <span class="menu-text">Wiki Library</span>
+                {{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'rssfeeds' activeClass='active'}}
+                    <i class="connections hide"></i>
+                    <span class="menu-text">RSS Feeds</span>
+                {{/link-to}}
+            </li>
+        </ul>
+    </li>
+</ul>

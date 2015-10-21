@@ -1,0 +1,27 @@
+<div class="shareModal modal fade bs-example-modal-sm" id="markComplete" tabindex="-1" >
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header learningplanblue-header no-radius">
+				<button type="button" class="close font-25" data-dismiss="modal" aria-hidden="true"><i class="icon-remove white"></i> </button>
+				<h4 class="modal-title" id="myModalLabel"><i class="icon-check"></i> Mark as Complete</h4>
+			</div>
+			<div class="modal-body page-padding padding-bottom-20" style="padding:15px !important;">
+				<div>By selecting <strong>Complete</strong>, this learning offering will be marked as complete 
+					and the date of completion will also be recorded.
+					<p>Please note: this action is irreversible; once a user marks an offering 
+					complete, it cannot be undone.
+				</p>
+				</div>
+				
+			</div>
+			<div class="modal-footer padding-12">
+				<span class="dark-red-border inline-border">
+				<button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cancel</button>
+				</span>
+				<span class="dark-border inline-border">
+				<button type="button" class="btn btn-primary btn-sm"  {{action "markAsActivityComplete" assetCompletionStatus.assetid assetCompletionStatus.courseId}}>Mark as Complete</button>
+				</span>
+			</div>
+		</div>
+	</div>
+</div>

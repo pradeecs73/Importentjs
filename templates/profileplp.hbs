@@ -1,0 +1,157 @@
+<div id="user-activity" class="page-content user-profile-page">
+  	<div class="widget-body list-with-tags" id="profile-layout">
+	    <div class="container header-panel">
+	        <div class="row">
+	            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	                <h1 class="eclipse-text">Prescribed Learning Plans</h1>
+	            </div>
+	        </div>
+	    </div>
+		<div class="tabbable">
+			<ul class="nav nav-tabs padding-left-18 tab-size-bigger" id="myTab">
+				<li >
+					{{#link-to "profile.my" data-toggle="tab" data-target="#profile"}}
+					Profile {{/link-to}}
+				</li>
+				<li>
+					{{#link-to "profile.myactivity" data-toggle="tab" data-target="#activity"}}
+					My Activities {{/link-to}}
+				</li>
+				<li>
+				  {{#link-to "profile.myrecentlearnings" data-toggle="tab" data-target="#rl"}}
+				  Recent Learnings {{/link-to}}
+				</li>
+				<li class="active">
+				  {{#link-to "profile.myprescribedlearningplans" data-toggle="tab" data-target="#plp"}}
+				  Prescribed Learning Plans {{/link-to}}
+				</li>
+				<li>
+		          {{#link-to "profile.activitysettings" data-toggle="tab" data-target="#notificationsSettings"}}
+		          Activity Stream Preferences  {{/link-to}}
+		        </li>
+			</ul>
+			<div class="tab-content">
+				<div id="plp" class="tab-pane in active" >
+					  <!-- Start PLP list section -->
+					  <div class="widget-box no-border no-border profile-section-plp" id="plp-panel">
+						  <div class="widget-header widget-padding bborder row-header">
+							  <h4 class="widget-header-title" data-icon-before="file-pen">Prescribed Learning Plans</h4>
+						  </div>
+						  {{#if learningPlans.length}}
+							  <div class="widget-body">
+								  <div class="widget-body-inner collapse in" id="plp-inner" aria-expanded="true">
+									  <div class="widget-main container data-table">
+										  <div class="row list-headings">
+											  <div class="col-sm-3">
+												  <label>Name</label>
+											  </div>
+											  <div class="col-sm-3">
+												  <label>Assigned by</label>
+											  </div>
+											  <div class="col-sm-2">
+												  <label>Added</label>
+											  </div>
+											  <div class="col-sm-2">
+												  <label class="eclipse-text">Completion Goal Date</label>
+											  </div>
+											  <div class="col-sm-2">
+												  <label>Status</label>
+											  </div>
+										  </div>
+										  {{#each learningPlan in learningPlans}}
+										  <div class="row clearfix learning-plan-row"> 
+											  <span class="col-sm-3 col-xs-12">
+												<label class="hidden-lg hidden-md hidden-sm"><strong>Name: </strong></label>
+												  {{#link-to "plpDetails" learningPlan.id}}{{learningPlan.name}}{{/link-to}}
+											  </span>
+											  <span class="col-sm-3 col-xs-12">
+												<label class="hidden-lg hidden-md hidden-sm"><strong>Assigned by: </strong></label>
+												  {{#if learningPlan.assignedBy}}
+												  {{learningPlan.assignedBy}}
+												{{else}}
+												  Self
+												{{/if}}  
+											  </span>
+											  <span class="col-sm-2 col-xs-12"> 
+											  <label class="hidden-lg hidden-md hidden-sm"><strong>Date Added: </strong></label>             
+												  {{dateInGMTFormat learningPlan.createdDate}}
+											  </span>
+											  <span class="col-sm-2 col-xs-12">
+												<label class="hidden-lg hidden-md hidden-sm"><strong>Completion Goal Date: </strong></label>
+												  {{learningPlan.comleteByDate}}
+												  {{dateInGMTFormat learningPlan.completeByDate}}
+											  </span>
+											  <span class="col-sm-2 col-xs-12">
+												<label class="hidden-lg hidden-md hidden-sm"><strong>Status: </strong></label>
+												{{#if learningPlan.status}}
+													{{#if learningPlan.plpRegistered}}
+														{{#if learningPlan.plpAppeared}}
+															In-Progress
+														{{else}}
+															Registered
+														{{/if}}
+													{{else}}
+														{{#if learningPlan.plpAppeared}}
+															Completed
+														{{/if}}
+													{{/if}}
+												{{else}}
+													Not Registered
+												{{/if}}
+												<span class="pull-right" style="padding-top:5px;">
+												  <a data-toggle="collapse" data-parent="#accordion" class="collapsed" href="#{{unbound learningPlan.id}}"></a>
+												</span>
+											  </span>
+										  </div>
+										  <div id="{{unbound learningPlan.id}}" class="row panel-collapse collapse">
+											  <div class="list-headings">
+												  <div class="col-sm-4">
+													  <label>Enrollments</label>
+												  </div>
+												  <div class="col-sm-4">
+													  <label>Type</label>
+												  </div>
+												  <div class="col-sm-4">
+													  <label>Completion Status</label>
+												  </div>
+											  </div>
+											  {{#each learningPlanItem in learningPlan.learningPlanItems}}
+											  <div class="enrollAct-data no-background-lp">
+												  <ul>
+													  <li class="col-sm-4">
+														  {{#if learningPlanItem.courseId}}
+															{{#link-to "learningCourse" learningPlanItem.courseId (query-params coursetype=learningPlanItem.courseType)}} 
+															  {{learningPlanItem.fullName}}
+															{{/link-to}}
+														  {{else}}
+															{{learningPlanItem.taskDesc}} 
+														  {{/if}}
+													  </li>
+													  <li class="col-sm-4">{{learningPlanItem.courseType}}</li>
+													  <li class="col-sm-4">{{learningPlanItem.courseCompleted}}</li>
+												  </ul>
+											  </div>
+											  {{/each}}
+										  </div>
+										  {{/each}}
+									  </div>
+									  <!-- /widget-main -->
+								  </div>
+							  {{else}}
+								<div class="no-value">No learning plans to display</div>
+							  {{/if}}
+							  <!--/widget-body-inner -->
+						  </div>
+								<div class="col-md-12">
+									<div>
+										{{view App.PaginationView controllerBinding="learningPlans"}}
+									</div>
+					    		</div>
+						  <!-- /widget-body -->
+					  </div>
+				  <!-- End PLP list section -->
+				</div>
+			</div>
+  		</div>
+  	</div>
+</div>

@@ -1,0 +1,79 @@
+<div id="messageDiv" class="alert alert-block">
+    <p></p>
+</div>
+<div class="admin-ui admin-tab-preferences">
+  <div class="widget-body no-border" id="admin-lists">
+    <div class="widget-body-inner">
+      <div class="widget-main clearfix">
+    
+        {{#if is__tenant_SiteManagement}}
+        
+        <div class="admin-table-wrap-outer">
+          <div class="admin-table-wrap-inner">
+            <div class="admin-table-content">
+          
+              <div class="list-headings">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-xs-7">
+                        <h5>Preference</h5>
+                    </div>
+                    <div class="col-xs-3">
+                        <h5>Status</h5>
+                    </div>
+                    <div class="col-xs-2">
+                        <h5>Actions</h5>
+                    </div>
+                  </div>
+                </div>
+              </div><!--/list-headings-->
+
+              <div id="expertise-topics" class="list-container">
+                {{#each configuration in allConfigurations}}
+                <div class="item-wrap container">
+                  <div class="row">
+                    <div class="col-xs-7">
+                      <p class="eclipse-text">{{configuration.displayName}}</p>
+                    </div>
+                    <div class="col-xs-3">
+                      <p class="eclipse-text">{{configuration.status}}</p>
+                    </div>
+                    <div class="col-xs-2">
+                      <div class="actions-wrap">
+                          {{#if configuration.editable}}
+                              {{#if configuration.checked}}
+                                  <span class="icon-x-thin bigger-180 red width-50 cursor-pointer"
+                                        type="button" data-dismiss="modal"
+                                        data-toggle="modal" data-rel="tooltip"
+                                        data-original-title="Disable" {{action 'confirmDisable' configuration}}>
+                                  </span>
+                              {{else}}
+                                  <span class="icon-checkmark-rounded bigger-180 green width-50 cursor-pointer"
+                                        type="button" data-dismiss="modal"
+                                        data-toggle="modal" data-rel="tooltip"
+                                        data-original-title="Enable"
+                                        data-target="#enableFeature" {{action 'confirmEnable' configuration}}>
+                                  </span>
+                              {{/if}}
+                          {{/if}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {{/each}}
+              </div>
+
+            </div><!--/admin-table-wrap-content-->
+          </div><!--/admin-table-wrap-inner-->
+        </div><!--/admin-table-wrap-outer-->
+
+        {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+        {{else}}
+            <h3>You may not have permission to perform operations in this tab</h3>
+            <h5>If you were looking to perform administrative operations, please look at other tabs</h5>
+        {{/if}}
+    
+      </div>
+    </div>
+  </div>
+</div>

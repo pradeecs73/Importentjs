@@ -1,0 +1,395 @@
+{{#if course.shared}}
+
+    <div {{ bind-attr class=":item-wrap course.isGridView:col-lg-3 course.isGridView:col-md-4 course.isGridView:col-sm-6 course.isGridView:col-xs-12 course.isGridView::col-xs-12" }} >
+
+    <div class="item-inner-wrap">
+
+    {{#if course.shared}}
+        <div {{ bind-attr class=":tc-course-section course.isGridView:col-sm-12 course.isGridView::col-sm-3" }} >
+    {{else}}
+        <div {{ bind-attr class=":tc-course-section course.isGridView:col-sm-12 course.isGridView::col-sm-4" }} >
+    {{/if}}
+
+        <div class="tc-course-section-inner">
+            {{#if course.sessionApplicable}}
+                <label class="tc-course-title">
+
+                    {{#if course.isGridView}}
+                        <strong>Title :</strong>
+                    {{/if}}
+
+                    {{#link-to "learningCourse" course.id (query-params coursetype=course.courseType) class="top-minus-12"}} {{course.name}} {{/link-to}}
+                </label>
+
+                {{#unless course.isGridView}}
+                    <label class="tc-course-type">
+                        ({{course.courseType}})
+                    </label>
+                {{/unless}}
+
+                <label class="tc-session-count">
+                    {{#if course.sessionCount}} {{course.sessionCount}} Session(s){{/if}}
+                </label>
+            {{else}}
+                <label class="tc-course-title">
+
+                    {{#if course.isGridView}}
+                        <strong>Title :</strong>
+                    {{/if}}
+
+                    {{#link-to "learningCourse" course.id (query-params coursetype=course.courseType) class="top-minus-12"}} {{course.name}} {{/link-to}}
+                </label>
+
+                {{#unless course.isGridView}}
+                    <label class="tc-course-type">
+                        ({{course.courseType}})
+                    </label>
+                {{/unless}}
+
+            {{/if}}
+        </div>
+
+		{{#if course.isGridView}}
+			<div class="tc-course-section-inner">
+			 
+				<label>
+				<strong>Type :</strong>
+					{{course.courseType}}
+				</label>
+			
+			</div>
+		{{/if}}
+		
+        <div class="tc-course-section-inner">
+
+            {{#if course.summary}}
+
+                {{#if course.isGridView}}
+
+                    <p><strong>Description :</strong></p>
+
+                    <p class="course-description-short">{{ellipsis course.summary 150}}</p> 
+
+                {{else}}
+
+                    {{#if course.shared}}
+                        <p>{{ellipsis course.summary 200}}</p>
+                    {{else}}
+                        <p>{{ellipsis course.summary 400}}</p>
+                    {{/if}}
+
+                {{/if}}
+
+            {{else}}
+
+                <p><span class="no-data">Description is not available for this course.</span></p>
+
+            {{/if}}
+
+        </div>
+    </div>
+
+    {{#if course.shared}}
+        <div {{ bind-attr class=":tc-type :tc-share-info course.isGridView::col-sm-1" }} >
+            {{#if course.isGridView}}
+                <span><strong>Shared By :</strong></span>
+            {{/if}}
+            {{course.sharedBy}}
+        </div>
+
+        <div {{ bind-attr class=":tc-comment :tc-share-info course.isGridView::col-sm-2" }} >
+            {{#if course.isGridView}}
+                <span><strong>Shared Comments :</strong></span>
+            {{/if}}
+
+            {{#if course.comment}}
+                {{{ellipsis course.comment 150}}}
+            {{else}}
+                <span class="no-data">No Comments</span>
+            {{/if}}
+
+        </div>
+
+        <div {{ bind-attr class=":tc-shared :tc-share-info course.isGridView::col-sm-2" }} >
+            {{#if course.isGridView}}
+                <span><strong>Date Shared :</strong></span>
+            {{/if}}
+            {{dateInGMTFormat course.sharedDate}}
+        </div>
+		
+		<div {{ bind-attr class=":tc-approval :tc-share-info course.isGridView::col-sm-2" }} >
+            {{#if course.isGridView}}
+                <span><strong>Requires Approval :</strong></span>
+            {{/if}}
+            {{#if course.managerApproval}} Yes {{else}} No {{/if}}
+        </div>
+    {{/if}}
+
+    <div {{ bind-attr class=":tc-actions course.isGridView:col-sm-12 course.isGridView::col-sm-2" }} >
+
+        {{#if course.shared}}
+            <a href="#" {{action "deleteLearningAssetFromShare" course.id course.sharedByEmail on="click"}}>Delete</a>
+            {{#unless course.hideRegister}}
+                {{course-list-item course=course transition="transition"}}
+            {{/unless}}
+        {{/if}}
+                            </div>
+    <div class="clearfix"></div>
+
+    </div><!-- /.item-inner-wrap -->
+
+    <!-- /.item-wrap -->
+    </div>
+{{else}}
+
+    <div {{ bind-attr class=":item-wrap course.isGridView:col-lg-3 course.isGridView:col-md-4 course.isGridView:col-sm-6 course.isGridView:col-xs-12 course.isGridView::col-xs-12" }} >
+
+    <div class="item-inner-wrap">
+
+
+
+    <div {{ bind-attr class=":tc-course-section course.isGridView:col-sm-12 course.isGridView::col-sm-6" }} >
+        <div class="tc-course-section-inner">
+            {{#if course.sessionApplicable}}
+                <label class="tc-course-title">
+
+                    {{#if course.isGridView}}
+                        <strong>Title :</strong>
+                    {{/if}}
+
+                    {{#link-to "learningCourse" course.id (query-params coursetype=course.courseType) class="top-minus-12"}} {{course.name}} {{/link-to}}
+                </label>
+
+                {{#unless course.isGridView}}
+                    <label class="tc-course-type">
+                        ({{course.courseType}})
+                    </label>
+                {{/unless}}
+
+                <label class="tc-session-count">
+                    {{#if course.sessionCount}} {{course.sessionCount}} Session(s){{/if}}
+                </label>
+            {{else}}
+                <label class="tc-course-title">
+
+                    {{#if course.isGridView}}
+                        <strong>Title :</strong>
+                    {{/if}}
+
+                    {{#link-to "learningCourse" course.id (query-params coursetype=course.courseType) class="top-minus-12"}} {{course.name}} {{/link-to}}
+                </label>
+
+                {{#unless course.isGridView}}
+                    <label class="tc-course-type">
+                        ({{course.courseType}})
+                    </label>
+                {{/unless}}
+
+            {{/if}}
+        </div>
+		
+		{{#if course.isGridView}}
+			<div class="tc-course-section-inner">
+			 
+				<label>
+				<strong>Type :</strong>
+					{{course.courseType}}
+				</label>
+			
+			</div>
+		{{/if}}
+		
+        <div class="tc-course-section-inner">
+
+            {{#if course.summary}}
+
+                {{#if course.isGridView}}
+
+                    <p><strong>Description :</strong></p>
+
+                    <p class="course-description-short">{{ellipsis course.summary 150}}</p>
+					
+					{{#if course.completionTime}}
+						{{#if course.completionTime}}
+								<p><strong>Enrolled Date :</strong></p>
+								<p>{{dateInGMTFormat course.completionTime}}</p>
+							{{else}}
+							<p><strong>Enrolled Date :</strong></p>
+							No completion date
+						{{/if}}
+					{{else}}
+						{{#if course.enrolTime}}
+							<p><strong>Enrolled Date :</strong></p>
+							<p>{{dateInGMTFormat course.enrolTime}}</p>
+							{{else}}
+							<p><strong>Enrolled Date :</strong></p>
+								No enrolled date
+						{{/if}}
+					{{/if}}
+
+                {{else}}
+
+                    {{#if course.shared}}
+                        <p>{{ellipsis course.summary 200}}</p>
+                    {{else}}
+                        <p>{{ellipsis course.summary 400}}</p>
+						
+						{{#if course.sessions.length}}
+							<p><b>Session(s):</b></p>
+								<ul>
+									{{#each session in course.sessions}}							
+										<li>
+										{{session.title}}:
+											{{#if session.startDate}}
+												{{dateInGMTFormat session.startDate}}
+											{{else}}
+												No start date
+											{{/if}}
+											
+											{{#if session.endDate}}
+											to 
+												{{dateInGMTFormat session.endDate}} | Location: {{session.city}}
+											{{/if}}
+											 
+										</li>
+									{{/each}}
+								</ul>
+                        {{/if}}
+						
+                    {{/if}}
+
+                {{/if}}
+
+            {{else}}
+
+                <p><span class="no-data">Description is not available for this course.</span></p>
+
+            {{/if}}
+
+        </div>
+    </div>
+    {{#if course.shared}}
+        <div {{ bind-attr class=":tc-course-section course.isGridView:col-sm-12 course.isGridView::col-sm-4" }} >
+            <div class="tc-course-section-inner row">
+                <div {{ bind-attr class=":tc-type course.isGridView::col-sm-2" }} >
+                    {{#if course.isGridView}}
+                        <span><strong>Shared By :</strong></span>
+                    {{/if}}
+                    {{course.sharedBy}}
+                </div>
+
+                <div {{ bind-attr class=":tc-comment course.isGridView::col-sm-3" }} >
+                    {{#if course.isGridView}}
+                        <span><strong>Shared Comments :</strong></span>
+                    {{/if}}
+                    {{{ellipsis course.comment 150}}}
+                </div>
+
+                <div {{ bind-attr class=":tc-shared course.isGridView::col-sm-1" }} >
+                    {{#if course.isGridView}}
+                        <span><strong>Date Shared :</strong></span>
+                    {{/if}}
+                    {{dateInGMTFormat course.sharedDate}} 
+                </div>
+            </div>
+        </div>
+    {{else}}
+
+        {{#unless course.isGridView}}
+            <div class="col-sm-4 tc-type">
+                <div class="tc-course-section-inner tc-upcoming-sessions">
+					{{#if course.completionTime}}
+						{{#if course.completionTime}}
+								<p>{{dateInGMTFormat course.completionTime}}</p>
+							{{else}}
+							No completion date
+						{{/if}}
+					{{else}}
+						{{#if course.enrolTime}}
+							<p>{{dateInGMTFormat course.enrolTime}}</p>
+							{{else}}
+							No enrolled date
+						{{/if}}
+					{{/if}}
+                </div>
+            </div>
+        {{/unless}}
+    {{/if}}
+
+    <div {{ bind-attr class=":tc-actions course.isGridView:col-sm-12 course.isGridView::col-sm-1" }} >
+            {{#unless course.sessionApplicable}}
+            {{#unless reporteesUsername}}
+                {{course-list-item course=course transition="transition"}}
+            {{/unless}}
+            {{/unless}}
+    </div>
+    <div class="clearfix"></div>
+
+    </div>
+    <!-- /.item-inner-wrap -->
+
+    </div><!-- /.item-wrap -->
+
+{{/if}}
+
+<div class="modal fade" id="dropModal{{unbound course.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close white" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"> Drop Learning Enrollment</h4>
+            </div>
+            <div class="modal-body">
+                <div class="selectLP-icon2">
+                    <span class="grey"> Please confirm you want to drop this learning offering. Some dropped offerings may still be charged to your department. Please review the official drop policy to learn about all effects, costs, and consequences associated with dropping.</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal"> Cancel</button>
+                <a href="#" id="drop-offering-link" {{ action "unEnrollCourse" course.id course.enrollmentId on="click"}}>
+                    <button id="drop-offering-button" type="button" class="btn btn-sm btn-primary" data-dismiss="modal">
+                        Drop Enrollment
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="registerModal{{unbound course.id}}" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header learningplanblue-header no-radius">
+                <button type="button" class="close font-25" data-dismiss="modal" aria-hidden="true"><i
+                        class="icon-remove white top-7"></i></button>
+                <h4 class="modal-title" id="myModalLabel"><i class="icon-register-white"></i> Register</h4>
+            </div>
+            <div class="modal-body padding-bottom-20 no-padding-left no-padding-right overflow-x-hidden">
+                <form action="#" method="POST" id="createLPForm">
+                    <fieldset>
+                        <div class="row page-padding">
+                            <div class="col-sm-12">
+                                <div class="padding-10"><i class="glyphicon glyphicon-info-sign bigger-150 top-5 margin-right-8"></i> <b>Cancellation Policy</b>: Please refer to Course Description
+								 <p class="gray-text">If you wish to register click the <strong>Register</strong>
+                                                        button.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" value="3f92894361bea6974217642e1be91cb1bb548e15" id="authenticity_token1"
+                               name="authenticity_token">
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer padding-12">
+                <button class="btn btn-sm btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                <a href="#" id="Register-offering-link" {{ action "enrollCourse" course.id course.managerApproval on="click"}}>
+                    <button id="Register-offering-button" class="btn btn-sm btn-primary" data-dismiss="modal">Register
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

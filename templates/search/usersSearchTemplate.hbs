@@ -1,0 +1,66 @@
+<div id="users" class="tab-pane">
+
+    <div class="dashboard filters-wrapper container">
+    
+        {{#if results.length}}
+        <div class="row upper-filters-panel clearfix">
+            {{#each facet in facets.resourceType}}
+                <div class="results-count filter-tags clearfix">
+                    <span class="label label-lg label-yellow arrowed-right pull-left">{{facet.displayName}}</span>
+                    <ul class="kc-tags col-sm-9 col-md-9 col-lg-10 clearfix">
+                        {{#each facet.values}}
+                            <li {{bindAttr class="selected:disabled:enabled"}}>
+                                <a class="category" {{action "addFilter" facet.fieldName this.term "users"}}>{{this.term}}</a>
+                            </li>
+                        {{/each}}
+                    </ul>
+
+                </div>
+            {{/each}}
+        </div>
+        {{/if}}
+
+        <div class="row filters-panel results-count table-top-header clearfix">
+
+            <ul class="col-xs-7 col-sm-7 col-md-7 col-lg-8 filters">
+                <li><span class="results-count-label">{{totalResults}} Results for :</span></li>
+                <li><span class="selected-tag">{{searchText}}</span></li>
+                {{#if allFilters.length}}
+                    <li><span class="plus">+</span></li>
+                {{/if}}
+                {{#each filter in allFilters}}
+                    <li>
+                        <a class="selected-tag">{{filter.value}}</a>
+                        <a class="close-tag" {{action "removeFilter" filter.fieldName filter.value "users"}}>x</a>
+                    </li>
+                {{/each}}
+            </ul>
+            <div id="document_toggle_view" class="clearfix pull-right layout-buttons">
+                {{sorting-link sortableFields=sortableFieldsWithRelevance sortBy=sortBy sortOrder=sortOrder updateSortByAction='updateSortBy' toggleSortOrderAction='toggleSortOrder'}}
+                <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action toggleView "list-view" "document"}}></a>
+                <a id="catalog-grid-view" {{ bind-attr class=":icon-grid-layout :pull-left isGridView:active" }} {{action toggleView "grid-view" "document"}}></a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Dashboard Ends -->
+    {{#if results.length}}
+        <div id="users_search_results" class="container widget-container">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                {{#each user in results }}
+                    {{render "userItem" user.resource}}
+                {{/each}}
+
+            </div>
+            <!-- PAGE CONTENT ENDS -->
+        </div>
+        <div>
+            {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+        </div>
+        <!-- /search results -->
+    {{else}}
+        <div class="no-value"> No results found </div>
+    {{/if}}
+</div>

@@ -1,0 +1,103 @@
+<div class="widget-body list-grid-box file-props" id="people-list">
+
+    <div class="header-panel">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h2>{{pageTitle}}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="widget-body-inner">
+        <div class="widget-main clearfix no-padding">
+            <div class="padding-12">
+
+
+                <form id="id-message-form" class="form-horizontal file-property-editing message-form clearfix"
+                      data-ember-action="51">
+                    <div class="post-form-blog-question">
+                        <div class="col-md-12 no-padding">
+                            <div class="col-md-10">
+
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label no-padding-right" for="form-file-name">File
+                                        Name: </label>
+
+                                    <div class="col-md-10">
+                                        <span class="current-file-name">{{fileName}}</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label no-padding-right" for="form-file-subject">Title:</label>
+
+                                    <div class="col-md-10">
+                                        <div class="input-icon block blog-title-input no-padding">
+                                            {{input type="text" value=title name="title" placeholder="Title" class="col-md-12 col-sm-12 col-xs-12" maxlength="255"}}
+                                            {{#if errors.title}}
+                                                <span class="error"> {{errors.title}}</span>
+                                            {{/if}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label no-padding-right">Description: </label>
+                                    <div class="col-md-10" id="wysiwyg-editor-container">
+                                        <div class="wysiwyg-editor wysiwyg-editor-height blog-tabtext"
+                                             id="wysiwyg-editor" contenteditable="true">
+                                            {{{unbound content.description}}}
+                                        </div>
+                                        {{#if errors.descriptionSansHtml}}
+                                            <span class="error"> {{errors.descriptionSansHtml}}</span>
+                                        {{/if}}
+                                    </div>
+                                </div>
+
+                                <div class="form-group ctrl-input-length">
+                                    <label class="col-md-2 control-label no-padding-right" for="tagsField">Tags:</label>
+
+                                    <div class="col-md-10 autocomplete-shrink-issue">
+                                        {{#if allTagsLoaded}}
+                                            {{bootstrap-tags-input source=allTags name=userTags value=userTags freeInput=true placeHolderText="Enter tags ..." addItemAction="addTag" removeItemAction="removeTag" componentId="tags-id" reset=reset forceLowerCase=true}}
+                                        {{else}}
+                                            {{bootstrap-tags-input source=allTags name=userTags value=userTags freeInput=true placeHolderText="Enter tags ..." addItemAction="addTag" removeItemAction="removeTag" componentId="tags-id" reset=reset forceLowerCase=true}}
+                                        {{/if}}
+                                        {{#if errors.userTags}}
+                                            <span class="error"> {{errors.userTags}}</span>
+                                        {{/if}}
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-10 form-lower-controls">
+                                <div class="row">
+                                    <div class="col-md-4 col-xs-12">
+                                        <span {{bind-attr class="status.success:green:red"}} > {{status.message}} </span></br>
+                                        <!--span class="asterisk">*</span> Data Required -->
+                                    </div>
+                                    <div class="col-md-8 col-xs-12">
+                                        <div class="pull-right">
+                                            <button type="reset" class="btn btn-sm btn-danger" {{action cancel}}> Cancel
+                                            </button>
+                                            <button type="submit" class="btn btn-sm btn-primary" {{action update}}> Save
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix space"></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+        <!-- /widget-main -->
+    </div>
+
+</div>
+

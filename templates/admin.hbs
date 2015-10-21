@@ -1,0 +1,26 @@
+<div class="page-header">
+    <h1> Admin </h1>
+</div>
+
+<div class="tabbable toggle_view admin-tabs">
+    <ul class="nav nav-tabs padding-left-18 tab-size-bigger" id="adminTab">
+
+        {{#link-to "admin.categories" (query-params pageNumber=1) data-target="#admin-outlet" tagName="li"}}
+            <a>Categories</a> {{/link-to}}
+        <!-- addition of all activities tab-->
+        {{#link-to "admin.allactivities" data-target="#admin-outlet" tagName="li"}}
+            <a>All Activities</a> {{/link-to}}
+
+        {{#if preferences.KOTG}}
+            {{#link-to "admin.mobileFolder" data-target="#admin-outlet" tagName="li"}}
+                <a>Mobile Folder</a> {{/link-to}}
+        {{/if}}
+        
+        {{#link-to "admin.blogProxyAssignment" data-target="#admin-outlet" tagName="li"}}
+            <a>Blog Proxy Assignment</a> {{/link-to}}
+    </ul>
+    <div class="tab-content no-border" id="admin-outlet">
+        <div class="message-container"></div>
+        {{outlet}}
+    </div>
+</div>

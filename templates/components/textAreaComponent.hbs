@@ -1,0 +1,6 @@
+{{textarea value=currentText maxlength=maxLength rows=rows class="form-control"}}
+{{#if isCountType}}
+    <span class="text-character-limit clearfix">{{characterEntered}}/{{maxLength}} characters</span>
+{{else}}
+    <span class="text-character-limit clearfix">{{characterLeft}} characters left</span>
+{{/if}}

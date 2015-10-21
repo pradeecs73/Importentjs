@@ -1,0 +1,24 @@
+{{#if tags}}
+    <!--div id="no-breadcrumbs" class="info-bar small-bar clearfix">
+        <div class="pull-left">
+            <i class="icon-tag margin-right-10"></i>
+            {{#each tags}}
+                <span class="tag">{{this}}</span>
+            {{/each}}
+        </div>
+    </div-->
+    <div class="header-panel file-tags-wrap bborder">
+        <div class="row">
+            <ul class="file-tags-list document-file-tags">
+                <i class="icon-tag grey margin-right-10"></i>
+                {{#each tags}}
+                    <li class="file-tag-keyword">
+                        <span class="inner-info">
+                            {{this}}
+                        </span>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+{{/if}}

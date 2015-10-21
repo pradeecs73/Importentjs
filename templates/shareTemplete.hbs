@@ -1,0 +1,55 @@
+<!-- Modal -->
+<style>
+  .textarea-no-resize {
+	resize:none;
+  }
+</style>
+<div class="shareModal training-catalog-shareModal">
+	<div id="shareCourse" class="modal fade bs-example-modal-sm " tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close white" data-dismiss="modal" aria-hidden="true" {{action clearShare on="click"}}>&times;</button>
+			<h4 class="modal-title" id="myModalLabel"><i class="glyphicon glyphicon-arrow-share white"></i> Share</h4>
+		  </div>
+		  	{{#view Ember.FlashView id="flash-view"}}
+	         	<div class="alert alert-danger" id="message">
+	            	<strong>Warning !!</strong> {{view.content.message}}.
+	        	</div>
+	    	{{/view}}
+			{{#if messages}}
+                              <div {{bind-attr class=":alert messageStatus:alert-success:alert-danger"}} > {{messages}} </div>
+            {{/if}}
+             {{#if sharing}}
+			                 <div class="progress progress-striped active">
+			                         <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+			                         </div>
+			                   </div>
+             {{/if}}
+
+		  <div class="modal-body">
+			<div class="form-group clearfix">
+				<label class="col-md-2 control-label no-padding-right glyphicon glyphicon-user align-right" for="form-field-share"></label>
+				<div class="col-md-10 word-break-custom">
+					{{input class="form-control user-suggest" type="text" id="form-field-mask-2" value=share placeholder="Enter shares" }}
+				</div>
+			</div>
+			
+			<div class="form-group clearfix">
+				<label class="col-md-2 control-label no-padding-right glyphicon glyphicon-comment align-right" for="form-field"></label>
+				<div class="col-md-10">
+					{{textarea placeholder="Default Text" id="form-field-8" class="form-control textarea-no-resize" value=comment}}
+				</div>
+			</div>
+			
+			<div class="clearfix space-2"></div>	
+		  </div>
+		  
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" {{action clearShare on="click"}}>Cancel</button>
+			<button type="button" class="btn btn-sm btn-primary"  {{action shareCourse shareModelData.courseId share on="click"}}>Share</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+</div><!-- Modal -->

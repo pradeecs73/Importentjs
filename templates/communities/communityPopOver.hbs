@@ -1,0 +1,52 @@
+<div class="catalogPopover">
+    <div class="popover-container">
+        <div class="popover-header">
+            <span class="thumb">
+                <img src='assets/images/thumb_group_default.jpg' width="35" />
+            </span>
+            <span class="name">
+                {{#link-to "community" _id target="_self" class="white"}}
+                    {{name}}
+                {{/link-to}}
+            </span>
+        </div>
+
+        <div class="popover-body">
+            <span class="dataCont">
+                <p>
+                    <b>Description : </b>
+                    {{{ellipsis description 150}}}...
+                </p>
+            </span>
+            {{#if tags}}
+                <span class="dataCont">
+                    {{#each tags}}
+                        <span class="tag">{{{this}}}</span>
+                    {{/each}}
+                </span>
+            {{/if}}
+            <span class="dataCont">
+                <b>Community Owner : </b>
+                {{profileLink creator creator}}
+            </span>
+            <span class="dataCont append-comma">
+                <b>Members : </b>
+                {{#if active}}
+                    {{#each member in members}}
+                        {{profileLink member member}}
+                    {{/each}}
+                {{else}}
+                    {{#each member in oldMembers}}
+                        {{profileLink member member}}
+                    {{/each}}
+                {{/if}}
+            </span>
+
+            {{#if isEditable}}
+                <span class="dataCont">
+                    {{#link-to "community.edit" _id class="icon-edit font-20"}}{{/link-to}}
+                </span>
+            {{/if}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+<div class="modal file-upload-modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="uploadNewFile">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header learningplanblue-header modal-create-header clearfix">
+                <button type="button" class="close font-25" data-dismiss="modal" {{action closeCreateDocumentModal}}>
+                    <i class="icon-remove white"></i>
+                </button>
+                <h4 class="modal-title"> {{modalTitle}}</h4>
+            </div>
+            {{#if fileMessage }}
+                <div class="modal-result-message page-padding padding-bottom-10">
+                    {{#if fileMessage.error}}
+                        <div class="file-upload-error">
+                            <p>{{fileMessage.error}}</p>
+                        </div>
+                        <div class="modal-footer file-upload-error">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" {{action closeCreateDocumentModal}}>Cancel</button>
+                            <button type="button" class="btn btn-primary" id="fileTryAgain" {{action tryAgain}}>Try Again</button>
+                        </div>
+                    {{/if}}
+                    {{#if fileMessage.success}}
+                        <div class="file-upload-success">
+                            <p>{{fileMessage.success}}</p>
+                        </div>
+                        <div class="modal-footer file-upload-success">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" {{action closeCreateDocumentModal}}>Done</button>
+                        </div>
+                    {{/if}}
+                </div>
+            {{else}}
+                <div class="modal-body page-padding padding-bottom-10">
+                    {{#if uploading}}
+                        <div class="progress progress-striped active">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                                 aria-valuemax="100" style="width: 100%;">
+                            </div>
+                        </div>
+                    {{/if}}
+                    <fieldset>
+                        <div class="row clearfix">
+                            <div class="col-sm-12 col-xs-12">
+                                {{file-chooser allowedFileTypes=allowedFileTypes name="file" reset=reset maxFileSizeInMB=2048 action='showFileErrors' allowedFileTypesMessage=allowedFileTypesMessage}}
+                                {{#if errors.file}}
+                                    <span class="error">{{errors.file}}</span>
+                                {{/if}}
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-sm-2 col-xs-12 no-padding">
+                                <span class="field-input-label">Title</span>
+                            </div>
+                            <div class="col-sm-10 col-xs-12 input-wrap">
+                                {{input-text currentText=title maxLength=255 type="count"}}
+                                {{#if errors.title}}
+                                    <span class="error">{{errors.title}}</span>
+                                {{/if}}
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-sm-2 col-xs-12 no-padding">
+                                <span class="field-input-label">Description</span>
+                            </div>
+                            <div class="col-sm-10 col-xs-12 input-wrap">
+                                {{text-area currentText=description maxLength=5000 type="count"}}
+                                {{#if errors.description}}
+                                    <span class="error">{{errors.description}}</span>
+                                {{/if}}
+                            </div>
+                        </div>
+
+                        <div class="row clearfix">
+                            <div class="col-sm-2 col-xs-12 no-padding">
+                                <span class="field-input-label">Tags</span>
+                            </div>
+                            <div class="col-sm-10 col-xs-12">
+                                {{#if allTagsLoaded}}
+                                    {{bootstrap-tags-input source=tags name=tags freeInput=true placeHolderText="Enter and select from list" addItemAction="addTag" removeItemAction="removeTag" componentId="tags-id" reset=reset forceLowerCase=true}}
+                                {{else}}
+                                    {{bootstrap-tags-input name=tags freeInput=true placeHolderText="Enter and select from list" addItemAction="addTag" removeItemAction="removeTag" componentId="tags-id" reset=reset forceLowerCase=true}}
+                                {{/if}}
+                                {{#if errors.tags}}
+                                    <span class="error">{{errors.tags}}</span>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" {{action closeCreateDocumentModal}}>Cancel</button>
+                        {{#unless uploading}}
+                            <button type="submit" class="btn btn-primary" {{action uploadFile}}>Upload</button>
+                        {{/unless}}
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+</div>

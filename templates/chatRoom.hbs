@@ -1,0 +1,137 @@
+<div class="position-relative individual-chat-container-box" {{bindAttr data-recency="rank"}}>
+<div class="widget-box chat col-md-3" {{bindAttr data-recency="rank"}}>
+        {{#if inviteMode}}
+<div class="widget-header class-head clearfix" {{action transitionChatRoom}}>
+  <span class="pull-left margin-left-6">
+    <i class="middle glyphicon glyphicon-comment bigger-180 green"></i>
+  </span>
+  <span class="class-title pull-left" style="max-width: 59%">
+    <h5>{{invitor}}</h5>
+  </span>
+  <span class="class-icon pull-right" >
+    <button type="button" class="close" {{action reject}}>
+      <i class="icon-remove white"></i>
+    </button>
+  </span>
+</div>
+<div class="widget-body js-widget-body" {{bindAttr id="sanitizedRoomName"}}>
+  <div class="accept-group-chat-invite position-relative">
+    <div class="accept-chat-overlay position-absolute"></div>
+    <div class="accept-chat-container position-absolute">
+      <div class="accept-reject-container">
+        <div class="accept-reject-content">
+          <div class="align-center white margin-top-bottom5">{{invitor}} has sent an invite</div>
+          <button type="button" {{action accept}} class="btn btn-primary">Accept</button>
+          <button type="button" {{action reject}} class="btn">Reject</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        {{else}}
+            <div {{bindAttr class=":widget-header :class-head :clearfix unreadMessageAvailable:blink_me"}}   {{action transitionChatRoom}}>
+		        <span class="pull-left margin-left-6 class-title">
+                    <h5>({{participantsCount}})</h5>
+                </span>
+                <span class="class-title">
+                                          <h5 {{bindAttr class="displayConflictError:hide:show"}}>{{participants}}</h5>
+                                          <h5 {{bindAttr class="displayConflictError:show:hide"}}>Error in Chat Room</h5>
+                                      </span>
+                <span class="class-icon pull-left"><i class="icon-bars white bigger-175"></i></span>
+		                              <span class="class-icon pull-right" >
+		                                  <button type="button" class="close" {{action closeRoom}}>
+                                              <i class="icon-remove white"></i>
+                                          </button>
+		                              </span>
+		                              <span class="class-icon pull-right" >
+		                                  <button type="button" class="close">
+                                              <i {{bindAttr class=":white chatRoomVisible:icon-caret-down:icon-caret-up"}}></i>
+                                          </button>
+		                              </span>
+            </div>
+            <div class="widget-body js-widget-body" {{bindAttr id="sanitizedRoomName"}}>
+                <div class="widget-main no-padding">
+                  <div {{bindAttr class=":chat-list-container :show-all-list showParticipantsList:show:hide"}}>
+                      {{#each participant in participantInfoList}}
+                          <div class="chat-indivisual-chat-container">
+                              <i>{{ render "jabberStatusPill" participant.contact}}</i> {{participant.shortName}}({{participant.username}})
+                          </div>
+                      {{/each}}
+                  </div>
+                  <div class="chat-action-items-bar invite-bar">
+                      <table width="100%">
+                          <tr>
+                              <td class="remove-padding-margin wid160">
+                                  {{#if inviteBoxName}}
+                                      {{bootstrap-tags-input remoteSourceConfig=allUsersConfig freeInput=false componentId=inviteBoxName placeHolderText="Invite here ..."}}
+                                  {{/if}}
+                              </td>
+                              <td valign="top">
+                                  <button type="button" class="btn btn-primary remove-padding-margin" {{action invite}}>Invite</button>
+                              </td>
+                              <td valign="top">
+                                <i class="icon-arrow-download grey pull-right" {{action shareChat}}></i>
+                                <i {{bindAttr class=":shift-left-5 :position-relative showParticipantsList:icon-caret-down:icon-caret-up"}} title="Show all" {{action toggleParticipantsList}}></i>
+                                {{#if isWebexEnabled}}
+                                <i class="icon icon-webex pull-right" {{action instantMeeting on="click" bubbles=false}} data-rel="tooltip" data-original-title="WebEx"></i>
+                                <i {{bindAttr class=":icon-spin :icon-spinner :orange2 :bigger-110 :pull-right startingWebex:show:hide"}} style="margin-top: 2px;"></i>
+                                {{/if}}
+                              </td>
+                          </tr>
+                      </table>
+                  </div>
+                    <div class="chat-session js-chat-session" {{bindAttr id="sanitizedRoomName"}}>
+                        <div id="jabber-content">
+                            {{#each message in myRoom.messages}}
+                                <div class="itemdiv dialogdiv">
+                                    <div {{bindAttr class=":user message.isNotification:hide"}}>
+                                        {{avatarMini message.user.shortName message.user.username}}
+                                    </div>
+
+                                    <div class="body">
+                                        <div {{bindAttr class=":time message.isNotification:hide"}}>
+                                            <i class="icon-time"></i>
+                                            <span class="grey">{{formatDate message.time "h:mm:ss a"}}</span>
+                                        </div>
+
+                                        <div {{bindAttr class=":name message.isNotification:hide"}}>
+                                            <a href="#">{{message.user.shortName}}</a>
+                                        </div>
+                                        <div {{bindAttr class=":text :chat-text message.isNotification:no-value"}}>
+                                            {{{message.body}}}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+
+                    <div class="jabber-status-message-container">
+                        <span class="jabber-status-message js-conflict-error red hide"></span>
+                    </div>
+
+
+                    <div class="jabber-status-message-container">
+                        <span class="jabber-status-message js-invitee-exists-error red hide"></span>
+                        <span class="jabber-status-message js-invitee-unavailable-error red hide"></span>
+                        <span class="jabber-status-message js-invitee-jabber-unavailable-error red hide"></span>
+                    </div>
+
+
+                    <div class="form-actions">
+                        <div class="input-group">
+                            {{input type="text" placeholder="Type your message here ..." class="form-control" name=sanitizedRoomName value=messageToSend action="sendMessage" onEvent="keypress"}}
+                            <span class="input-group-btn">
+		                      <button class="btn btn-sm cis-bg-color btn-info no-radius" type="button" {{action sendMessage}}>
+                                  <i class="icon-arrow-share"></i>
+                              </button>
+		                  </span>
+                        </div>
+                    </div>
+                </div><!-- /widget-main -->
+            </div><!-- /widget-body -->
+
+        {{/if}}
+    </div><!-- /widget-box -->
+</div>

@@ -1,0 +1,125 @@
+<div class="navbar navbar-fixed-top top-navbar" id="navbar">
+    <div class="navbar-container" id="navbar-container">
+        <div class="col-xs-1 mobile-menu-btn text-center">
+            <div class="btn-group navbar-togglebutton">
+                <a class="btn dropdown-toggle navbar-button" id="mobileMenuToggle" href="javascript:void(0)">
+                    <i class="icon-menu white"></i>
+                </a>
+            </div>
+        </div>
+        <div class="navbar-header">
+            <a href="#">
+                <div class="navbar-brand"></div>
+            </a>
+        </div>
+        <div class="col-xs-1 search-bar pull-right responsive-left-padding hidden-lg hidden-md hidden-sm">
+            <div class="topNav btn-group">
+                <a href="#" id="mobileSearchToggle" class="btn dropdown-toggle navbar-button mobile-search-toggle">
+                    <i class="icon-search white bigger-150"></i>
+                    <i class="icon-caret-up white bigger-110"></i>
+                </a>
+            </div>
+        </div>
+        <div class="pull-right notification-bar no-padding navbar-margin" role="navigation">
+            <ul class="topNav nav cis-nav pull-right">
+                <li class="cis-dropdown cis-nav-drop-notifications notificationsList">
+                    {{outlet notificationPanel}}
+                </li>
+                {{jabber-chat refreshJabberLogin=refreshJabberLogin}}
+                <li class="cis-dropdown cis-nav-drop-profile">
+                    <div class="pull-left dropdown-toggle avatar-container" data-toggle="dropdown">
+                        {{avatarMiniNoLink shortName username}}
+                        <a href="#">
+                          <span class="user-info">
+                              <small>Welcome,</small>
+                              <span class="user-name">{{shortName}} </span>
+                            <i class="icon-caret-down"></i>
+                          </span>
+                        </a>
+                    </div>
+
+                    <ul class="user-menu pull-right dropdown-menu dropdown-navbar navbar-drop navbar-profile dropdown-caret dropdown-close">
+                        <li class="dropdown-header" data-icon-before="user">
+                            Profile Menu
+                        </li>
+                        {{#link-to 'profile' activeClass='active' tagName='li'}}
+                            <a>Profile </a>
+                        {{/link-to}}
+                        {{#if isMyAccountEnabled}}
+                            {{#link-to 'myAccount' activeClass='active' tagName='li'}}
+                                <a>My Account </a>
+                            {{/link-to}}
+                        {{/if}}
+
+                        {{#if preferences.FormalLearning}}
+						 {{#if isProxyManager}}
+							<li>
+								<a href="#" onClick="javascript:window.open('/lms');return true;" >
+									Catalog Administrator
+								</a>
+							</li>
+						 {{/if}}
+                        {{/if}}
+
+                        {{#link-to 'help' activeClass='active' tagName='li'}}
+                            <a>Help </a>
+                        {{/link-to}}
+                        {{#link-to 'tnc' activeClass='active' tagName='li'}}
+                            <a>Terms &amp; Conditions</a>
+                        {{/link-to}}
+                        <li class="logout last">
+                            <a {{action logout}} href="#">
+                                <i class="icon-power-off"></i>
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+            </ul>
+        </div>
+        <div class="navbar-header col-xs-3 col-md-3 no-padding pull-right navbar-hidden hidden-xs">
+            <div class="space-6"></div>
+
+            <form class="form-search col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button data-icon-before="search" class="searchCustomClass btn btn-default dropdown-toggle"
+                                    type="submit" {{action 'search'}}>
+                            <!-- <i class="icon-search bigger-150"></i> -->
+                            </button>
+                    </span>
+                    <input type="text" {{bind-attr value="controllers.search.searchText"}} placeholder="Find Answers"
+                           class="form-control input-mask-date"
+                           id="top-nav-search-box" {{action 'clearErrors' on='keyUp'}} {{action 'search' on='enter'}}/>
+
+                    <div style="display: none;" class="popover fade bottom in" id="searchError">
+                        <div class="arrow"></div>
+                        <div class="popover-content error">Please enter at least 2 valid characters.</div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="navbar-header mobile-nav-search hidden row-header">
+    <form class="form-search col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding-right">
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button class="btn mobile-search-btn"
+                        data-icon-before="search" type="submit" {{action 'search'}}>
+                    <!-- <i class="icon-search nav-search-icon white"></i> -->
+                </button>
+            </span>
+            <input type="text" {{bind-attr value="controllers.search.searchText"}} placeholder="Search"
+                   class="form-control input-mask-date"
+                   id="top-nav-search-box" {{action 'clearErrors' on='keyUp'}} {{action 'search' on='enter'}}/>
+
+            <div style="display: none;" class="popover fade bottom in" id="searchError">
+                <div class="arrow"></div>
+                <div class="popover-content error">Please enter at least 3 valid characters.</div>
+            </div>
+        </div>
+    </form>
+</div>

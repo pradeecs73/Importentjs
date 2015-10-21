@@ -1,0 +1,7 @@
+{{#if hasPages}}
+<ul class="pagination">
+    <li {{bindAttr class="disablePrev:disabled"}}><a {{action prevPage}}>← Previous</a></li>
+    <li class="align-center">{{input class="form-control" value=pageNumberValue type="text" action='gotoPage' size="2" class="pageVal"}}/ {{totalPages}}</li>
+    <li {{bindAttr class="disableNext:disabled"}}><a {{action nextPage}}>Next →</a></li>
+</ul>
+{{/if}}

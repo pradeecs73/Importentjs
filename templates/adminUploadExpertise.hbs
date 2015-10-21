@@ -1,0 +1,36 @@
+<div class="modal-create-header">
+  <button  {{bindAttr class=":close busy:hide"}} {{action close}}>
+    <i class="icon-remove white"></i>
+  </button>
+  Bulk Upload Expertise
+
+</div>
+<div class="modal-body clearfix">
+    {{#if success}}
+      <p>{{message}}</p>
+    {{else}}
+      <div>
+        {{input type="file" id="file"}}
+      </div>
+
+      <div class="pull-left" style="width: 200px;">
+          <a href="assets/data/expertise/bulk-import-expertise-template.csv">Download Sample Template</a>
+      </div>
+
+      <div class="pull-right" style="width: 100px;">
+        {{#if busy}}
+          <i class="icon-spin icon-spinner-dots loading-icon bigger-160" style="margin-top: 7px;"></i>
+        {{/if}}
+        <button type="submit" {{action upload}} {{bindAttr class=":btn :btn-sm :btn-primary :pull-right busy:disabled"}}>
+          Submit
+        </button>
+      </div>
+
+      <div class="pull-left" style="width: 400px;">
+          <span>Note: Only .CSV files allowed. Please upload not more than a 100 records at a time.</span>
+      </div>
+    <div class="pull-left" style="width: 400px;">
+        <p class="error">{{message}}</p>
+    </div>
+    {{/if}}
+</div>

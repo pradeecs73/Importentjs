@@ -1,0 +1,220 @@
+<style>
+	.eLearningCustom .panel-title {	
+	font-size: 13px;
+	}
+	.eLearningCustom .padding-16{
+	padding:16px;
+	}
+	.eLearningCustom a{
+	text-decoration:none !important;
+	}
+	.eLearningCustom .popup-share-box .modal-content {
+	border-radius: 10px !important;
+	}
+	.eLearningCustom .popup-share-box .close {
+	opacity: 1 !important;
+	}
+	.eLearningCustom .btn.btn-primary > a {
+	color: #FFFFFF !important;
+	}
+	.calendarHideShow {
+	display:none;
+	}
+	.interests {
+	cursor:pointer;
+	}
+	.modal-dialog {
+	left: 0;
+	}
+</style>
+{{#if _id}}
+<div id="successMessageDiv" class="alert alert-block alert-success hide">
+	<button type="button" class="close" data-dismiss="alert">
+	<i class="icon-remove"></i>
+	</button>
+	<p>
+		<i class="icon-ok"></i>  {{successMessage}}
+	</p>
+</div>
+{{view view.confirmModelDialogView}}
+<div class="clearfix"></div>
+<div>
+	<div class="widget-header widget-header-flat row-header">
+		<h4 class="lighter"><i class="icon-book black"></i>  {{title}}</h4>
+	</div>
+</div>
+<div class="clearfix"></div>
+<div class="eLearningCustom details-page">
+<div class="social-strip clearfix">
+<div class="clearfix">
+  {{#if shareAccess}}
+  <div class="share-icon pull-right last posts-share-sized">
+      <a href="#" {{action "openShareModel" _id on="click"}}>
+      <span title="" class="pointer" data-rel="tooltip" style="cursor: pointer; position: relative;" data-original-title="Share" data-placement="left">
+      <i class="middle icon-arrow-share blue"></i>
+      </span>
+      </a>
+  </div>
+  {{/if}}  
+  <div class="social pull-right"  ref-entity-id="{{unbound _id}}" ref-entity-type="wiki"></div>
+</div>
+</div>
+</div>
+<div class="clearfix"></div>
+<div class="panel-footer clearfix" style="border-bottom: 1px solid rgb(221, 221, 221);">
+	<div class="actions pull-left">
+		<div class="tagGroup pull-left">
+			{{#if this.tags}}
+			 <i class="icon-tag bigger-120 h-space-right"></i>
+			{{#each tag in this.tags}}
+				<span class="tag">{{tag}}</span>
+			{{/each}}
+			{{else}}
+			<span></span>
+			{{/if}}
+		</div>
+	</div>
+	<div class="pull-left grey">
+	    
+	    {{#if this.files}}
+	    <i data-icon="'" class="icon"></i>
+	    {{#each file in this.files}}
+	     <span class="tag"><a target="_blank" {{action downloadAttachFile file.fName this._id}}> {{unbound file.fName}} </a></span>
+	    {{/each}}
+	    {{/if}}     
+	</div>
+	<div class="actions pull-right">
+		{{#if this.isUserHasAccessToDelete}}
+		{{#link-to "wiki.edit" class="no-underline"}}
+		<span class="pointer" data-placement="left" data-rel="tooltip" style="cursor: pointer; position: relative;" data-original-title="Edit Wiki">
+		<i class="middle icon-pencil grey bigger-125"></i>
+		</span>
+		{{/link-to}} 
+		<span class="h-space-right"></span>
+		<a class="no-underline" data-dismiss="modal" data-target="#deletePost" data-toggle="modal" {{action beforeDelete this target="view"}}>
+		<i class="middle icon-trash-o grey bigger-125" data-rel="tooltip" data-placement="left" data-original-title="Delete Wiki"></i>
+		</a>
+		{{/if}}
+	</div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-12 full-view-width collaboration-page">
+	<div class="col-md-12 full-view-width">
+		<div class="message-header padding-12" style="padding-bottom:0">
+			<div class="space-4"></div>
+			<div class="row">
+				<div class="pull-left">
+					{{avatarMini authorName author}} &nbsp; <span class="label label-info arrowed-in arrowed-in-right">{{profileLink authorName author}}</span> &nbsp; <i class="icon-time bigger-110 orange middle"></i> <span class="time">{{formatDate createDate  "DD MMM YYYY"}}</span>
+				</div>
+			</div>
+		</div>
+		<div class="hr hr-double"></div>
+		<div class="message-body">
+			{{{model.content}}}
+		</div>
+	</div>
+</div>
+
+	{{#if writeAccess}}
+	<div class="uyan-comment col-lg-12 col-md-12 col-sm-12 col-xs-12" load="no" articletitle="{{unbound title}}" entityid="{{unbound _id}}" style='padding:0;word-wrap:break-word;word-break:break-all;'></div>
+	{{/if}}
+
+<div class="clearfix"></div>
+<div {{bindAttr class=":col-md-12 showRelatedWikis::hide"}}>
+	<div class="col-md-12">
+		<div class="hr hr-double"></div>
+		<div class="widget-box transparent">
+			<div class="widget-header">
+				<h5>Related Wikis</h5>
+			</div>
+			<div class="widget-body alert-info-custom">
+				{{#each relatedWiki in model.relatedWikis}}
+				<div class="alert alert-info no-padding-top">
+					<div class="row">
+						<div class="profile-activity message-header ">
+							<div class="user">
+								<span class="blue bigger-100">{{#link-to "wiki" relatedWiki._id}} {{relatedWiki.title}} {{/link-to}}</span>
+								<div class="space-4"></div>
+								{{avatarMini relatedWiki.authorName relatedWiki.author}}&nbsp;<span class="author_name">{{profileLink relatedWiki.authorName relatedWiki.author}} <i class="icon-time bigger-110 orange middle"></i> {{from-now relatedWiki.createDate}}</span>
+							</div>
+						</div>
+						<div class="clearfix" style=" padding:8px !important;height:auto !important">
+							<p><small>{{ellipsis relatedWiki.content 150}}</small></p>
+						</div>
+						<hr>
+						<div class="col-md-12"> 
+							<span class="grey">
+							    <i class="icon-thumbs-up icon-1x blue"></i> {{relatedWiki.stats.likes}} likes
+							</span> 
+							<span class="grey">
+							    <i class="icon-eye-open icon-1x purple"></i> {{relatedWiki.views.length}} views
+							</span>
+							<span class="grey">
+							    <i class="icon-comments-alt icon-1x red"></i> {{relatedWiki.stats.comments}} comments
+							</span> 
+						</div>
+					</div>
+				</div>
+				<div class="space-10"></div>
+				{{/each}}
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal -->
+<div class="shareModal">
+	<div id="sharePost" class="modal fade bs-example-modal-sm " tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close white" data-dismiss="modal" aria-hidden="true" {{action clearShare on="click"}}>&times;</button>
+					<h4 class="modal-title" id="myModalLabel"><i class="glyphicon glyphicon-arrow-share white"></i> Share</h4>
+				</div>
+				{{#view Ember.FlashView id="flash-view"}}
+		         	<div class="alert alert-danger" id="message">
+		            	<strong>Warning !!</strong> {{view.content.message}}.
+		        	</div>
+		    	{{/view}}
+		    	{{#if messages}}
+    					<div {{bind-attr class=":alert messageStatus:alert-success:alert-danger"}} > {{messages}} </div>
+  				{{/if}}
+  				{{#if sharing}}
+				      	<div class="progress progress-striped active">
+				        	<div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+				        	</div>
+			      		</div>
+    			{{/if}}
+				<div class="modal-body">
+					<div class="form-group clearfix">
+						<label class="col-md-2 control-label no-padding-right glyphicon glyphicon-user align-right" for="form-field-share"></label>
+						<div class="col-md-10 word-break-custom">
+							{{bootstrap-tags-input remoteSourceConfig=usersAndGroupsForAutoSuggest  value=share freeInput=false componentId="shareForPost" placeHolderText="Enter user/community name"}}
+						</div>
+					</div>
+					<div class="form-group clearfix">
+						<label class="col-md-2 control-label no-padding-right glyphicon glyphicon-comment align-right" for="form-field"></label>
+						<div class="col-md-10">
+							<textarea placeholder="Default Text" id="form-field-8" class="form-control" style="resize:none;"></textarea>
+						</div>
+					</div>
+					<div class="clearfix space-2"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" {{action clearShare on="click"}}>Cancel</button>
+					<button type="button" class="btn btn-sm btn-primary"  {{action sharePost shareModelData.postId share on="click"}}>Share</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{else}}
+<div id="resourceNotAvailable" class="alert alert-block alert-danger">
+	<button type="button" class="close" data-dismiss="alert">
+	<i class="icon-remove"></i>
+	</button>
+	<p>
+		 <i class="icon-remove"></i> </i>  The requested resource is no longer available.
+	</p>
+</div>
+
+{{/if}}

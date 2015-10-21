@@ -1,0 +1,77 @@
+<div id="messageDiv" class="alert alert-block">
+    <p></p>
+</div>
+<div class="admin-ui admin-tab-blog-proxy">
+  <div class="widget-body no-border" id="admin-lists">
+    <div class="widget-body-inner">
+      <div class="widget-main clearfix">
+
+        <div class="admin-table-wrap-outer">
+          <div class="admin-table-wrap-inner">
+            <div class="admin-table-content">
+          
+              <div class="list-headings">
+                <div class="container">
+                  <div class="row">
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <h5>Bloggers</h5>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <h5>Proxies</h5>
+                    </div>
+
+                  </div>
+                </div>
+              </div><!--/list-headings-->
+
+
+              <div id="expertise-topics" class="list-container">
+                {{#each bloggerProxy in model}}
+                <div class="item-wrap container">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 item-name-email">
+                            <span class="info-label">Bloggers</span>
+                            <p class="item-fullname" >{{bloggerProxy.displayName}}</p>
+                            <p class="item-email eclipse-text">{{bloggerProxy.userId}}</p>
+                            <p><strong>{{activeMessage}}</strong></p>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="inner-col-wrap">
+                                <div class="tags-container">
+                                    <ul class="item-tags" id="ul{{unbound bloggerProxy._id}}">
+                                        {{#each names in bloggerProxy.proxies}}
+                                        <li id="li{{unbound bloggerProxy._id }}{{unbound names.displayName}}">
+                                             <div>
+                                                <span class="item-tag-text">{{names.displayName}}</span>
+                                                <span class="profile-tag-remove"><i class="icon-remove red" {{action "removeSelectedUser" bloggerProxy._id names.userId }}></i></span>
+                                            </div>
+                                        </li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                                <div class="add-tags-wrap add-tags-container">
+                                   <form {{action 'getBloggerId' bloggerProxy._id on="focusIn"}}>
+                                    {{bootstrap-tags-input remoteSourceConfig=allUsersConfig reset=reset componentId=bloggerProxy._id freeInput=false 
+                                    placeHolderText="Start typing to choose a proxy..." addItemAction="addProxy"  minCharsForSearch=1}}
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="error">{{errorMessage}}</div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+              </div>
+
+            </div><!--/admin-table-wrap-content-->
+          </div><!--/admin-table-wrap-inner-->
+        </div><!--/admin-table-wrap-outer-->
+
+        {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+    
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="grid-item box-grid-item">
+  {{#if isFile}}
+  <span class="thumb box-unable-icon"><img style="height:70px;vertical-align:top;" {{bind-attr src=icon}}></span>
+  {{else}}
+  <span class="thumb box-unable-icon" data-icon-before="folder-lines" style="font-size:70px;"></span>
+  {{/if}}
+  <span class="summary box-grid-detail">
+    <a>
+      {{#if isFile}}
+          <span class="box-name" {{bind-attr title=name}} {{action 'loadList' id type}}>{{{ellipsis name 18}}}</span>
+      {{else}}
+          <span class="box-name" {{bind-attr title=name}} {{action 'selectItem' id}}>{{{ellipsis name 18}}}</span>
+      {{/if}}
+    </a>
+    <span class="description" {{bind-attr title=description}}>
+        {{{ellipsis description 20}}}
+    </span>
+    <span class="box-grid-description"><span>Uploaded:</span><br/><span>{{formatedDate}}</span></span>
+{{!--
+    <span class="box-grid-information">
+        <span class="count-info icon-file box-information-icon box-unable-icon">
+          <span>{{count}}</span>
+        </span>
+        <span class="count-info icon-user-group3 box-information-icon box-unable-icon">
+          <span>{{shared.count}}</span>
+        </span>
+--}}
+        {{!--#if hasShared}}
+           <i class="icon-chain-linked box-information-icon box-unable-icon"></i>
+        {{/if--}}
+    </span>
+  </span>
+  <span class="actions">
+      {{#if canShare}}
+        <span class="btn" data-icon-before="arrow-share" {{action "_openShareModel" id type name}}></span>
+      {{/if}}
+{{!--#if isFile}}
+        <span class="btn btn-sm btn-primary pull-right" {{action 'loadList' id type}}>Download</span>
+    {{else}}
+        <span class="btn btn-sm btn-primary pull-right" {{action 'selectItem' id}}>View</span>
+{{/if--}}
+  </span>
+</div>
+{{!-- view App.CommunityPopOver --}}

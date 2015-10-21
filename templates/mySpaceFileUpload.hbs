@@ -1,0 +1,105 @@
+<div id="mySpace-fileUploads" class="tab-pane active">
+  <div class="widget-box transparent" id="recent-box">
+        <div class="widget-header widget-header-flat padding-12">
+        <h4 class="lighter"> <i class="icon-list orange"></i> File Uploads </h4>
+
+  </div>
+
+  <div class="space-10"></div>
+
+  <div class="widget-body">
+    <div class="widget-body-inner" style="display: block;">
+      <div class="widget-main no-padding">
+      
+<div>
+  	<div class="input-group" style="margin-left:13px;">
+    	<span class="input-group-btn">
+      	<span>
+	        {{file-chooser allowedFileTypes=allowedFileTypes name="files[]" maxFileSizeInMB=5 reset=resetFileChooser multiple="multiple"}}
+      	</span>
+    	</span>
+    </div>
+
+       <div class="form-group" style="margin-left:13px;">
+              <div class="row">
+                <div class="col-md-3">
+                    {{#if allTagsLoaded}}
+                        {{bootstrap-tags-input source=allTags componentId="tagsField" placeHolderText="Enter tags ..." forceLowerCase=true}}
+                    {{/if}}
+                </div>  
+              </div>
+      </div>
+
+
+</div>
+<div class="col-md-11">
+  <div class="mySpaceFileUpload">
+    <button id="id-add-attachment" {{action "uploadFiles" on="click"}}  class="btn btn-sm btn-primary"> <i class="icon-upload-alt bigger-140"></i> Upload Files </button>
+    <button id="id-add-attachment"  {{action "clear" on="click"}} class="btn btn-sm btn-danger"> <i class="icon-remove bigger-140"></i> Cancel </button>
+  </div>
+</div>
+
+<div class="clearfix"></div>
+<div class="clearfix space"></div>
+
+<div class="table-responsive" style="margin-left:13px;">
+  <table id="sample-table-1" class="table table-striped table-bordered table-hover" style="border: 1px solid #DDDDDD;">
+          <thead>
+            <tr>
+              <th>File name</th>
+              <th>User name</th>
+              <th>File size</th>
+              <th>Uploaded date</th>
+              <th>Tags</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each file in uploadedFiles}}
+             <tr>
+                <td>
+
+				<a href="/mycontentrepo/{{unbound file.name}}" target="_blank">{{unbound file.name}}</a>		
+
+        <span class="pull-right" id="file-description">
+            <a data-rel="tooltip" data-placement="left"  data-original-title="Document Preview" href="javascript:void(0);" id="file-link_{{unbound file.name}}">
+            <i class="icon-file-alt green bigger-110"></i>
+            </a>
+            <div id="file-container_{{unbound file.name}}" class="file-container">
+              <div id="_" class="filePreviewWrapper">
+                <iframe style="width:100%; height:100%;" src='https://docs.google.com/gview?url={{getMyDomain}}/contentrepo/{{unbound file.name}}&embedded=true&' frameborder='0' allowfullscreen>
+                </iframe>
+              </div>
+            </div>
+        </span>
+				
+				</td>
+        <td>{{file.authorName}}</td>
+        <td>{{humanReadableFileSize  file.fileSize}}</td>
+        <td>{{from-now file.createDate}}</td>
+        <td style="padding-bottom:2px; padding-left:2px">
+        {{#checkForEmptyArray file.tags }}
+           <div class="kc-file-tile tag-view file-tags-container">
+               <ul class="file-filter tags-items">
+                  <li class="tag ng-scope label-sm"><a href="javascript:void(0);">{{file.tags}}</a></li>
+               </ul>
+           </div>
+        {{/checkForEmptyArray}}   
+        </td>
+         <td>{{file.status}}</td>
+     </tr>
+     {{/each}}
+  </tbody>
+
+   </table>
+</div>
+
+
+      </div>
+      <!-- /widget-main --> 
+    </div>
+    </div>
+  <!-- /widget-body --> 
+  </div>
+
+</div>

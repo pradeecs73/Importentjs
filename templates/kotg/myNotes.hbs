@@ -1,0 +1,160 @@
+<style>
+  .kotgCustom .message-navbar {
+  border-style: none !important;
+  }
+  .kotgCustom .messagebar-item-left, .kotgCustom .messagebar-item-right {
+  bottom: 2px !important
+  }
+  .kotgCustom .messagebar-item-right {
+  right: auto !important;
+  }
+  .shareModal .modal{padding-top:60px;}
+  
+  @media screen and (-webkit-min-device-pixel-ratio:0) {
+  .kotg .upload-content-ul li input[type="text"] {          
+          line-height: 20px;
+  }
+  }
+
+  
+  
+  
+</style>
+<div class="documents page-content my-file-library list-grid-page no-padding">
+  <div class="container header-panel">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h1 class="eclipse-text">My Notes</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="col-xs-12 no-padding">
+  <div class="kotg">
+      <!--home_list_view.html-->
+      <div id="home-content">
+        <div class='home-nav-list'>
+          <div class='search clear-fix'>
+              <div class='k-sorting-dropdown'>
+                <a {{action desc}}>
+                  <i class='k-icon-sorter k-icon-sorter-lg icon-sort-descending pull-left'></i>
+                </a>
+                <a href="#" class='' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' >
+                  <span class="icon-caret-down" style="padding-top:12px;"></span>
+                </a>
+                <ul class='dropdown-menu' role='menu' aria-labelledby='dLabel' style='position:absolute;margin:-10px auto auto 25px;border-radius:3px !important;'>
+                  <li class='sortItem sortByTimeItem active'>
+                    <i class="icon-checkmark pull-left"></i>
+                    <span {{action sort 'Time'}}>Time</span>
+                    <i class="k-icon-sorter icon-sort-descending pull-right"></i>
+                  </li>
+                  <li class='sortItem sortByNameItem'>
+                    <i class="icon-checkmark pull-left"></i>
+                    <span {{action sort 'Name'}}>Name</span>
+                    <i class="k-icon-sorter icon-sort-descending pull-right"></i>
+                  </li>
+                </ul>
+              </div>
+              <!-- <div class="k-search-input" style="width:180px;"> -->
+              <div class="k-search-input">
+                  <i class="icon icon-search"></i>
+                  {{input class='note-search' type="text" placeholder="Search"  action="searchNote" valueBinding='keywords'}}
+                  <i class="k-icon-remove icon-cancel" style="display:none;" {{action clearSearchBar}}></i>
+              </div>
+          </div>
+<!--           <div class='k-stat'>
+            <span class='item-title'>Notes</span>
+            <span class='crawl-icon' data-placement='bottom' data-rel='tooltip' data-original-title='Add a Note' title=''>
+              <button class='icon-file-plus' {m{action 'addNote'}}></button>
+            </span>
+          </div> -->
+          <div class='k-count'>
+            <span class='item-count content-text-font'>{{model.collections.length}} Item(s)</span>
+          </div>
+
+          <!-- Content List-->
+          <div class='home-nav-list-content'>
+            <div class='home-nav-list-content-li'>
+              <ul>
+                {{#each model.collections}}
+                  {{#link-to 'myNote' document.id tagName='li'}}
+                    <div class='l-area f-l' style="width: 278px;">
+                      <h5 class="content-text-font" style='word-wrap:break-word !important;'>{{document.shortenedTitle}}</h3>
+                      <span class='time'>{{formatDate document.createdAt "DD MMM YYYY, HH:mm:ss"}}</span>
+                    </div>
+                  {{/link-to}}
+                {{/each}}
+              </ul>
+              <div class='loading-more vertical-center' style='text-align:center;'>
+                <span class='img-loading loadingCollection' style='font-size:24px;'>
+                  <i class='icon-spin icon-spinner-dots' style='line-height: 0.7;'></i>
+                </span>
+               
+                <span class='text loading-more-text'  style='display:none;' {{action loadMoreNotes}}>
+                  <i class='icon-refresh'></i>
+                  <em>&nbsp;&nbsp;show more</em>
+                </span>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail -->
+        <div style='min-width:1000px;' {{bind-attr class=":details-area isEditingNote:note-is-editing:note-isnt-editing"}}>
+          <div class='details-nav' style="padding:8px 0;">
+              <div style="float:right;" class="btn" data-icon-before="plus-thin" {{action 'addNote'}} data-placement='left' data-rel='tooltip' data-original-title='Add a Note'></div>
+          </div>
+          <div class='details-nav details-nav-2'>
+            <div class='ui-details-tools-btn'style='min-width:300px;'>
+              <span title="" class="pointer kotg-custom-btns" data-rel="tooltip" style="cursor: pointer;" data-original-title="Delete Collection" data-placement="left" data-toggle='modal' data-target="#deleteConfirmModal">
+                <i class="kotg-custom-btns-i btn" data-icon-before="trash-o"></i>
+              </span>
+
+              <span title="" class="pointer kotg-custom-btns" data-rel="tooltip" style="cursor: pointer;" data-original-title="Edit" data-placement="left" {{action editNote}}>
+                <i class="kotg-custom-btns-i btn" data-icon-before='pencil-thick'></i>
+              </span>
+
+              <span title="" class="pointer kotg-custom-btns" data-rel="tooltip" style="cursor:pointer;" data-original-title="Share" data-placement="left">
+                <i class="kotg-custom-btns-i btn" data-icon-before="arrow-shared" {{action "_openShareModel"}}></i>
+              </span>
+              <span class="kotg-custom-btns" data-rel="tooltip" style="cursor: pointer;" data-original-title="Favorite" data-placement="left">
+                <i class="kotg-custom-btns-i btn" data-icon-before="star" id="kotg-favorite" {{action "favorite"}}></i>
+              </span>
+             
+              <div id="kotg_social_strip" class="social pull-right"  ref-entity-id="" ref-entity-type="collection" style='width:234px;padding-top:15px;'></div>
+            </div>
+          </div>
+          {{outlet tagArea}}
+          <div class='detail-pane' style="padding-left:320px;">
+            {{outlet detail}}
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+{{outlet shareDocumentModalOutlet}}
+<!-- delete confirm modal -->
+<div class="modal shareModal" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close white" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Delete Note</h4>
+              </div>
+              <div class="modal-body">
+                <div class="col-sm-12">
+                  <div class="padding-10">
+                    <span class="grey">Please confirm you want to delete the note.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary"  data-dismiss="modal" {{action deleteNote}}>Delete</button>
+              </div>
+            </div>
+          </div>
+</div>

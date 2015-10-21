@@ -1,0 +1,21 @@
+{{#if detailsPage}}
+    {{#if isFileViewable}}
+        {{#if isReaderDelivered}}
+            <a {{action openReaderIfFileAvailable}} class="btn btn-sm btn-primary view-file ui-selectee" data-rel="tooltip" data-original-title="View">
+                {{yield}}
+            </a>
+        {{/if}}
+    {{/if}}
+{{else}}
+    {{#if isFileViewable}}
+        {{#if isReaderDelivered}}
+            <a {{action openReaderIfFileAvailable}} class="btn view-file" data-icon-before="glasses" data-rel="tooltip" data-original-title="View">
+                {{yield}}
+            </a>
+        {{else}}
+            <a {{action openVideoPlayerIfFileAvailable}} class="btn view-file" data-rel="tooltip" data-icon-before="glasses" data-original-title="View">
+                {{yield}}
+            </a>
+        {{/if}}
+    {{/if}}
+{{/if}}

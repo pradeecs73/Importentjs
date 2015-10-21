@@ -1,0 +1,117 @@
+
+
+<div class="tab-content" style="border:0 !important">
+	<div id="mySpace-tab" class="tab-pane active">
+		<div class="eLearningCustom">
+			<div class="widget-box transparent">
+				<div class="widget-header widget-header-flat widget-padding bborder row-header profiletopnobor">
+					<i class="icon-list pull-left margin-right-8 orange"></i>
+					<h5 class="smaller pull-left">My Learnings</h5>
+					<div class="widget-toolbar"> <a href="#" data-action="collapse"> <i class="icon-caret-up"></i> </a> </div>
+					<div class="profilewidget-toolbar"> </div>
+				</div>
+				<div class="widget-body">
+					<div class="widget-body-inner" style="display: block;">
+						<div class="widget-main">
+							<div class="row">
+								<div class="widget-main no-padding">
+								{{#if model.myLearningPlans}}
+										{{#each course in myLearningPlans}}	
+											<div class="itemdiv commentdiv profile-activity clearfix">
+												<div class="body" style="margin:5px !important">
+													<a style="cursor: default;text-decoration : none;"><span class="text">{{#link-to "learningCourse" course.id}} {{course.fullname}} {{/link-to}}</span></a>
+													<span class="label label-info arrowed"><i class="icon-circle smaller-80 align-middle"></i> Plan Name - WIP </span>
+													{{#if course.description}}
+														<div class="grey"><i class="icon-quote-left"></i> {{removeHTMLTagsForEllipsisDisplay course.description}} </div>
+													{{else}}
+														<div class="grey">No Description Available</div>
+													{{/if}}
+													<span class="author_name"><i class="orange icon-time bigger-110"></i>{{formatDateSeconds course.enrol_startdate "DD MMM YYYY"}}</span>
+												</div>
+											</div>
+										{{/each}}
+								{{else}}
+									<div class="well well-sm">
+										<div><span class="attachment"><i class="orange icon-asterisk bigger-120"></i></span> No learning modules to display. <a href="/#/formal-learning/catalog"> Click here to  add/enroll for courses</a></div>
+									</div>
+								{{/if}}
+									{{!-- {{#if model.learningplans}}
+									{{#each learningPlan in model.learningplans}}
+									{{#each learningAsset in learningPlan.learningAssets}}
+									<div class="itemdiv commentdiv profile-activity clearfix">
+										<div class="body" style="margin:5px !important">
+											<a style="cursor: default;text-decoration : none;"><span class="text">{{learningAsset.title}}</span></a>
+											<span class="label label-info arrowed"><i class="icon-circle smaller-80 align-middle"></i> {{learningPlan.title}} </span>
+											<div class="grey"><i class="icon-quote-left"></i> {{learningPlan.trainingInfo}}</div>
+											<span class="author_name"><i class="orange icon-time bigger-110"></i> {{currentDate 'LL'}}</span>
+										</div>
+									</div>
+									{{/each}}
+									{{/each}}
+									{{else}}
+									<div class="well well-sm">
+										<div><span class="attachment"><i class="orange icon-asterisk bigger-120"></i></span> No learning modules to display. <a href="/knowledgecenter/#/trainingCatalog"> Click here to  add/enroll for courses</a></div>
+									</div>
+									{{/if}} --}}
+									<ul class="pager">
+										<li class="previous"> <a href="#">&larr; Older</a> </li>
+										<li class="next"> <a href="#">Newer &rarr;</a> </li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="widget-box transparent">
+				<div class="widget-header widget-header-flat widget-padding bborder row-header profiletopnobor">
+					<i class="icon-list pull-left margin-right-8 orange"></i>
+					<h5 class="smaller pull-left">Suggested Learnings</h5>
+					<div class="widget-toolbar"> <a href="#" data-action="collapse"> <i class="icon-caret-up"></i> </a> </div>
+					<div class="profilewidget-toolbar"> </div>
+				</div>
+				<div class="widget-body">
+					<div class="widget-body-inner" style="display: block;">
+						<div class="widget-main">
+							<div class="row">
+								<div class="widget-main no-padding">
+									<div class="itemdiv commentdiv profile-activity clearfix">
+										<div class="body" style="margin:5px !important">
+											<a href="#"><span class="text">Branding</span></a>
+											<div class="pull-right"> <span class="icon-star orange"></span> <span class="icon-star orange"></span> <span class="icon-star orange"></span> <span class="icon-star orange"></span> <span class="icon-star grey"></span> </div>
+											<div class="grey"><i class="icon-quote-left"></i> This course does exactly what it says on the tin! It equips you with the theory, tools and techniques of branding and brand management to analyse and evaluate brands and manage them for maximum effectiveness; providing you with a thorough grounding in the principles of branding and brand management....</div>
+											<span class="author_name"><i class="orange icon-time bigger-110"></i> 01-Sept-2013 </span>
+										</div>
+									</div>
+									<div class="itemdiv commentdiv profile-activity clearfix">
+										<div class="body" style="margin:5px !important">
+											<a href="#"><span class="text">Customer Centricity</span></a>
+											<div class="pull-right"> <span class="icon-star orange"></span> <span class="icon-star orange"></span> <span class="icon-star orange"></span> <span class="icon-star orange"></span> <span class="icon-star grey"></span> </div>
+											<div class="grey"><i class="icon-quote-left"></i> Creating a positive consumer experience at the point of sale and post-sale.
+												A customer-centric approach can add value to a company by enabling it to differentiate itself from competitors who do not offer the same experience…
+											</div>
+											<span class="author_name"><i class="orange icon-time bigger-110"></i> 01-Oct-2013 </span>
+										</div>
+									</div>
+									<div class="itemdiv commentdiv profile-activity clearfix">
+										<div class="body" style="margin:5px !important">
+											<a href="#"><span class="text"> Go to Market Strategies</span></a>
+											<div class="pull-right"> <span class="icon-star orange"></span> <span class="icon-star orange"></span> <span class="icon-star orange"></span> <span class="icon-star orange"></span> <span class="icon-star grey"></span> </div>
+											<div class="grey"><i class="icon-quote-left"></i> This course cover topics like Omni-Channel Strategy and Online-Offline Interaction,How to Find Lead Users and Facilitate Influence and Contagion and Social Targeting, Social Advertising and Persuasion…</div>
+											<span class="author_name"><i class="orange icon-time bigger-110"></i> 21-Oct-2013 </span> 
+										</div>
+									</div>
+									<ul class="pager">
+										<li class="previous"> <a href="#">&larr; Older</a> </li>
+										<li class="next"> <a href="#">Newer &rarr;</a> </li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /myspace-tab1 --> 
+</div>

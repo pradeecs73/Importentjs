@@ -1,0 +1,50 @@
+<div class="video-spot text-center">
+    <div class="video" style="position:absolute;">
+        <div id="videoPlayerPlaceholder" class="video-spot text-center">
+            <!-- Start of Brightcove Player -->
+
+            <div style="display:none"></div>
+
+            <!--
+            By use of this code snippet, I agree to the Brightcove Publisher T and C
+            found at https://accounts.brightcove.com/en/terms-and-conditions/.
+            -->
+
+            <object {{bind-attr id=playerElementId}} class="BrightcoveExperience">
+                <param name="bgcolor" value="#000000"/>
+                <param name="width" value="640"/>
+                <param name="height" value="360"/>
+                <param name="playerID" {{bind-attr value=playerId}}/>
+                <param name="playerKey" {{bind-attr value=playerKey}}/>
+                <param name="wmode" value="opaque"/>
+                <param name="isVid" value="true"/>
+                <param name="isUI" value="true"/>
+                <param name="dynamicStreaming" value="true"/>
+                <param name="secureConnections" value="true"/>
+                <param name="secureHTMLConnections" value="true"/>
+                <param name="includeAPI" value="true"/>
+                <param name="templateLoadHandler" value="videoOnTemplateLoad"/>
+                <param name="templateReadyHandler" value="videoOnTemplateReady"/>
+            </object>
+
+            <input {{bind-attr id=hiddenFieldId}} type="hidden" {{bind-attr value=videoId}}/>
+            <input {{bind-attr id=videoAvailableHiddenFieldId}} type="hidden" {{bind-attr value=videoAvailable}}/>
+            <input {{bind-attr id=videoAutherNameHiddenField}} type="hidden" {{bind-attr value=videoAuthorName}}/>
+            <input {{bind-attr id=videoNameHiddenField}} type="hidden" {{bind-attr value=videoName}}/>
+            <input {{bind-attr id=videoDocumentIdHiddenField}} type="hidden" {{bind-attr value=documentId}}/>
+            <!-- End of Brightcove Player -->
+        </div>
+    </div>
+    {{#if videoAvailable}}
+    {{else}}
+        <!--HTML for overlay with absolute positioning-->
+        <div class="unavailable-text" style="position:absolute;">
+            <div class="inside-text">The requested video is temporarily unavailable due to processing. Please try again
+                later.
+            </div>
+            <div class="retry-button">
+                <button class="btn btn-sm btn-primary" {{action checkVideoAvailability}}>Retry</button>
+            </div>
+        </div>
+    {{/if}}
+</div>

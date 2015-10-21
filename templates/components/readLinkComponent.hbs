@@ -1,0 +1,15 @@
+{{#if isFileViewable}}
+    {{#if isReaderDelivered}}
+        <a {{action openReaderIfFileAvailable}} data-rel="tooltip" data-original-title="Read">
+            {{yield}}
+        </a>
+    {{else}}
+        <a {{action openVideoPlayerIfFileAvailable}} data-rel="tooltip" data-original-title="Read">
+            {{yield}}
+        </a>
+    {{/if}}
+{{else}}
+    <a {{action startDownload}}>
+        {{yield}}
+    </a>
+{{/if}}

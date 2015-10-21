@@ -1,0 +1,296 @@
+<div id="messageDiv" class="alert alert-block">
+    <p></p>
+    <div class="error">{{errorMessage}}</div>
+    <div {{bind-attr class=':success successMessage:fade-out-message'}}>{{successMessage}}</div>
+</div>
+<div class="admin-ui admin-tab-users">
+    <div class="widget-body no-border" id="admin-lists">
+        <div class="widget-body-inner">
+            <div class="widget-main clearfix">
+
+                {{#if userRelatedPermissions}}
+                    <div class="admin-filters-panel">
+                        <div class="container">
+                            <div class="row searchCatalogCustom list-grid-page">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="row">
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                            <div id="toggle_view" class="clearfix toggle-view-container layout-buttons">
+                                                {{#if hasSearchText}}
+                                                    {{sorting-link sortableFields=sortableFieldsWithRelevance sortBy=sortBy sortOrder=sortOrder updateSortByAction='updateSortBy' toggleSortOrderAction='toggleSortOrder'}}
+                                                {{else}}
+                                                    {{sorting-link sortableFields=sortableFields sortBy=sortBy sortOrder=sortOrder updateSortByAction='updateSortBy' toggleSortOrderAction='toggleSortOrder'}}
+                                                {{/if}}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                            {{visual-search componentId='peopleFilterBox' facets=allFacets filters=filters searchAction='filter' placeHolderText='Filter by Expertise, City, JobTitle, Organization, Status'}}
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="filter-panel-divider"></div>
+
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 search-add-wrap">
+                                    <div class="row">
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 form-search">
+                                            <div class="form-wrap">
+                                                <i class="icon-search" {{action 'search'}}></i>
+                                                {{input id="peopleSearchBox" value=searchBoxText type="text" action='search' placeholder="Search by Name, Expertise etc."}}
+
+                                                <div style="display: none;" class="popover fade bottom in" id="searchBoxError">
+                                                    <div class="arrow"></div>
+                                                    <div class="popover-content error">Please enter at least 2 valid characters.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{#unless isMobile}}
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                {{#if is__ed_AdminExpertiseAssignment}}
+                                                    <button class="btn upload-btn" type="button" data-icon-before="arrow-upload" data-rel="tooltip" data-original-title="Bulk Assign Expertise"
+                                                        {{action 'uploadUsersModal'}}>
+                                                    </button>
+                                                {{/if}}
+                                                {{#if is__userpi_IdentityManagement}}
+                                                    <button class="btn upload-btn" type="button" data-icon-before="user-plus" data-rel="tooltip" data-original-title="Bulk Create Users"
+                                                        {{action 'seedUsersModal'}}>
+                                                    </button>
+                                                {{/if}}
+                                            </div>
+                                        {{/unless}}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--         <div class="admin-filters-panel">
+          <div class="container">
+            <div class="row list-grid-page">
+              <div class="col-lg-8 col-md-8 col-sm-6 col-xs-2">
+                <div id="toggle_view" class="clearfix toggle-view-container layout-buttons">
+                    {{sorting-link sortableFields=sortableFields sortBy=sortBy sortOrder=sortOrder updateSortByAction='updateSortBy' toggleSortOrderAction='toggleSortOrder'}}
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-6 col-xs-10">
+                <div class="form-wrap form-search">
+                    <i class="icon-search" {{action 'searchByUsername'}}></i>
+                    {{input id="adminSearchBoxvalue" class="form-control" value=registrationSearchValue placeholder="Search by registration username" type="text" action="searchByUsername" on="enter"}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+                    <!--/admin-filters-panel-->
+
+                    <div class="admin-table-wrap-outer">
+                        <div class="admin-table-wrap-inner">
+                            <div class="admin-table-content">
+
+                                <div class="list-headings">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-15">
+                                                <h5>User Name</h5>
+                                            </div>
+                                            <div class="col-10">
+                                                <h5>Full Name</h5>
+                                            </div>
+                                            <div class="col-10">
+                                                <h5>Job Title</h5>
+                                            </div>
+                                            <div class="col-10">
+                                                <h5>Last Login</h5>
+                                            </div>
+                                            <div class="col-10">
+                                                <h5>Date Created</h5>
+                                            </div>
+                                            <div class="col-15">
+                                                <h5>Date Modified</h5>
+                                            </div>
+                                            <div class="col-5">
+                                                <h5>Status</h5>
+                                            </div>
+                                            {{#if is__userpi_RoleAssignment}}
+                                                <div class="col-15">
+                                                    <h5>Role</h5>
+                                                </div>
+                                            {{/if}}
+                                        </div>
+                                    </div>
+                                </div><!--/list-headings-->
+
+                                <div id="admin-user-list" class="list-container">
+                                    {{#each}}
+                                        <div class="item-wrap container">
+                                            <div class="row">
+
+                                                <div class="col-15 item-name-email">
+                                                    <p class="item-email">{{username}}</p>
+                                                </div>
+                                                <div class="col-10">
+                                                    <p class="item-title-department">{{fullName}}</p>
+                                                </div>
+                                                <div class="col-10">
+                                                    <p class="item-title-department">{{jobTitle}}</p>
+                                                </div>
+                                                {{#if loginDate}}
+                                                    <div class="col-10"><p class="item-title-department">{{formatDate loginDate "MMMM DD, YYYY HH:mm:ss"}}</p></div>
+                                                {{else}}
+                                                    <div class="col-10"><p class="item-title-department"> - </p></div>
+                                                {{/if}}
+                                                {{#if onBoardingDate}}
+                                                    <div class="col-10">
+                                                        <p class="item-title-department">{{formatDate onBoardingDate "MMMM DD, YYYY HH:mm:ss"}}</p>
+                                                    </div>
+                                                {{else}}
+                                                    <div class="col-10">
+                                                        <p class="item-title-department"> - </p>
+                                                    </div>
+                                                {{/if}}
+                                                {{#if lastUpdated}}
+                                                    <div class="col-15">
+                                                        <p class="item-title-department">{{formatDate lastUpdated "MMMM DD, YYYY HH:mm:ss"}}</p>
+                                                    </div>
+                                                {{else}}
+                                                    <div class="col-15">
+                                                        <p class="item-title-department"> - </p>
+                                                    </div>
+                                                {{/if}}
+                                                {{#if active}}
+                                                    <div class="col-5">
+                                                        <p class="item-title-department">Active</p>
+                                                    </div>
+                                                {{else}}
+                                                    <div class="col-5">
+                                                        <p class="item-title-department">Inactive</p>
+                                                    </div>
+                                                {{/if}}
+                                                {{#if parentController.is__userpi_RoleAssignment}}
+                                                    <div class="col-15 roles-col-wrap">
+                                                        <ul class="item-roles">
+                                                            {{#if isLoggedInUser}}
+                                                                {{#each roleName in roles}}
+                                                                    <li>
+                                                                        {{roleName}}
+                                                                    </li>
+                                                                {{/each}}
+                                                            {{else}}
+                                                                {{#each role in roleDetails}}
+                                                                    <li class="role-checkbox-text">
+                                                                        {{view App.CheckBoxWithAction action='handleRoleChange' checked=role.isChecked name=role.name}}
+                                                                        <span class="lbl"></span>
+                                                                        {{role.name}}
+                                                                    </li>
+                                                                {{/each}}
+                                                            {{/if}}
+                                                        </ul>
+                                                    </div>
+                                                {{/if}}
+
+
+
+                                                {{#if parentController.is__ed_AdminExpertiseAssignment}}
+
+                                                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#{{unbound id}}" {{action "closepopupmodelfromoutside"}}>Open Model</button>
+                                                    <!-- Modal -->
+                                                    <div id="{{unbound id}}" class="modal fade" role="dialog">
+                                                        <div class="modal-dialog">
+
+                                                            <!-- Modal content-->
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Modal Header</h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p>Admin Assigned Expertise</p>
+
+                                                                    <span class="info-label">Expertise </span>
+                                                                    <div class="inner-col-wrap">
+                                                                        <div class="tags-container">
+                                                                            <ul class="item-tags" id="adminassignedultag">
+                                                                                {{#each adminAssignedExpertise}}
+                                                                                    {{#if isAdded}}
+                                                                                        <li>
+                                                                                            <div class='closingpopupmodel' style="background-color:#0096d6;">
+                                                                                                <span class="item-tag-text">{{name}}</span>
+                                                                                                <span class="profile-tag-remove"><i class="icon-remove red" {{action "popupremoveexpertise" id}}></i></span>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                    {{else}}
+                                                                                        <li>
+                                                                                            <div class='closingpopupmodel'>
+                                                                                                <span class="item-tag-text">{{name}}</span>
+                                                                                                <span class="profile-tag-remove"><i class="icon-remove red" {{action "popupremoveexpertise" id}}></i></span>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                    {{/if}}
+                                                                                {{/each}}
+                                                                            </ul>
+                                                                        </div>
+                                                                        <div class="add-tags-wrap add-tags-container">
+                                                                            {{bootstrap-tags-input remoteSourceConfig=parentController.expertiseAutoSuggest value=emptyArray reset=reset componentId=adminAssignedExpertiseAutoCompleteId freeInput=false placeHolderText="Start typing to choose an Area of Expertise..." addItemAction="popupaddExpertise" removeItemAction="popupremoveexpertise" minCharsForSearch=1}}
+                                                                        </div>
+                                                                    </div><!-- inner-col-wrap -->
+                                                                    <div class="error">{{errorMessage}}</div>
+
+
+                                                                    <p>Self/Learner Assigned Expertise</p>
+
+                                                                    <span class="info-label">Expertise </span>
+                                                                    <div class="inner-col-wrap">
+                                                                        <div class="tags-container">
+                                                                            <ul class="item-tags">
+                                                                                {{#each selfTaggedExpertise}}
+                                                                                    <li>
+                                                                                        <div class="closingpopupmodel">
+                                                                                            <span class="item-tag-text">{{name}}</span>
+                                                                                            <span class="profile-tag-remove"><i class="icon-remove red" {{action "popupselfremoveexpertise" id}}></i></span>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                {{/each}}
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div><!-- inner-col-wrap -->
+
+
+                                                                </div><!-- model-body -->
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal" {{action "savepopupupdatedexpertises"}}>Save</button>
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal" {{action "closepopupmodel"}}>Close</button>
+                                                                </div>
+                                                            </div><!-- modal-contant -->
+
+                                                        </div><!-- modal-dialog -->
+                                                    </div><!-- modal fade -->
+
+                                                {{/if}}
+
+
+
+                                            </div>
+                                        </div>
+                                    {{/each}}
+                                </div>
+
+                            </div><!--/admin-table-wrap-content-->
+                        </div><!--/admin-table-wrap-inner-->
+                    </div><!--/admin-table-wrap-outer-->
+
+                    {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+
+                {{else}}
+                    {{#if usersNotLoaded}}
+                        <h6>loading...</h6>
+                    {{else}}
+                        <h3>You may not have permission to perform user related operations</h3>
+                        <h5>If you were looking to perform administrative operations, please look at other tabs</h5>
+                    {{/if}}
+                {{/if}}
+
+            </div>
+        </div>
+    </div>
+</div>

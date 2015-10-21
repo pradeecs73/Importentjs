@@ -1,0 +1,88 @@
+<div class="admin-ui admin-tab-registrations">
+  <div class="widget-body no-border" id="admin-lists">
+    <div class="widget-body-inner">
+      <div class="widget-main clearfix">
+    
+        {{#if is__userpi_ModerateRegistrations}}
+        <div class="admin-filters-panel">
+          <div class="container">
+            <div class="row list-grid-page">
+              <div class="col-lg-8 col-md-8 col-sm-6 col-xs-2">
+                <div id="toggle_view" class="clearfix toggle-view-container layout-buttons">
+                    {{sorting-link sortableFields=sortableFields sortBy=sortBy sortOrder=sortOrder updateSortByAction='updateSortBy' toggleSortOrderAction='toggleSortOrder'}}
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-6 col-xs-10">
+                <div class="form-wrap form-search">
+                    <i class="icon-search" {{action 'searchByUsername'}}></i>
+                    {{input id="adminSearchBoxvalue" class="form-control" value=registrationSearchValue placeholder="Search by registration username" type="text" action="searchByUsername" on="enter"}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!--/admin-filters-panel-->
+        
+        <div class="admin-table-wrap-outer">
+          <div class="admin-table-wrap-inner">
+            <div class="admin-table-content">
+          
+              <div class="list-headings">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-xs-3">
+                        <h5>Username</h5>
+                    </div>
+                    <div class="col-xs-3">
+                        <h5>Name</h5>
+                    </div>
+                    <div class="col-xs-4">
+                        <h5>Created On</h5>
+                    </div>
+                    <div class="col-xs-2">
+                        <h5>Actions</h5>
+                    </div>
+                  </div>
+                </div>
+              </div><!--/list-headings-->
+
+
+              <div id="expertise-topics" class="list-container">
+                {{#each registration in allRegistrations itemController="adminRegistrationItem"}}
+                <div class="item-wrap container">
+                  <div class="row">
+                    <div class="col-xs-3">
+                      <p class="eclipse-text">{{registration.username}}</p>
+                      <div class="error">{{registrationErrorMessage}}</div>
+                    </div>
+                    <div class="col-xs-3">
+                      <p class="eclipse-text">{{registration.firstName}} {{registration.lastName}}</p>
+                    </div>
+
+                    <div class="col-xs-4">
+                      <p class="eclipse-text">{{formatDate registration.createdOn "dddd, MMMM DD, YYYY"}}</p>
+                    </div>
+                    <div class="col-xs-2">
+                      <div class="actions-wrap">
+                          <span {{action 'reject'}}><i class="icon-remove btn bigger-125"></i></span>
+                          <span {{action 'accept'}}><i class="icon-checked green btn bigger-125"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {{/each}}
+              </div>
+
+            </div><!--/admin-table-wrap-content-->
+          </div><!--/admin-table-wrap-inner-->
+        </div><!--/admin-table-wrap-outer-->
+
+        {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+        {{else}}
+            <h3>You may not have permission to perform operations in this tab</h3>
+            <h5>If you were looking to perform administrative operations, please look at other tabs</h5>
+        {{/if}}
+    
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,125 @@
+{{#if error}}
+    {{render "notAllowed"}}
+{{else}}
+
+{{!-- <span class="flashMessage success">{{successMessage}}</span> --}}
+
+  <div class="eLearningCustom details-page community-detail-page">
+
+  {{ view App.CommunitiesDetailTitleView }}
+
+  {{ view App.CommunitiesDetailAuthorView }}
+
+{{#if displayAllViews}}  
+  <div class="widget-box transparent">
+  {{ view App.CommunitiesDetailTagsView }}
+      <div class="widget-header no-padding">
+          <div class="no-border">
+              <ul class="nav nav-tabs padding-left-18 tab-size-bigger" id="myTab">
+                  {{#link-to "community.details"  data-target="#community-outlet" tagName="li"}}
+                  <a>Description</a> {{/link-to}}
+                  {{#link-to "community.blogs"  data-target="#community-outlet" tagName="li"}}
+                  <a>Blogs</a> {{/link-to}}                  
+                  <!-- addition of all activities tab-->
+                  {{#link-to "community.discussions" data-target="#community-outlet" tagName="li"}}
+                  <a>Discussions</a> {{/link-to}}
+                  {{#link-to "community.wikis" data-target="#community-outlet" tagName="li"}}
+                  <a>Wikis</a> {{/link-to}}
+                  {{#if isTenantHavingAccessToPlaybook}}
+                  {{#link-to "community.foundational"  data-target="#community-outlet" tagName="li"}}
+                  <a>Skills</a> {{/link-to}}
+                  {{/if}}
+                   {{#link-to "community.documents" data-target="#community-outlet" tagName="li"}}
+                  <a>Library</a> {{/link-to}}
+                    {{#link-to "community.files" data-target="#community-outlet" tagName="li"}}
+                  <a>Files</a> {{/link-to}}
+                    {{#link-to "community.members" (query-params pageNumber=1)  data-target="#community-outlet" tagName="li"}}
+                  <a>Members</a> {{/link-to}}
+                  {{#if isUserAuthored}}
+                    {{#link-to "community.proxies" data-target="#community-outlet" tagName="li"}}
+                  <a>Proxy Assignment</a> {{/link-to}}
+                  {{/if}}
+              </ul>
+          </div>
+      </div>
+  </div>
+  <div class="tab-content no-border" id="community-outlet">
+          <div class="message-container"></div>
+          {{outlet}}
+  </div>
+<div class="widget-box transparent">
+		<div class="widget-header widget-header-flat widget-padding bborder row-header">
+			<div class="widget-toolbar">
+			</div>
+		</div>
+		<div id="communityComments" class="panel-collapse widget-body collapse in">
+			<div class="recentReaders comments_container" ref-entity-id="6" ref-entity-type="course">
+				<div class="uyan-comment" load="no" articletitle="{{unbound name}}" entityid="{{unbound _id}}"></div>
+			</div>
+		</div>
+	</div>
+{{/if}}
+  </div>
+{{/if}}
+
+
+    <!-- Modal -->
+<div class="modal fade" id="addCommunityRole" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title show-list-gap" id="myModalLabel">Contributions / Proxies</h4>
+      </div>
+      <div class="modal-body">
+        {{#if communitySpecificRoles}}
+           <div id="divAllMemberRole">
+              <ul>
+               {{#each role in communitySpecificRoles}}
+                 <li class="show-list-gap"> 
+                    {{input  type="checkbox" checked=role.assigned class="chkBoxOpacity" data-role-id=role._id  data-role-name=role.name}}
+                   <span class="spanPadding"> {{role.name}}</span>
+                 </li>
+               {{/each}}
+              </ul>
+           </div>
+        {{else}}
+            <p> No roles are available to display </p>
+        {{/if}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" {{action 'assignCommunityRole' }}>Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal file-upload-modal" id="fileuploadCommunity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+                  <div class="modal-header learningplanblue-header modal-create-header clearfix">
+                      <button type="button" class="close white" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h4 class="modal-title" id="myModalLabel">File Upload</h4>
+                  </div>
+                  <div class="modal-body">
+                <span>Accepted:<strong>epub, pdf, doc, docx, ppt, pptx, xls, xlsx, png, jpg, jpeg</strong></span>            
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <span>
+                          {{file-upload allowedFileTypes=allowedFileTypes name="files[]" maxFileSizeInMB=5 reset=resetFileChooser multiple="multiple"}}
+                        </span>
+                      </span>
+                    </div>
+                  <div>
+                  <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary"{{action attachFile }}> Attach File</button>
+                      <button type="reset" class="btn  btn-primary" {{action cancelAttachFile}}> Cancel </button>
+                  </div>
+      </div>
+  </div>
+</div>
+
+

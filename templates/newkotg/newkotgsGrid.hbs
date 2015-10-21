@@ -1,0 +1,80 @@
+<div {{bindAttr class="isGridView:grid:list"}}>
+    <div class="grid-body">
+        {{#each item in model}}
+            <div {{bind-attr class=":item :col-xs-12 :col-sm-6 :col-md-4 :col-lg-4 item.isChecked:hightlight"}}>
+                <div class="item-body clearfix">
+                    <div class="item-left">
+                        <div class="thumb">
+                            {{#if item.document.isNote}}
+                                <div class="icon-note"></div>
+                            {{else}}
+                                {{#if item.document.hasImg}}
+                                    <img {{bind-attr src=item.document.img}} >
+                                {{else}}
+                                    <div class="icon-image"></div>
+                                {{/if}}
+                            {{/if}}
+                        </div>
+                        <div class="select-one">
+                            {{input type="checkbox" checked=item.isChecked}}
+                            <span class="lbl">
+                        </div>
+                        {{!-- {{tags}} --}}
+                    </div>
+                    <div class="item-right">
+                        {{#if this.isCollections}}
+                            {{#link-to 'collection' item.document.id tagName='a'}}
+                                <div class="title" {{bind-attr title=item.document.title}}>
+                                {{{ellipsis item.document.title 40}}}
+                                </div>
+                            {{/link-to}}
+                        {{/if}}
+                        {{#if this.isNotes}}
+                            {{#link-to 'note' item.document.id tagName='a'}}
+                                <div class="title" {{bind-attr title=item.document.title}}>
+                                {{{ellipsis item.document.title 40}}}
+                                </div>
+                            {{/link-to}}
+                        {{/if}}
+                        {{#if this.isShareds}}
+                            {{#link-to 'sharedItem' item.document.id tagName='a'}}
+                                <div class="title" {{bind-attr title=item.document.title}}>
+                                {{{ellipsis item.document.title 40}}}
+                                </div>
+                            {{/link-to}}
+                        {{/if}}
+                        {{#unless this.isNotes}}
+                            <div class="text-url">
+                                {{{showDomain item.document.url}}}
+                            </div>
+                        {{/unless}}
+                        {{!--
+                        {{#if item.document.digest}}
+                            <div class="description" {{bind-attr title=item.document.digest}}>
+                            {{{ellipsis item.document.digest 30}}}
+                            </div>
+                        {{/if}}
+                        --}}
+                        <div class="icon-clock">
+                            {{formatDate item.document.createdAt "DD MMM YYYY, HH:mm:ss"}}
+                        </div>
+<!--                         <div class="createTime">
+                            <span class="text">Created: </span>
+                            <span>{{formatDate item.document.createdAt "MMM DD, YYYY"}}</span>
+                        </div>
+                        <div class="createTime">
+                            <span class="text">Time: </span>
+                            <span>{{formatDate item.document.createdAt "HH:mm"}}</span>
+                        </div>
+ -->                        
+                        <div class="actions">
+                            <span {{bind-attr class=":btn item.isStared:starred"}} data-rel="tooltip" data-original-title="Favorite" data-placement="left" data-icon-before="star" {{action "star" item.document.id}}></span>
+                            <span class="btn" data-rel="tooltip" data-original-title="Share" data-placement="left" data-icon-before="arrow-share" {{action "openNewkotgShareModal" item.document.id}}></span>
+                            <span class="btn" data-rel="tooltip" data-original-title="Delete" data-placement="left" data-icon-before="trash-o" data-toggle='modal' data-target='#kotgDeleteModal' {{action "setDeleteId" item.document.id}}></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>

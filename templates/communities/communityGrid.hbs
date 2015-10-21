@@ -1,0 +1,85 @@
+<div class="grid-item ">
+  <div class="row">
+     <div class="col-sm-3">
+        <span class="thumb">
+          <img src='assets/images/thumb_group_default.jpg' width="60" class="round-border"/>
+        </span>
+     </div>
+     <div class="col-sm-8">
+        <div class="row ">
+          <div class="col-sm-12">
+            {{#link-to "community.details" _id}} {{ellipsis name 120}} {{/link-to}}
+          </div>
+          <div class="col-sm-12">
+            {{category.name}}
+          </div>
+        </div>       
+      </div> 
+  </div>
+  <div class="row">
+	<div class="col-sm-12">
+		<div><label>Type: </label>{{type}}</div>
+	</div>
+    <div class="col-sm-12">
+       <div>
+          <span> 
+                <i class="icon-user-group2 bigger-125 grey"></i>
+                {{#if active}}
+                  {{membersCount}}
+                {{else}}
+                  {{oldMembers.length}}
+                {{/if}} 
+          </span>
+          <!--span> 
+           <i {{bind-attr class=":bigger-125 :grey :middle isPublic:icon-lock-open:icon-lock-closed"}}></i>&nbsp;{{type}}
+          </span-->
+          <span> 
+            <i class="icon-clock icon-1x grey"></i> {{formatDate createdOn "DD MMM YYYY"}}
+          </span>
+      </div>
+    </div>
+  </div>
+   <div class="row">
+    <span class="summary">
+	    <div class="col-sm-12">
+		  <span class="description">
+			  {{ellipsis description 150}}
+		  </span>
+	   </div> 
+      <span class="creator">
+        <label>Created by</label><span>{{profileLink creatorShortName creator}}</span>
+      </span>
+      <span class="hidden">
+          {{#each tags}}
+              <span class="tag">{{this}}</span>
+          {{/each}}
+      </span>
+    </span>
+    <span class="members">
+
+    </span>
+  </div>
+  <!--span class="members category">
+    <label>Category</label>
+    <span>
+        < Category info >
+    </span>
+  </span-->
+
+  <!--span class="members created">
+    <label>Created</label>
+    <span>
+        < Created info >
+    </span>
+  </span-->
+  <span class="actions">
+    {{#link-to "community.details" _id class="pull-right" target="_self"}}
+        <span class="btn view-file" data-icon-before="glasses" data-rel="tooltip" data-original-title="View"></span>
+    {{/link-to}}
+
+      {{#if isEditable}}
+          {{#link-to "community.edit" _id class="icon-edit blue bigger-160 pull-right align-icon-to-btn"}}{{/link-to}}
+      {{/if}}
+  </span>
+</div>
+{{ view App.CommunityPopOver }}

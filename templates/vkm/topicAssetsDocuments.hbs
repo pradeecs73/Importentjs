@@ -1,0 +1,78 @@
+<div class="sub-panel-content-inner sub-panel-available">
+	<h5><a href="javascript:void(0)">Documents <span class="panel-document-counter-assets">({{documentsCount}})</span></a></h5>
+
+	<div class="sub-panel-list-wrap slide-wrapper" id="docs-slider">
+		<div class="slider-controls">
+    		<a href="javascript:void(0)" class="icon-caret-left slider-nav-left disabled"></a>
+    		<a href="javascript:void(0)" class="icon-caret-right slider-nav-right disabled"></a>	
+		</div>
+		<div class="sub-panel-list  sub-document-list slider-contents">
+
+			<div class="slider-inner-contents" id="slider-inner-document">
+			{{#if topicAssetsDocuments}}
+				{{#each documents in topicAssetsDocuments}}
+					<div class="knowledge-asset-item" id="knowledge-asset-document">
+	    				<div class="knowledge-item-inner">
+	    					<div class="asset-summary clearfix">
+	    						<div class="item-image"><img class="item-image" src='{{unbound documents.img}}' alt="" /></div>
+	    						<div class="asset-title">
+	    							{{#if match}}
+	        							<a href="#/document/{{unbound documents.assetURL}}/my" class="asset-title"><h5>{{documents.assetTitle}}</h5></a>
+	        						{{else}}
+	        							<a href="#/document/{{unbound documents.assetURL}}/shared" class="asset-title"><h5>{{documents.assetTitle}}</h5></a>
+	        						{{/if}}
+	        						<p class="asset-decription">{{documents.authorName}}</p>
+	    						</div>
+	    					</div>
+	    					<ul class="asset-info">
+	    						<li class="asset-date">
+	    							<i class="icon-clock"></i>
+	    							<span class="asset-date time">{{documents.creationDate}}</span>
+	    						</li>
+	    						<li class="asset-interaction-info enabled">
+					        		<ul>
+					        			<li>
+					        				{{#if documents.likesNo}}
+					        				<a class="icon-thumbs-up asset-like" href="javascript:void(0)"> 
+						        				<span class="like-counter">{{documents.likesNo}}</span></a>
+						        			{{else}}
+						        				<a class="icon-thumbs-up asset-like" href="javascript:void(0)"> 
+						        				<span class="like-counter">0</span></a>
+						        			{{/if}}
+					        			</li>
+					        			<li>
+					        				{{#if documents.sharedNo}}
+					        				<a class="asset-comment icon-arrow-share" href="javascript:void(0)">
+					        				<span class="share-counter">{{documents.sharedNo}}</span></a>
+						        			{{else}}
+						        				<a class="asset-comment icon-arrow-share" href="javascript:void(0)">
+					        					<span class="share-counter">0</span></a>
+					        				{{/if}}
+					        			</li>
+					        			<li>
+					        				{{#if documents.favoredNo}}
+					        				<a class="icon-star asset-favorite" href="javascript:void(0)">
+					        				<span class="favorite-counter">{{documents.favoredNo}}</span></a>
+						        			{{else}}
+						        				<a class="icon-star asset-favorite" href="javascript:void(0)">
+						        				<span class="favorite-counter">0</span></a>
+						        			{{/if}}
+					        			</li>
+					        		</ul>
+	    						</li>
+	    					</ul>
+	    				</div>
+	    			</div>
+	    		{{/each}}
+    		{{else}}
+    			<div class="missing-data-message">
+                    <p class="error-message"><em>No Documents to display</em></p>
+				</div>
+			{{/if}}
+    			
+    		</div>
+
+		</div>
+
+	</div>
+</div>

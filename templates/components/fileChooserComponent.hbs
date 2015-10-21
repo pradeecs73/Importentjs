@@ -1,0 +1,20 @@
+<div class="uploader-wrap uploader-empty clearfix">
+    <input type="file" placeholder="" id="kc-files" class="btn" {{bind-attr name=name}} {{action on="change"}}/>
+    {{#if file}}
+        <span class="uploaded-file-tag pull-left">
+            <span class="inner-info">
+                <i class="icon-file  {{{unbound file.fileType}}}-file-icon"></i>
+                <span class="filename">{{file.fileName}}</span>
+                <span class="file-size">{{file.fileSize}}</span>
+            </span>
+        </span>
+    {{else}}
+        <span class="inner-text">No File(s) Chosen</span>
+    {{/if}}
+    <button type="file" id="fileselector" class="btn btn-sm btn-primary pull-right" {{bind-attr class=disableClick}} {{action openFileChooser}}>
+        Choose File
+    </button>
+</div>
+<div>
+<span class="tip">{{{allowedFileTypesDisplayMessage}}}</span>
+</div>

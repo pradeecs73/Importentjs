@@ -1,0 +1,48 @@
+{{#if isAdmin}}
+    <ul class="nav nav-list">
+        <li class="active">
+            <button class="dropdown-toggle" data-icon-after="caret-right">
+                <i class="icon-contact menu-icon"></i>
+                <span class="menu-text">Admin</span>
+            </button>
+            <ul class="submenu">
+
+                {{#if showUserTab}}
+                    <li>
+                        {{#link-to 'userManagement' activeClass='active'}}
+                            <i class="activities hide"></i> <span class="menu-text">User</span>
+                        {{/link-to}}
+                    </li>
+                {{/if}}
+
+                {{#if showSystemTab}}
+                    <li>
+                        {{#link-to 'system'activeClass='active'}}
+                            <i class="activities hide"></i> <span class="menu-text">System</span>
+                        {{/link-to}}
+                    </li>
+                {{/if}}
+
+                <li>
+                    {{#link-to 'mobile'activeClass='active'}}
+                        <i class="activities hide"></i> <span class="menu-text">Mobile</span>
+                    {{/link-to}}
+                </li>
+
+                <li>
+                    {{#link-to 'collaborate' activeClass='active'}}
+                        <i class="activities hide"></i> <span class="menu-text">Collaborate</span>
+                    {{/link-to}}
+                </li>
+
+                {{#if showReportsTab}}
+                    <li>
+                        {{#link-to 'reports'activeClass='active'}}
+                            <i class="activities hide"></i> <span class="menu-text">Reporting</span>
+                        {{/link-to}}
+                    </li>
+                {{/if}}
+            </ul>
+        </li>
+    </ul>
+{{/if}}

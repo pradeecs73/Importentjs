@@ -1,0 +1,99 @@
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Explore Products</h4>
+      </div>
+      <div class="modal-body" style="">
+        <div class="row" style="">
+          <div class="col-lg-12">
+                <div class="row welcome-note">
+                    <span class="welcome-to-user">Hi {{name}} ! Hope you have had a
+                        great first few days at
+                        Camway. You can get
+                        started in any of the
+                        following ways ...
+                    </span>
+                </div>
+                <div {{ action trendingTopics }} class="row welcome-grid" data-dismiss="modal">
+                    <div class="col-lg-3 col-sm-3 align-center">
+
+
+                    <span class="line-height-1 bigger-170 grid-icon"><i
+                            class="icon-star blue bigger-250"></i> </span>
+
+                        <div class="space-6"></div>
+                    </div>
+                    <div class="col-lg-8 col-sm-8 "><span class="blue bigger-180">
+                    Trending topics
+                </span>
+                        <div class="space-2"></div>
+
+                        <p>We've brought you the latest and the most trending
+                            information
+                            orgainsed by topics. Browse through one or more topics and
+                            see
+                            what interests you.</p></div> <div class="welcome-coloumn col-lg-1 col-sm-1 col-xs-1 align-center"><span
+                                                                                                         class="line-height-1 bigger-170 grid-arrow"><i
+                                                                                                         class="icon-angle-right grey bigger-190"></i> </span></div>
+                </div>
+                <div class="space-4"></div>
+                <div {{ action post }} class="row welcome-grid" data-dismiss="modal">
+                    <div class="col-lg-3 col-sm-3 align-center" >
+
+                        <span class="line-height-1 bigger-170 grid-icon"><i
+                                class="icon-edit green bigger-250"></i> </span>
+                    </div>
+                    <div class="col-lg-8 col-sm-8 ">
+                        <span class="green bigger-180">Post </span>
+                        <div class="space-2"></div>
+                        <p>Share your thoughts via a post or browse through posts
+                            written by your friends or colleagues. You can also ask a
+                            question or answer any one of them.</p></div> <div class="welcome-coloumn col-lg-1 col-sm-1 col-xs-1 align-center"><span
+                                                                                                         class="line-height-1 bigger-170 grid-arrow"><i
+                                                                                                         class="icon-angle-right grey bigger-190"></i> </span></div>
+                </div>
+                <div class="space-4"></div>
+                <div {{ action visitLearningPlan }} class="row welcome-grid" data-dismiss="modal">
+                    <div class="col-lg-3 col-sm-3 align-center">
+
+                        <span class="line-height-1 bigger-170 grid-icon"><i
+                                class="icon-book red bigger-250"></i> </span>
+                    </div>
+                    <div class="col-lg-8 col-sm-8 "><span class="red bigger-180">
+                        Learning Plan
+                        </span>
+                        <div class="space-2"></div>
+                        <p>Search, pick, schedule and plan your learning. A simple drag
+                            and drop interface allows for quick and easy scheduling.
+                            Give it a try</p></div> <div class="welcome-coloumn col-lg-1 col-sm-1 col-xs-1 align-center"><span
+                                                                                                         class="line-height-1 bigger-170 grid-arrow"><i
+                                                                                                         class="icon-angle-right grey bigger-190"></i> </span></div>
+                </div>
+                <div class="space-4"></div>
+                <div {{action fillProfile}} class="row welcome-grid last" data-dismiss="modal">
+                    <div  class="col-lg-3 col-sm-3 align-center">
+
+
+                        <span class="line-height-1 bigger-170 grid-icon"><i
+                                class="icon-user orange bigger-250"></i> </span>
+                    </div>
+                    <div class="col-lg-8 col-sm-8 "><span class="orange bigger-180">
+                        Update your profile
+                                                </span>
+                        <div class="space-2"></div>
+                        <p>Here is a chance to update your profile and tell your friends
+                            and colleagues more about you.</p></div> <div class="welcome-coloumn col-lg-1 col-sm-1 col-xs-1 align-center"><span
+                                                                                                         class="line-height-1 bigger-170 grid-arrow"><i
+                                                                                                         class="icon-angle-right grey bigger-190"></i> </span></div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Later ...</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

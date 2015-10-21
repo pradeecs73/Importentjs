@@ -1,0 +1,67 @@
+<div class="header-panel sub-header myfile-title-share top-panel-padding">
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 no-padding">
+            <span class="file-type-icon">
+                <img src="assets/images/klib/file_generic-{{{unbound imageType}}}.png" alt=""/>
+                <div class="type-banner {{{unbound imageType}}}-file-type">
+                    {{{unbound documentType}}}
+                </div>
+            </span>
+            <h2 class="eclipse-text qa-automation-title" {{bind-attr title=pageTitle}}>
+              <span class="lefttitle eclipse-text" data-rel="tooltip" data-original-title="{{{unbound title}}}">{{title}}</span>
+                <span class="rightbutton">
+                {{#view-file document=model appId=appId fileUnavailable='openFileUnavailableModal' videoAvailable='openVideoPlayerModal' detailsPage=true tagName='span'}}
+                    View
+                {{/view-file}}
+                </span>
+            </h2>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="row file-rating-social-wrap">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding file-rating-wrap clearfix">
+                    {{#if enableSocialWidgets}}
+                    <div class="social pull-right"  ref-entity-id="{{{unbound id}}}" ref-entity-type="document"></div>
+                    {{/if}}
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <ul class="file-share-info clearfix">
+                        <li class="download-enabled">
+                            {{#download-link document=model}} {{/download-link}}
+                        </li>
+                        {{#if isEditable}}
+                            <li class="editing-enabled">
+                                <a  {{bind-attr href='documentEditPath'}}>
+                                    <i data-rel="tooltip" data-original-title="Edit" class="icon-pencil"></i>
+                                </a>
+                            </li>
+                        {{#if parentController.taggingEnabled}}
+                            <li class="tags-enabled">
+                                <a class="edit-tags">
+                                    <i data-rel="tooltip" data-original-title="Tags" class="icon-tag"></i>
+                                </a>
+                            </li>
+                        {{/if}}
+                        {{/if}}
+                        <li>
+                            <a href="#">
+                                <i data-rel="tooltip" data-original-title="Share" class="icon-arrow-share" {{action "openShareDocumentModal" model}} data-toggle="modal"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="alert-danger hide" id="actionsErrorMessage">This file has been deleted</div>
+                        </li>
+                        <li>
+                            <div class="alert-danger hide" id="notFoundErrorMessage_{{unbound id}}">This file has been deleted</div>
+                        </li>
+                        <li>
+                            <div class="alert-danger hide" id="forbiddenErrorMessage_{{unbound id}}">Operation not authorized</div>
+                        </li>
+                        <li>
+                            <div class="alert-danger hide" id="forbiddenOrNotFoundErrorMessage_{{unbound id}}">Operation not authorized or the file has been deleted</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="tab-inner-wrap clearfix">
+
+	<div class="tab-summary">
+		{{#if locations}}
+			<ul class="tab-summary-list" id="locationList">
+				{{#each location in locations}}
+					{{#if location.addToFilter}}
+						<li data-placement="left" data-toggle="tooltip" data-categ="locations" data-uri-info='{{unbound location.locationName}}' data-original-title='{{unbound location.locationName}}' class="long-text active"><a class="filter-link" title="{{unbound location.locationName}}" href="#" {{action "removeFilter" location.locationName "locations"}}>{{location.locationName}}</a></li>
+					{{else}}
+						<li data-placement="left" data-toggle="tooltip" data-categ="locations" data-uri-info='{{unbound location.locationName}}' data-original-title='{{unbound location.locationName}}' class="{{unbound location.cssClass}}"><a class="filter-link" title="{{unbound location.locationName}}" href="#" {{action "selectFilter" location.locationName location.locationName "locations"}}>{{location.locationName}}</a></li>
+					{{/if}}
+				{{/each}}
+			</ul>
+		{{/if}}
+	</div>
+											
+</div>

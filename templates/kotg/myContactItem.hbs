@@ -1,0 +1,12 @@
+<div class="itemdiv memberdiv" data-id="{{unbound _view.contentIndex}}">
+  <div class="user">
+    <span>
+      <img  src="/knowledgecenter/profiles/{{unbound convertToLowerCaseName selectedUser.id}}_mini.jpg" alt="{{selectedUser.id}} ({{selectedUser.name}})" title="{{selectedUser.id}} ({{selectedUser.name}})"></span>
+  </div>
+  <div class="body">
+    <div class="name">{{selectedUser.id}}</div>
+    <div class="email">{{selectedUser.name}}</div>
+  </div>
+
+  <i class="icon-remove pull-right" {{action removeContact selectedUser}}></i>
+</div>

@@ -1,0 +1,66 @@
+<div class="modal-header learningplanblue-header modal-create-header clearfix">
+    <button type="button" class="close font-25" data-dismiss="modal" {{action closeShareDocumentModal}}>
+        <i class="icon-remove white"></i>
+    </button>
+    <h4 class="modal-title"> Share Files</h4>
+</div>
+
+<div class="modal-body page-padding padding-bottom-10 file-share-modal">
+    {{#if messages.statusMessage}}
+        <div {{bind-attr class=":alert status:alert-success:alert-danger"}} > {{messages.statusMessage}} </div>
+    {{/if}}
+    {{#if sharing}}
+        <div class="progress progress-striped active">
+            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+                 style="width: 100%"></div>
+        </div>
+    {{/if}}
+    <fieldset>
+        <div class="row clearfix">
+            <div class="col-sm-12 col-xs-12 input-wrap">
+              {{#if existingSharesLoaded}}
+                {{bootstrap-tags-input initialized='tagsInputInitialized' remoteSourceConfig=usersAndGroupsForAutoSuggest value=existingShares freeInput=false componentId="sharesField" placeHolderText="Enter user/community name"}}
+              {{/if}}
+            </div>
+        </div>
+        <div class="row clearfix admin-file-share-options">
+            <div class="col-sm-12 col-xs-12">
+                {{#if canChangePublicAccess}}
+                    <label>
+                        {{input type="checkbox" checked=allAuthenticatedUsersGroupsSelected }}
+                        <span class="lbl"></span> Share with All Registered Users
+                    </label>
+                    
+                    {{#if warningShowEnabled}}
+                        <div class="admin-share-all">
+                            <h4>Warning</h4>
+
+                            <p>Enabling this will allow all registered users to access the content. Are you sure you
+                                want to do this?</p>
+                            <label>
+                                {{input class="hide-share-warning" type="checkbox" name="form-field-checkbox" checked=hideShareWarning}}
+                                <span class="lbl"></span> Do not show this again
+                            </label>
+
+
+                            <div class="admin-share-agree">
+                                <button type="button"
+                                        class="btn btn-primary" {{action resetAllAuthenticatedUsersGroups}}>No
+                                </button>
+                                <button type="button" class="btn btn-primary" {{action acceptWarning}}>Yes</button>
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/if}}
+            </div>
+        </div>
+    </fieldset>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" {{bindAttr class="enableButton:enabled:disabled"}} data-dismiss="modal" {{action closeShareDocumentModal}}>Cancel
+        </button>
+        <button type="button"
+                class="btn btn-primary" {{bindAttr class="enableButton:enabled:disabled"}} {{action shareDocument on="click"}}>
+            Save
+        </button>
+    </div>
+</div>

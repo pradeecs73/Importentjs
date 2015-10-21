@@ -1,0 +1,163 @@
+<div id="posts" class="tab-pane">
+
+    <div class="dashboard filters-wrapper container">
+        <div class="row filters-panel results-count table-top-header clearfix">            
+
+            <ul class="col-xs-7 col-sm-7 col-md-7 col-lg-8 filters">
+                <li><span class="results-count-label">{{totalResults}} Results for :</span></li>
+                <li><span class="selected-tag">{{searchText}}</span></li>
+            </ul>
+
+            <div id="document_toggle_view" class="clearfix pull-right layout-buttons">
+                <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action toggleView "list-view" "document"}}></a>
+                <a id="catalog-grid-view" {{ bind-attr class=":icon-grid-layout :pull-left isGridView:active" }} {{action toggleView "grid-view" "document"}}></a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dashboard Ends -->
+    {{#if results.length}}
+        <div id="posts_search_results" class="container widget-container">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                {{#each results itemController='documentItem'}}
+                    {{#if isGridView}}
+                        <div class="col-sm-4 col-md-4 col-lg-3">
+                            <div class="kc-grid withPopOver" data-rel="popover" data-container="body" data-toggle="popover" data-placement="auto right" data-original-title="" title="">
+                                <h2 class="grid-header">
+                                    <div class="category-image">
+                                        <i class="white icon-file"></i>
+                                    </div>
+
+                                    <div class="grid-title">
+                                        {{!--{{#link-to 'document' document.id class="white"}}--}}
+                                        {{!--{{documentTitle}}--}}
+                                        {{!--{{/link-to}}--}}
+                                        <a {{bindAttr href="controller.blogReadUrl"}} target="_self"><span class="white">{{{ellipsis resource.title  60}}}...</span></a>
+                                    </div>
+                                </h2>
+                                <div class="grid-sub-section">
+                                    {{{ellipsis postSummary 60}}}...
+                                </div>
+                                <div class="grid-sub-section">
+                                    <span>Type:</span>
+                                    <span> {{postType}}</span>
+                                </div>
+                                <div class="grid-sub-section">
+                                    <span>Created by: </span>
+                                    <span> {{profileLink resource.authorName resource.author}}</span>
+                                </div>
+                                <div class="grid-sub-section">
+                                    <span>Created on: </span>
+                                    <span> {{from-now resource.createDate}}</span>
+                                </div>								
+                                <div class="grid-sub-section last">
+                                    <div class="align-left action-icons">
+                                        <a {{bindAttr href="controller.blogReadUrl"}} target="_self"><span class="btn btn-sm btn-primary">Read</span></a>
+                                        <div class="inline">
+                                            {{#if resource.views}}
+                                                <span class="grey"><i class="icon-eye-open icon-1x"></i>&nbsp;{{resource.views.length}}&nbsp;</span>
+                                            {{else}}
+                                                <span class="grey"><i class="icon-eye-open icon-1x"></i>&nbsp;0&nbsp;</span>
+                                            {{/if}}
+                                            {{#if resource.comments}}
+                                                <span class="grey"><i class="icon-comments-alt icon-1x"></i>&nbsp;{{resource.comments.length}}&nbsp;</span>
+                                            {{else}}
+                                                <span class="grey"><i class="icon-comments-alt icon-1x"></i>&nbsp;0&nbsp;</span>
+                                            {{/if}}
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="catalogPopover">
+                                    <div class="popover-container">
+                                        <div class="popover-header">
+                                            <span class="thumb">
+                                                <i class="white icon-file"></i>
+                                            </span>
+                                            <span class="name">
+                                                {{{ellipsis resource.title  60}}}...
+                                            </span>
+                                        </div>
+
+                                        <div class="popover-body">
+                                            <span class="dataCont">
+                                                <span><b>Description : </b>
+													{{{ellipsis postSummary 60}}}...
+                                                </span>
+                                            </span>
+                                            <span class="dataCont">
+                                                {{#each resource.tags}}
+                                                    <span class="tag">{{{this}}}</span>
+                                                {{/each}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {{else}}
+                        <div class=" catalog-list-view">
+                            <div class="document-catalog">
+                                <div class="category-description-block position-relative">
+                                    <div class="category-image">
+                                        <i class="blue icon-file"></i>
+                                        <span class="blue">
+                                            {{postType}}
+                                        </span>
+                                    </div>
+                                    <a {{bindAttr href="controller.blogReadUrl"}} target="_self"><b class="blue">{{{ellipsis resource.title  60}}}...</b></a>
+                                    <div class="category-block-description">
+                                        <p class="category-description"><b>Description : </b>
+											{{{ellipsis postSummary 60}}}...
+                                        </p>
+                                        {{#each resource.tags}}
+                                            <span class="tag">{{{this}}}</span>
+                                        {{/each}}
+                                        {{#if resource.views}}
+                                            <span class="grey"><i class="icon-eye-open icon-1x"></i> {{resource.views.length}} Views </span>
+                                        {{else}}
+                                            <span class="grey"><i class="icon-eye-open icon-1x"></i> 0 Views</span>
+                                        {{/if}}
+                                        {{#if resource.comments}}
+                                            <span class="grey">&nbsp; &nbsp; <i class="icon-comments-alt icon-1x"></i> {{resource.comments.length}} Comments</span>
+                                        {{else}}
+                                            <span class="grey">&nbsp; &nbsp; <i class="icon-comments-alt icon-1x"></i> 0 Comments</span>
+                                        {{/if}}
+
+
+                                    </div>
+                                    <div class="document-upload-date">
+                                        <div>
+                                            <span class="grey uploaded-date">Created by:
+                                                {{profileLink resource.authorName resource.author}}
+                                            </span>
+                                        </div>
+										<div class="grid-sub-section">
+											<span>Created on: </span>
+											<span> {{from-now resource.createDate}}</span>
+										</div>										
+                                        <div class="action-buttons">
+                                            <div class="pull-right">
+                                                <a {{bindAttr href="controller.blogReadUrl"}} target="_self"><span class="btn btn-sm btn-primary">Read</span></a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/each}}
+
+            </div>
+            <!-- PAGE CONTENT ENDS -->
+        </div>
+        <div>
+            {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+        </div>
+        <!-- /search results -->
+    {{else}}
+        <div class="no-value"> No results found </div>
+    {{/if}}
+</div>

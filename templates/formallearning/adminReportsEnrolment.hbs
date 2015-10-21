@@ -1,0 +1,137 @@
+<div id="user-activity" class="page-content user-profile-page admin-reports-ui">
+    <div class="widget-body list-with-tags" id="profile-layout">
+        <div class="container header-panel">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h1 class="eclipse-text">Learning Enrollments</h1>
+                </div>
+            </div>
+        </div>
+        <div class="tabbable">
+            <div class="tab-content">
+                <div id="enrollments" class="tab-pane in active" >
+                    <div class="page-content list-grid-page training-catalog my-enrollments no-padding">
+                        <div {{ bind-attr class=":widget-body :list-with-tags isGridView:grid-view:list-view"}}>
+                            <div class="filter-wrapper">
+                                <div class="filters-panel has-sorting">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+											{{visual-search componentId='peopleFilterBox' facets=allFacets filters=filters searchAction='filter' placeHolderText='Filter by Type, Manager, JobTitle, Organization'}}
+                                        </div>
+                                        <div class="filter-panel-divider"></div>
+                                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                                            <form {{action filterByStartAndEndDate on="submit"}}>
+												<div class="dateRages">
+													<div class="date-range-title date-title">Date Range:</div>
+													<div class="range-date"><div class="input-group date" data-provide="datepicker">{{input class="date-picker-input"  placeholder="start date" valueBinding="startDate" }}<i class="btn icon-calendar learning_calendar_btn"></i>
+													</div></div>
+													<div class="date-until-title date-title">Until:</div>
+													<div class="range-date"><div class="input-group date" data-provide="datepicker">{{input class="date-picker-input"  placeholder="end date" valueBinding="endDate" }}<i class=" btn icon-calendar learning_calendar_btn"></i>
+													</div></div>
+													<div class="date-range-button"><button class="btn btn-primary">Filter</button></div>
+												</div>
+                                            <form>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12 download-btn-wrap">
+                                            <div class="pull-right">
+												{{report-generator serviceFunction=getEnrolledCourses searchFilters=searchFilters dataKey="courses" countKey="total" reportType="csv" JSONFormatfunction=formatCourseJSON reportFileName="AdminEnrolmentReport"}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+							{{#if courses.length}}
+                                <div class="widget-body">
+                                    <div class="widget-body-inner collapse in" id="plp-inner" aria-expanded="true">
+                                        <div class="widget-main container data-table">
+                                            <div class="row list-headings">
+                                                <div class="col-sm-1">
+                                                    <label>Last Name</label>
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label>First Name</label>
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label>Email</label>
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label>Organization</label>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <label>Course</label>
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label>Delivery</label>
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label>Registration</label>
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label>Completion</label>
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label>Status</label>
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label>Score</label>
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label>Approval</label>
+                                                </div>
+                                            </div>
+											{{#each course in courses}}
+                                                <div class="row clearfix learning-plan-row">
+                                                    <div class="col-sm-1">
+														{{course.lastName}}
+                                                    </div>
+                                                    <div class="col-sm-1">
+														{{course.firstName}}
+                                                    </div>
+                                                    <div class="col-sm-1">
+														{{course.email}}
+                                                    </div>
+                                                    <div class="col-sm-1">
+														{{course.organization}}
+                                                    </div>
+												<span class="col-sm-2 col-xs-12">
+													{{course.fullname}}
+                                                </span>
+												<span class="col-sm-1 col-xs-12">
+													{{course.courseType}}
+                                                </span>
+												<span class="col-sm-1 col-xs-12">
+													{{dateInGMTFormat course.enrolTime}}
+                                                </span>
+												<span class="col-sm-1 col-xs-12">
+													{{#if course.completionTime}}
+														{{dateInGMTFormat course.completionTime}}
+													{{/if}}
+                                                </span>
+												<span class="col-sm-1 col-xs-12">
+													{{course.completed}}
+                                                </span>
+												<span class="col-sm-1 col-xs-12">
+													{{course.score}}
+                                                </span>
+												<span class="col-sm-1 col-xs-12">
+													{{course.managerApproval}}
+                                                </span>
+                                                </div>
+											{{/each}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"> </div>
+								{{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+							{{else}}
+                                <div class="no-value">No courses to display</div>
+							{{/if}}
+                        </div><!--/ .widget-body-->
+                    </div>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

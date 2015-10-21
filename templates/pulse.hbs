@@ -1,0 +1,297 @@
+<div class="page-content pulse">
+		<div class="page-header">
+				<h1>
+						Pulse
+				</h1>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#my-pulse" data-toggle="tab">Me</a></li>
+					<li><a href="#org-pulse" data-toggle="tab" {{action "wePulse"}}>We</a></li>
+				</ul>
+
+				<div class="tab-content">
+					<div class="tab-pane active" id="my-pulse">
+						<div class="toolbar">
+							<h4>Weekly</h4>
+							<div class="timeline">
+								<div class="btn-group">
+									<button type="button" class="btn">Today</button>
+									<button type="button" class="btn checked">Weekly</button>
+									<button type="button" class="btn">Monthly</button>
+								</div>
+								<button class="btn btn-small">
+									<span class="glyphicon glyphicon-chevron-left"></span>
+								</button>
+								<p><strong>16-Dec-2013</strong> to <strong>22-Dec-2013</strong></p>
+								<button class="btn btn-small disabled">
+									<span class="glyphicon glyphicon-chevron-right"></span>
+								</button>
+							</div>
+						</div>
+						<div>
+							<div id="meChartContainer" class="chartContainer"></div>
+						</div>
+						<div class="row summary">
+							<div class="hr hr32 hr-dotted"></div>
+
+							<div class="col-sm-12 infobox-container">
+								<div class="infobox infobox-green  ">
+									<div class="infobox-icon">
+										<i class="icon-comments"></i>
+									</div>
+
+									<div class="infobox-data">
+										<span class="infobox-data-number">4</span>
+										<div class="infobox-content">Blogs</div>
+									</div>
+								</div>
+
+								<div class="infobox infobox-orange">
+									<div class="infobox-icon">
+										<i class="icon-question"></i>
+									</div>
+
+									<div class="infobox-data">
+										<span class="infobox-data-number">15</span>
+										<div class="infobox-content">Questions</div>
+									</div>
+
+
+								</div>
+
+								<div class="infobox infobox-blue">
+									<div class="infobox-icon">
+										<i class="icon-file"></i>
+									</div>
+
+									<div class="infobox-data">
+										<span class="infobox-data-number">3</span>
+										<div class="infobox-content">EPUBS</div>
+									</div>
+								</div>
+
+								<div class="infobox infobox-red  ">
+									<div class="infobox-icon">
+										<i class="icon-facetime-video"></i>
+									</div>
+
+									<div class="infobox-data">
+										<span class="infobox-data-number">3</span>
+										<div class="infobox-content">Videos</div>
+									</div>
+								</div>
+
+								<div class="infobox infobox-black  ">
+									<div class="infobox-icon">
+										<i class="icon-file"></i>
+									</div>
+
+									<div class="infobox-data">
+										<span class="infobox-data-number">56</span>
+										<div class="infobox-content">PDFS</div>
+									</div>
+								</div>
+
+								<div class="infobox infobox-purple  ">
+									<div class="infobox-icon">
+										<i class="icon-book"></i>
+									</div>
+
+									<div class="infobox-data">
+										<span class="infobox-data-number">11</span>
+										<div class="infobox-content">Learning Modules</div>
+									</div>
+								</div>
+
+								<div class="infobox infobox-pink  ">
+									<div class="infobox-icon">
+										<i class="icon-file"></i>
+									</div>
+
+									<div class="infobox-data">
+										<span class="infobox-data-number">15</span>
+										<div class="infobox-content">PPTS</div>
+									</div>
+								</div>
+
+								<div class="infobox infobox-orange2  ">
+									<div class="infobox-chart">
+										<span class="sparkline" data-values="196,128,202,177,154,94,100,170,224"><canvas width="44" height="33" style="display: inline-block; width: 44px; height: 33px; vertical-align: top;"></canvas></span>
+									</div>
+									<div class="infobox-data">
+										<span class="infobox-data-number">6,251</span>
+										<div class="infobox-content">Profie Views</div>
+									</div>
+									<div class="badge badge-success">
+										7.2%
+										<i class="icon-angle-up"></i>
+									</div>
+								</div>
+
+								<div class="infobox infobox-blue2  ">
+									<div class="infobox-progress">
+										<div class="easy-pie-chart percentage easyPieChart" data-percent="80" data-size="45" style="width: 45px; height: 45px; line-height: 45px;">
+											<span class="percent">80</span>%
+										<canvas width="49" height="49" style="width: 45px; height: 45px;"></canvas></div>
+									</div>
+
+									<div class="infobox-data">
+										<span class="infobox-text">Profile</span>
+
+										<div class="infobox-content">
+											 Completion
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane" id="org-pulse">
+						<div class="toolbar">
+							<select>
+								<option selected="selected">All offices</option>
+								<option>Australia</option>
+								<option>China</option>
+								<option>India</option>
+								<option>United States</option>
+								<option>United Kingdom</option>
+							</select>
+							<div class="timeline">
+								<div class="btn-group">
+									<button type="button" class="btn">Today</button>
+									<button type="button" class="btn checked">Weekly</button>
+									<button type="button" class="btn">Monthly</button>
+								</div>
+								<button class="btn btn-small">
+									<span class="glyphicon glyphicon-chevron-left"></span>
+								</button>
+								<p><strong>16-Dec-2013</strong> to <strong>22-Dec-2013</strong></p>
+								<button class="btn btn-small disabled">
+									<span class="glyphicon glyphicon-chevron-right"></span>
+								</button>
+							</div>
+						</div>
+						<div>
+							<div id="weChartContainer" class="chartContainer"></div>
+						</div>
+						<div class="row summary">
+							<div class="hr hr32 hr-dotted"></div>
+
+							<div class="col-sm-12 infobox-container">
+								<div class="infobox infobox-green  ">
+									<div class="infobox-icon">
+										<i class="icon-comments"></i>
+									</div>
+
+									<div class="infobox-data">
+										<span class="infobox-data-number">200</span>
+										<div class="infobox-content">Blogs</div>
+									</div>
+								</div>
+
+								<div class="infobox infobox-orange">
+									<div class="infobox-icon">
+										<i class="icon-question"></i>
+									</div>
+
+									<div class="infobox-data">
+										<span class="infobox-data-number">150</span>
+										<div class="infobox-content">Questions</div>
+									</div>
+
+
+								</div>
+
+								<div class="infobox infobox-blue">
+									<div class="infobox-icon">
+										<i class="icon-file"></i>
+									</div>
+
+									<div class="infobox-data">
+										<span class="infobox-data-number">120</span>
+										<div class="infobox-content">EPUBS</div>
+									</div>
+								</div>
+
+								<div class="infobox infobox-red  ">
+									<div class="infobox-icon">
+										<i class="icon-facetime-video"></i>
+									</div>
+
+									<div class="infobox-data">
+										<span class="infobox-data-number">50</span>
+										<div class="infobox-content">Videos</div>
+									</div>
+								</div>
+
+								<div class="infobox infobox-black">
+									<div class="infobox-icon">
+										<i class="icon-file"></i>
+									</div>
+
+									<div class="infobox-data">
+										<span class="infobox-data-number">250</span>
+										<div class="infobox-content">PDFS</div>
+									</div>
+								</div>
+
+								<div class="infobox infobox-purple  ">
+									<div class="infobox-icon">
+										<i class="icon-book"></i>
+									</div>
+
+									<div class="infobox-data">
+										<span class="infobox-data-number">300</span>
+										<div class="infobox-content">Learning Modules</div>
+									</div>
+								</div>
+
+								<div class="infobox infobox-pink  ">
+									<div class="infobox-icon">
+										<i class="icon-file"></i>
+									</div>
+
+									<div class="infobox-data">
+										<span class="infobox-data-number">50</span>
+										<div class="infobox-content">PPTS</div>
+									</div>
+								</div>
+
+								<div class="infobox infobox-orange2  ">
+									<div class="infobox-chart">
+										<span class="sparkline" data-values="196,128,202,177,154,94,100,170,224"><canvas width="44" height="33" style="display: inline-block; width: 44px; height: 33px; vertical-align: top;"></canvas></span>
+									</div>
+									<div class="infobox-data">
+										<span class="infobox-data-number">6,251</span>
+										<div class="infobox-content">Profie Views</div>
+									</div>
+									<div class="badge badge-success">
+										7.2%
+										<i class="icon-angle-up"></i>
+									</div>
+								</div>
+
+								<div class="infobox infobox-blue2  ">
+									<div class="infobox-progress">
+										<div class="easy-pie-chart percentage easyPieChart" data-percent="80" data-size="45" style="width: 45px; height: 45px; line-height: 45px;">
+											<span class="percent">80</span>%
+										<canvas width="49" height="49" style="width: 45px; height: 45px;"></canvas></div>
+									</div>
+
+									<div class="infobox-data">
+										<span class="infobox-text">Profile</span>
+
+										<div class="infobox-content">
+											 Completion
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</div>

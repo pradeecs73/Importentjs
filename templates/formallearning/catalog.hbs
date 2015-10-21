@@ -1,0 +1,920 @@
+<div class="page-content list-grid-page training-catalog no-padding">
+
+<div {{ bind-attr class=":widget-body :list-with-tags isGridView:grid-view:list-view controller.isPlpSelected:learning-plans-displayed"}}>
+
+<div class="container header-panel">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            {{#if isPlpSelected}}
+                <h1 class="eclipse-text">Learning Plans</h1>
+            {{else}}
+                <h1 class="eclipse-text">Training Catalog</h1>
+            {{/if}}
+        </div>
+    </div>
+</div>
+
+<!-- Actions status message -->
+<div {{bind-attr class="showMessage::hide"}}>
+    <div class="alert alert-block alert-danger">
+                <span>
+                    Due to some unexpected errors course details cannot be displayed.
+                </span>
+    </div>
+</div>
+<div id="status-message-div" class="alert alert-block alert-success hide">
+    <button type="button" class="close">
+        <i class="icon-remove"></i>
+    </button>
+    <div>
+        <span id="status-message-text"></span>
+    </div>
+</div>
+<!-- //Actions status message -->
+
+<div class="filter-wrapper">
+    <div class="filters-panel has-sorting">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+            <div class="row">
+                <div id="view-option-buttons" class="col-lg-3 col-md-4 col-sm-4 col-xs-12 layout-buttons">
+                    <a id="catalog-grid-view" {{ bind-attr class=":icon-grid-layout :pull-left isGridView:active" }} {{action toggleView "grid-view" target=view}}></a>
+                    <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action toggleView "list-view" target=view}}></a>
+                    <!--Start sorting-->
+					{{#if isPlpSelected}}
+						{{sorting-link sortableFields=sortablePLPFields sortBy=sortPLPBy sortOrder=sortPLPOrder updateSortByAction='updatePLPSortBy' toggleSortOrderAction='togglePLPSortOrder'}}
+					{{else}}
+						{{sorting-link sortableFields=sortableFields sortBy=sortByName sortOrder=sortOrder updateSortByAction='updateSortBy' toggleSortOrderAction='toggleSortOrder'}}
+					{{/if}}
+                    <!--End sorting-->
+                    <!--Start Plp Checkbox-->
+                    <label class="plpchek">
+                        Prescribed Learning
+                        Plans {{input type="checkbox" checked=isPlpSelected change=fetchPerscribedPlanDetails}}
+                        <span class="lbl"></span>
+                    </label>
+                    <!--End Plp Checkbox-->
+                </div>
+                {{#unless isPlpSelected}}
+                    <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12 filter-by-wrapper">
+                        {{visual-search componentId='search_box_container2' facets=allFacets filters=filters searchAction='filter' placeHolderText='Filter By Categories / Location / Type'}}
+                    </div>
+                {{/unless}}
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 search-add-wrap">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 form-wrap col-xs-12">
+                    <div class="form-search">
+                        {{#if isPlpSelected}}
+                            <i class="icon-search" {{action 'search'}}></i>
+                            {{input class="form-control" placeholder="Search By Title, Description" type="text" value=keyword action="searchPrescribedLearningPlans" on="enter"}}
+                        {{else}}
+                            <i class="icon-search" {{action 'search'}}></i>
+                            {{input id="tc-search1" type="text" size="40" placeholder="Search By Title, Description"  value=searchText class="form-control no-shadow-input input-mask-date width2x" action="search" on="enter"}}
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Plp List-->
+{{#if isPlpSelected}}
+    {{#if prescribeLearningPlan}} <!-- PLP Length -->
+    {{#unless isGridView}}
+        <!-- Show List View Headings -->
+        <div class="sortCatalogCustom">
+            <div class="list-headings">
+                <div class="col-sm-4 col-xs-4 tc-course-section">
+                    <h5 class="bold"> Name </h5>
+                </div>
+                <div class="col-sm-4 col-xs-4 tc-type">
+                    <h5 class="bold"> Description</h5>
+                </div>
+				<div class="col-sm-2 col-xs-2 tc-type">
+                    <h5 class="bold"> Requires Approval </h5>
+                </div>
+                <div class="col-sm-2 col-xs-2 plp-actions">
+                    <h5 class="bold"> Actions </h5>
+                </div>
+            </div>
+        </div>
+    {{/unless}}
+
+    <!--- Start PLP GridView -->
+    {{#if isGridView}}
+        <div class="grid-view">
+            {{#each prescribed in prescribeLearningPlan}}
+                <div {{ bind-attr class=":item-wrap isGridView:col-lg-3 isGridView:col-md-4 isGridView:col-sm-6 isGridView:col-xs-12 isGridView::col-xs-12" }} >
+                    <div class="item-inner-wrap" style="min-height: 220px">
+                        <div class="col-sm-6 tc-course-section">
+                            <div class="tc-course-section-inner">
+                                <b><span>Title :</span></b>
+                                {{#link-to "plpDetails" prescribed.id}} {{prescribed.name}} {{/link-to}}
+                                
+                            </div>
+
+                            <div class="tc-course-section-inner">
+                                <b><span>Description :</span></b>
+                                {{#if prescribed.description}}
+                                    {{ellipsis prescribed.description 150}}
+                                {{else}}
+                                    Description Not Available
+                                {{/if}}
+                            </div>
+							<div class="tc-course-section-inner">
+                                <b><span>Requires Approval :</span></b>
+                                {{#if prescribed.managerApproval}}
+									Yes
+								{{else}}
+									No
+								{{/if}}
+                            </div>
+
+                            <div class="tc-course-section-inner">
+                                <b><span>Actions :</span></b>
+                                {{#if canAssignPLP}}
+                                    <div class="plp-actions-section">
+                                        <a id="tc-addtolp2" data-target="#addPrescribedModal" data-toggle="modal" {{action "openUserSelectionModel" prescribed.id "true"}}
+                                          >Assign</a>
+                                    </div>
+                                {{/if}}
+                                {{#if  prescribed.managerEmail}}
+                                    {{#if prescribed.isManagerAssigned}}
+                                        <div class="plp-actions-section">
+                                            Already assigned by manager
+                                        </div>
+                                    {{else}}
+                                        {{#if prescribed.plpCompleted}}
+                                            <ul>
+                                                <span> - </span>
+                                            </ul>
+                                        {{else}}
+                                            <div class="plp-actions-section">
+                                                <a id="dropId" {{action "togglePrescribedLearningPlanEnrollment" "drop" prescribed.id}}>Delete</a>
+                                            </div>
+                                        {{/if}}
+                                    {{/if}}
+                                {{else}}
+                                    {{#if selfAssignPLP}}
+                                        <div class="plp-actions-section" style="width:180px">
+                                            <a id="registerId" {{action "togglePrescribedLearningPlanEnrollment" "enrol" prescribed.id}}>Self
+                                                Assignment</a>
+                                        </div>
+                                    {{/if}}
+                                {{/if}}
+                                {{#if canAssignPLP}}
+                                    <label class="plpchek">
+                                        {{view Ember.Checkbox checkedBinding="prescribed.plpSelectCheckbox" bubbles=false}}
+                                        <span class="lbl"></span>
+                                    </label>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    {{else}} <!--- End PlP GridView -->
+
+    <!-- PLP ListView -->
+    <div {{ bind-attr class=":sortCatalogCustomHeader" }} >
+        {{#each prescribed in prescribeLearningPlan}}
+            <div class="clearfix learning-plan-row">
+							<span class="col-sm-4 col-xs-12 tc-course-section">
+								<label class="hidden-lg hidden-md hidden-sm"><strong>Name: </strong></label>
+                                {{#link-to "plpDetails" prescribed.id}} {{prescribed.name}} {{/link-to}}
+							</span>
+							<span class="col-sm-4 col-xs-12 tc-type">
+								<label class="hidden-lg hidden-md hidden-sm"><strong>Description: </strong></label>
+                                {{#if prescribed.description}}
+                                    {{ellipsis prescribed.description 150}}
+                                {{else}}
+                                    Description Not Available
+                                {{/if}}
+							</span>
+							<span class="col-sm-2 col-xs-12 tc-course-section">
+								{{#if prescribed.managerApproval}}
+									Yes
+								{{else}}
+									No
+								{{/if}}
+							</span>
+
+							<span class="col-sm-2 col-xs-12 plp-actions">
+								<label class="hidden-lg hidden-md hidden-sm"><strong>Actions: </strong></label>
+                                {{#if canAssignPLP}}
+                                    <div class="plp-actions-section">
+                                        <a id="tc-addtolp2" data-target="#addPrescribedModal" data-toggle="modal" {{action "openUserSelectionModel" prescribed.id "true"}}>Assign</a>
+                                    </div>
+                                {{/if}}
+                                {{#if  prescribed.managerEmail}}
+                                    {{#if prescribed.isManagerAssigned}}
+                                        <div class="plp-actions-section">
+                                            Already assigned by manager
+                                        </div>
+                                    {{else}}
+                                        {{#if prescribed.plpCompleted}}
+                                            <ul>
+                                                <span> - </span>
+                                            </ul>
+                                        {{else}}
+                                            <div class="plp-actions-section">
+                                                <a id="dropId" {{action "togglePrescribedLearningPlanEnrollment" "drop" prescribed.id}}>Delete</a>
+                                            </div>
+                                        {{/if}}
+                                    {{/if}}
+                                {{else}}
+                                    {{#if selfAssignPLP}}
+                                        <div class="plp-actions-section">
+                                            <a id="registerId" {{action "togglePrescribedLearningPlanEnrollment" "enrol" prescribed.id}}>Self
+                                                Assignment</a>
+                                        </div>
+                                    {{/if}}
+                                {{/if}}
+                                {{#if canAssignPLP}}
+                                    <label class="plpchek">
+                                        {{view Ember.Checkbox checkedBinding="prescribed.plpSelectCheckbox" bubbles=false}}
+                                        <span class="lbl"></span>
+                                    </label>
+                                {{/if}}
+                                <span class="lbl"></span>
+								<span class="pull-right" style="padding-top:5px;">
+									<a data-toggle="collapse" data-parent="#accordion" href="#{{unbound prescribed.id}}"
+                                       class="collapsed"></a>
+								</span>
+							</span>
+            </div>
+
+
+            <div id="{{unbound prescribed.id}}" class="panel-collapse collapse">
+                <div class="list-headings table-header-bg" style="border-top: 1px solid #e2e2e2;">
+                    <div class="col-sm-5">
+                        <label>
+                            Enrollments and Activities
+                        </label>
+                    </div>
+                    <div class="col-sm-3"><label>Type</label></div>
+                    <div class="col-sm-4"><label>Completion Status</label></div>
+                </div>
+                <!-- PLP Courses -->
+                {{#each learningPlanItem in prescribed.learningPlanItems}}
+                    <div class="enrollAct-data no-background-lp">
+                        <ul>
+                            <li class="col-sm-5">
+                                {{#if learningPlanItem.fullName}}
+                                    {{#link-to "learningCourse" learningPlanItem.courseId (query-params coursetype=learningPlanItem.courseType)}}
+                                        {{learningPlanItem.fullName}}
+                                    {{/link-to}}
+                                {{else}}
+                                    No enrollments
+                                {{/if}}
+                            </li>
+                            <li class="col-sm-3 learningPlan-type padding-LP-12">
+                                {{#if learningPlanItem.courseType}}
+                                    {{learningPlanItem.courseType}}
+                                {{else}}
+                                    No type
+                                {{/if}}
+                            </li>
+                            <li class="col-sm-4 learningPlan-type">
+                                {{learningPlanItem.courseCompleted}}
+                            </li>
+                        </ul>
+                    </div>
+                {{/each}}
+            </div>
+        {{/each}}
+    </div>
+    {{/if}}
+    <!--pagination -->
+    <div class="tc-pagination">
+        <div>
+            {{pagination-link action='gotoPlpPage' totalResults=plpPageList pageNumber=plpPageNumber}}
+        </div>
+    </div>
+    <!-- PLP ListView /-->
+    {{#if isPlpSelected }}
+        {{#if canAssignPLP}}
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+						{{#if buttonDisabled}}
+							<button id="bttn-add-plp" data-target="#addPrescribedModal" data-toggle="modal"
+									class="btn btn-sm btn-primary pull-right btn-add-plp" {{bind-attr disabled=buttonDisabled}} >
+								<span class="icon-add-plp-white"></span> Add Users To Prescribed Learning Plan(s)
+							</button>
+						{{else}}
+							<button id="bttn-add-plp" data-target="#addPrescribedModal" data-toggle="modal"
+									class="btn btn-sm btn-primary pull-right btn-add-plp" {{action "openUserSelectionModel" prescribed.id "true"}}>
+								<span class="icon-add-plp-white"></span> Add Users To Prescribed Learning Plan(s)
+							</button>
+						{{/if}}
+                    </div>
+                </div>
+            </div>
+        {{/if}}
+    {{/if}}
+    {{else}}
+        <div class="no-value">No Learning Plans to display</div>
+    {{/if}}
+    <!-- /. Add Prescribed Learning Plan modals -->
+
+    <div class="manager-plp-assign-screen">
+
+   {{outlet plpUsersOutlet}}
+
+{{else}}
+    <!-- Check if Courses Exist -->
+
+    <div class="sortCatalogCustom filter-by-radio-wrapper">
+
+        <div class="col-lg-8 col-lg-push-4 col-md-8 col-md-push-4 col-sm-8 col-sm-push-4 col-xs-12 filter-items-wrapper">
+
+            <ul class="horizontal-list">
+                <li class="filter-by-title">Filter By:</li>
+                <li class="views-filter">
+                    {{view Ember.RadioButton name="selectionTest" checked="true" selectionBinding="filterByDate" value="all"}}
+                    <span class="lbl"></span>
+                    <label class="grey"> All</label>
+                </li>
+                <li class="views-filter">
+                    {{view Ember.RadioButton name="selectionTest" selectionBinding="filterByDate" value="1week"}}
+                    <span class="lbl"></span>
+                    <label class="grey"> 1 Week</label>
+                </li>
+                <li class="views-filter">
+                    {{view Ember.RadioButton name="selectionTest" selectionBinding="filterByDate" value="1month"}}
+                    <span class="lbl"></span>
+                    <label class="grey"> 1 Month</label>
+                </li>
+                <li class="views-filter">
+                    {{view Ember.RadioButton name="selectionTest" selectionBinding="filterByDate" value="3months"}}
+                    <span class="lbl"></span>
+                    <label class="grey"> 3 Months</label>
+                </li>
+            </ul>
+
+            <select class="filter-items-dropdown" name="" id="">
+                <option>Filter By</option>
+                <option value="all">All</option>
+                <option value="1week">1 Week</option>
+                <option value="1month">1 Month</option>
+                <option value="3months">3 Months</option>
+            </select>
+
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+
+
+    <!-- Category Filter Levels -->
+    {{#if firstLevelCategories.length}}
+        <div class="sortCatalogCustom">
+            <!-- Categories: 1st Level -->
+            <div class="category-filter-strip sub-categories">
+                <ul class="categories-horizontal-list ">
+                    {{#each firstLevelCategory in firstLevelCategories}}
+                        <li>
+                            {{#view "sub-category"}}
+                                <a href="#" {{ action "showSubCategoriesAndCourse" firstLevelCategory on="click"}} name="sub-categories">{{firstLevelCategory.name}}</a>
+                            {{/view}}
+                        </li>
+                    {{/each}}
+                </ul>
+                <ul class="categories-horizontal-list child-categories show-cats hidden-sm hidden-md hidden-lg">
+                    <li>
+                        Subcategory: 
+                        <a href="javascript:void(0);">Show text for chosen subcategory here</a>
+                    </li>
+                </ul>
+                {{#if collapsedFirstLevelCategories.length}}
+                    <div class="dropdown categories-dropdown" id="categoriesDropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="modal" data-target="#popupTemplate" {{action "openPopupTemplate" firstLevelCategories collapsedFirstLevelCategories "Sub"}}>
+                            <span class="label-desktop hidden-xs">More ...</span>
+                            <span class="label-desktop hidden-sm hidden-md hidden-lg">Select Another Subcategory</span>
+                            <!--span class="icon-caret-down categories-dropdown-caret"></span-->
+                        </a>
+                        <ul class="dropdown-menu collapsed-sub-categories" role="menu">
+                            {{#each collapsedFirstLevelCategory in collapsedFirstLevelCategories}}
+                                <li name="sub-categories">
+                                    {{#view "sub-category"}}
+                                        <a href="#" {{ action "showSubCategoriesAndCourse" collapsedFirstLevelCategory on="click"}} name="sub-categories">{{collapsedFirstLevelCategory.name}}</a>
+                                    {{/view}}
+                                </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                {{/if}}
+                <div class="clearfix"></div>
+            </div>
+
+            <!-- Categories: 2nd Level -->
+            {{#if secondLevelCategories.length}}
+                <div class="category-filter-strip">
+                    <ul class="categories-horizontal-list child-categories">
+                        {{#each secondLevelCategory in secondLevelCategories}}
+                            <li {{ bind-attr class="secondLevelCategory.selected:active" }}>
+                                {{#view "sub-category"}}
+                                    <a href="#" {{ action "showSubCategoriesAndCourse" secondLevelCategory true on="click"}} name="child-categories" >{{secondLevelCategory.name}}</a>
+                                {{/view}}
+                            </li>
+                        {{/each}}
+                    </ul>
+                    <ul class="categories-horizontal-list child-categories show-cats hidden-sm hidden-md hidden-lg">
+                        <li>
+                            Subcategory: 
+                            <a href="javascript:void(0);">Show text for chosen subcategory here</a>
+                        </li>
+                    </ul>
+                    {{#if collapsedSecondLevelCategories.length}}
+                        <div class="dropdown categories-dropdown" id="categoriesDropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="modal" data-target="#popupTemplate" {{action "openPopupTemplate" secondLevelCategories collapsedSecondLevelCategories "Child"}}>
+                                <span class="label-desktop hidden-xs">More ...</span>
+                                <span class="label-desktop hidden-sm hidden-md hidden-lg">Select Another Subcategory</span>
+                                <!--span class="icon-caret-down categories-dropdown-caret"></span-->
+                            </a>
+                            <ul class="dropdown-menu collapsed-child-categories" role="menu">
+                                {{#each collapsedSecondLevelCategory in collapsedSecondLevelCategories}}
+                                    <li {{ bind-attr class="collapsedSecondLevelCategory.selected:active" }}>
+                                        {{#view "sub-category"}}
+                                            <a href="#" {{ action "showSubCategoriesAndCourse" collapsedSecondLevelCategory true on="click"}} name="child-categories">{{collapsedSecondLevelCategory.name}}</a>
+                                        {{/view}}
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    {{/if}}
+                    <div class="clearfix"></div>
+                </div>
+            {{/if}}
+        </div>
+    {{/if}}
+
+
+    {{#if courses.length}}
+
+        {{#unless isGridView}}
+            <!-- Show List View Headings -->
+            <div class="sortCatalogCustom">
+                <div class="list-headings">
+                    <div class="col-sm-4 tc-course-section">
+                        <h5 class="bold"> Name </h5>
+                    </div>
+                    <div class="col-sm-2 tc-type">
+                        <h5 class="bold"> Upcoming Sessions</h5>
+                    </div>
+                    <div class="col-sm-2 tc-type">
+                        <h5 class="bold"> Category</h5>
+                    </div>
+					<div class="col-sm-2 tc-actions">
+                        <h5 class="bold"> Requires Approval </h5>
+                    </div>
+                    <div class="col-sm-2 tc-actions">
+                        <h5 class="bold"> Actions </h5>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        {{/unless}}
+        <!--// end: List Headings -->
+
+        <!-- ListView -->
+        <div {{ bind-attr class=":sortCatalogCustomHeader" }} >
+        {{#each course in courses}}
+            {{#if course.name}}
+                <!-- <div class="item-wrap"> -->
+                <div {{ bind-attr class=":item-wrap isGridView:col-lg-3 isGridView:col-md-4 isGridView:col-sm-6 isGridView:col-xs-12 isGridView::col-xs-12" }} >
+
+                <div class="item-inner-wrap">
+
+
+                <div class="col-sm-4 tc-course-section">
+                    <div class="tc-course-section-inner">
+                        {{#if course.sessionApplicable}}
+                            <label class="tc-course-title">
+
+                                {{#if isGridView}}
+                                    <strong>Title :</strong>
+                                {{/if}}
+
+                                {{#link-to "learningCourse" course.id (query-params coursetype=course.courseType) class="top-minus-12"}} {{course.name}} {{/link-to}}
+                            </label>
+
+                            {{#unless isGridView}}
+                                <br />
+                                <label class="tc-course-type">
+                                    ({{course.iltViewType}})
+                                </label>
+                            {{/unless}}
+
+                            <label class="tc-session-count">
+                                {{#if course.sessionCount}} {{course.sessionCount}} Session(s){{/if}}
+                            </label>
+                        {{else}}
+                            <label class="tc-course-title">
+
+                                {{#if isGridView}}
+                                    <strong>Title :</strong>
+                                {{/if}}
+
+                                {{#link-to "learningCourse" course.id (query-params coursetype=course.courseType) class="top-minus-12"}} {{course.name}} {{/link-to}}
+                            </label>
+
+                            {{#unless isGridView}}
+                                <br />
+                                <label class="tc-course-type">
+                                    ({{course.iltViewType}})
+                                </label>
+                            {{/unless}}
+
+                        {{/if}}
+                    </div>
+                    {{#if isGridView}}
+                        <div class="tc-course-section-inner">
+                            <label class="tc-course-title">
+
+
+                                <strong>Type :</strong>
+                                {{course.iltViewType}}
+
+
+                            </label>
+                        </div>
+                    {{/if}}
+                    <div class="tc-course-section-inner">
+
+                        {{#if course.summary}}
+
+                            {{#if isGridView}}
+
+                                <strong>Description :</strong>
+
+                                {{ellipsis course.summary 150}}
+
+                            {{else}}
+
+                                <p>{{ellipsis course.summary 400}}</p>
+
+                            {{/if}}
+
+                        {{else}}
+
+                            <p><span class="no-data">Description is not available for this course.</span></p>
+
+                        {{/if}}
+
+                    </div>
+                </div>
+
+                {{#unless isGridView}}
+                    <div class="col-sm-2 tc-course-section">
+                        <div class="tc-course-section-inner tc-upcoming-sessions">
+                            {{#if course.sessionApplicable}}
+                            <p>
+                                {{#if course.isIlt}}
+                                    {{#each session in course.sessions}}
+                                        <div>{{dateInGMTFormat session.startDate}}, {{session.city}}
+                                            , {{session.country}}</div>
+                                    {{else}}
+                                        <label class="no-active-sessions">No active sessions</label>
+                                    {{/each}}
+                                {{else}}
+                                    {{#if course.isWebex}}
+                                        {{#each session in course.sessions}}
+                                            <div>{{dateInGMTFormat session.startDate}}, Duration: {{session.duration}}
+                                                min
+                                            </div>
+                                        {{else}}
+                                            <label class="no-active-sessions">No active sessions</label>
+                                        {{/each}}
+                                    {{/if}}
+                                {{/if}}
+                                </p>
+                            {{else}}
+                                <p class="no-data">Not Applicable</p>
+                            {{/if}}
+                        </div>
+                    </div>
+                {{/unless}}
+
+
+                <div class="col-sm-2 tc-course-section">
+                    <div class="tc-course-section-inner tc-course-category truncate">
+                        {{#if isGridView}}
+							<label class="tc-course-title">
+								<strong>Category :</strong>
+								<a id="tc-catid" href="#" {{action "setParentCategoryToFilter" course.displayCategory}}>{{course.displayCategory.lastCategoryName}}</a>
+							</label>
+							{{else}}
+								<a id="tc-catid" href="#" {{action "setParentCategoryToFilter" course.displayCategory}}>{{course.displayCategory.lastCategoryName}}</a>
+                        {{/if}}
+                    </div>
+                </div>
+				<div class="col-sm-2 tc-course-section">
+                    <div class="tc-course-section-inner tc-course-category truncate">
+                        {{#if isGridView}}
+							<label class="tc-course-title">
+								<strong>Requires Approval :</strong>
+								{{#if course.managerApproval}} Yes {{else}} No {{/if}}
+							</label>
+						{{else}}
+							{{#if course.managerApproval}} Yes {{else}} No {{/if}}
+                        {{/if}}
+                    </div>
+                </div>
+
+
+                <div class="col-sm-2 tc-actions tc-course-section">
+                    <!-- launch Icons -->
+
+                    <div class="tc-course-section-inner">
+
+                        {{#if isGridView}}
+                            <p><strong>Actions:</strong></p>
+                        {{/if}}
+
+                        {{#if course.isUserEnroled}}
+
+                            <div class="tc-actions-section">
+                                {{#if course.isElearning}}
+									{{#if course.pendingApproval}}
+										Pending Approval
+									{{else}}
+										<div class="tclaunch-icon">
+											<a id="tc-eurl2" href="#" {{action "onLaunch" course}}>Launch</a>
+										</div>
+									{{/if}}
+								{{/if}}
+
+								{{#if course.isQuiz}}
+									{{#if course.pendingApproval}}
+										Pending Approval
+									{{else}}
+										<div class="tclaunch-icon">
+											<a id="tc-quiz2" href="#" {{action transition course on="click"}}>Launch</a>
+										</div>
+									{{/if}}
+								{{/if}}
+
+								{{#if course.isScorm}}
+									{{#if course.pendingApproval}}
+										Pending Approval
+									{{else}}
+										<div class="tclaunch-icon">
+											<a id="tc-scorm2" href="#"  {{action "onLaunch" course}}>Launch</a>
+										</div>
+									{{/if}}
+								{{/if}}
+                            </div>
+
+                        {{/if}}
+                        <!-- End launch iocns ./-->
+
+                        {{#if course.alreadyInLearningPlan}}
+                            <div class="tc-actions-section">
+                                <!--Added To Learning Plan ICON -->
+                                <a id="tc-addtolp2" {{action "learningPlanModal" course.id "true"}}>Added To Learning
+                                    Plan</a>
+                            </div>
+                        {{else}}
+                            <div class="tc-actions-section">
+                                <!--Add To Learning Plan ICON -->
+                                <a id="tc-addedtolp2" {{action "learningPlanModal" course.id}}>Add To Learning Plan</a>
+                            </div>
+                        {{/if}}
+
+                        {{#unless course.hideRegister}}
+                            {{#if course.isUserEnroled}}
+                                <div class="tc-actions-section">
+
+                                    <!--To hide drop button for ILT, WBT, WebEx Courses-->
+                                    {{#if course.sessionApplicable}}
+                                        <a style="display:none" data-dismiss="modal"
+                                           data-target="#dropModal{{unbound course.id}}{{unbound course.categoryid}}"
+                                           data-toggle="modal">Drop</a>
+                                    {{else}}
+                                        {{#if course.completed}}
+                                        {{else}}
+                                            <a id="tc-drop3" data-dismiss="modal"
+                                               data-target="#dropModal{{unbound course.id}}{{unbound course.categoryid}}"
+                                               data-toggle="modal">Drop</a>
+                                        {{/if}}
+                                    {{/if}}
+                                </div>
+                            {{else}}
+                                <div class="tc-actions-section">
+
+                                    <!--To hide register button for ILT, WBT, WebEx Courses-->
+                                    {{#if course.sessionApplicable}}
+                                        <a style="display:none" data-dismiss="modal"
+                                           data-target="#registerModal{{unbound course.id}}{{unbound course.categoryid}}"
+                                           data-toggle="modal">Register</a>
+                                    {{else}}
+                                        {{#if course.completed}}
+                                        {{else}}
+                                            <a id="tc-enroll3" data-dismiss="modal"
+                                               data-target="#registerModal{{unbound course.id}}{{unbound course.categoryid}}"
+                                               data-toggle="modal">Register</a>
+                                        {{/if}}
+                                    {{/if}}
+                                </div>
+                            {{/if}}
+                        {{/unless}}
+
+                    </div>
+
+                </div>
+
+                <div class="clearfix"></div>
+
+                </div>
+
+                </div>
+                <!-- modal data for DROP -->
+                <div class="modal fade" id="dropModal{{unbound course.id}}{{unbound course.categoryid}}" tabindex="-1"
+                     role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close white" data-dismiss="modal"
+                                        aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel"> Drop Learning Enrollment</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="modal-section">
+                                    <p class="gray-text"> Please confirm you want to drop this learning offering. Some
+                                        dropped offerings may still be charged to your department. Please review the
+                                        official drop policy to learn about all effects, costs, and consequences
+                                        associated with dropping.</p>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal"> Cancel
+                                </button>
+                                <a href="#" {{ action "unEnrollCourse" course.id course.enrollmentId on="click"}}>
+                                    <button id="DropOffering" type="button" class="btn btn-sm btn-primary"
+                                            data-dismiss="modal">Drop Enrollment
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- modal data for DROP //-->
+
+                <!-- modal data for REGISTER -->
+                <div class="modal fade" id="registerModal{{unbound course.id}}{{unbound course.categoryid}}"
+                     tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header learningplanblue-header no-radius">
+                                <button type="button" class="close font-25" data-dismiss="modal" aria-hidden="true"><i
+                                        class="icon-remove white top-7"></i></button>
+                                <h4 class="modal-title" id="myModalLabel"><i class="icon-register-white"></i> Register
+                                </h4>
+                            </div>
+                            <div class="modal-body padding-bottom-20 no-padding-left no-padding-right overflow-x-hidden">
+                                <div class="modal-section">
+                                    <form action="#" method="POST" id="createLPForm">
+                                        <fieldset>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                     <div class="padding-10"><i class="glyphicon glyphicon-info-sign bigger-150 top-5 margin-right-8"></i> <b>Cancellation Policy</b>: Please refer to Course Description
+													 
+													 <p class="gray-text">If you wish to register click the <strong>Register</strong>
+                                                        button.</p>
+                                </div>
+                                                </div>
+                                            </div>
+
+                                            <input type="hidden" value="3f92894361bea6974217642e1be91cb1bb548e15"
+                                                   id="authenticity_token1" name="authenticity_token">
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer padding-12">
+                                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                                <a href="#" {{ action "enrollCourse" course.id course.managerApproval on="click"}}>
+                                    <button id="RegisterPopUp" class="btn btn-primary" data-dismiss="modal">Register
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal data for REGISTER//-->
+
+            {{/if}}
+        {{/each}}
+        <!-- data -->
+        </div>
+
+        <!--pagination -->
+        <div class="tc-pagination">
+            <div>
+                <!-- pagination -->
+                {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+            </div>
+        </div>
+        <div class="tc-nodata">{{model.status}}</div>
+        <!-- ListView ./-->
+
+
+
+        <!-- if courses.length == false: -->
+    {{else}}
+
+        <div class="no-value">No courses to display</div>
+
+    {{/if}}
+    <!--// courses.length -->
+{{/if}}
+<!-- End Plp List -->
+
+
+</div><!--/.widget-body-->
+
+</div>
+<!--/.page-content-->
+
+
+<div class="shareModal">
+    <div class="modal fade" id="addACourseToLP" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header learningplanblue-header modal-create-header clearfix">
+                    <button type="button" class="close white" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="addlearning-TrainingCatlog-icon"></i>Add To
+                        Learning Plan</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-section select-personal">
+                        <!-- <i class="margin-right-10 selectLP-TrainingCatlog-icon"></i> -->
+                        <!--dropdown-->
+                        <div class="btn-group select-style" data-icon-after="caret-down">
+                            {{view Ember.Select
+                            contentBinding=learningPlans
+                            classNames="form-control"
+                            optionValuePath="content.id"
+                            optionLabelPath="content.name"
+                            valueBinding="controller.planId"
+                            id="planSelector"}}
+                        </div>
+                        <!--dropdown-->
+                    </div>
+                    <h4 class="align-center">OR</h4>
+
+                    <div class="modal-section">
+                        <i class="createP-TrainingCatlog-icon margin-right-10"></i>
+                        <span class="grey">Create new Individual Learning Plan (70 character limit):</span>
+
+                        <div class="form-group">
+                            {{input type="text" class="form-control tc-addPlanTextBox" placeholder="Type a Title" value=learningPlanName maxlength="70"}}
+                            {{#if errors.title}}
+                                <span style="color:red;float:left;padding-left:6px">{{errors.title}}</span>
+                            {{/if}}
+                        </div>
+                    </div>
+					{{#if showDate}}
+						<div class="modal-section">
+							<i class="setdate-TrainingCatlog-icon"></i>
+							<span class="grey"> Set a date for Learning Plan completion</span>
+						</div>
+						<div class="col-sm-12">
+							<div class="input-group date addToPlpPopup" data-provide="datepicker">{{input class="date-picker-input" valueBinding="learningPlanDate"}}<i class="btn icon-calendar learning_calendar_btn"></i>
+							</div>
+						</div>
+					{{/if}}
+                    <!-- set date-->
+                    <div class="modal-section set-date-container">
+                        {{#if errors.date}}
+                            <span style="color:red;float:left;padding-left:6px">{{errors.date}}</span>
+                        {{/if}}
+                    </div>
+                </div>
+				
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary"
+                            data-dismiss="modal" {{action "cancelAddToLp" on="click"}}>Cancel
+                    </button>
+                    {{#if update}}
+                        <button type="button"
+                                class="btn btn-sm btn-primary" {{action "addToLearningPlan" courseId oldLearningPlanId learningPlanItemId on="click"}}>
+                            Move
+                        </button>
+                    {{else}}
+                        <button type="button"
+                                class="btn btn-sm btn-primary" {{action "addToLearningPlan" courseId on="click"}}>Add
+                        </button>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{outlet popupTemplate}}

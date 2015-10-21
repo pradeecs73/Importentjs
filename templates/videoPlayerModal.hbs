@@ -1,0 +1,12 @@
+<div class="modal-header learningplanblue-header modal-create-header clearfix">
+    <button type="button" class="close font-25" {{action closeVideoPlayerModal}}>
+        <i class="icon-remove white"></i>
+    </button>
+    <h4 class="modal-title"> Video Player</h4>
+</div>
+<div class="modal-body">
+    {{#video-player document=document appId=appId}}{{/video-player}}
+</div>
+<div class="modal-footer">
+    {{!--<button class="btn btn-sm btn-primary" {{action closeVideoPlayerModal}}>Ok</button>--}}
+</div>

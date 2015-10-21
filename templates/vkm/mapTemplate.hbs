@@ -1,0 +1,175 @@
+<div class="vkm-main-content " id="vkm-window">
+	
+	<!-- TOP PANEL -->
+	<div class="vkm-top-panel-wrap clearfix" id="vkm-navbar">
+	{{view App.VkmTopNavView}}
+	</div>
+	
+	<!-- PAGE CONTENT -->
+	<div class="vkm-page-content clearfix" id="pageContent">
+
+		<!-- INNER CONTENT -->
+		<div class="widget-body">
+
+			
+
+
+			<div class="fake-compare-modal vkm-modal-outer">
+
+				<div class="image-wrap">
+				
+					<div class="col-xs-5 modal-control-panel">
+						<a href="#" class="btn close-hover-modal" data-icon-before="x-thin"></a>
+					</div>
+
+					<div class="topic-target"></div>
+
+					<!--<img src="assets/images/social-demo/dialog_compare.png" alt="">-->
+
+				</div>
+
+				<div class="vkm-modal-bg"></div>
+
+			</div>
+
+
+
+			<div class="widget-body-inner">
+			
+                <div id="successMessageDiv" class="vkm-alerts vkm-alerts-danger hide">
+					<p>
+						No Knowledge Topic Map to display for the selected User or Filter Values.
+					</p>
+				</div>
+				
+				<div id="vkm-map-nav-wrapper" class="vkm-map-nav-wrapper has-heading">
+					<!-- BREADCRUMBS -->
+					{{#view App.clickKnowledgeView}}
+					<div class="breadcrumbs-wrapper" id="breadcrumb-wrapper">
+						<ul class="breadcrumb">
+							<li class="active">My Connections</li>
+						</ul>
+					</div>
+					{{/view}}
+					<!-- CURRENT MAP TITLE / SUBTITLE -->
+			        <div class="container header-panel" id="vkm-page-header">
+			            <div class="row">
+			                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			                	<div class="vkm-map-icon"></div>
+			                	<div class="vkm-map-title">
+				                    <h1 class="eclipse-text"></h1>
+				                    <h2 class="eclipse-text"></h2>
+			                	</div>
+			                </div>
+			            </div>
+			        </div>
+				</div>
+
+				<!-- <div class="bubble-chart-container">
+				<div id="sample-bubble-chart"></div>
+				</div> -->
+				{{view App.VkmModalView}}
+				{{#view App.clickKnowledgeView}}
+				<div id="social-map" class="social-map" data-map-view="connections" data-entity="">
+					<div id="map-menu" class="map-menu">
+							
+					</div>
+					<div id="kmap-menu" class="kmap-menu hide">
+							<ul id="knowledge-map-links">
+								{{#each item in dropdown}}
+									<li class ="{{unbound item.value }}" data-icon-before= "{{unbound item.dataIcon}}" data-val="{{unbound item.value}}" data-map-topic="{{ unbound item.datatopic}}" {{action "changeTopbarListItem" item.value}}>
+										<a data-val="{{unbound item.name}}" href="#">{{item.name}}</a></li>
+								{{/each}}
+							</ul>
+					</div>
+
+					<div id="map-content" class="map-content">
+							
+					</div>
+				
+				</div>
+				{{/view}}
+
+				<div class="filter-wrapper">
+					<div class="filter-container">
+						<div id="current-filters" class="filter-list">
+							<h5>Filters: </h5>
+						</div>
+					</div>
+				</div>
+
+
+				{{#if items}}
+				<div class="filter-wrapper filters-active">
+					<!-- <a href="#" class="btn reset-filters-btn"> <i class="icon-refresh"></i> Clear All Filters</a> -->
+					<h5>Filters ({{items.length}}/5):</h5>
+					<div id="filter-container">
+					{{#each item in items}}
+						<span class="filter-tag">
+							<span class="inner-info">
+								<span data-categ="{{ unbound item.category }}" data-info="'+item.term+'" class="filter-text">{{item.term}}</span> 
+								<a title="Remove Filter" class="icon-remove" data-categ="{{unbound item.category}}" {{action "removeFilter" item.term item.category}}></a>
+							</span>
+						</span>
+					{{/each}}
+					<span class="filter-tag clear-all-btn">
+						<span class="inner-info">
+							<a title="Remove Filter" class="icon-remove" {{action "clearAllFilters" }}> </a>
+							<span class="filter-text" {{action "clearAllFilters" }}>Clear All Filters</span> 
+						</span>
+					</span>
+				</div>
+				</div>
+				{{/if}}
+			</div>
+
+			<div class="side-control-panel hide">
+				<a data-icon-before="search-plus" class="btn zoom-in"></a>
+				<a data-icon-before="search-minus" class="btn zoom-out"></a>
+				<a data-icon-before="expand2" class="btn fullscreen" id="enter-fullscreen"></a>
+				<a data-icon-before="arrow-share" class="btn share"></a>
+				<a data-icon-before="scale-tipped-left" class="btn compare" disabled></a>
+				<a data-icon-before="question-circle2" class="btn help"></a>
+			</div>	
+
+			<!-- Knowledge Map Legend -->
+			<!--<div class="vkm-legend-wrap" id="kmap-legend">
+				<a href="#" data-toggle="collapse" data-target="#kmap-legend-content" data-icon-before="caret-down" class="legend-toggle" id="kmap-legend-toggle">Legend</a>
+				<div id="kmap-legend-content" class="vkm-legend-panel collapse in">
+
+					<div class="vkm-labels-wrap">
+						<span class="kmap-legend-label legend-label-expert">Expert</span>
+						<span class="kmap-legend-label legend-label-beginner">Beginner</span>
+						<span class="kmap-legend-label legend-label-advanced">Advanced</span>
+						<span class="kmap-legend-label legend-label-intermediate">Intermediate</span>
+						<span class="kmap-legend-label legend-label-foundational">Foundational</span>
+					</div>
+					<img class="legend-image" src="assets/images/social-demo/map-legend.png" alt="" />
+					<ul class="vkm-legend-color-key">
+						<li class="kmap-legend-me">Me</li>
+						<li class="kmap-legend-others">Others in My Job Role</li>
+					</ul>
+				</div>
+			</div>-->			
+
+			{{#view App.clickKnowledgeView}}
+			<!-- Knowledge Map Legend -->
+			<div class="vkm-legend-wrap" id="smap-legend">
+				<a href="#" data-toggle="collapse" data-target="#smap-legend-content" data-icon-before="caret-down" class="legend-toggle" id="smap-legend-toggle">Legend</a>
+				<div id="smap-legend-content" class="vkm-legend-panel collapse in">
+					<ul class="vkm-legend-color-key">
+						<li class="kmap-legend-direct">direct</li>
+						<li class="kmap-legend-indirect">indirect</li>
+					</ul>
+				</div>
+			</div>
+			{{/view}}
+
+		</div>
+		<!-- RIGHT SIDEBAR -->
+		{{view App.VkmSidebarView}}
+		
+
+	</div><!--/.page-content -->	
+</div>		
+

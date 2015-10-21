@@ -1,0 +1,112 @@
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-1 item-image">
+            <img src="assets/images/klib/file_generic-{{{unbound imageType}}}.png" alt="" class="ui-selectee cursor-normal" />
+            <div class="type-banner {{{unbound imageType}}}-file-type">
+                {{{unbound documentType}}}
+            </div>
+            {{#if duration}}
+                <div class="time-limit-area">
+                    <span class="glyphicon glyphicon-play-circle black"></span>
+                    <span class="video-time-limit">{{formattedDuration}}</span>
+                </div>
+            {{/if}}
+        </div>
+        <div class="col-2">
+            <p class="item-title eclipse-text">
+                <a class="eclipse-text view-details" {{bind-attr href='documentDetailPath'}}>{{title}}</a>
+            </p>
+            {{#if parentController.sharedWithEnabled}}
+                {{#if hasShares}}
+                    <a class="file-user-share eclipse-text" data-toggle="popover"
+                       data-html="true" data-trigger="manual" data-placement="bottom" title=""
+                       {{!--data-content="<span>Shared with: Amy Adams (amyadam), Bonnie Bates (bonbate), Derek Deese (derdees), Don Lo (donlo), Emilia Evers (emievers) <a data-dismiss=&quot;modal&quot; data-target=&quot;#editFileSharing&quot; data-toggle=&quot;modal&quot; class=&quot;openShareModal&quot;>+ 30 other members</a></span>"--}}
+                       data-content="<span>Shared with: </span>"
+                       data-original-title=""><i class="icon-group"></i></a>
+                {{/if}}
+            {{/if}} 
+            <div class="clearfix"></div>      
+            <div class="item-description">
+                <p class="eclipse-text">
+                    {{#if description}}
+                        {{description}}
+                    {{/if}}
+                </p>
+                {{#if tagsExists}}
+                <ul class="item-tags truncate" data-icon-before="tag">
+                    {{#each tag in tagsToDisplay}}
+                        <li><span class="truncate">{{tag}}</span></li>
+                    {{/each}}
+                        <!--li class="filler"></li-->
+                    {{#if ellipsiseTags}}
+                        <li class="no-bg eclipse-text"><a class="view-details" {{bind-attr href='documentDetailPath'}}>...</a></li>
+                    {{/if}}
+                </ul>
+                {{/if}}
+            </div>
+        </div>
+        <div class="col-3">
+            <span class="info-label">Size </span>
+
+            <p class="subtitle item-size">{{humanReadableFileSize size}}</p>
+        </div>
+        <div class="col-4">
+            <span class="info-label">Modified </span>
+
+            <p class="subtitle modf-date">{{formatDate modifiedOn "DD-MMM-YYYY"}}</p>
+
+            <p class="subtitle modf-time">{{formatDate modifiedOn "hh:mm:ss A"}}</p>
+        </div>
+        <div class="col-5">
+            <span class="info-label">Uploaded </span>
+
+            <p class="subtitle modf-date">{{formatDate uploadedOn "DD-MMM-YYYY"}}</p>
+
+            <p class="subtitle modf-time">{{formatDate uploadedOn "hh:mm:ss A"}}</p>
+        </div>
+        <div class="col-6">
+            <span class="info-label">Actions </span>
+            <ul class="file-actions">
+                {{#view-file document=model appId=appId fileUnavailable='openFileUnavailableModal' videoAvailable='openVideoPlayerModal' detailsPage=false tagName='li'}}{{/view-file}}
+                {{#if parentController.downloadEnabled}}
+                    <li>
+                        {{#download-link document=model}}{{/download-link}}
+                    </li>
+                {{/if}}
+                {{#if parentController.sharingEnabled}}
+                    <li>
+                        <a class="btn edit-file" data-target="#editFileSharing" data-rel="tooltip" data-original-title="Share" data-icon-before="arrow-share" {{action "openShareDocumentModal" model}} data-toggle="modal" data-dismiss="modal" href="">
+                        </a>
+                    </li>
+                {{/if}}
+                {{#if parentController.deleteEnabled }}
+                    {{#if canDelete }}
+                        <li>
+                            <a class="btn" data-icon-before="trash-o" data-rel="tooltip" data-original-title="Delete" data-toggle="modal" data-target="#deleteFile" {{action "openDeleteConfirmationModal" model}}></a>
+                        </li>
+                    {{/if}}
+                {{/if}}
+                <li>
+                    <div class="alert-danger hide" id="forbiddenErrorMessage_{{unbound id}}">Operation not authorized.</div>
+                </li>
+                <li>
+                    <div class="alert-danger hide" id="notFoundErrorMessage_{{unbound id}}">The file has been deleted.</div>
+                </li>
+                <li>
+                    <div class="alert-danger hide" id="forbiddenOrNotFoundErrorMessage_{{unbound id}}">Operation not authorized or the file has been deleted</div>
+                </li>
+            </ul>
+            {{#if parentController.multiSelectEnabled}}
+            <!--div class="select-box">
+                <label>
+                    <input class="ccks" type="checkbox" name="form-field-checkbox">
+                    <span class="lbl"> </span>
+                </label>
+            </div-->
+            {{/if}}
+        </div>
+    </div>
+
+</div>
+
+

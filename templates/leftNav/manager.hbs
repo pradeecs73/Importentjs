@@ -1,0 +1,24 @@
+{{#if hasReportees}}
+<ul class="nav nav-list">
+    <li class="active">
+        <button class="dropdown-toggle" data-icon-after="caret-right">
+            <i class="icon-network menu-icon"></i>
+            <span class="menu-text"> Manager </span>
+        </button>
+        <ul class="submenu">
+            <li>
+                {{#link-to 'myTeam' (query-params filters="" searchText="" pageNumber=1 manageruniqueid=loginuserid managerUserName=loginshortname keepUserSelection=false) activeClass='active'}}
+                    <i class="activities hide"></i> <span class="menu-text">My Team({{hasReportees}})</span>
+                {{/link-to}}
+            </li>
+            {{#if viewPendingApprovals}}
+                <li>
+                    {{#link-to 'pendingApprovals' activeClass='active'}}
+                        <i class="activities hide"></i> <span class="menu-text">Pending Approvals({{pendingApprovalsCount}})</span>
+                    {{/link-to}}
+                </li>
+            {{/if}}
+        </ul>
+    </li>
+</ul>
+{{/if}}

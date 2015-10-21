@@ -1,0 +1,42 @@
+<div id="adminCategorise-tab" class="tab-pane active">
+    <div class="widget-box transparent" id="recent-box">
+        <div class="widget-header widget-header-flat padding-12">
+            <h4 class="lighter"><i class="icon-list orange"></i>Categorise Documents</h4>
+        </div>
+
+
+        <div class="row padding-12">
+
+			{{#if model}}
+				{{#each topic in model itemController="adminTopicItem"}}
+
+                    <div class="col-sm-6 col-md-6 col-lg-4">
+                        <div class="kc-tile">
+                            <form {{action "updateCategory" this on="submit"}}>
+
+                                <div class="tag-cloud" {{bind-attr id="prefixedTopicId"}}>
+									{{#each token in topic.tokens}}
+                                        <span {{bind-attr style="token.fontSize"}}>{{token.value}}</span>
+									{{/each}}
+                                </div>
+
+                                <div {{bind-attr class=":form-group isSuccessAlert:has-success isFailureAlert:has-error"}}>
+	                            <span class="block input-icon input-icon-right">
+									{{input type="text" value=category placeholder="Enter Category" class="form-control input-mask-date" focus-in="setEditMode" focus-out="exitEditMode"}}
+                                    <i {{bind-attr class="isSuccessAlert:icon-ok-sign isFailureAlert:icon-remove"}}></i>
+		                        </span>
+
+                                    <div class="help-block col-xs-12 col-sm-reset inline"> {{alert.message}} </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+				{{/each}}
+			{{else}}
+                <div class="no-value"> No results found </div>
+			{{/if}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="page-header">
+    <h1> System </h1>
+</div>
+
+<div class="tabbable toggle_view admin-tabs">
+
+    <ul class="nav nav-tabs padding-left-18 tab-size-bigger" id="adminTab">
+
+        {{#if licenceTabEnabled}}
+            {{#link-to "system.licenseBatch" data-target="#admin-outlet" tagName="li"}}
+                <a>Licensing</a>
+            {{/link-to}}
+        {{/if}}
+
+        {{#if preferenceTabEnabled}}
+            {{#link-to "system.preferences" data-target="#admin-outlet" tagName="li"}}
+                <a>Site Management</a>
+            {{/link-to}}
+        {{/if}}
+
+    </ul>
+
+    <div class="tab-content no-border" id="admin-outlet">
+        <div class="message-container"></div>
+        {{#if showErrorTab}}
+            <h3>Access Denied.</h3>
+            <h5>It looks like the required permission to perform this administrative operation has been revoked. Please
+                refresh this application to access the relevant administrative operations.</h5>
+        {{else}}
+            {{outlet}}
+        {{/if}}
+
+    </div>
+
+</div>

@@ -1,0 +1,206 @@
+<div class="page-content">
+<div class="page-header">
+    <h1>
+        Trending Topics
+    </h1>
+</div>
+<div class="row">
+<div class="tabbable">
+
+
+
+<ul class="inbox-tabs nav nav-tabs padding-16 tab-size-bigger tab-space-1" id="myTab">
+    <li class="active">
+      <a data-toggle="tab" href="#trending_documents">
+        <i class="blue icon-book bigger-100"></i>
+              <span class="bigger-110">
+                Documents
+
+              </span>
+      </a>
+    </li>
+</ul>
+
+<div class="tab-content no-border">
+<div class="searchCatalogCustom">
+  <div class="table-top-header">
+    <div class="col-sm-12">
+
+      <div class="filter clearfix">
+        <div class="label label-lg label-yellow arrowed-right pull-left">Other Trending </div>
+
+        <div class="filter-tags trending col-lg-9">
+          <ul class="kc-tags col-xs-12 col-sm-12 col-md-12 col-lg-11 clearfix"
+              ng-hide="loading || minLengthError || !items.length">
+              {{#each allOtherTopics}}
+                <li>
+                    {{#link-to "trendingTopic" this.name}}
+                      <span class="label label-xlg label-info">{{this.name}}<span
+                        class="badge badge-yellow">{{this.documentCount}}</span></span>
+                    {{/link-to}}
+                </li>
+
+              {{/each}}
+          </ul>
+        </div>
+        <div id="toggle_view" class="clearfix pull-right toggle-view-container">
+          <a id="catalog-grid-view" {{ bind-attr class=":toggle_view :icon-grid-layout :col-lg-3 :rborder isGridView:active" }} {{action toggleView "grid-view" target=view}}></a>
+          <a id="catalog-list-view" {{ bind-attr class=":toggle_view :icon-list-layout :col-lg-3 isGridView::active" }} {{action toggleView "list-view" target=view}}></a>
+        </div>
+      </div>
+
+      <h5 class="pull-left no-margin">Showing Results for
+        <span class="label label-xlg label-success arrowed arrowed-right">
+            {{topicName}}
+            <span class="badge badge-info">{{documentItems.documents.searchResultDocuments.length}}</span>
+        </span>
+      </h5>
+    </div>
+
+    <div class="clearfix"></div>
+  </div>
+</div>
+<div id="trending_documents" class="widget-container">
+    {{#if documentItems.documents}}
+      <div id="search_results" class="large-grid-view">
+        <!-- PAGE CONTENT BEGINS -->
+        <div class="row">
+        {{#each documentItems.documents.searchResultDocuments itemController='documentItem'}}
+          {{#if isGridView}}
+              <div class="col-sm-4 col-md-4 col-lg-3">
+                <div class="kc-grid withPopOver" data-rel="popover" data-container="body" data-toggle="popover" data-placement="auto right" data-original-title="" title="">
+                  <h2 class="grid-header">
+                    <div class="category-image">
+                      <i class="white icon-file"></i>
+                    </div>
+                    <div class="grid-title">
+                        {{#link-to 'document' document.id class="white"}}
+                            {{documentTitle}}
+                        {{/link-to}}
+
+                    </div>
+                  </h2>
+                  <div class="grid-sub-section summary">
+                      {{{description}}}...
+                  </div>
+                  <div class="grid-sub-section">
+                    <span>Type:</span>
+                    <span> {{document.fileType}}</span>
+                  </div>
+                  <div class="grid-sub-section">
+                    <span>Uploaded on: </span>
+                    <span> 09/04/2014</span>
+                  </div>
+                  <div class="grid-sub-section last">
+                    <div class="align-left action-icons">
+                        {{#read-link document=document readable=readable}}
+                          <span class="btn btn-sm btn-primary">Read</span>
+                        {{/read-link}}
+                    </div>
+                  </div>
+                  <div class="catalogPopover">
+                    <div class="widget-container contact-tile-onHover">
+                      <div class="widget-box">
+                        <div class="widget-header">
+                          <strong class="modal-document-name popover-document-title">
+                              {{documentTitle}}
+                          </strong>
+                        </div>
+
+                        <div class="widget-body">
+                          <div class="widget-main no-padding">
+                            <div class="dataCont description">
+                              <div class="document-subtitle">
+                      <span class="grey"><b>Categories: </b>
+                          {{#each category in categories}}
+                              {{category}},
+                          {{/each}}
+                      </span></div>
+                              <div class="grey"><b>Summary : </b>
+                                  {{{description}}}...
+                              </div>
+                              <div class="clearfix"></div>
+                            </div>
+                            <div class="dataCont">
+	                            {{#each document.userTags}}
+                                    <span class="tag">{{this}}</span>
+	                            {{/each}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          {{else}}
+              <div class=" catalog-list-view">
+                 <div class="document-catalog">
+                   <div class="category-description-block position-relative">
+                <div class="category-image">
+                  <i class="blue icon-file"></i>
+                  <span class="blue">
+                      {{document.fileType}}
+                  </span>
+                </div>
+                <div class="document-name">
+                    {{#link-to 'document' document.id}}
+                        {{documentTitle}}
+                    {{/link-to}}
+                </div>
+
+                <div class="document-subtitle"><span class="grey"><b>Categories:</b>
+                  {{#each category in categories}}
+                      {{category}},
+                  {{/each}}
+                </span></div>
+                <div class="category-block-description">
+                  <p class="category-description"><b>Summary : </b>
+                      {{{description}}}...
+                  </p>
+
+	                {{#each document.userTags}}
+                        <span class="tag">{{this}}</span>
+	                {{/each}}
+
+
+                </div>
+                <div class="document-upload-date">
+                  <div><span class="grey uploaded-date">Uploaded on: </span>
+                  </div>
+
+                  <div class="action-buttons">
+                    <div class="pull-right">
+                      <div id="ember1394" class="ember-view">
+                        <a href="/reader/content/show?x=d1e5bd7ea8dc403188ccba32ed6e00c1822d0dc1" >
+
+                        <span class="btn pull-right">Read</span>
+
+                      </a></div>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+              </div>
+                 </div>
+              </div>
+          {{/if}}
+        {{/each}}
+        </div>
+        <!-- PAGE CONTENT ENDS -->
+      </div>
+      <!-- /search results -->
+    {{else}}
+      <div class="no-value"> No results found </div>
+    {{/if}}
+</div>
+
+
+
+</div>
+
+</div>
+
+</div>
+<!-- /.row -->
+</div><!-- /.page-content -->

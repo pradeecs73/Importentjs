@@ -1,0 +1,18 @@
+<div class="tab-inner-wrap clearfix">
+
+	<div class="tab-summary">
+		{{#if jobRoles}}
+			<ul class="tab-summary-list" id="jobTitleList">
+				{{#each jobTitle in jobRoles}}
+					{{#if jobTitle.addToFilter}}
+					<li data-placement="left" data-toggle="tooltip" data-categ="titles" data-uri-info='{{unbound jobTitle.jobRoleURI}}' data-original-title='{{unbound jobTitle.jobRole}}' class="long-text active"><a class="filter-link" alt="{{unbound jobTitle.jobRole}}" title="{{unbound jobTitle.jobRole}}" href="#" {{action "removeFilter" jobTitle.jobRole "jobRoles"}}>{{jobTitle.jobRole}}</a></li>
+					{{else}}
+					<li data-placement="left" data-toggle="tooltip" data-categ="titles" data-uri-info='{{unbound jobTitle.jobRoleURI}}' data-original-title='{{unbound jobTitle.jobRole}}' class="{{unbound jobTitle.cssClass}}"><a class="filter-link" alt="{{unbound jobTitle.jobRole}}" title="{{unbound jobTitle.jobRole}}" href="#" {{action "selectFilter" jobTitle.jobRole jobTitle.jobRoleURI "jobRoles"}}>{{jobTitle.jobRole}}</a></li>
+					{{/if}}
+				{{/each}}
+				
+			</ul>
+		{{/if}}
+	</div>
+										
+</div>

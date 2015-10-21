@@ -1,0 +1,109 @@
+<article class="people-list-view">
+  <section class="display-table">
+      <div class="position-relative">
+        {{#if shouldShowVisitingCard}}
+          {{ view App.PeoplePopOverView }}
+        {{/if}}
+      </div>
+    <div class="display-table-cell position-relative">
+      <div class="position-relative">
+        <div class="content-section no-margin-left">
+          <div class="pull-left">
+            {{avatarMini fullName username}}
+          </div>
+          <div class="pull-left status-message-section">
+            {{#unless isCurrentUser}}
+            <i>{{ render "jabberStatusPill" model}}</i>
+            {{/unless}}
+          </div>
+          <div class="pull-left line-height-normal">
+            <span class="profile-name">{{profileLink fullName username}}</span>
+
+            {{ellipsis jobTitle 35}}
+            <p><strong>{{activeMessage}}</strong></p>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        {{# if expertise.length}}
+        <span class="expert-badge icon-badge-shield"> </span>
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="display-table-cell email-location-section">
+      <div class="content-section">
+        <i class="icon-building bigger-120"></i>
+        <span class="align-to-center">
+          {{#if organization}}
+            {{organization}}
+          {{else}}
+            <i>Not Specified</i>
+          {{/if}}
+        </span>
+        <div>
+          <i class="icon-location-pin bigger-120"></i>
+          <span class="align-to-center">{{location.city}}{{isCommaRequired}}{{ellipsis location.country 5}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="display-table-cell">
+      <div class="content-section">
+        <i class="icon-home bigger-120"></i>
+        <span class="align-to-center">
+          {{#if location.address}}
+            {{location.address}}
+          {{else}}
+            <i>Not Specified</i>
+          {{/if}}
+        </span>
+      </div>
+    </div>
+
+  </section>
+  <footer>
+    {{#unless isCurrentUser}}
+      <span class="contact-icons pull-left">
+        <i>{{ render "jabberItem" model}}</i>
+        <i>{{ render "webexItem" model}}</i>
+      </span>
+    {{/unless}}
+    <div class="contact-numbers">
+      <i class="icon-phone bigger-140"></i>
+      <span class="align-to-center">
+        {{#if contactNumber}}
+          {{contactNumber}}
+        {{else}}
+          <i>Not Specified</i>
+        {{/if}}
+      </span>
+    </div>
+    <div class="contact-numbers">
+      <i class="icon-envelope-closed bigger-140"></i>
+      <span class="align-to-center">
+        {{#if email}}
+          <a {{bindAttr href='mailTo'}} class='email' onclick="javascript:event.stopPropagation();">{{email}}</a>
+        {{else}}
+          <i>Not Specified</i>
+        {{/if}}
+      </span>
+    </div>
+  {{#if isMultiSelectEnabled}}
+    <div class="pull-right extra-icons">
+      <span class="checkbox-more-actions">
+        {{#unless isCurrentUser}}
+                <span onclick="javascript:event.stopPropagation();">
+            <label {{bindAttr class=":middle :pull-right multiSelectEnabled:show:hide"}}>
+            {{view Ember.Checkbox checkedBinding="controller.userChecked" bubbles=false}}
+            <span class="lbl"></span>
+          </label>
+        </span>
+    {{/unless}}
+    <div class="clearfix"></div>
+    </span>
+    </div>
+    {{/if}}
+    <div class="clearfix"></div>
+  </footer>
+
+</article>

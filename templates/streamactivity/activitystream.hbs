@@ -1,0 +1,356 @@
+<div class="active-stream-bg activeStream">
+	<div class="active-stream-bg">
+		<div class="row  active-stream-page">
+		    <div class="col-xs-12 col-sm-8 col-lg-8 col-md-8">
+		      	<div class="row gray-box">
+		        	<div class="col-xs-9 col-lg-11"  style="padding-bottom:10px;">
+		        		<div  class="col-xs-2 col-lg-1" style="padding:0 !important;">
+		        			<img src="../../assets/images/activity/header_stream_icon.png" width="36" height="36" alt="" style="margin:5px 0 0 0;" /> 
+		        		</div>
+		        		<div class="col-xs-10 col-lg-11">
+		        			<span class="asp-title" style="line-height:normal;">Activity Stream</span>
+		        		</div>
+		        	</div>
+		        	<div class="hidden-xs hidden-sm col-lg-1 listing-type"> 
+		        		<div id="activity_toggle_view" class="clearfix pull-right toggle-view-container">
+							<a id="activity-list-view" {{bind-attr class=":toggle_view :icon-list-layout :rborder :col-lg-3 isGridView:active"}} {{action toggleView "list-view" target=view}}></a>
+					        <a id="activity-grid-view" {{ bind-attr class=":toggle_view :icon-grid-layout :col-lg-3  isGridView::active" }} {{action toggleView "grid-view" target=view}}></a>
+					    </div>
+		        	</div>
+		        	<div class="hidden-md hidden-lg col-xs-3 col-sm-3" style="padding:10px 0 0 0;"> 
+		        		<a id="actMobSrchTgl" class="btn dropdown-toggle navbar-button">
+		        			<span class="icon-srch pull-left" style="right:0 !important;"></span> 
+		        		</a>
+		        		<a id="actMobFltrTgl" class="btn dropdown-toggle navbar-button">
+		        			<span class="icon-flter pull-left"></span> 
+		        		</a>
+		        	</div>
+		        	<div class="hidden-xs hidden-sm col-xs-12 col-sm-12 col-lg-6 col-md-6" id="mobileactsrchgrp" style="margin:0 0 10px 0;">
+		          		<div class="input-group round-borders-6">
+		            		{{input value=search id="searchactivities" class="width2x form-control" placeholder="Search Activities"}}
+			            	<span class="input-group-btn" id="searchImgIcon">
+								<i class="icon-srch nav-search-icon"></i>
+							</span>
+		            	</div>
+		        	</div>
+		        	<div class="hidden-xs hidden-sm col-xs-12 col-sm-12 col-lg-6 col-md-6" id="mobileactfltrgrp">
+		        		<div id="activityStreamView"></div>
+		        	</div>
+		      	</div>
+		    </div>
+		</div>
+		{{#if isGridView}}
+			{{#if formatdiscussions}}
+				<div id="divDiscussion" class="activity_stream">
+					<div class="row">
+						<div class="gray-box col-xs-12 col-sm-8 col-lg-8 col-md-8">
+								{{#each boundobj in formatdiscussions}}
+									<div class="activityrow active-stream-page row" {{bindAttr data-title="boundobj.dtitle"}}>
+			    						<div class="fold" style="padding:0 !important;margin:0 !important;">
+				            				<div class="media">
+												<div  class="col-xs-2 col-lg-1" style="text-align:center;">
+				    								{{displayobjecttype boundobj.objtype}}
+				    								<div class="activityType">{{boundobj.objtype}}</div>
+				    							</div>
+				        						<div class="col-xs-10 col-lg-11">
+			          								<div class="row">
+			            								<div class="col-xs-7 col-lg-9">
+			              									<h4 style="margin:10px 0 0 0 !important;">{{boundobj.dtitle}}<span class="time-stamp"></span></h4>
+			              									<div class="link-color">
+			              										{{boundobj.dactor}} commented {{timeagofilter boundobj.dlatest}}, {{displayMonth boundobj.dlatest}} {{displayDate boundobj.dlatest}}, {{displayTime boundobj.dlatest}}
+			              									</div>
+			            								</div>
+			            								<div class="col-xs-3 col-lg-2 no-padding">
+			              									<div class="pull-right icon-2x blue likeSpace">
+			              										<span class="likeiconcls"></span><i class="icon-thumbs-up-alt"></i>
+			              									</div>
+			              								</div>
+			            								<div class="col-xs-2 col-lg-1 show-more-stream">
+			              									<div class="pull-right">
+			                									<div>
+			                										<div style="margin:11px 2px 0 0;">{{boundobj.dcount}}</div>
+			                									</div>
+			              									</div>
+			            								</div>
+			          								</div>
+			          								<div class="spacer10"></div>
+			          								<div class="row" style="padding: 0 0 10px 0;">
+			            								<div class="col-xs-10 col-lg-8">
+			            									<div class="pull-left" style="padding:20px 0 0 0;display:none;" onclick="App.ActEventUtil.prevpeople(event,this);">
+																<img class="revimg" src="../../assets/images/activity/arrow-right.png" hspace="12"  width="12" {{bindAttr total-people="boundobj.dpeople.length"}}>
+															</div>
+			            									<div class="pull-left pplprnt ovrflw">
+			            										<div class="avlblppl" style="right:3px;">
+					            									{{#each person in boundobj.dpeople}}
+																		{{avatarMiniDisc person}}
+																	{{/each}}
+																</div>
+															</div>
+															<div class="pull-left" style="z-index:999;width:50px;margin:19px 0 0 10px;" onclick="App.ActEventUtil.nextpeople(event,this);">
+																<div class="pull-left">
+																	<img src="../../assets/images/activity/arrow-right.png" hspace="12"  width="12" {{bindAttr total-people="boundobj.dpeople.length"}}>
+																</div>
+															</div>
+			            								</div>
+			          								</div>
+			          								<div class="spacer10"></div>
+			        							</div>
+			        						</div>
+			        					</div>
+			    					</div>
+							    	{{#each actobj in boundobj.uactivities}}
+							    		<div class="active-stream-page row">
+											<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 gradient-white-box">
+												<div class="row user-post">
+									  				<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+									  					<div class="pull-left">
+															{{avatarPerson actobj._source.actor.displayName actobj._source.id}}
+															<div class="date-stamp">{{displayDate actobj._source.published}}</div>
+															<div class="month-stamp">{{displayMonth actobj._source.published}}</div> 
+									        			</div>
+									        			<div class="pull-left col-xs-7 col-md-7 col-sm-10 col-lg-10">
+													 		<p>{{actobj._source.title}} {{removeHTMLTagsForEllipsisDisplay actobj._source.object.ellipsisedContent}}</p>
+										          			<span class="link-color">{{actobj._source.actor.displayName}}, {{timeagofilter actobj._source.published}}</span>
+									          			</div>
+										        		<div class="pull-right grey">
+										        			<div render-like {{bindAttr ref-entity-type="boundobj.objtype" ref-entity-id="actobj._id"}} class="right-move like-enabled first"  onclick="App.ActEventUtil.calculatelike(event,this);">
+					                    					</div>
+								              			</div>
+									        		</div>
+									      		</div>
+									    	</div>
+									    </div>
+								    {{/each}}
+				    				<div class="spacer2"></div>
+								{{/each}}
+						</div>
+					</div>	
+				</div>
+			{{/if}}
+		{{else}}
+			{{#if formatdiscussions}}
+			<style>
+				@media screen and (max-width: 767px) {
+					.bigger-110{font-size: 110%!important;}
+					.col-sm-12{width: 100%!important;}
+				}
+			</style>
+			<div id="divDiscussion" class="activity_stream">
+				<div class="row">
+					<div class="col-xs-12 col-sm-8 col-lg-8 col-md-8">
+					<div class="row gray-box">
+					{{#each boundobj in formatdiscussions}}
+						{{#oddevenrow _view.contentIndex}}
+							<div style="clear:both;"></div>
+						{{/oddevenrow}}
+				        <div class="activityrow col-xs-8 col-sm-6 col-md-6" {{bindAttr data-title="boundobj.dtitle"}}>
+				          	<div class="fold">
+				            	<div class="media"> 
+					            	<a class="pull-left mediaImage" href="#" style="margin-right:0;text-align:center;">
+					            		{{displayobjecttype boundobj.objtype}}
+					            		<div class="activityType">{{boundobj.objtype}}</div>
+					              	</a>
+					              	<div class="media-body">
+					                	<div class="caption">
+					                  		<h4 {{bindAttr title=boundobj.dtitle}}>{{truncateTitle boundobj.dtitle}}</h4>
+					                  		<div class="link-color">{{boundobj.dactor}} commented {{timeagofilter boundobj.dlatest}},</div> 
+											<div class="link-color">
+					                  			{{displayMonth boundobj.dlatest}} {{displayDate boundobj.dlatest}}, {{displayTime boundobj.dlatest}} 
+					                  		</div>
+					                  		<div class="spacer20"></div>
+					                  		<div class="row" style="padding: 0 0 10px 0;">
+			            						<div class="col-xs-8 col-lg-8">
+					            					<div class="pull-left" style="padding:20px 0 0 0;display:none;" onclick="App.ActEventUtil.prevpeople(event,this);">
+														<img class="revimg" src="../../assets/images/activity/arrow-right.png" hspace="12"  width="12" {{bindAttr total-people="boundobj.dpeople.length"}}>
+													</div>
+					            					<div class="pull-left" style="width:76%;overflow:hidden;">
+					            						<div class="avlblppl" style="right:3px;">
+							            					{{#each person in boundobj.dpeople}}
+																{{avatarMiniDisc person}}
+															{{/each}}
+														</div>
+													</div>
+													<div class="pull-left" style="z-index:999;width:15px;margin:19px 0 0 10px;" onclick="App.ActEventUtil.nextpeople(event,this);">
+														<div class="pull-left">
+															<img src="../../assets/images/activity/arrow-right.png" hspace="12"  width="12" {{bindAttr total-people="boundobj.dpeople.length"}}>
+														</div>
+													</div>
+			            						</div>
+			            						<div class="col-xs-4 paddingT20"> 
+					                  				<span class="icon-2x blue"><span class="likeiconcls"></span><i class="icon-thumbs-up-alt"></i></span>
+					                  			</div>
+			          						</div>
+					                	</div>
+				            		</div>
+				        		</div>
+				    		</div>
+						</div>
+					{{/each}}
+					</div>
+					</div>
+			    </div>
+			</div>
+			{{/if}}
+		{{/if}}
+	</div>
+</div>
+<div {{bindAttr class=":col-xs-12 :col-sm-8 :col-lg-8 :col-md-8 :text isnotification:no-value"}}>
+	{{nodatamsg}}
+</div>
+{{!-- modal-content --}}
+<div id="modal-table" class="modal fade" tabindex="-1">
+<div class="modal-dialog" style="left:auto !important">
+<div class="modal-content">
+	<div class="modal-header no-padding">
+		<div class="table-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+			<span class="white">&times;</span>
+			</button>
+			List of "Activity Stream"
+		</div>
+	</div>
+	<div class="modal-body no-padding">
+		<table class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
+			<thead>
+				<tr>
+					<th>Activity</th>
+					<th>
+						<i class="icon-time bigger-110"></i>
+						Capture Status
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>View forum</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>
+				<tr>
+					<td>Reply to forum</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>
+				<tr>
+					<td>Create forum</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>
+				<tr>
+					<td>Rate a forum</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>
+				<tr>
+					<td>Mark a forum as favorite</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>
+				<tr>
+					<td>Follow a forum</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>
+				<tr>
+					<td>Like a forum</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>
+				<tr>
+					<td>View blog</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>
+				<tr>
+					<td>Reply to blog</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>
+				<tr>
+					<td>Create blog</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>
+				<tr>
+					<td>Rate a blog</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>
+				<tr>
+					<td>Mark a blog as favorite</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>
+				<tr>
+					<td>Follow a blog</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>
+				<tr>
+					<td>Like  a blog</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>
+				<tr>
+					<td>Create a course</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>
+				<tr>
+					<td>Rate  a course</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>
+				<tr>
+					<td>Follow a course</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>
+				<tr>
+					<td>Like  a course</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>
+				<tr>
+					<td>View a course</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>				
+				<tr>
+					<td>Enroll a course</td>
+					<td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+				</tr>
+				<tr>
+                    <td>Create a community</td>
+                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+                </tr>
+                <tr>
+                    <td>Edit a community</td>
+                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+                </tr>
+                <tr>
+                    <td>Join a community</td>
+                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+                </tr>
+                <tr>
+                    <td>View a community</td>
+                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+                </tr>
+                <tr>
+                    <td>Like a community</td>
+                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+                </tr>
+                <tr>
+                    <td>Follow a community</td>
+                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+                </tr>
+                <tr>
+                    <td>Rate a community</td>
+                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+                </tr>
+                <tr>
+                    <td>Mark a community as favorite</td>
+                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+                </tr>
+                <tr>
+                    <td>Like a document</td>
+                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+                </tr>
+                <tr>
+                    <td>Follow a document</td>
+                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+                </tr>
+                <tr>
+                    <td>Rate a document</td>
+                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+                </tr>
+                <tr>
+                    <td>Mark a document as favorite</td>
+                    <td><span class="label label-success arrowed-in arrowed-in-right">Yes</span></td>
+                </tr>			
+			</tbody>
+		</table>
+	</div>
+</div>
+{{!-- /.modal-content --}}

@@ -1,0 +1,750 @@
+<link href="assets/css/app/coursedetails-innerstyle.css" rel="stylesheet" />
+
+{{#if courseDetails.type}}
+
+	<div class="eLearningCustom page-content course-details-page">
+		<div id="successMessageDiv" class="alert alert-block alert-success hide">
+			<button type="button" class="close" >
+				<i class="icon-remove"></i>
+			</button>
+			<p>
+				<i class="icon-ok" id="status-message-icon"></i> <span id="status-message-text"></span> {{message}}
+			</p>
+		</div>
+
+		<div class="clearfix"></div>
+
+		<div class="header-panel border-bottom row-header widget-padding-title">
+			 <div class="row">
+				<!-- title-->
+				<div class="col-lg-6 col-md-5 col-sm-5 col-xs-12">
+					<div class="cd-header-title">
+						<h4 class="lighter">{{courseDetails.title}} <label class="tc-course-type">({{courseDetails.type}})</label></h4>
+					</div>
+				</div>
+				<!-- title//-->
+
+				<!-- social strip-->
+				<div class="col-lg-4 col-md-5 col-sm-4 col-xs-12">
+					<div class="eLearningCustom details-page">
+						<div class="social-strip clearfix  tc-social-strip">
+							<div class="clearfix">
+								<div class="share-icon pull-right last">
+									<a id="cd-share" href="#">
+										<span title="" class="pointer icon-size" data-icon-before="arrow-share" data-rel="tooltip" data-original-title="Share" data-toggle="modal" data-target="#shareCourse" data-placement="top">
+										</span>
+									</a>
+								</div>
+								<div class="social pull-right" ref-entity-id="{{unbound activityId}}" ref-entity-type="course"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--social strip //-->
+
+				<!--actions-->
+				<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+					<div class="actions">
+						<div class="approvals">
+							<span class="dark-border inline-border line-height-normal actioniconsright">
+								
+								{{#if learningplanStatus}}
+									<a href="#" id="cd-addedtolp" class="drop-add-plan-margin-top" data-toggle="modal" data-target="#addACourseToLP" {{action "learningPlanModal" "true"}}>Added To Learning Plan</a> 
+								{{else}}
+									<a href="#" id="cd-addtolp" data-toggle="modal" data-target="#addACourseToLP" {{action "learningPlanModal"}}>Add To Learning Plan</a> 
+								{{/if}}
+								
+								
+								{{#if courseDetails.registerButton}}
+									 {{#if markAsComplete}}
+										{{else}}
+											{{#if enrollmentStatus}}
+													<a id="cd-drop" data-dismiss="modal" data-target="#dropModal" data-toggle="modal">Drop</a>
+												{{else}}
+													{{#if courseDetails.visible}}
+														<a id="cd-register" data-dismiss="modal" data-target="#registerModal" data-toggle="modal">Register</a>
+													{{else}}
+														<a id="cd-register" {{action "disabledCourse"}}>Register</a>
+													{{/if}}
+											{{/if}}
+									{{/if}}	
+							   {{/if}}
+
+							</span>
+						</div>
+					</div>
+				</div>
+				<!--actions//-->
+			</div>
+		</div>
+
+		<div class="clearfix"></div>
+
+
+		<!--Course Description -->
+		<div class="userprofileRow padding-left-right padding-top" id="courseDeatilsCourseSummary">
+			{{#if courseDetails.description}} {{enableRichText courseDetails.description}} {{else}}
+			<span class="no-data">Description is not available for this course.</span>
+			{{/if}}
+		</div>
+		<!--Course Description// -->
+
+       <!-- Course Category -->
+		<div>
+			<ul class="tc-course-category">
+				<span>&nbsp;Category: </span>
+				{{#each category in courseDetails.category}}
+					<li> {{category.categoryName}} </li>
+				{{/each}}
+			</ul>
+		</div>
+		<!-- End Course Category -->
+
+		<div class="grey padding-left-right">
+			{{#if courseDetails.managerApproval}} This Course Requires Manager Approval {{/if}}
+		</div>
+
+		<!--likes/ views--->
+		<div class="grey padding-left-right">
+			<span class="tc-likes"><i class="icon-thumbs-up icon-1x black"></i> {{stats.likes}} likes </span>
+			<span class="tc-views"><i class="icon-eye-open icon-1x black"></i> {{stats.views}} views </span>
+		</div >
+
+
+		{{#if hasSessions}}
+			<div class="widget-box transparent">
+					<div class="widget-header widget-header-flat widget-padding row-header remove-rightborder">
+						<div class="col-sm-11">
+							<h4 class="lighter">Available Sessions</h4>
+						</div>
+						<div class="col-sm-1">
+							<a data-toggle="collapse" data-parent="#accordion" class="pull-right" href="#ILT" id="cd-ilt" style="padding-top:8px"></a>
+						</div>
+					</div>
+					
+			<div class="panel-collapse collapse in" id="ILT">
+			{{#if sessionCount}}
+				<div class="widget-body">
+					<div class="widget-body-inner" style="display: block;">
+						<div class="widget-header widget-header-flat widget-padding row-header remove-rightborder remove-topborder cd-border-bottom">
+							<!-- sorting-->
+							<div class="sorting-container session-options container">
+								<!-- -->
+								<div class="row">
+									<div class="col-lg-6 col-md-4 col-sm-4 col-xs-4">
+										{{#if courseDetails.isIlt}}
+											<div class="droplabel city">City &nbsp;&nbsp;</div>
+											<div class="btn-group select-style citybox session-dropdown">
+												{{view Ember.Select prompt="All" contentBinding=sessionCityData optionValuePath="content" optionLabelPath="content" valueBinding="controller.sessionCity" class="form-control"}}
+											</div>
+										{{/if}}
+									</div>
+									<div class="col-lg-3 col-md-4 col-sm-4 col-xs-4">
+										<div class="btn-group select-style sdate session-dropdown">
+											{{view Ember.Select prompt="All" contentBinding=sessionStartData optionValuePath="content.value" optionLabelPath="content.label" valueBinding="controller.sessionStartDate" class="form-control"}}
+										</div>									
+										<div class="droplabel from">Start Date</div>
+									</div>
+									{{#if courseDetails.isIlt}}
+										<div class="col-lg-3 col-md-4 col-sm-4 col-xs-4">
+											<div class="btn-group select-style edate session-dropdown">
+												{{view Ember.Select prompt="All" contentBinding=sessionEndData optionValuePath="content.value" optionLabelPath="content.label" valueBinding="controller.sessionEndDate" class="form-control"}}
+											</div>									
+											<div class="droplabel to">End Date </div>
+										</div>
+									{{/if}}
+								</div>
+							</div>
+							<!-- sorting//-->
+						</div>
+
+						<div class="widget-main">
+							<div style="clear:both"></div>
+							<div class="inner-page-content">
+								<div class="row">
+									<div class="col-sm-12">
+										{{#each session in sessions}}
+											<!--cd gridview-->
+											<div class="cd-gridview">
+												<div class="col-sm-3">
+													<div class="kc-grid">
+														<div class="grid-sub-section">
+															<div class="margin-bottom">Session Name: <b>{{ellipsis session.sessionName 70}}</b></div>
+															{{#if courseDetails.isIlt}}
+																<div class="margin-bottom">City: {{#if session.city}}<b>{{session.city}}</b>{{else}} <b>No city</b>{{/if}}</div>
+																{{#if session.state}}
+																<div class="margin-bottom">State: <b>{{session.state}}</b>
+																</div>
+																{{/if}}
+																{{#if session.country}}
+																<div class="margin-bottom">Country: <b>{{session.country}}</b></div>
+																{{/if}}
+															{{/if}}
+															{{#if courseDetails.isIlt}}
+																{{#each facility in session.sessionDates}}
+																	{{#unless _view.contentIndex}}
+																	<div class='margin-bottom'>Facility: 
+																	{{#if facility.roomName}}<b>{{facility.roomName}}</b>{{else}} <b>No facility</b>{{/if}}
+																	</div>
+																	{{/unless}}
+																{{/each}}
+															{{/if}}
+															
+															{{#if session.sessionStartdate}}
+																<div class="margin-bottom">Start Date: <b>{{dateInGMTFormat session.sessionStartdate}}</b>
+																</div>
+															{{else}}
+																<div class="margin-bottom"><b>Start Date: No start date</b></div>
+															{{/if}}
+
+															{{#if courseDetails.isIlt}}<div class="margin-bottom">End Date:<b>{{dateInGMTFormat session.sessionEnddate}}</b></div>{{/if}}
+
+
+															
+															{{#if courseDetails.isIlt}}
+																{{#each facility in session.sessionDates}}
+																	{{#unless _view.contentIndex}}
+																	<div class='margin-bottom'>Instructor: 
+																	{{#if facility.firstname}}<b>{{facility.firstname}}</b>{{else}} <b>No Instructor</b>{{/if}}
+																	</div>
+																	{{/unless}}
+																{{/each}}
+																
+																{{else}}
+																	{{#if session.sessionInstructor}}
+																		<div class="margin-bottom">Instructor: <b>{{session.sessionInstructor}}</b>
+																		</div>
+																	{{else}}
+																		<div class="margin-bottom">Instructor: <b>No Instructor</b>
+																		</div>
+																	{{/if}}
+															{{/if}}
+															
+
+															<div class="margin-bottom">Duration: {{#if session.duration}}<b>{{session.duration}}</b>{{else}} <b> No duration</b>{{/if}}	
+															</div>
+															{{#if courseDetails.isWebex}}
+																<div class="margin-bottom">Enrolled Date: {{#if session.sessionEnrollmentDate}}<b>{{dateInGMTFormat session.sessionEnrollmentDate}}</b>{{else}} <b> No enrolled date</b>{{/if}}														
+																</div>
+															{{/if}}
+															<div class="margin-bottom">
+																<label class="recentCheck">
+																	{{input type="checkbox" checked=session.modify change=showSessionParticipants}} 
+																	<span class="lbl"></span> Show Participants
+																</label>
+															</div>
+															<div class="margin-bottom">
+																{{#if courseDetails.isWebex}}
+																	{{#if session.sessionEnrollmentStatus}}
+																	<div class="item-announcement">
+																		<p>
+																			Join the Webex meeting on <b>{{dateInGMTFormat session.sessionStartdate}}</b>.
+																		</p>
+																	</div>
+																	
+																	{{/if}}
+																{{/if}}
+															</div>														
+															<div class="margin-bottom">{{#if session.launch}}<span class="pull-left padding-top10">Actions: </span>{{/if}}
+																{{#if session.sessionEnrollmentStatus}}
+																	<a id="cd-sessiondrop" href="#" class="btn btn-primary session-btn" data-dismiss="modal" data-target="#sessionDropModal{{unbound courseDetails.courseId}}{{unbound session.sessionId}}" data-toggle="modal">Drop</a>
+
+																	{{#if session.pendingApproval}}
+																		Pending Approval
+																	{{else}}
+																	   {{#if session.launch}}
+																			<a class="cd-launchButton" href="#" {{action "onWebexLaunch" courseDetails session}} style="padding-left:5px" > Launch</a>
+																	   {{/if}}
+																	{{/if}}
+																{{else}}
+																	<a id="cd-sessionenroll" href="#" class="btn btn-primary session-btn" data-dismiss="modal" data-target="#sessionRegisterModal{{unbound courseDetails.courseId}}{{unbound session.sessionId}}" data-toggle="modal" >Enroll</a>
+																{{/if}}
+															</div>
+															{{#if courseDetails.isIlt}}
+																{{#each sessionDates in session.sessionDates}}
+																	<button type="button" class="btn btn-sm btn-primary next-days-buttons" data-toggle="popover" data-placement="top" data-content="
+																		<div class='margin-bottom day2'><b>Day {{sessionDates.day}}</b></div>
+																		<div class='margin-bottom'>Facility: <b>{{sessionDates.roomName}}</b></div>
+																		<div class='margin-bottom'>Area Name: <b>{{sessionDates.areaName}}</b></div>
+																		<div class='margin-bottom'>City: <b>{{sessionDates.city}}</b></div>
+																		<div class='margin-bottom'>Start Date: <b>{{dateInGMTFormat sessionDates.timestart}}</b></div>
+																		<div class='margin-bottom'>End Date:<b>{{dateInGMTFormat sessionDates.timefinish}}</b> </div>
+																		<div class='margin-bottom'>Instructor: <b>{{sessionDates.firstname}}, {{sessionDates.lastname}}</b></div>">
+																	</button>
+																{{/each}}
+															{{/if}}
+														</div>
+													</div>
+												</div>
+											</div>
+											<!--gridview//-->
+
+											<!-- Session Register Modal-->
+											<div class="searchTrainingCatalogCustom">
+												<div class="modal fade" id="sessionRegisterModal{{unbound courseDetails.courseId}}{{unbound session.sessionId}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+													<div class="modal-dialog">
+														<div class="modal-content">
+															<div class="modal-header learningplanblue-header no-radius">
+																<button type="button" class="close font-25" data-dismiss="modal" aria-hidden="true"><i class="icon-remove white top-7"></i>
+																</button>
+																<h4 class="modal-title" id="myModalLabel"><i class="icon-register-white"></i> Register for Session</h4>
+															</div>
+															<div class="modal-body padding-bottom-20 no-padding-left no-padding-right overflow-x-hidden">
+																<form action="#" method="POST" id="createLPForm">
+																	<fieldset>
+																		<div class="row">
+																			<div class="col-sm-12">
+																				<div class="padding-10"><i class="glyphicon glyphicon-info-sign bigger-150 top-5 margin-right-8"></i> <b>Cancellation Policy</b>: Please refer to Course Description
+																				 <p class="gray-text">If you wish to register click the <strong>Register</strong>
+                                                        button.</p>
+																				</div>
+																			</div>
+																		</div>
+
+																		<input type="hidden" value="3f92894361bea6974217642e1be91cb1bb548e15" id="authenticity_token1" name="authenticity_token">
+																	</fieldset>
+																</form>
+															</div>
+															<div class="modal-footer padding-12">
+																<button class="btn btn-sm btn-danger" type="button" data-dismiss="modal">Cancel</button>
+																<a id="cd-register-link2" href="#" {{action "enrollSession" courseDetails.courseId courseDetails session.sessionId courseDetails.managerApproval on="click" }}>
+																	<button id="cd-register-button2" class="btn btn-sm btn-primary" data-dismiss="modal">Register</button>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<!--Session Register Modal ../ -->
+
+											<!-- Session drop Modal-->
+											<div class="searchTrainingCatalogCustom">
+												<div class="modal fade" id="sessionDropModal{{unbound courseDetails.courseId}}{{unbound session.sessionId}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+													<div class="modal-dialog">
+														<div class="modal-content">
+															<div class="modal-header">
+																<button type="button" class="close white" data-dismiss="modal" aria-hidden="true">&times;</button>
+																<h4 class="modal-title" id="myModalLabel"> Drop Learning Enrollment Session</h4>
+															</div>
+															<div class="modal-body">
+																<div class="selectLP-icon2">
+																	<span class="grey">Please confirm you want to drop this learning offering. Some dropped offerings may still be charged to your department. Please review the official drop policy to learn about all effects, costs, and consequences associated with dropping.</span>
+																</div>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+																<a id="cd-drop-link2" href="#" {{action "cancelSession" courseDetails.courseId courseDetails session.sessionId session.enrollmentId on="click" }}>
+																	<button id="cd-drop-button2" class="btn btn-sm btn-primary" data-dismiss="modal">Drop Enrollment</button>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<!-- Session drop Modal .../ -->
+										{{/each}}
+
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /widget-main -->
+						<div class="row cd-pagination widget-box transparent" style="margin-bottom: 20px;">
+							<div class="col-sm-4">
+								{{#if courseDetails.isIlt}}<div class="pull-left cd-padding-top-bottom5">{{cityCount}} Location(s)</div>{{/if}}
+							</div>
+							<div class="col-sm-4">
+								<!-- pagination -->
+								<div>
+									{{view App.PaginationView controllerBinding="sessions"}}
+								</div>
+								<!-- pagination// -->
+							</div>
+							<div class="col-sm-4">
+								<div class="pull-right cd-padding-top-bottom5">{{sessionCount}} Session(s)</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			{{else}}
+				<div class="no-value">No Active Sessions</div>
+			{{/if}}
+			</div>
+
+
+			<!-- /widget-body -->
+			</div>
+		{{else}}
+			<div class="widget-box transparent">
+					<div class="widget-header widget-header-flat widget-padding row-header remove-rightborder cd-border-bottom">
+						<div class="col-sm-11">
+							<h4 class="lighter">Learning Modules</h4>
+						</div>
+						<div class="col-sm-1">
+							<a data-toggle="collapse" data-parent="#accordion" class="pull-right" href="#Elearing" id="cd-eurl" style="padding-top:8px"></a>
+						</div>
+					</div>
+			
+				<div class="panel-collapse collapse in" id="Elearing">
+					<div class="widget-body">
+						<div class="widget-body-inner" style="display: block;">
+							<div class="widget-main">
+								<div style="clear:both"></div>
+								<div class="inner-page-content eLearningCustom">
+									<div class="list-headings row cd-margin-bottom">
+										<div class="col-sm-2">Module</div>
+										<div class="col-sm-2 eclipse-text">Assignment Type</div>
+										<div class="col-sm-2 eclipse-text">Requirement</div>
+										<div class="col-sm-2 eclipse-text">Completion Status</div>
+										<div class="col-sm-2 eclipse-text">Completed On</div>
+										<div class="col-sm-2">Action</div>
+									</div>
+									<div class="row cd-margin-bottom">
+										<div class="col-sm-2">
+											<p class="mobile-title">Module</p>
+											{{courseDetails.moduleName}}</div>
+										<div class="col-sm-2">
+											<p class="mobile-title">Assignment Type</p>
+											{{courseDetails.activityflag}}</div>
+										<div class="col-sm-2">
+											<p class="mobile-title">Requirement</p>
+											Required</div>
+										<div class="col-sm-2">
+											<p class="mobile-title">Completion Status</p>
+											{{#if completedOn}}
+												Completed
+											{{else}}
+												{{#if pendingApproval}}
+													Pending Approval
+												{{else}}
+													{{#if enrollmentStatus}} 
+														{{#if courseDetails.enableCompletion}}
+														<a id="cd-markascomplete" data-dismiss="modal" data-target="#markComplete" data-toggle="modal">Mark as Complete</a>
+														{{else}}
+															N/A
+														{{/if}} 
+													{{else}}
+														No Status
+													{{/if}}
+												{{/if}}
+											{{/if}}
+										</div>
+
+										{{#if completedOn}}
+											<div class="col-sm-2 cd-margin-bottom" id="completedOn">
+												<p class="mobile-title">Completed On</p>
+												{{formatDateSeconds completedOn "DD MMM YYYY"}}</div>
+										{{else}}
+											<div class="col-sm-2 cd-margin-bottom">
+												<p class="mobile-title">Completed On</p>
+												No Data</div>
+										{{/if}}
+
+										<div class="col-sm-2">
+											<p class="mobile-title">Action</p>
+											{{#if enrollmentStatus}}
+												{{#if courseDetails.isScorm}}
+													{{#if pendingApproval}}
+														Pending Approval
+													{{else}}
+														<a id="cd-launch" href="#" {{action "onLaunch" courseDetails}}>Launch</a>
+													{{/if}}
+												{{/if}}
+												{{#if courseDetails.isQuiz}}
+													{{#if pendingApproval}}
+														Pending Approval
+													{{else}}
+														<div class="dark-border">															
+															 <a id="cd-launch" href="#" {{action "transition" courseDetails}}>Launch</a>
+														</div>
+													{{/if}}
+												{{/if}}
+												{{#if courseDetails.isElearning}}
+													{{#if pendingApproval}}
+														Pending Approval
+													{{else}}
+														<a id="cd-launch" href="#" {{action "onLaunch" courseDetails}}>Launch</a>
+													{{/if}}
+												{{/if}}
+											{{/if}}
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /widget-main -->
+						</div>
+					</div>
+				</div>
+				<!-- /widget-body -->
+			</div>
+		{{/if}}
+
+
+
+		<div class="widget-box transparent">
+			<div class="widget-header widget-header-flat widget-padding row-header remove-rightborder">	
+				<div class="col-sm-11">
+					<h4 class="lighter">Recent Participants</h4>
+				</div>
+				<div class="col-sm-1">
+					<a data-toggle="collapse" data-parent="#accordion" class="pull-right collapsed"  href="#recentReaders" id="cd-recentreaders" style="padding-top:8px"></a>
+				</div>
+			</div>
+			<div class="panel-collapse cd-border-top collapse" id="recentReaders">
+				<div class="widget-body recentReaders">
+					<div class="widget-body-inner" style="display: block;">
+					<!--sorting -->
+					  <div class="filters-panel has-filter-list">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 filter-items-wrapper">
+
+								<ul class="horizontal-list">
+									<li class="filter-by-title">Filter By: </li>
+									<li class="views-filter">
+										{{view Ember.RadioButton name="selection" selectionBinding="cdFilter" value="all"}}
+										<span class="lbl"></span>
+										<label class="filter-by-label">All</label>
+									</li>
+									<li class="views-filter">
+										{{view Ember.RadioButton name="selection" selectionBinding="cdFilter" value="enrol1month"}}
+										<span class="lbl"></span>
+										<label class="filter-by-label">Enrolled in last 1 month</label>
+									</li>
+									<li class="views-filter">
+										{{view Ember.RadioButton name="selection" selectionBinding="cdFilter" value="enrol3month"}}
+										<span class="lbl"></span>
+										<label class="filter-by-label">Enrolled in last 3 months</label>
+									</li>
+									<li class="views-filter">
+										{{view Ember.RadioButton name="selection" selectionBinding="cdFilter" value="c1month"}}
+										<span class="lbl"></span>
+										<label class="filter-by-label">Completed in last 1 month</label>
+									</li>
+									<li class="views-filter">
+										{{view Ember.RadioButton name="selection" selectionBinding="cdFilter" value="c3month"}}
+										<span class="lbl"></span>
+										<label class="filter-by-label">Completed in last 3 months</label>
+									</li>
+									
+								</ul>
+
+								<select class="filter-items-dropdown" name="" id="">
+									<option>Filter By</option>
+									<option value="Enrol1month">Enrolled in last 1 month</option>
+									<option value="Enrol3month">Enrolled in last 3 months</option>
+									<option value="cOneMonth">Completed in last 1 month</option>
+									<option value="completed3month">Completed in last 3 months</option>
+								</select>
+
+							</div>
+						</div>
+						<!--sorting -->
+						<div class="widget-main clearfix">
+							<div class="page-content">
+								<div class="row">
+									<div class="col-md-12">
+										<p style="height:20px"></p>
+										{{#if recentReadersUserDataLength}}
+											{{#each contact in recentReadersUserData}} {{render "userItem" contact}} {{/each}}
+										{{else}}
+											<div class="no-value">No Participants</div>
+										{{/if}}                                        
+									</div>
+									<div class="col-md-12">
+										{{view App.PaginationView controllerBinding="recentReadersUserData"}}
+									</div>
+								</div><!--/.row-->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="widget-box transparent">
+			<div class="widget-header widget-header-flat widget-padding row-header remove-rightborder">	
+				<div class="col-sm-11">
+					<h4 class="lighter">Comments & Reviews</h4>
+				</div>
+				<div class="col-sm-1">
+					<a data-toggle="collapse" data-parent="#accordion" class="pull-right"  href="#comments" id="cd-comments" style="padding-top:8px"></a>
+				</div>
+			</div>
+			<div class="panel-collapse" id="comments">
+				<div class="widget-body recentReaders col-xs-12 col-sm-12 col-md-12 col-lg-12 courseComments cd-border-top no-padding">
+					<div class="uyan-comment" load="no" articletitle="{{unbound courseDetails.title}}" entityid="{{unbound courseDetails.courseId}}"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="dropModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close white" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel"> Drop Learning Enrollment</h4>
+					</div>
+					<div class="modal-body">
+						<div class="selectLP-icon2">
+							<span class="grey">Please confirm you want to drop this learning offering. Some dropped offerings may still be charged to your department. Please review the official drop policy to learn about all effects, costs, and consequences associated with dropping.</span>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+						<a id="tc-drop-offering" href="#" {{action "cancelCourse" courseDetails.courseId categoryid  courseDetails.enrollmentId on="click" }}>
+							<button id="tc-drop-offering1" class="btn btn-sm btn-primary" data-dismiss="modal">Drop Enrollment</button>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="searchTrainingCatalogCustom">
+			<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header learningplanblue-header no-radius">
+							<button type="button" class="close font-25" data-dismiss="modal" aria-hidden="true"><i class="icon-remove white top-7"></i> 
+							</button>
+							<h4 class="modal-title" id="myModalLabel"><i class="icon-register-white"></i> Register</h4>
+						</div>
+						<div class="modal-body padding-bottom-20 no-padding-left no-padding-right overflow-x-hidden">
+							<form action="#" method="POST" id="createLPForm">
+								<fieldset>
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="padding-10"><i class="glyphicon glyphicon-info-sign bigger-150 top-5 margin-right-8"></i> <b>Cancellation Policy</b>: Please refer to Course Description
+											<p class="gray-text">If you wish to register click the <strong>Register</strong>
+                                                        button.</p>
+											</div>
+										</div>
+										
+									</div>
+
+									<input type="hidden" value="3f92894361bea6974217642e1be91cb1bb548e15" id="authenticity_token1" name="authenticity_token">
+								</fieldset>
+							</form>
+						</div>
+						<div class="modal-footer padding-12">
+							<button class="btn btn-sm btn-danger" type="button" data-dismiss="modal">Cancel</button>
+							<a id="tc-register-button1" href="#" {{ action "enrollCourse" courseDetails.courseId categoryid courseDetails courseDetails.managerApproval on="click" }}>
+								<button id="tc-register-button2" class="btn btn-sm btn-primary" data-dismiss="modal">Register</button>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{{outlet shareCourseModelOutlet}} {{outlet activityCompleteModelOutlet}} {{outlet addToLpModalOutlet}}
+	</div>
+{{else}}
+	<h2 style="color:#e31b23;padding:10px">The SCORM package is not published, please contact your catalog administrator to preview/publish the SCORM.</h2>
+{{/if}}
+<div class="modal shareModal" id="webexModalInvalid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close white" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"> WebEx Error</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-sm-12">
+                    <div class="padding-10">
+                        <span class="grey">WebEx details matching your account are not found. Please contact Admin.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">OK</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="shareModal modal fade bs-example-modal-sm" id="markComplete" tabindex="-1" >
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header learningplanblue-header no-radius">
+				<button type="button" class="close font-25" data-dismiss="modal" aria-hidden="true"><i class="icon-remove white"></i> </button>
+				<h4 class="modal-title" id="myModalLabel"><i class="icon-check"></i> Mark as Complete</h4>
+			</div>
+			<div class="modal-body page-padding padding-bottom-20" style="padding:15px !important;">
+				<div>By selecting <strong>Complete</strong>, this learning offering will be marked as complete 
+					and the date of completion will also be recorded.
+					<p>Please note: this action is irreversible; once a user marks an offering 
+					complete, it cannot be undone.
+				</p>
+				</div>
+				
+			</div>
+			<div class="modal-footer padding-12">
+				<span class="dark-red-border inline-border">
+				<button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cancel</button>
+				</span>
+				<span class="dark-border inline-border">
+				<button type="button" id="MarkAsComplete" class="btn btn-primary btn-sm" {{action "markAsActivityComplete" courseDetails.moduleCourseId courseDetails.courseId}}>Mark as Complete</button>
+				</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal -->
+<style>
+  .textarea-no-resize {
+	resize:none;
+  }
+</style>
+<div class="shareModal training-catalog-shareModal">
+	<div id="shareCourse" class="modal fade bs-example-modal-sm " tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close white" data-dismiss="modal" aria-hidden="true" {{action clearShare on="click"}}>&times;</button>
+			<h4 class="modal-title" id="myModalLabel"><i class="glyphicon glyphicon-arrow-share white"></i> Share</h4>
+		  </div>
+		  	{{#view Ember.FlashView id="flash-view"}}
+	         	<div class="alert alert-danger" id="message">
+	            	<strong>Warning !!</strong> {{view.content.message}}.
+	        	</div>
+	    	{{/view}}
+			{{#if messages}}
+                              <div {{bind-attr class=":alert messageStatus:alert-success:alert-danger"}} > {{messages}} </div>
+            {{/if}}
+             {{#if sharing}}
+			                 <div class="progress progress-striped active">
+			                         <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+			                         </div>
+			                   </div>
+             {{/if}}
+
+		  <div class="modal-body">
+			<div class="form-group clearfix">
+				<label class="col-md-2 control-label no-padding-right glyphicon glyphicon-user align-right" for="form-field-share"></label>
+				<div class="col-md-10 word-break-custom">
+					{{bootstrap-tags-input remoteSourceConfig=fetchUsers  value=share freeInput=false componentId="shareForPost" placeHolderText="Enter shares" id="sharePopup" minCharsForSearch=1}}
+				</div>
+			</div>
+			
+			<div class="form-group clearfix">
+				<label class="col-md-2 control-label no-padding-right glyphicon glyphicon-comment align-right" for="form-field"></label>
+				<div class="col-md-10">
+					{{textarea placeholder="Default Text" id="form-field-8" class="form-control textarea-no-resize" value=comment}}
+				</div>
+			</div>
+			
+			<div class="clearfix space-2"></div>	
+		  </div>
+		  
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" {{action clearShare on="click"}}>Cancel</button>
+			<button type="button" class="btn btn-sm btn-primary"  {{action shareCourse courseDetails.courseId share on="click"}}>Share</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+</div><!-- Modal -->

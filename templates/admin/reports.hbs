@@ -1,0 +1,44 @@
+<div class="page-header">
+    <h1> Reporting </h1>
+</div>
+
+<div class="tabbable toggle_view admin-tabs">
+    <ul class="nav nav-tabs padding-left-18 tab-size-bigger" id="myTab">
+        {{#if usageTabEnabled}}
+            <li class="active">
+                {{#link-to "reports.usage" data-toggle="tab" data-target="#dashboard"}}
+                    Usage
+                {{/link-to}}
+            </li>
+        {{/if}}
+        {{#if formalLearningTabEnabled}}
+            <li>
+                {{#link-to "reports.enrollment" data-toggle="tab" data-target="#enrollments"}}
+                    Learning Enrollments
+                {{/link-to}}
+            </li>
+            <li>
+                {{#link-to "reports.learningPlan" data-toggle="tab" data-target="#plp"}}
+                    Learning Plans
+                {{/link-to}}
+            </li>
+        {{/if}}
+        <li>
+            {{#link-to "reports.allactivities" data-toggle="tab" data-target="#dashboard"}}
+                Global Activity Stream
+            {{/link-to}}
+        </li>
+    </ul>
+
+    <div class="tab-content no-border" id="admin-outlet">
+        <div class="message-container"></div>
+        {{#if showErrorTab}}
+            <h3>Access Denied.</h3>
+            <h5>It looks like the required permission to perform this administrative operation has been revoked. Please
+                refresh this application to access the relevant administrative operations.</h5>
+        {{else}}
+            {{outlet}}
+        {{/if}}
+    </div>
+
+</div>

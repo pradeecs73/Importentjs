@@ -1,0 +1,15 @@
+<div class="feed-index-view">
+    <header>
+        <h3>{{name}}</h3>
+        <span class="fui-new-24"></span>
+    </header>
+    <ul>
+        {{#each}}
+            <li>
+                {{{feedLink this}}}
+                <div class="date"> {{from-now publishedDate }}</div>
+
+            </li>
+        {{/each}}
+    </ul>
+</div>

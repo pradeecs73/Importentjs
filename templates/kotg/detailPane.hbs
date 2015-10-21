@@ -1,0 +1,143 @@
+ <div id='editingNoteArea' style='display:none;'>
+    <div style='height:48px;padding: 15px 25px 10px 0;'>
+        <span class="text icon-title" style="width:5%;font-size:24px;float:left;"></span>
+        <input type="text" id="note-editor-title" class="input-title" maxlength="100" placeholder="Title"  title="Specify at least 1 lettered title" style="width: 93%;float: left;border-radius: 3px;border: 1px solid #d8dfe5;">
+    </div>
+    <div style="margin-left:40px;color:red;display:none;" id="note-notice">title can't be blank</div>
+    <div class="col-xs-12" id="note-editor-bar">
+        <div class="btn-toolbar" data-role="editor-toolbar" data-target="#note-editor-area">
+            <div class="btn-group">
+                <a class="btn" data-icon-before="bold" data-edit="bold" title="" data-original-title="Bold (Ctrl/Cmd+B)"></a>
+                <a class="btn" data-icon-before="italic" data-edit="italic" title="" data-original-title="Italic (Ctrl/Cmd+I)"></a>
+                <a class="btn" data-icon-before="strike-through" data-edit="strikethrough" title="" data-original-title="Strikethrough"></a>
+                <a class="btn" data-icon-before="underline" data-edit="underline" title="" data-original-title="Underline (Ctrl/Cmd+U)"></a>
+            </div>
+            <hr style="width:2px;height:24px;background-color:#6282a4;float:left;margin:4px 0 0 0;">
+            <div class="btn-group">
+                <a class="btn" data-icon-before="list-bullets" data-edit="insertunorderedlist" title="" data-original-title="Bullet list"></a>
+                <a class="btn" data-icon-before="list-numbers" data-edit="insertorderedlist" title="" data-original-title="Number list"></a>
+            </div>
+            <hr style="width:2px;height:24px;background-color:#6282a4;float:left;margin:4px 0 0 0;">
+            <div class="btn-group">
+                <a class="btn dropdown-toggle" data-icon-before="text-color" data-toggle="dropdown" title="" data-original-title="Font"><span class="icon-caret-down"></span></a>
+                <table class="dropdown-menu" style="min-width:200px;padding:5px 10px;height:190px;">
+                    <tbody class="editor-color">
+                        <tr>
+                            <td colspan="10" style="border-bottom: 1px solid #ddd;">Theme color</td>
+                        </tr>
+                        <tr style="height:30px;">
+                            <td><a title="ffffff" data-edit="forecolor #ffffff" style="background-color:#ffffff;"></a></td>
+                            <td><a title="000000" data-edit="forecolor #000000" style="background-color:#000000;"></a></td>
+                            <td><a title="eeece1" data-edit="forecolor #eeece1" style="background-color:#eeece1;"></a></td>
+                            <td><a title="1f497d" data-edit="forecolor #1f497d" style="background-color:#1f497d;"></a></td>
+                            <td><a title="4f81bd" data-edit="forecolor #4f81bd" style="background-color:#4f81bd;"></a></td>
+                            <td><a title="c0504d" data-edit="forecolor #c0504d" style="background-color:#c0504d;"></a></td>
+                            <td><a title="9bbb59" data-edit="forecolor #9bbb59" style="background-color:#9bbb59;"></a></td>
+                            <td><a title="8064a2" data-edit="forecolor #8064a2" style="background-color:#8064a2;"></a></td>
+                            <td><a title="4bacc6" data-edit="forecolor #4bacc6" style="background-color:#4bacc6;"></a></td>
+                            <td><a title="f79646" data-edit="forecolor #f79646" style="background-color:#f79646;"></a></td>
+                        </tr>
+                        <tr>
+                            <td><a title="f2f2f2" data-edit="forecolor #f2f2f2" style="background-color:#f2f2f2;"></a></td>
+                            <td><a title="7f7f7f" data-edit="forecolor #7f7f7f" style="background-color:#7f7f7f;"></a></td>
+                            <td><a title="ddd9c3" data-edit="forecolor #ddd9c3" style="background-color:#ddd9c3;"></a></td>
+                            <td><a title="c6d9f0" data-edit="forecolor #c6d9f0" style="background-color:#c6d9f0;"></a></td>
+                            <td><a title="dbe5f1" data-edit="forecolor #dbe5f1" style="background-color:#dbe5f1;"></a></td>
+                            <td><a title="f2dcdb" data-edit="forecolor #f2dcdb" style="background-color:#f2dcdb;"></a></td>
+                            <td><a title="ebf1dd" data-edit="forecolor #ebf1dd" style="background-color:#ebf1dd;"></a></td>
+                            <td><a title="e5e0ec" data-edit="forecolor #e5e0ec" style="background-color:#e5e0ec;"></a></td>
+                            <td><a title="dbeef3" data-edit="forecolor #dbeef3" style="background-color:#dbeef3;"></a></td>
+                            <td><a title="fdeada" data-edit="forecolor #fdeada" style="background-color:#fdeada;"></a></td>
+                        </tr>
+                        <tr>
+                            <td><a title="d8d8d8" data-edit="forecolor #d8d8d8" style="background-color:#d8d8d8;"></a></td>
+                            <td><a title="595959" data-edit="forecolor #595959" style="background-color:#595959;"></a></td>
+                            <td><a title="c4bd97" data-edit="forecolor #c4bd97" style="background-color:#c4bd97;"></a></td>
+                            <td><a title="8db3e2" data-edit="forecolor #8db3e2" style="background-color:#8db3e2;"></a></td>
+                            <td><a title="b8cce4" data-edit="forecolor #b8cce4" style="background-color:#b8cce4;"></a></td>
+                            <td><a title="e5b9b7" data-edit="forecolor #e5b9b7" style="background-color:#e5b9b7;"></a></td>
+                            <td><a title="d7e3bc" data-edit="forecolor #d7e3bc" style="background-color:#d7e3bc;"></a></td>
+                            <td><a title="ccc1d9" data-edit="forecolor #ccc1d9" style="background-color:#ccc1d9;"></a></td>
+                            <td><a title="b7dde8" data-edit="forecolor #b7dde8" style="background-color:#b7dde8;"></a></td>
+                            <td><a title="fbd5b5" data-edit="forecolor #fbd5b5" style="background-color:#fbd5b5;"></a></td>
+                        </tr>
+                        <tr>
+                            <td><a title="bfbfbf" data-edit="forecolor #bfbfbf" style="background-color:#bfbfbf;"></a></td>
+                            <td><a title="3f3f3f" data-edit="forecolor #3f3f3f" style="background-color:#3f3f3f;"></a></td>
+                            <td><a title="938953" data-edit="forecolor #938953" style="background-color:#938953;"></a></td>
+                            <td><a title="548dd4" data-edit="forecolor #548dd4" style="background-color:#548dd4;"></a></td>
+                            <td><a title="95b3d7" data-edit="forecolor #95b3d7" style="background-color:#95b3d7;"></a></td>
+                            <td><a title="d99694" data-edit="forecolor #d99694" style="background-color:#d99694;"></a></td>
+                            <td><a title="c3d69b" data-edit="forecolor #c3d69b" style="background-color:#c3d69b;"></a></td>
+                            <td><a title="b2a2c7" data-edit="forecolor #b2a2c7" style="background-color:#b2a2c7;"></a></td>
+                            <td><a title="92cddc" data-edit="forecolor #92cddc" style="background-color:#92cddc;"></a></td>
+                            <td><a title="fac08f" data-edit="forecolor #fac08f" style="background-color:#fac08f;"></a></td>
+                        </tr>
+                        <tr>
+                            <td><a title="a5a5a5" data-edit="forecolor #a5a5a5" style="background-color:#a5a5a5;"></a></td>
+                            <td><a title="262626" data-edit="forecolor #262626" style="background-color:#262626;"></a></td>
+                            <td><a title="494429" data-edit="forecolor #494429" style="background-color:#494429;"></a></td>
+                            <td><a title="17365d" data-edit="forecolor #17365d" style="background-color:#17365d;"></a></td>
+                            <td><a title="366092" data-edit="forecolor #366092" style="background-color:#366092;"></a></td>
+                            <td><a title="953734" data-edit="forecolor #953734" style="background-color:#953734;"></a></td>
+                            <td><a title="76923c" data-edit="forecolor #76923c" style="background-color:#76923c;"></a></td>
+                            <td><a title="5f497a" data-edit="forecolor #5f497a" style="background-color:#5f497a;"></a></td>
+                            <td><a title="31859b" data-edit="forecolor #31859b" style="background-color:#31859b;"></a></td>
+                            <td><a title="e36c09" data-edit="forecolor #e36c09" style="background-color:#e36c09;"></a></td>
+                        </tr>
+                        <tr>
+                            <td><a title="7f7f7f" data-edit="forecolor #7f7f7f" style="background-color:#7f7f7f;"></a></td>
+                            <td><a title="0c0c0c" data-edit="forecolor #0c0c0c" style="background-color:#0c0c0c;"></a></td>
+                            <td><a title="1d1b10" data-edit="forecolor #1d1b10" style="background-color:#1d1b10;"></a></td>
+                            <td><a title="0f243e" data-edit="forecolor #0f243e" style="background-color:#0f243e;"></a></td>
+                            <td><a title="244061" data-edit="forecolor #244061" style="background-color:#244061;"></a></td>
+                            <td><a title="632423" data-edit="forecolor #632423" style="background-color:#632423;"></a></td>
+                            <td><a title="4f6128" data-edit="forecolor #4f6128" style="background-color:#4f6128;"></a></td>
+                            <td><a title="3f3151" data-edit="forecolor #3f3151" style="background-color:#3f3151;"></a></td>
+                            <td><a title="205867" data-edit="forecolor #205867" style="background-color:#205867;"></a></td>
+                            <td><a title="974806" data-edit="forecolor #974806" style="background-color:#974806;"></a></td>
+                        </tr>
+                        <tr>
+                            <td colspan="10" style="padding-top:10px;border-bottom:1px solid #ddd;">Standard color</td>
+                        </tr>
+                        <tr style="height:30px;">
+                            <td><a title="c00000" data-edit="forecolor #c00000" style="background-color:#c00000;"></a></td>
+                            <td><a title="ff0000" data-edit="forecolor #ff0000" style="background-color:#ff0000;"></a></td>
+                            <td><a title="ffc000" data-edit="forecolor #ffc000" style="background-color:#ffc000;"></a></td>
+                            <td><a title="ffff00" data-edit="forecolor #ffff00" style="background-color:#ffff00;"></a></td>
+                            <td><a title="92d050" data-edit="forecolor #92d050" style="background-color:#92d050;"></a></td>
+                            <td><a title="00b050" data-edit="forecolor #00b050" style="background-color:#00b050;"></a></td>
+                            <td><a title="00b0f0" data-edit="forecolor #00b0f0" style="background-color:#00b0f0;"></a></td>
+                            <td><a title="0070c0" data-edit="forecolor #0070c0" style="background-color:#0070c0;"></a></td>
+                            <td><a title="002060" data-edit="forecolor #002060" style="background-color:#002060;"></a></td>
+                            <td><a title="7030a0" data-edit="forecolor #7030a0" style="background-color:#7030a0;"></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr style="width:2px;height:24px;background-color:#6282a4;float:left;margin:4px 0 0 0;">
+            <div class="btn-group">
+                <a class="btn" data-icon-before="rotate-left" data-edit="undo" title="" data-original-title="Undo (Ctrl/Cmd+Z)"></a>
+                <a class="btn" data-icon-before="rotate-right" data-edit="redo" title="" data-original-title="Redo (Ctrl/Cmd+Y)"></a>
+            </div>
+        </div>
+    </div>
+    <div style='margin-top:38px;'>
+        <span class="icon-info-circle" style="float:left;width:5%;font-size:24px;"></span>
+        <div id="note-editor-area"></div>
+    </div>
+    <div class="editor-btn-area" id="note-editor-btn-area" style='padding:20px 45px 30px 0;text-align:right;'>
+        <span class="btn btn-primary" id="btn-note-cancel" style="width:80px;" {{action 'cancelEdit'}}>Cancel</span>
+        <span class="btn btn-primary" id="btn-note-save" style="width:80px;" {{action 'saveNote'}}>Save</span>
+    </div>
+ </div>
+ <div class="detail-content-text" id='detail-content-text' style='padding-right:20px'>
+    <div class="entry-title">
+        <h1 id="html-content-head" style='word-wrap:break-word !important;line-height: initial;'></h1>
+    </div>
+    <div id="html-content" class="text" style="position: static;">
+        
+
+    </div>
+    <div class="uyan-comment" load="no" style='margin-top: 20px; border-top:1px solid #EDEDED;word-wrap:break-word;word-break: break-all;'></div>
+</div>

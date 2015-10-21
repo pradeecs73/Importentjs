@@ -1,0 +1,41 @@
+{{#if write}}
+<div class="widget-box transparent">
+    {{#if requestMembers}}
+    <div class="widget-header widget-header-flat widget-padding bborder row-header">
+       
+        <h5 data-icon-before="arrow-go-in">
+            Requesting Membership
+        </h5>
+        <div class="searchCatalogCustom blog-catalogCustom pull-left" style="padding-top:5px;">
+            <div id="toggle_view" class="clearfix toggle-view-container layout-buttons">
+                      <div class="dropdown sorting-dropdown" data-action="sort" id="sortCommunities">
+                            <a href="#" class="sorter-toggle dropdown-toggle" id="change-dir" data-toggle="dropdown" data-icon-before="sort-descending">
+                                    <span class="icon-caret-down"></span>
+                                </a>
+                            
+                             <ul class="dropdown-menu" role="menu" id='sortingDropdownIdMembers'>
+                                <li><a id ="shortNameMembers" {{action 'getSortedDataByFiledType'  "shortName" true "Members"}}>Name<i class="icon-sort-ascending icon-sorter pull-right"></i></a></li>
+                                <li><a id="jobTitleMembers" {{action 'getSortedDataByFiledType'  "jobTitle" true "Members"}}>Title<i class="icon-sort-ascending icon-sorter pull-right"></i></a></li>
+                                <li><a id="locationMembers" {{action 'getSortedDataByFiledType'  "location.city" true "Members"}}>Location<i class="icon-sort-ascending icon-sorter pull-right"></i></a></li>
+                             </ul>
+                      </div>
+             </div>
+         </div>
+        
+        <div class="widget-toolbar">
+            <!--div data-parent="#accordion" data-action="collapse" class="accordion-toggle collapsed">
+                <i class="icon-caret-up"></i>
+            </div-->
+        </div>
+    </div>
+    <div id="communityJoinRequests" class="panel-collapse margin-top-10 collapse in">
+        <div class="widget-body clearfix">
+            {{#each requester in joinRequesterProfiles}}
+                {{render "userItem" requester}}
+            {{/each}}
+        </div>
+    </div>
+    {{/if}}
+</div>
+{{/if}}   
+   

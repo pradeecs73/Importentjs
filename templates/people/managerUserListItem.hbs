@@ -1,0 +1,103 @@
+
+     <div class="position-relative">
+            {{#if shouldShowVisitingCard}}
+              {{ view App.PeoplePopOverView }}
+            {{/if}}
+      </div>
+      <div class="container-fluid">
+        <div class="row clearfix">
+          <div class="col-11">
+                <span class="checkbox-more-actions">
+                  <span onclick="javascript:event.stopPropagation();">
+                    <label {{bindAttr class="multiSelectEnabled:show:hide"}}>
+                      {{view Ember.Checkbox checkedBinding="controller.userChecked" bubbles=false}}
+                      <span class="lbl"></span>
+                    </label>
+                  </span>
+                </span>
+          </div>
+          <div class="col-8 clearfix">
+                <div class="pull-left">
+                  {{avatarMini shortName username}}
+                </div>
+                <div class="pull-left status-message-section">
+                  {{#unless isCurrentUser}}
+                    <i class="smaller">{{ render "jabberStatusPill" model}}</i>
+                  {{/unless}}
+                </div>
+                <div class="pull-left line-height-normal">
+                <div>
+                  <span class="profile-name">{{profileLink shortName username}}</span>
+                 </div> 
+                 <div>
+                  {{ellipsis jobTitle 35}}
+                 </div>
+                 <div>
+                  {{username}}
+                 </div>
+                </div>
+          </div>
+          
+          <div class="col-6">
+           {{#if isManager}}
+            <div>
+              Manager
+            </div>
+            <div>
+              <a href="javascript:void(0)" {{action changefilterarrayvalue username shortName}} >{{reporteeNumber}} Reports</a>
+           </div>
+            {{else}}
+              <div>
+                Employee
+              </div>
+              <div>
+                {{reporteeNumber}} Reports
+              </div>
+            {{/if}}
+            
+          </div>
+          <div class="col-14">
+            {{#if organization}}
+              {{organization}}
+            {{else}}
+              <i>Not Specified</i>
+            {{/if}}
+          </div>
+          {{#if showandhideplp}}
+            <div class="col-10">
+			{{#if lmsInfo.plpcount}}
+				{{#link-to 'learningPlans' (query-params reporteesUsername=username) activeClass='active'}} {{lmsInfo.plpcount}} {{/link-to}}
+			{{else}}
+				{{lmsInfo.plpcount}}
+			{{/if}}
+            </div>
+          {{/if}}
+          <div class="col-3">
+			{{#if lmsInfo.coursecount}}
+            {{#link-to 'myEnrollment' (query-params reporteesUsername=username reporteesSort="progress") activeClass='active'}} {{lmsInfo.coursecount}} {{/link-to}}
+			{{else}}
+				{{lmsInfo.coursecount}}
+			{{/if}}
+          </div>
+          <div class="col-3">
+			{{#if lmsInfo.completedcount}}
+            {{#link-to 'myEnrollment' (query-params reporteesUsername=username reporteesSort="completed") activeClass='active'}} {{lmsInfo.completedcount}} {{/link-to}}
+			{{else}}
+				{{lmsInfo.completedcount}}
+			{{/if}}
+          </div>
+
+          <div class="col-12">
+              {{#unless isCurrentUser}}
+                <span class="contact-icons pull-left">
+                <i>{{ render "jabberItem" model}}</i>
+                </span>
+              {{/unless}}
+              {{#unless isCurrentUser}}
+                <span class="contact-icons pull-left">
+                <i>{{ render "webexItem" model}}</i>
+                </span>
+             {{/unless}}
+          </div>
+      </div> <!--closing row div -->
+      </div> <!--closing container-fluid -->

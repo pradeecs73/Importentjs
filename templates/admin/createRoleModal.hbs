@@ -1,0 +1,77 @@
+<div class="modal file-upload-modal create-role-modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="addRole">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header learningplanblue-header modal-create-header clearfix">
+                <button type="button" class="close font-25" data-dismiss="modal" {{action closeRoleModal}}>
+                    <i class="icon-remove white"></i>
+                </button>
+                <h4 class="modal-title"> {{modalTitle}}</h4>
+            </div>
+            {{#if roleMessage.success }}
+                <div class="modal-result-message page-padding padding-bottom-10">
+                    <div class="role-create-success">
+                        <p>{{roleMessage.success}}</p>
+                    </div>
+                    <div class="modal-footer role-create-success">
+                        <button type="button" class="btn btn-primary"
+                                data-dismiss="modal" {{action closeRoleModal}}>Done
+                        </button>
+                    </div>
+                </div>
+            {{else}}
+
+                <h6 class="modal-subtitle">{{modalSubtitle}}</h6>
+                {{#if roleMessage.error}}
+                    <div class="role-create-error">
+                        <p>{{roleMessage.error}}</p>
+                    </div>
+                {{/if}}
+
+                <div class="row clearfix">
+                    <div class="col-sm-2 col-xs-12 no-padding">
+                        <span class="field-input-label">Name</span>
+                    </div>
+                    <div class="col-sm-10 col-xs-12 input-wrap">
+                        {{input-text currentText=name maxLength=255 type="count"}}
+
+                    </div>
+                </div>
+
+                <div class="row clearfix">
+                    <div class="col-sm-2 col-xs-12 no-padding">
+                        <span class="field-input-label">Description</span>
+                    </div>
+                    <div class="col-sm-10 col-xs-12 input-wrap">
+                        {{input-text currentText=description maxLength=255 type="count"}}
+                    </div>
+                </div>
+
+                <div class="row clearfix">
+                    <div class="col-sm-2 col-xs-12 no-padding">
+                        <span class="field-input-label">Inherit Role</span>
+                    </div>
+                    <div class="col-md-10">
+                        {{view Ember.Select prompt="Please choose one"
+                        content=systemRoles
+                        optionValuePath="content.id"
+                        optionLabelPath="content.name"
+                        id="roleSelector"
+                        selection=selectedRole
+                        }}
+
+                    </div>
+                </div>
+                <div>
+                    <span class="field-input-label">{{modalNote}}</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" {{action closeRoleModal}}>
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary" {{action createRole}}>Add Role</button>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+</div>
+

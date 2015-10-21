@@ -1,0 +1,95 @@
+<div class="page-content communities list-grid-page no-padding">
+    <div {{ bind-attr class=":widget-body :list-with-tags isGridView:grid-view:list-view"}}>
+        <div class="container header-panel">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h1 class="eclipse-text" {{bind-attr title=pageTitle}}>{{listingName}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="filter-wrapper">
+            <div class="filters-panel has-sorting">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                    <div class="row">
+                        <div id="view-option-buttons" class="col-lg-4 col-md-5 col-sm-4 col-xs-6 layout-buttons">
+                            <a id="catalog-grid-view" {{ bind-attr class=":icon-grid-layout :pull-left isGridView:active" }} {{action toggleView "grid-view" target=view}}></a>
+                            <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action toggleView "list-view" target=view}}></a>
+                            {{sorting-link sortableFields=sortableFields sortBy=sortBy sortOrder=sortOrder updateSortByAction='updateSortBy' toggleSortOrderAction='toggleSortOrder'}}
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-8 col-xs-6">
+                            {{visual-search componentId='fileCatalogFilterBox' facets=allFacets filters=filters searchAction='filter' placeHolderText='Filter by Type'}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 search-add-wrap">
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-10 form-wrap col-xs-10">
+                            <div class="form-search">
+                                <i class="icon-search" {{action 'search'}}></i>
+                                {{input id="documentCatalogSearchBox" class="form-control" value=searchBoxText placeholder="Search by Community attributes" type="text" action='search'}}
+                            </div>
+                        </div>
+                        {{#if isUserHasAccessToCreate}}
+                        <span {{bind-attr class=":pull-right newPath:active"}}> {{#link-to "communities.create" (query-params from=routeName) data-toggle="tab" data-target="#communities-outlet"}} 
+                            <span class=""> 
+                                <i data-rel="tooltip" data-original-title="Create Community" data-placement="left" data-icon-before="plus-thin" class="btn"></i>
+                            </span>
+						{{/link-to}}	
+                        </span>
+                        {{/if}}                        
+                    </div>
+                </div>
+            </div>
+            <div class="filters-panel has-filter-list">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 filter-items-wrapper">
+                    {{catalog-filter filters=requiredCloudletFilters selected=filterType type="document" action='cloudletFilter'}}
+                </div>
+            </div>
+        </div>
+
+        {{#if allGroups}}
+        <div {{bindAttr class=":catalog isGridView:grid:list"}}>
+            <div class="container header list-headings">
+                <ul>
+                    <li class="thumb"></li>
+                    <li class="name"><h5>Name</h5></li>
+                    <li class="members"><h5>Members</h5></li>
+                    <li class="type"><h5>Type</h5></li>
+                    <li class="category"><h5>Category</h5></li>
+                    <li class="type"><h5>Created On</h5></li>
+                    <li class="actions"><h5>Action</h5></li>
+                </ul>
+            </div> 
+            <div class="widget-body-inner">
+                <div class="widget-main clearfix">           
+                  <ul class="communities items">
+                    {{#if isGridView}}
+                      {{#each allGroups itemController="communityItem"}}
+                        <li {{bindAttr class=":withPopOver :col-sm-4 :col-md-4 :col-lg-3 active::deactivated"}} data-rel="popover" data-container="body" data-toggle="popover" data-placement="auto right" data-original-title="" title="">
+                          {{ view App.CommunityGridView }}
+                        </li>
+                      {{/each}}
+                    {{else}}
+                      {{#each allGroups itemController="communityItem"}}
+                          <li {{bindAttr class="active::deactivated"}} >
+                            {{ view App.CommunityListView }}
+                          </li>
+                      {{/each}}
+                    {{/if}}
+                  </ul>
+              </div>
+          </div>
+          <div class="col-md-12">
+              <div>
+                  {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber }}
+              </div>
+          </div>      
+
+        </div>
+        {{else}}
+        
+        <div class="no-value"> No results found </div>
+        {{/if}}
+
+    </div>
+</div>

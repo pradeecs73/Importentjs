@@ -1,0 +1,93 @@
+<div id="library" class="tab-pane">
+    <div class="widget-box transparent">
+        <div class="widget-header widget-header-flat widget-padding bborder row-header">
+    		<div class="searchCatalogCustom blog-catalogCustom pull-left">
+    	       <div id="toggle_view" class="clearfix toggle-view-container layout-buttons">
+                          <div class="dropdown sorting-dropdown" data-action="sort" id="sortCommunitiesLibrary">
+                                <a href="#" class="sorter-toggle dropdown-toggle" id="change-dir" data-toggle="dropdown" data-icon-before="sort-descending">
+                                        <span class="icon-caret-down"></span>
+                                    </a>
+    	                        <ul class="dropdown-menu" role="menu" id='sortingDropdownIdLibrary'>
+    	                         	<li><a id="titleLibrary" {{action 'getSortedDataByFiledType' "title" "Library" '#sortCommunitiesLibrary'}}>Name<i class="icon-sort-ascending icon-sorter pull-right"></i></a></li>
+                                    <li><a id="createdByLibrary" {{action 'getSortedDataByFiledType' "createdBy" "Library" '#sortCommunitiesLibrary'}}>Author<i class="icon-sort-ascending icon-sorter pull-right"></i></a></li>
+                                    <li><a class="selected" id="uploadedOnLibrary" {{action 'getSortedDataByFiledType' "uploadedOn" "Library" '#sortCommunitiesLibrary'}}>Created<i class="icon-sort-ascending icon-sorter pull-right"></i></a></li>
+                                </ul>
+    	                  </div>
+                          <h5 style="margin-top:-5px;margin-left:-80px;">Library</h5>
+    	         </div>
+             </div>
+            <span class="widget-toolbar">
+                <!--div data-parent="#accordion" data-action="collapse" class="accordion-toggle collapsed">
+                    <i class="icon-caret-up"></i>
+                </div-->
+                {{!-- <!-- <a href="#" {{action "uploadDocument" _id}}><i data-rel="tooltip" data-original-title="Upload Document" data-placement="left" {{bindAttr class=":icon-plus-thin :add-blog ull-right :margin-top-5 active:show:hidden isMember:show:hidden"}}></i></a> --> --}}
+            </span>
+
+        </div>
+            <div id="communityDocuments" class="panel-collapse collapse in widget-body" >
+            {{#if allDocuments}}
+                <div class="widget-body details-table">
+                    <ul class="table-top-header">
+                        <li class="col-sm-4">
+                            <label class="grey bold"> Title</label>
+                        </li>
+                        <li class="col-sm-3 hidden-xs">
+                            <label class="grey bold"> Author </label>
+                        </li>
+                        <li class="col-sm-2 hidden-xs">
+                            <label class="grey bold"> Created </label>
+                        </li>
+                        <li class="col-sm-1 hidden-xs">
+                           <!-- <label class="grey bold"> Views </label> -->
+                        </li>
+                        <li class="col-sm-2 hidden-xs">
+                            <!-- <label class="grey bold"> Actions </label> -->
+                        </li>
+                    </ul>
+                    {{#each sharedDocument in allDocuments}}
+                        <ul class="data-row clearfix">
+                            <li class="col-sm-4">
+                                {{#link-to 'document' sharedDocument.id}}
+                                    {{sharedDocument.title}}
+                                {{/link-to}}
+                            </li>
+                            <li class="col-sm-3">
+                                {{#if sharedDocument.createdBy}}
+                                    {{profileLink sharedDocument.createdBy sharedDocument.createdBy}}
+                                {{else}}
+                                    -
+                                {{/if}}
+                            </li>
+                            <li class="col-sm-2">
+                                {{formatDate sharedDocument.uploadedOn "DD MMM YYYY"}}
+                            </li>
+                            <li class="col-sm-1">
+                                
+                            </li>
+                            <li class="col-sm-2">
+                    {{!-- <!--<ul class="file-actions">
+                                    <li>
+                                        <a class="btn" data-icon-before="pencil" data-rel="tooltip" data-original-title="Edit"></a>
+                                    </li>
+                                    <li>
+                                        <a class="btn edit-file" data-target="#editFileSharing" data-rel="tooltip" data-original-title="Share" data-icon-before="arrow-share" {{action "openShareDocumentModal" model}} data-toggle="modal" data-dismiss="modal" href="">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        {{#download-link document=model}} {{/download-link}}
+                                    </li>
+                                    <li>
+                                        <a class="btn red" data-icon-before="trash-o" data-rel="tooltip" data-original-title="Delete"></a>
+                                    </li>
+                                </ul>-->  --}}
+                            </li>
+                        </ul>
+                    {{/each}}
+                    {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber }}
+                </div>
+              {{else}}
+              <p class="no-records-found widget-padding">There are no documents in this community.</p>
+              {{/if}}
+            </div>
+    </div>
+</div>

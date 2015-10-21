@@ -1,0 +1,24 @@
+<div class="catalogPopover">
+    <div class="popover-container">
+        <div class="popover-header">
+            <span class="thumb">
+                <i class="icon-file"></i>
+            </span>
+            <span class="name">
+                {{title}}
+            </span>
+        </div>
+
+        <div class="popover-body">
+            <p class="dataCont">
+                <b>Description : </b>
+                {{{ ellipsis description 150 }}}
+            </p>
+            <span class="dataCont">
+                {{#each userTags}}
+                    <span class="tag">{{this}}</span>
+                {{/each}}
+            </span>
+        </div>
+    </div>
+</div>

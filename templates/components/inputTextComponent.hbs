@@ -1,0 +1,6 @@
+{{input type="text" value=currentText placeholder=placeholder maxlength=maxLength class="form-control"}}
+{{#if isCountType}}
+    <span class="text-character-limit clearfix">{{characterEntered}}/{{maxLength}} characters</span>
+{{else}}
+    <span class="text-character-limit clearfix">{{characterLeft}} characters left</span>
+{{/if}}

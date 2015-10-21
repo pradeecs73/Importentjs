@@ -1,0 +1,13 @@
+<div class="mobileFolder-settings">
+	<h3>Upload File Size Limit</h3>
+	<div class="file-size-setting">
+		{{input value=formatFileSizeLimit placeholder="Enter a number" type="text" action='updateFileSizeLimit' on='enter'}}MB
+		<button class="btn btn-primary" {{action updateFileSizeLimit}}>Set</button>
+	</div>
+	{{#if errorMessage}}
+		<div class="mobileFolder-message error-message">{{errorMessage}}</div>
+	{{/if}}
+	{{#if successMessage}}
+		<div class="mobileFolder-message success-message">{{successMessage}}</div>
+	{{/if}}
+</div>

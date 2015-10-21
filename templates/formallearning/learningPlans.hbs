@@ -1,0 +1,450 @@
+<div class="page-content list-grid-page training-catalog learning-plans no-padding">
+
+	<div {{ bind-attr class=":widget-body :list-with-tags isGridView:grid-view:list-view"}}>
+
+        <div class="container header-panel">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                {{#if reporteesUsername}}
+                    <h1 class="eclipse-text">Learning Plans of {{reporteesUsername}}</h1>
+                {{else}}
+                    <h1 class="eclipse-text">Learning Plans</h1>
+                {{/if}}
+                </div>
+            </div>
+        </div>
+        <!-- Actions status message -->
+        <div {{bind-attr class="showMessage::hide"}}>
+            <div class="alert alert-block alert-danger">
+                <button type="button" class="close" data-dismiss="alert">
+                <i class="icon-remove"></i>
+                </button>
+                <span>
+                    <i class="icon-remove"></i> Due to some unexpected errors course details cannot be displayed.
+                </span>
+            </div>
+        </div>
+        <div id="status-message-div" class="alert alert-block alert-success hide">
+        	<div>
+        		 <span id="status-message-text"></span>
+        	</div>
+        </div>
+
+		<div id="successMessageDiv" class="alert alert-block alert-success hide">
+			<p>
+				{{message}}
+			</p>
+		</div>
+        <!-- //Actions status message -->
+       {{#unless reporteesUsername}}
+        <div class="filter-wrapper">
+            <div class="filters-panel has-sorting">
+                <div class="col-lg-8 col-md-7 col-sm-5 col-xs-12">
+                    <div class="row">
+                        <div id="view-option-buttons" class="col-lg-2 col-md-2 col-sm-4 col-xs-12 layout-buttons">
+							<a id="catalog-grid-view" {{ bind-attr class=":icon-grid-layout :pull-left isGridView:active" }} {{action toggleView "grid-view" target=view}}></a>
+                            <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action toggleView "list-view" target=view}}></a>
+                        </div>
+						 <div class="col-lg-10 col-md-10 col-sm-4 col-xs-12">
+							<form {{action searchLearningPlans true on="submit"}}>
+								<div class="col-sm-12 dateRages">
+									<div class="date-range-title date-title">Date Range:</div>
+									<div class="range-date"><div class="input-group date" data-provide="datepicker">{{input class="date-picker-input" placeholder="start date" valueBinding="startDate" }}<i class="btn icon-calendar learning_calendar_btn"></i>
+									</div></div>
+									<div class="date-until-title date-title">Until:</div>
+									<div class="range-date"><div class="input-group date" data-provide="datepicker">{{input class="date-picker-input" placeholder="end date" valueBinding="endDate" }}<i class=" btn icon-calendar learning_calendar_btn"></i>
+									</div></div>
+									<div class="date-range-button"><button>Filter</button></div>
+								</div>
+							 <form>
+						 </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-5 col-sm-7 col-xs-12 search-add-wrap">
+                    <div class="row">
+                        <div class="col-lg-9 col-md-10 col-sm-10 form-wrap col-xs-10">
+                            <div class="form-search">
+                                <i class="icon-search" {{action 'search'}}></i>
+                                {{input class="form-control no-shadow-input input-mask-date width2x" placeholder="Search By Title , Description" type="text" value=keyword action="searchLearningPlans" on="enter" name="ilp-search"}}
+                            </div>
+                        </div>
+						<div class="col-lg-1">
+							{{report-generator serviceFunction=getLearningPlans searchFilters=searchFilters dataKey="learningPlans" countKey="plpCount" reportType="csv" JSONFormatfunction=formatCourseJSON reportFileName="LearningPlanReport"}}
+						</div>
+                        <span {{bind-attr class=":li-new-mail :pull-right newPath:active"}}>
+                            {{#link-to 'indLearningPlan' 'false' activeClass='active' class="btn-new-mail createNew-icon-right"}}
+                            <span class="">
+                        		<i data-rel="tooltip" id="create-ILP" data-original-title="Add Individual Learning Plan" data-placement="left" data-icon-before="plus-thin" class="btn"></i>
+                    		</span>
+                    		{{/link-to}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/unless}}
+
+{{#if learningPlans.length}}
+		{{#if isGridView}}
+			<div class="space"></div>
+			<div class="grid-view clearfix">
+				{{#each learningPlan in learningPlans}}
+				<div {{ bind-attr class=":item-wrap isGridView:col-lg-3 isGridView:col-md-4 isGridView:col-sm-6 isGridView:col-xs-12 isGridView::col-xs-12" }} >
+					<div class="item-inner-wrap">
+						<div class="col-sm-6 tc-course-section">
+							<div class="tc-course-section-inner">
+								<b><span>Plan Name :</span></b>
+								{{#if learningPlan.isTypePLP}}
+									<span style="font-size: 14px; font-weight: bold;">{{learningPlan.name}}</span>
+								{{else}}
+									{{learningPlan.name}}
+								{{/if}}
+							</div>
+							<div class="tc-course-section-inner">
+								<b><span>Type :</span></b>
+								<span> {{learningPlan.type}} </span>
+							</div>
+							<div class="tc-course-section-inner">
+								<b><span>Assigned by :</span></b>
+								<span> {{learningPlan.assignedBy}} </span>
+							</div>
+							<div class="tc-course-section-inner">
+								<b><span>Completion Goal Date :</span></b>
+								<span>
+									{{#if learningPlan.completeByDate}}
+										{{dateInGMTFormat learningPlan.completeByDate}}
+									{{else}}
+										No Completion Goal Date
+									{{/if}}
+								</span>
+							</div>
+							<div class="tc-course-section-inner">
+								{{#if learningPlan.pendingApproval}}
+									<div> Pending Approval </div>
+								{{/if}}
+								<b><span>Status :</span></b>
+								<span>
+									{{#if learningPlan.isTypePLP}}
+										{{#if learningPlan.status}}
+											{{#if learningPlan.plpRegistered}}
+												{{#if learningPlan.plpAppeared}}
+													In-Progress
+												{{else}}
+													Registered
+												{{/if}}
+											{{else}}
+												{{#if learningPlan.plpAppeared}}
+													Completed
+												{{/if}}
+											{{/if}}
+										{{else}}
+											Not Registered
+										{{/if}}
+									{{else}}
+										NA
+									{{/if}}
+								</span>
+							</div>
+							<div class="tc-course-section-inner last">
+								<b><span>Actions :</span></b>
+								<span>
+									{{#if learningPlan.isTypePLP}}
+										{{#if learningPlan.status}}
+											{{#if learningPlan.plpAppeared}}
+												{{#if learningPlan.plpRegistered}}
+													<a id="dropId" {{action "enrollPrescribedLearningPlan" learningPlan.id learningPlan.status learningPlan.type "drop" learningPlan.enrollmentId ""}}>Drop</a>
+												{{else}}
+													<span> - </span>
+												{{/if}}
+											{{else}}
+												<a id="dropId" {{action "enrollPrescribedLearningPlan" learningPlan.id learningPlan.status learningPlan.type "drop" learningPlan.enrollmentId ""}}>Drop</a>
+											{{/if}}
+										{{else}}
+											<a id="registerId" {{action "enrollPrescribedLearningPlan" learningPlan.id learningPlan.status learningPlan.type "enrol"  "" learningPlan.managerApproval}}>Register</a>
+										{{/if}}
+									{{else}}
+										{{#link-to "indLearningPlan" learningPlan.id }}Edit{{/link-to}}
+									{{/if}}
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				{{/each}}
+			</div>
+			<div class="space"></div>
+			<div class="no-value">{{model.status}}</div>
+		{{else}}
+
+            <div class="list-headings widget-table-header clearfix" >
+                <div class="col-sm-2"><h5>Name</h5></div>
+                <div class="col-sm-2"><h5>Type</h5></div>
+                <div class="col-sm-2"><h5>Assigned by</h5></div>
+                <div class="col-sm-2"><h5 class="eclipse-text">Completion Goal Date</h5></div>
+                <div class="col-sm-2"><h5>Status</h5></div>
+                {{#unless reporteesUsername}}
+                <div class="col-sm-2"><h5>Actions</h5></div>
+                {{/unless}}
+            </div>
+
+			{{#each learningPlan in learningPlans}}
+				<div class="container list-content">
+					<div class="row">
+						
+						<div class="col-sm-2 col-xs-12 item-name">
+							<span class="item-data">
+								{{#if learningPlan.isTypePLP}}
+									{{#link-to "plpDetails" learningPlan.id}}{{learningPlan.name}}{{/link-to}}
+								{{else}}
+									{{learningPlan.name}}
+								{{/if}}
+							</span>
+						</div>
+						<div class="col-sm-2 col-xs-12">
+							<label class="hidden-lg hidden-md hidden-sm"><strong>Type: </strong></label>
+							<span class="item-data">{{learningPlan.type}}</span>
+						</div>
+						<div class="col-sm-2 col-xs-12">
+							<label class="hidden-lg hidden-md hidden-sm"><strong>Assigned by: </strong></label>
+							<span class="item-data">
+		                        {{#if learningPlan.isTypePLP}}
+		                            <a href="#/user/{{unbound learningPlan.managerEmail}}">{{learningPlan.assignedBy}}</a>
+		                        {{else}}
+		                            {{learningPlan.assignedBy}}
+		                        {{/if}}
+		                    </span>
+		                </div>
+						<div class="col-sm-2 col-xs-12">
+							<label class="hidden-lg hidden-md hidden-sm"><strong>Completion Goal Date: </strong></label>
+							<span class="item-data">
+								{{#if learningPlan.completeByDate}}
+									{{dateInGMTFormat learningPlan.completeByDate}}
+								{{else}}
+									No Completion Goal Date
+								{{/if}}
+							</span>
+						</div>
+						<div class="col-sm-2 col-xs-12">
+							<label class="hidden-lg hidden-md hidden-sm"><strong>Status: </strong></label>
+							<span class="item-data">
+							{{#if learningPlan.isTypePLP}}
+								{{#if learningPlan.status}}
+									{{#if learningPlan.plpRegistered}}
+										{{#if learningPlan.plpAppeared}}
+											In-Progress
+										{{else}}
+											Registered
+										{{/if}}
+									{{else}}
+										{{#if learningPlan.plpAppeared}}
+											Completed
+										{{/if}}
+									{{/if}}
+								{{else}}
+									Not Registered
+								{{/if}}
+							{{else}}
+								NA
+							{{/if}}
+							</span>
+						</div>
+						<div class="col-sm-2 col-xs-12">
+						
+						{{#unless reporteesUsername}}
+							{{#if learningPlan.isTypePLP}}
+								{{#if learningPlan.status}}
+									{{#if learningPlan.plpAppeared}}
+										{{#if learningPlan.pendingApproval}}
+											<div> Pending Approval </div>
+										{{/if}}
+										{{#if learningPlan.plpRegistered}}
+											<a id="dropId" {{action "enrollPrescribedLearningPlan" learningPlan.id learningPlan.status learningPlan.type "drop" learningPlan.enrollmentId ""}}>Drop</a>
+										{{else}}
+											<span> - </span>
+										{{/if}}
+									{{else}}
+										{{#if learningPlan.pendingApproval}}
+											<div> Pending Approval </div>
+										{{/if}}
+										<a id="dropId" {{action "enrollPrescribedLearningPlan" learningPlan.id learningPlan.status learningPlan.type "drop" learningPlan.enrollmentId ""}}>Drop</a>
+									{{/if}}
+								{{else}}
+									<a id="registerId" {{action "enrollPrescribedLearningPlan" learningPlan.id learningPlan.status learningPlan.type "enrol"  "" learningPlan.managerApproval}}>Register</a>
+								{{/if}}
+							{{else}}
+								{{#link-to "indLearningPlan" learningPlan.id class="action-link" }} Edit {{/link-to}}
+							{{/if}}
+						{{/unless}}	
+							<a data-toggle="collapse" data-parent="#accordion" class="pull-right collapsed" href="#{{unbound learningPlan.id}}" ></a>
+						</div>
+
+					</div>
+				</div>
+				<div id="{{unbound learningPlan.id}}" class="panel-collapse collapse">
+					
+					{{#if learningPlan.learningPlanItems}}
+
+					<div class="learning-padding widget-table-header">
+						<div class="col-sm-2">
+							<label class="eclipse-text">
+							{{#if learningPlan.isTypePLP}}
+								Enrollments
+							{{else}}
+								Enrollments and Activities
+							{{/if}}
+							</label>
+						</div>
+						<div class="col-sm-2"><label>Type</label></div>
+						<div class="col-sm-4"><label>Details</label></div>
+						<div class="col-sm-4"><label>Completion Status</label></div>
+					</div>
+					{{#each data in learningPlan.learningPlanItems}}
+					<div class="enrollAct-data no-background-lp">
+						<ul>
+							<li class="col-sm-2 col-xs-10 col-one">
+								{{#if data.courseId}}
+									{{#link-to "learningCourse" data.courseId (query-params coursetype=data.courseType)}}
+										{{data.fullName}}
+									{{/link-to}}
+										{{#if data.mandatory}}
+											<span style="font-size:14px; color:#FF0000">*</span>
+										{{/if}}
+								{{else}}
+									{{data.taskDesc}}
+								{{/if}}
+							</li>
+							<li class="col-sm-2 col-xs-10 col-two">
+								<label class="hidden-lg hidden-md hidden-sm"><strong>Type: </strong></label>
+								{{#if data.courseId}}
+									{{data.courseType}}
+								{{else}}
+									Task
+								{{/if}}
+							</li>
+							<li class="col-sm-4 col-xs-10 col-three">
+								<label class="hidden-lg hidden-md hidden-sm"><strong>Details: </strong></label>
+								{{#if data.detail}}
+									{{data.detail}}
+								{{else}}
+									No Details
+								{{/if}}
+								</li>
+							<li class="col-sm-2 col-xs-10 col-four">
+								<label class="hidden-lg hidden-md hidden-sm"><strong>Status: </strong></label>
+								{{#if data.courseId}}
+									{{#if data.isCourseCompleted}}
+										Completed
+									{{else}}
+										{{#if data.courseCompleted}}
+											In Progress
+										{{else}}
+											Not Registered
+										{{/if}}
+									{{/if}}
+								{{else}}
+									NA
+								{{/if}}
+							</li>
+							{{#unless reporteesUsername}}
+							<li class="col-sm-1 action-links-wrap">
+								{{#if data.courseId}}
+									{{#if data.showRegister}}
+										{{#if data.courseCompleted}}
+											{{#if data.isCourseCompleted}}
+											{{else}}
+												<a class="tc-drop"{{ action "cancelEnrollCourse" data.courseId data.enrollmentId on="click"}}>Drop</a>
+											{{/if}}
+											{{#if data.isELearning}}
+												{{#if data.pendingApproval}}
+													<div> Pending Approval </div>
+												{{else}}
+													{{#if learningPlan.isTypePLP}}
+														{{#if learningPlan.enforceorder}}
+															{{#if data.isLaunch}}
+																<a href="#" {{action "onLaunch" data}}>Launch</a>
+															{{else}}
+																<a href="#" {{action "onInvalidLaunch"}}>Launch</a>
+													{{/if}}
+														{{/if}}
+													{{else}}
+														<a href="#" {{action "onLaunch" data}}>Launch</a>
+													{{/if}}
+												{{/if}}
+											{{/if}}
+											{{#if data.isScorm}}
+												{{#if data.pendingApproval}}
+													<div> Pending Approval </div>
+												{{else}}
+													<span class="tclaunch-icon" style="padding-top:8px">
+														{{#if learningPlan.isTypePLP}}
+															{{#if learningPlan.enforceorder}}
+																{{#if data.isLaunch}}
+																	<a id="tc-scorm2" href="#" {{action "onLaunch" data}}>Launch</a>
+																{{else}}
+																	<a id="tc-scorm2" href="#" {{action "onInvalidLaunch"}}>Launch</a>
+																{{/if}}
+															{{/if}}
+														{{else}}
+															<a id="tc-scorm2" href="#" {{action "onLaunch" data}}>Launch</a>
+														{{/if}}
+													</span>
+												{{/if}}
+											{{/if}}
+											{{#if data.isAssessment}}
+												{{#if data.pendingApproval}}
+													<div> Pending Approval </div>
+												{{else}}
+													{{#if learningPlan.isTypePLP}}
+														{{#if learningPlan.enforceorder}}
+															{{#if data.isLaunch}}
+																<a href="#" {{action transition data on="click"}}>Launch</a>
+															{{else}}
+																<a href="#" {{action "onInvalidLaunch"}}>Launch</a>
+															{{/if}}
+														{{/if}}
+													{{else}}
+														<a href="#" {{action transition data on="click"}}>Launch</a>
+													{{/if}}
+												{{/if}}
+											{{/if}}
+										{{else}}
+											{{#if data.visible}}
+									      		<a class="tc-register" {{ action "enrollCourse" data.courseId data.managerApproval on="click"}}>Register</a>
+											{{else}}
+												<a class="tc-register" {{ action "disabledCourse" on="click"}}>Register</a>
+											{{/if}}
+										{{/if}}
+									{{else}}
+										NA
+									{{/if}}
+								{{else}}
+									NA
+								{{/if}}
+							
+								{{#if learningPlan.isTypePLP}}
+								{{else}}
+									<a class="tc-delete" {{action "deleteIndividualLearningPlanTask" learningPlan.id data.id }}>Delete</a>
+								{{/if}}
+							</li>
+							{{/unless}}
+						</ul>
+					</div>
+					{{/each}}
+
+					{{else}}
+
+					<div class="no-value">No learning plans to display</div>
+
+					{{/if}}					
+				</div>
+			{{/each}}
+				<div class="no-value">{{model.status}}</div>
+		{{/if}}
+			<div class="clearfix"> </div>
+			 {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+        {{else}}
+            <div class="no-value">No Learning Plans to display</div>
+        {{/if}}
+		</div><!--/.widget-body-->
+	</div><!--/.page-content-->
+<!-- </div>

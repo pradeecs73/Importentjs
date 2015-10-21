@@ -1,0 +1,20 @@
+<div class="page-header">
+    <h1> Mobile </h1>
+</div>
+
+<div class="tabbable toggle_view admin-tabs">
+
+    <ul class="nav nav-tabs padding-left-18 tab-size-bigger" id="adminTab">
+        <li class="active">
+            {{#link-to "mobile.mobileFolder" data-target="#admin-outlet" tagName="li"}}
+                <a>Mobile Folder</a>
+            {{/link-to}}
+        </li>
+    </ul>
+
+    <div class="tab-content no-border" id="admin-outlet">
+        <div class="message-container"></div>
+        {{outlet}}
+    </div>
+
+</div>

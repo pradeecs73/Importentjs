@@ -1,0 +1,20 @@
+<div class="mobileknowledge">
+	<span class="col-xs-12">&nbsp;</span>
+	<span class="pull-left icon-title note-editor-title-icon"></span>
+	{{input type="text" id="note-editor-title" class="col-xs-11" value=title maxlength="100" placeholder="Title"  title="Specify at least 1 lettered title"}}
+
+	{{#if hasWarning}}
+		<span class="icon-exclamation-triangle col-xs-12" style="color:red;font-size:16px;">{{warning}}</span>
+	{{else}}
+		<span class="col-xs-12"  style="font-size:16px;">&nbsp;</span>
+	{{/if}}
+
+	<span class="pull-left icon-info-circle note-editor-area-icon"></span>
+	<div class="col-xs-11" id="note-editor-area"></div>
+	<div class="col-xs-11 note-editor-footer">
+		<div class="buttons">
+			<button class="btn btn-sm btn-primary" {{action cancel}}>Cancel</button>
+			<button class="btn btn-sm btn-primary" {{action save target=view}}>Save</button>
+		</div>
+	</div>
+</div>

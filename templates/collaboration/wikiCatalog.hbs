@@ -1,0 +1,236 @@
+<div class="page-content list-grid-page wikis no-padding">
+    <div {{ bind-attr class=":widget-body :list-with-tags isGridView:grid-view:list-view"}}>
+        <div class="container header-panel">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h1 class="eclipse-text" {{bind-attr title=pageTitle}}>Wiki Library</h1>
+                </div>
+            </div>
+        </div>
+
+        <div id="wikisDelMessage" {{bind-attr class="showMessage::hide"}}>
+            <div class="alert alert-block alert-success">
+                <button type="button" class="close" data-dismiss="alert">
+                    <i class="icon-remove"></i>
+                </button>
+                <p>
+                    <i class="icon-ok"></i> You have successfully deleted the wiki.
+                </p>
+            </div>
+        </div>
+
+        {{view view.confirmModelDialogView}}
+
+        <div class="filter-wrapper">
+            <div class="filters-panel has-sorting">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                    <div class="row">
+                        <div id="view-option-buttons" class="col-lg-4 col-md-5 col-sm-4 col-xs-6 layout-buttons">
+                            <a id="catalog-grid-view" {{ bind-attr class=":icon-grid-layout :pull-left isGridView:active" }} {{action toggleView "grid-view" target=view}}></a>
+                            <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action toggleView "list-view" target=view}}></a>
+                            {{sorting-link sortableFields=sortableFields sortBy=sortBy sortOrder=sortOrder updateSortByAction='updateSortBy' toggleSortOrderAction='toggleSortOrder'}}
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-8 col-xs-6">
+                            {{visual-search componentId='fileCatalogFilterBox' facets=allFacets filters=filters searchAction='filter' placeHolderText='Filter by Scope, Status, # of comments'}}
+							<!-- <div id="VS">
+								<div id="search_box_container2"></div>
+							</div>	 -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 search-add-wrap">
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-10 form-wrap col-xs-10">
+                            <div class="form-search">
+                                <i class="icon-search" {{action 'search'}}></i>
+                                {{input class="form-control" value=searchBoxText placeholder="Search By Title, Description" type="text" action='search' on='enter'}}
+                            </div>
+                        </div>
+                        {{#if isUserHasAccessToCreate}}
+                        <span {{bind-attr class=":li-new-mail :pull-right newPath:active"}}> {{#link-to "wikis.new" (query-params chatSession="" session="" chatRoom="" communityId="") class="btn-new-mail createNew-icon-right"  data-target="#wikis-outlet"}} 
+                            <span class=""> 
+                                <i data-rel="tooltip" data-original-title="Add Wiki" data-placement="left" data-icon-before="plus-thin" class="btn"></i>
+                            </span>{{/link-to}}
+                        </span>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+            <div class="filters-panel has-filter-list">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 filter-items-wrapper">
+
+                    <ul class="horizontal-list">
+                        <li class="filter-by-title">Filter By: </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton checked="checked" name="selectionTest" selectionBinding="filter" value="my"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">My Wikis</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="filter" value="recent"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">All Wikis</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="filter" value="shared"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">Shared</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="filter" value="liked"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">My Likes</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="filter" value="favorite"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">My Favorites</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="filter" value="followed"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">Followed by Me</label>
+                        </li>
+                    </ul>
+                    <select class="filter-items-dropdown" name="" id="">
+                        <option>Filter By</option>
+                        <option value="my">My Wikis</option>
+                        <option value="recent">All Wikis</option>
+                        <option value="shared">Shared</option>
+                        <option value="liked">My Likes</option>
+                        <option value="favorite">My Favorites</option>
+                        <option value="followed">Followed by Me</option>
+                    </select>
+
+                </div>
+            </div>
+        </div>
+        <div id="wikis-outlet" class="grid-view" data-bindattr-14="14">
+
+        {{#if isGridView}}
+            
+            {{#each thiswiki in allPosts itemController="wikis.index"}}
+            <div class="col-sm-4 col-md-4 col-lg-3 trng-catlogue-gridView ">
+                <div class="kc-grid withPopOver postGrid" data-rel="popover" data-container="body" data-toggle="popover" data-placement="auto right">
+                    <div class="category-description-block position-relative">
+                    
+                        <h2 class="grid-header clearfix" 
+                            <span class="category-image">
+                                {{avatarMini thiswiki.authorName thiswiki.author}}
+                            </span>
+                            <span class="grid-title">
+                                {{profileLink thiswiki.authorName thiswiki.author}}
+                            </span>
+                        </h2>
+                                   
+                        <div class="grid-sub-section grey">
+                            <a class="user" href="#"><span class="text">{{#link-to "wiki" thiswiki._id}} {{thiswiki.title}} {{/link-to}} </span></a>
+                        </div>
+                        
+                        <div class="grid-sub-section">
+                            <span class="author_name"><i class="icon-time orange bigger-110"></i> {{formatDate thiswiki.createDate  "DD MMM YYYY"}}</span>
+                        </div><!--/.grid-sub-section--> 
+                        
+                        <div class="grid-sub-section">
+                            <i class="icon-quote-left"></i> {{{ellipsis thiswiki.content.content 30}}}
+                        </div><!--/.grid-sub-section-->     
+                        
+                        <div class="grid-sub-section grey views-font-size">
+                           <span> <i class="icon-thumbs-up icon-1x blue"></i> {{stats.likes}} likes</span>
+                           <span><i class="icon-eye-open icon-1x purple"></i> {{views.length}} views</span>                        
+                           
+                        </div><!--/.grid-sub-section--> 
+                                                                        
+                        
+                        <div class="grid-sub-section last">
+                            <div class="document-upload-date">
+                                <div class="pull-left" style="font-weight:normal">
+                                    <span {{bind-attr class=":label :arrowed isDraft:label-yellow isPublished:label-success:lebel-blue" }}>{{thiswiki.status}}</span>&nbsp;<i {{bind-attr class=":bigger-125 :grey isPublic:icon-globe:icon-lock" data-original-title="scope"}} title=""></i>
+                                </div>
+                                
+                                {{#if thiswiki.isUserHasAccessToDelete}}
+                                        <div class="pull-right action-buttons">
+                                            <a class="blue">{{#link-to "wiki.edit" thiswiki}}<i class="icon-pencil bigger-125"></i>{{/link-to }}</a> 
+                                           <a data-dismiss="modal" data-target="#deletePost" {{action beforeDelete thiswiki target="view"}} data-toggle="modal" class="red"> <i class="icon-remove bigger-125"></i> </a>
+                                        </div><!--/.action buttons-->
+                                {{/if}}
+                                            
+                                <div class="clearfix"></div>
+                            </div><!--/.document-upload-date-->
+                    
+                        </div><!--/.grid-sub-section last-->
+                      </div><!--/.category-description-block-->
+                 </div><!-- /.kc-grid-->
+            </div><!--/.col-sm-4-->
+            {{/each}}
+
+        {{else}}
+            
+            {{#each thiswiki in allPosts itemController="wikis.index"}}
+            <div class="message-item no-border no-padding message-unread">
+                <div class="itemdiv commentdiv profile-activity clearfix">
+                    <div class="body" style="margin:5px !important">
+                    <div class="pull-left"> {{avatarMini thiswiki.authorName thiswiki.author}}</div>
+                     <div class="pull-right">Created on: <i class="orange icon-time bigger-110 pull-left"></i> <span>{{#if thiswiki.createDate}} {{formatDate thiswiki.createDate  "DD MMM YYYY"}} {{else}}{{formatDate thiswiki.udpateDate  "DD MMM YYYY"}}{{/if}}</span></div>
+                        <div class="pull-right" style="font-weight:normal; clear:both; margin-top: -24px;"><span {{bind-attr class=":label :arrowed isDraft:label-yellow isPublished:label-success:lebel-blue" }}>{{thiswiki.status}}</span>&nbsp;<i {{bind-attr class=":bigger-125 :grey isPublic:icon-globe:icon-lock" data-original-title="scope"}} title=""></i></div>
+                        
+                        <a class="user " href="#"><span class="text">{{#link-to "wiki" thiswiki._id}} {{thiswiki.title}} {{/link-to}} </span></a><br/>
+                        <span class="author_name">{{profileLink thiswiki.authorName thiswiki.author}}</span>
+                        <div class="grey pull-left summaryText"><span class="bold">Summary:</span> {{{ellipsis thiswiki.content.content 120}}} </div>
+                         <div class="clearfix"></div>
+                        <div class="pull-left grey" style="margin-left:50px;">
+                        
+                        {{#if thiswiki.files}}
+                        <i data-icon="'" class="icon"></i>
+                            {{#each file in thiswiki.files}}
+                            {{#ifchecklength}}
+                                <span class="tag"><a target="_blank" {{action downloadAttachFile file.fName thiswiki._id}}> {{unbound file.fName}} </a></span>
+                            {{/ifchecklength}}
+                            {{/each}}
+                            {{#checktotalLen thiswiki.files}}
+                             <span class="tag">{{#link-to "wiki" thiswiki._id}}More{{/link-to}}</span>
+                            {{/checktotalLen}}
+                        {{/if}}     
+                        </div>   <div class="clearfix"></div>                        
+                         <div class="tagGroup pull-left grey" style="margin-left:50px;">
+                            {{#if thiswiki.tags}}
+                                <i class="middle icon-tag grey"></i>
+                                {{{tagsellipsis thiswiki.tags}}}
+                            {{else}}
+                                <span></span>
+                            {{/if}}
+                        </div>
+                        <div class="pull-left status-buttons grey" style="clear:both"></div>
+                         
+                         <div class="pull-left status-buttons grey">
+                           <span>
+                                    <i class="icon-thumbs-up icon-1x blue"></i> {{stats.likes}} likes
+                           </span>                                                                                                                                                
+                           <span>
+                                   <i class="icon-eye-open icon-1x purple"></i> {{views.length}} views
+                           </span>                                                                                                                                                
+                           
+                       </div>
+                        {{#if thiswiki.isUserHasAccessToDelete}}
+                            <div class="pull-right action-buttons">{{#link-to "wiki.edit" thiswiki  class="blue"}} 
+                            <i class="icon-pencil bigger-125"></i> {{/link-to}}
+                           <a data-dismiss="modal" data-target="#deletePost" {{action beforeDelete thiswiki target="view"}} data-toggle="modal" class="red"> <i class="icon-remove bigger-125"></i> </a>
+                             </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+
+       {{/if}}
+        </div><!--/#wikis-outlet-->
+
+        <div class="col-md-12"> 
+	        <div>
+	            {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+	        </div>
+        </div>
+        <div class="no-value">{{model.status}}</div>
+
+    </div>
+</div>

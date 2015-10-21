@@ -1,0 +1,167 @@
+<style>
+.chkBoxOpacity{
+  opacity:1 !important;
+}
+.btn[data-icon-before]:before{
+  font-size: 16px !important;
+}
+.editPosition{
+  left:-7px !important;
+}
+.spanPadding{
+  padding:20px !important;
+}
+.modal-backdrop{
+  z-index: -1 !important;
+}
+.modal-dialog{
+  top: 100px;
+}
+.filters-panel{
+  border-bottom: 0px !important;
+}
+.show-list-gap{
+  margin-bottom: 2%;
+}
+.cursPoint{
+  cursor: pointer
+ }
+ .showOnTop{
+  z-index:10000 !important;
+ }
+
+</style>
+<div class="widget-box transparent">
+    <div class="widget-header widget-header-flat widget-padding bborder row-header">
+
+        <div class="filter-wrapper">
+           <div class="filters-panel has-sorting list-grid-page">
+              <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                 <div class="row">
+                    <div id="view-option-buttons" class="col-lg-4 col-md-5 col-sm-4 col-xs-6 layout-buttons">
+                       <a id="catalog-grid-view" {{ bind-attr class=":icon-grid-layout :pull-left isGridView:active" }} {{action 'toggleViewCommunity' "grid-view"}}></a>
+                       <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action 'toggleViewCommunity' "list-view"}}></a>
+                       <!-- <div class="dropdown sorting-dropdown" data-action="sort" id="sortingDropdownId">
+                          <a href="#" class="sorter-toggle dropdown-toggle" id="change-dir" data-toggle="dropdown" data-icon-before="sort-descending">
+                          <span class="icon-caret-down"></span>
+                          </a>
+                          <ul class="dropdown-menu" role="menu">
+                             <li>
+                                <a href="#" id="title" {{action 'sortDataByFiledType'  "title" '#sortPostsBlogs'}}  data-sub-action="f_name" data-sort-direction="asc" data-icon-after="sort-ascending">Name</a>
+                             </li>
+                          </ul>
+                        </div> -->
+                    </div>
+                    <!--<div class="col-lg-8 col-md-7 col-sm-8 col-xs-6">
+                       {{visual-search componentId='fileCatalogFilterBox' facets=allFacets filters=filters searchAction='filter' placeHolderText='Filter by Type'}}
+                    </div> -->
+                    <div class="admin-filters-panel">
+                      <div class="container">
+                        <div class="row list-grid-page">
+                          <div class="input-icon block no-padding bootstrap-tagsinput-cus">
+                            <div class="input-group">
+                              {{#if roleAddRemoveMembersDecision}}
+                               {{bootstrap-tags-input remoteSourceConfig=allUsersConfig reset=reset componentId="txtMember" freeInput=false 
+                                placeHolderText="Add Member" addItemAction="addMember" minCharsForSearch=1}} 
+                              {{/if}}  
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div><!--/admin-filters-panel-->
+                 </div>
+              </div>
+           </div>
+        </div>
+        
+
+           {{!--  <i data-rel="tooltip" data-original-title="Add A Member" data-placement="left" {{bindAttr class=":icon-plus-thin :add-question-icon :margin-top-5 :pull-right active:show:hidden isMember:show:hidden"}}{{action "addMember" _id}}></i> --}}
+    </div>
+
+    
+    <div id="communityMembers" class="panel-collapse margin-top-10 collapse in">
+        <div class="widget-body clearfix">
+            {{#if isGridView}}
+                {{#each member in paginatedMembers}}
+                    {{render "userItem" member}}
+                {{/each}}
+            {{else}}
+               <div class="admin-ui">
+                <div class="widget-body no-border" id="admin-lists">
+                <div class="tab-pane expertise-tab" id="category-list">
+                    <div class="admin-header-panel list-headings">
+                        <div class="row">
+                            <div class="col-1">
+                                <h5>Member Name</h5>
+                            </div>
+                            <div class="col-1">
+                                <h5>Member Id</h5>
+                            </div>
+                            <div class="col-1">
+                                <h5>Actions</h5>
+                            </div>
+                        </div>
+                    </div><!--/list-headings-->
+                    <div class="widget-body-inner">
+                      <div class="widget-main clearfix">
+                        <div id="communityMembersList" class="list-container">
+                            {{#if paginatedMembers}}
+                                {{#each member in paginatedMembers}}
+                                    <div class="item-wrap expertise-item-wrap">
+                                      <div class="item-inner-wrap">
+                                        <div class="item-inner-content">
+                                                <div  class="row clearfix">
+                                                    <div class="col-1 item-name-email">
+                                                      <span class="info-label">Member Name</span>
+                                                      <p class="item-created-by eclipse-text"> {{member.fullName}}</p>
+                                                    </div>
+
+                                                    <div class="col-1 item-name-email">
+                                                      <span class="info-label">Member Id</span>
+                                                      <p class="item-created-by eclipse-text"> {{member.username}}</p>
+                                                    </div>
+
+                                                    <div class="col-1">
+                                                      <span class="info-label">Actions</span>
+                                                      <div class="actions-wrap">
+                                                        {{#if member.roleActionDecision}}
+                                                          <button type="button"
+                                                             data-rel="tooltip"  
+                                                             data-icon-before="icon-pencil"
+                                                             data-original-title="Assign Contribution(s)"  
+                                                             data-placement="top"   
+                                                             class="btn icon-pencil expertise-action expertise-action-edit clsPosition editPosition"
+                                                             data-target="#addCommunityRole" 
+                                                             data-toggle="modal" 
+                                                              {{action 'communitySpecificRoles' member.shortName member.username}}>
+                                                          </button>
+                                                          <span data-rel="tooltip"  data-original-title="Remove Member"  data-placement="top"  class="expertise-action expertise-action-edit clsPosition  icon-trash-o" {{action 'deleteMember' member.username}}></span>
+                                                        {{/if}}
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                {{/each}}
+                            {{else}}
+                                 <div class="no-value"> No results found </div>
+                            {{/if}}
+                        </div>
+                      </div>
+                    </div>
+                 </div>
+                 </div>
+                 </div>  
+            {{/if}}
+        </div>
+         <div class="col-md-12" class="showOnTop" style="z-index:10000 !important"> 
+          <div>
+              {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+          </div>
+        </div>
+    </div>
+    {{#if roleAddRemoveMembersDecision}}    
+        {{ view App.CommunityJoinrequestView }}
+    {{/if}}
+</div>

@@ -1,0 +1,23 @@
+<div class="modal file-upload-modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" id="termsAndConditions">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header learningplanblue-header modal-create-header clearfix">
+                <h4 class="modal-title"> {{modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <div id="tncText" class="scroller">
+                    {{{ tAndCText }}}
+                </div>
+                <label>
+                    {{ input type="checkbox" checked=isAgreed }}
+                    <span class="lbl"></span> I agree to Terms and Conditions
+                </label>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" {{ action logout }}>Exit</button>
+                    <button type="button" {{bind-attr class=":btn :btn-primary isAgreed::disabled"}} data-dismiss="modal" {{ action acceptTermsAndConditions tAndCVersion }}>Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

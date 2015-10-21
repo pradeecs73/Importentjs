@@ -1,0 +1,38 @@
+<div class="tab-content no-border no-padding">
+    <div id="wikis-outlet" class="tab-pane in active">                                              
+        <div class="message-container">
+            <div class="message-list-container">
+                <div class="message-list" id="message-list">
+                    {{#each itemController="wiki"}}
+                    <div class="message-item no-border no-padding message-unread">
+                        <div class="itemdiv commentdiv profile-activity clearfix">
+                            <div class="body" style="margin:5px !important">
+                               <div class="pull-left"> {{avatarMini authorName author}}</div>
+                <div class="pull-right welcome-to-user">
+                <span class="grey"><b>Updated on:</b></span>
+                <i class="orange icon-time bigger-110"></i> {{from-now createDate}} </span>
+                </div>
+                                <div class="pull-right" style="font-weight:normal;clear:both;"><span {{bind-attr class=":label :arrowed isDraft:label-yellow:label-success" }}>{{statusLabel}}</span>&nbsp;<i {{bind-attr class=":bigger-125 :grey isPublic:icon-globe:icon-lock" data-original-title="scope"}} title=""></i></div>
+
+                                <a class="user" href="#"><span class="text">{{#link-to "wiki" this._id}} {{title}} {{/link-to}} </span></a><br/>
+                <span class="author_name"> {{profileLink authorName author}}</span>
+                <div class="grey status-buttons">Summary: {{{ellipsis content.content 150}}} </div>
+                                <div class="text grey">Tags: {{tags}}</div>
+                                <div class="pull-left grey status-buttons" style="clear:both;">
+                                   <span><i class="icon-thumbs-up icon-1x blue"></i> {{stats.likes}} likes</span>
+                                   <span><i class="icon-eye-open icon-1x purple"></i> {{views.length}} views</span>            
+                                   <span><i class="icon-comments-alt icon-1x red"></i> {{stats.comments}} comments</span>
+                               </div>
+                                <div class="pull-right action-buttons">{{#link-to "wiki.edit" this  class="blue"}} <i class="icon-pencil bigger-125"></i> {{/link-to}}<a {{action "delete" this "wikis.my"}} class="red"> <i class="icon-remove bigger-125"></i> </a> </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+            <!-- /.tab-pane --> 
+        </div>
+        <!-- /.message-list-container --> 
+    </div>
+    <!-- /.tab-pane --> 
+</div>

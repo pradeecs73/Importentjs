@@ -1,0 +1,13 @@
+<div class="dropdown sorting-dropdown" data-action="sort">
+    {{#if allowToggleSortOrder}}
+        <a href="#" class="sorter-toggle" id="change-dir" {{ bind-attr data-icon-before="sortOrderIcon" }} {{action "toggleSortOrder"}}> </a>
+    {{else}}
+        <a href="#" class="sorter-toggle" id="change-dir" {{ bind-attr data-icon-before="sortOrderIcon" }}></a>
+    {{/if}}
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span class="icon-caret-down"></span></a>
+    <ul class="dropdown-menu" role="menu">
+        {{#each sortableFields itemController="sortableFieldItem"}}
+            <li><a {{ bind-attr class="sortedByCurrentField:selected" }}  {{action 'updateSortBy'}} {{bind-attr id=idField}} {{ bind-attr data-icon-after="parentController.sortOrderIcon" }}> {{model.text}} </a></li>
+        {{/each}}
+    </ul>
+</div>

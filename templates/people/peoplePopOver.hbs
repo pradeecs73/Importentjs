@@ -1,0 +1,50 @@
+<div class='catalogPopover1'>
+  <div class="item-vcard">
+    <div class="vcard-tooltip-arrow">
+      <img src="assets/images/vcard-tooltip-arrow.png" alt="">
+    </div>
+    <div class="vcard-title clearfix">
+      <div class="item-image">{{avatarMini shortName username}}</div>
+      <p class="item-vcard-name">{{shortName}}</p>
+    </div>
+    <div class="vcard-content clearfix first">
+      <p class="item-title">{{jobTitle}}</p>
+      <p class="item-location">{{location.city}}{{isCommaRequired}}{{location.country}}</p>
+      <p class="item-workemail eclipse-text"><a {{bind-attr href="mailTo"}} class="visit-date" onclick="javascript:event.stopPropagation();"><smaller>{{email}}</smaller></a> </p>
+    </div>
+    {{#if organization}}
+    <div class="vcard-content clearfix">
+      <p class="item-department">{{organization}}</p>
+    </div>
+    {{/if}}
+    {{#if topExpertise}}
+    <div class="vcard-content vcard-skills clearfix">
+      <ul>
+        {{#each item in topExpertise}}
+        <li>
+          <div>
+            {{#if item.endorsementCount}}
+                <span><strong>{{item.endorsementCount}}</strong></span>
+            {{/if}}
+            <span>{{item.name}}</span>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+    {{/if}}
+    {{#unless isCurrentUser}}
+    <div class="vcard-content vcard-links clearfix last">
+      <ul>
+        <li>
+          <span class="contact-icons">
+            <i class="first">{{ render "jabberItem" model}}</i>
+            <i>{{ render "webexItem" model}}</i>
+          </span>
+          {{profileLinkButton username "View Profile"}}
+        </li>
+      </ul>
+    </div>
+    {{/unless}}
+  </div>
+</div>

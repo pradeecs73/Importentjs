@@ -1,0 +1,28 @@
+<ul class="nav nav-list">
+    <li class="active">
+        <button class="dropdown-toggle" data-icon-after="caret-right">
+            <i class="icon-institution menu-icon"></i>
+            <span class="menu-text"> Knowledge Center</span>
+        </button>
+        <ul class="submenu">
+            <li id="_documentsCatalog">
+                {{#link-to 'documents.catalog' (query-params filterType="all"  filters="" searchText="" pageNumber=1 sortBy="uploadedOn" sortOrder="desc") activeClass='active'}}
+                    <i class="activities hide"></i><span class="menu-text">Knowledge Library</span>
+                {{/link-to}}
+            </li>
+            <li id="_documentsMy">
+                {{#link-to 'documents.my' (query-params filterType="all" filters="" searchText="" pageNumber=1 sortBy="uploadedOn" sortOrder="desc") activeClass='active'}}
+                    <i class="connections hide"></i>
+                    <span class="menu-text">My Files</span>
+                {{/link-to}}
+            </li>
+
+            <li id="_documentsShared">
+                {{#link-to 'documents.shared' (query-params filterType="all" filters="" searchText="" pageNumber=1 sortBy="uploadedOn" sortOrder="desc") activeClass='active'}}
+                    <i class="connections hide"></i>
+                    <span class="menu-text">Shared Files</span>
+                {{/link-to}}
+            </li>
+        </ul>
+    </li>
+</ul>

@@ -1,0 +1,16 @@
+<div class="modal-header learningplanblue-header modal-create-header clearfix">
+    <button type="button" class="close font-25" {{action closeFileUnavailableModal}}>
+        <i class="icon-remove white"></i>
+    </button>
+    <h4 class="modal-title"> {{fileType}} Unavailable</h4>
+</div>
+<div class="modal-body">
+    <div class="input-group" style="margin-left:13px;">
+        <span>
+            <h6>The requested {{lowercaseFileType}} is temporarily unavailable due to processing. Please try again later.</h6>
+        </span>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-sm btn-primary" {{action closeFileUnavailableModal}}>Ok</button>
+</div>

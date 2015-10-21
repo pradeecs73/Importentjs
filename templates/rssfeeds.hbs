@@ -1,0 +1,104 @@
+<div {{bindAttr class="nofeeds:hide:show"}}>
+    <div class="feeds js-feeds list-grid-page">
+        <div class="header-panel">
+            <div class="row">
+                <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12">
+                    <a  class="pull-right">
+                        <span class=""> 
+                            <i style="color: #E31B23;" data-rel="tooltip" {{action 'deleteRssFeed'}} data-original-title="Delete a RSS Feed" data-placement="left" data-icon-before="trash-o" class="btn red"></i>
+                            <i data-rel="tooltip" {{action 'openEditRssfeedModal'}} data-original-title="Edit a RSS Feed" data-placement="left" data-icon-before="pencil" class="btn"></i>
+                            <i data-rel="tooltip" {{action 'openCreateRssfeedModal'}} data-original-title="Add a RSS Feed" data-placement="left" data-icon-before="plus" class="btn"></i>
+                        </span>
+                    </a>
+                    <h1>RSS Feeds</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-wrapper">
+            <div class="filters-panel has-sorting">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                    <div class="row">
+                        <div id="view-option-buttons" class="col-lg-4 col-md-5 col-sm-4 col-xs-6 layout-buttons">
+                            <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action toggleView "list-view" target=view}}></a>
+
+                            <!--div class="dropdown sorting-dropdown" data-action="sort" id="communitiesSortingDropdownId">
+                                <a href="#" class="sorter-toggle dropdown-toggle" id="change-dir" data-toggle="dropdown" data-icon-before="sort-descending">
+                                    <span class="icon-caret-down"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" id='communitiesSortingDropdownId'>
+                                    <li>
+                                        <a href="#" id="name" {{action 'getSortedData'  "name" '#sortCommunities'}} data-sub-action="f_name" data-sort-direction="asc" data-icon-after="sort-ascending">Name</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="selected" id="createdOn" {{action 'getSortedData'  "createdOn" '#sortCommunities'}} data-sub-action="f_size" data-sort-direction="asc" data-icon-after="sort-ascending">Created Date</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" d="category" {{action 'getSortedData'  "category.name" '#sortCommunities'}} data-sub-action="f_modf" data-sort-direction="asc" data-icon-after="sort-ascending">Category</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" id="membersCount" {{action 'getSortedData'  "membersCount" '#sortCommunities'}} data-sub-action="f_upld" data-sort-direction="desc" data-icon-after="sort-ascending"># of Members</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" id="type" {{action 'getSortedData'  "type" '#sortCommunities'}} data-sub-action="f_type" data-sort-direction="asc" data-icon-after="sort-ascending">Type</a>
+                                    </li>
+                                </ul>
+                            </div--> 
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-8 col-xs-6">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 search-add-wrap">
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                        </div>
+                        <span {{bind-attr class=":pull-right newPath:active"}}> 
+                            <span class=""> 
+                                <i data-rel="tooltip" data-original-title="Add a RSS Feed" data-placement="left" {{action 'openCreateRssfeedModal'}} data-icon-before="plus-thin" class="btn"></i>
+                            </span> 
+                        </span>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rss-feeds js-rss-feeds-names result-closed">
+            <div class="rss-feed-container">
+                <div class="rss-feed-title">
+                    <ul class="rss-publisher" id="myTab3">
+                        {{#each}}
+                            {{#link-to 'rssfeedItems' _id tagName="li" class="js-rss-feed-link js-accordion-closed"}}
+                                <a data-toggle="tab" {{bind-attr title='name'}}>
+                                    <i class="icon-chevron-right js-direction-icon"></i>{{name}}
+                                </a>
+                            {{/link-to}}
+                        {{/each}}
+                    </ul>
+                </div>
+                <div class="rss-content-div">
+                    {{outlet}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div {{bindAttr class=":widget-container nofeeds:show:hide"}} id="rss-feed-box">
+    <div class="header-panel">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h1>RSS Feeds</h1>
+            </div>
+        </div>
+    </div>
+    <div class="text-center centered center">
+        <div style="width: 291px; border-bottom: 1px solid #ccc; margin:50px auto 10px;">
+            <i class="icon-rss" style="font-size: 152px;"></i><br>
+            <h4>No Feeds available</h4>
+            <span class="help-block">Please enter new feed</span>
+        </div>
+        <button id="id-btn-dialog2" class="btn btn-primary" {{action 'openCreateRssfeedModal'}}>Add New Feed
+        </button>
+    </div>
+</div>

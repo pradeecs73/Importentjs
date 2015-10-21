@@ -1,0 +1,6 @@
+<div {{bind-attr class="isSuccessAlert:has-success isFailureAlert:has-error readonly:readonly"}}>
+    <span class="block input-icon input-icon-right">
+        <input type="text" {{bindAttr placeholder="placeHolderText"}} {{bindAttr id="componentId"}} class="form-control"/>
+        <i {{bind-attr class="isSuccessAlert:icon-ok-sign isFailureAlert:icon-remove"}}></i>
+    </span>
+</div>

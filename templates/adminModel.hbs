@@ -1,0 +1,47 @@
+<div id="adminModel-tab" class="tab-pane active">
+    <div class="widget-box transparent" id="recent-box">
+        <div class="widget-header widget-header-flat padding-12">
+            <h4 class="lighter"><i class="icon-list orange"></i>Model Documents</h4>
+        </div>
+
+		{{#if modellingResponse.status}}
+            <div {{bind-attr class=":alert alert-block isModellingSuccessful:alert-success:alert-danger"}}>
+                <button type="button" class="close" data-dismiss="alert">
+                    <i class="icon-remove"></i>
+                </button>
+
+				{{modellingResponse.message}}
+
+            </div>
+		{{/if}}
+
+        <div class="widget-box transparent padding-12" id="recent-box">
+            <div class="widget-body">
+                <div class="widget-body-inner" style="display: block;">
+                    <div class="widget-main no-padding">
+                        Number of documents available for tagging: {{documentsToModel}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="padding-12">
+
+            <button id="reloadDocumentsBtn" type="submit" class="btn btn-sm btn-primary" {{action "reload"}}><i
+                    class="icon-refresh bigger-140"></i>
+                <script id="metamorph-204-start" type="text/x-placeholder"></script>
+                Reload
+                <script id="metamorph-204-end" type="text/x-placeholder"></script>
+            </button>
+
+            <button id="modelDocumentsBtn" type="submit" class="btn btn-sm btn-primary" {{action "modelDocuments"}}><i
+                    class="icon-filter bigger-140"></i>
+                <script id="metamorph-204-start" type="text/x-placeholder"></script>
+                Model
+                <script id="metamorph-204-end" type="text/x-placeholder"></script>
+            </button>
+        </div>
+        <p class="modeling-note">(On remodeling, assigned categories will get deleted. Please
+            reassign the categories once modeling is successful.)</p>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<ul class="nav nav-list">
+    <li class="active">
+            <button class="dropdown-toggle" data-icon-after="caret-right">
+                <i class="icon-user-group2 menu-icon"></i>
+                <span class="menu-text"> People</span>
+            </button>
+            <ul class="submenu">
+                <li>
+                    {{#link-to 'contacts' (query-params filters="" searchText="" pageNumber=1 keepUserSelection=false) activeClass='active'}}
+                        <i class="activities hide"></i> <span class="menu-text">All People</span>
+                    {{/link-to}}
+                </li>
+                <li>
+                    {{#link-to 'expertUsers' (query-params filters="" searchText="" pageNumber=1 keepUserSelection=false) activeClass='active'}}
+                        <i class="connections hide"></i>
+                        <span class="menu-text">Experts</span>
+                    {{/link-to}}
+                </li>
+            </ul>
+    </li>
+</ul>

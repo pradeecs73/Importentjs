@@ -1,0 +1,124 @@
+<div id="messageDiv" class="alert alert-block">
+    <p></p>
+    <div class="error">{{errorMessage}}</div>
+    <div {{bind-attr class=':success successMessage:fade-out-message'}}>{{successMessage}}</div>    
+</div>
+
+<div class="admin-ui admin-tab-categories">
+  <div class="widget-body no-border" id="admin-lists">
+    <div class="widget-body-inner">
+      <div class="widget-main clearfix">
+    
+        {{!-- #if is__userpi_ModerateCategories 
+              /* this condition does not currently exist but should be added? */ --}}
+
+        <div class="admin-filters-panel">
+          <div class="container">
+            <div class="row list-grid-page">
+
+              <div class="col-lg-4 col-md-4 col-sm-6 col-xs-10 search-add-wrap">
+                <div class="form-wrap">
+                  <form class="form-search" {{action "searchByName" on="submit"}}>
+                    <i class="icon-search"></i>
+                    {{input type="text" id="txtSearch" value=newCategory placeholder="Search/Add category" maxlength="50"}}
+                  </form>
+                </div>
+              </div>
+              <div class="col-lg-2 col-lg-push-6 col-md-2 col-md-push-6 col-sm-2 col-sm-push-4 col-xs-2 add-category-btn-wrap">
+                <span class=""> 
+                  <i data-rel="tooltip" data-original-title="Add a Category" data-placement="left" data-icon-before="plus"  data-toggle="modal" class="btn" {{action addCategory on="click"}} ></i>
+                </span>
+              </div>
+
+            </div>
+          </div>
+        </div><!--/admin-filters-panel-->
+        
+        <div class="admin-table-wrap-outer">
+          <div class="admin-table-wrap-inner">
+            <div class="admin-table-content">
+          
+              <div class="list-headings">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-30">
+                        <h5>Name</h5>
+                    </div>
+                    <div class="col-30">
+                        <h5>Created By</h5>
+                    </div>
+                    <div class="col-25">
+                        <h5>Created On</h5>
+                    </div>
+                    <div class="col-15">
+                        <h5>Actions</h5>
+                    </div>
+                  </div>
+                </div>
+              </div><!--/list-headings-->
+
+
+              <div id="expertise-topics" class="list-container">
+              {{#if model}}
+                {{#each category in model}}
+                <div class="item-wrap container">
+                  
+                    <div id="div_{{unbound category._id}}" {{bind-attr class=":row :clearfix category.active::inactivecategory"}}>
+                            
+                        <div class="col-30 item-name-email">
+                          <form {{action "updateCategoryNew" category._id this on="submit" }}>
+                            <p class="item-topic eclipse-text" >{{category.name}}</p>
+                            {{input type="text" name="name" id=category._id class="disnone"}}
+                          </form>
+                        </div>
+
+                        <div class="col-30">
+                          <p class="item-created-by eclipse-text">{{category.creator}}</p>
+                        </div>
+                      
+                        <div class="col-25">
+                          {{#if category.createdDate}}
+                              <p class="item-created-by eclipse-text">{{from-now category.createdDate}}</p>
+                          {{else}}
+                              <p class="item-created-by"> Not available </p>
+                          {{/if}}
+                        </div>
+
+                        <div class="col-15">
+                          <div class="actions-wrap">
+                            <span class="expertise-action expertise-action-edit clsPosition  icon-pencil" {{action 'editUpdateCategory' category._id }} data-rel="tooltip" data-original-title="Edit" data-placement="top" ></span> 
+                            {{#if category.active}} 
+                              <span id="span_{{unbound category._id}}" class="icon-remove clsPosition" {{action 'deleteCategory' category._id category this}}  data-rel="tooltip" data-original-title="De-activate" data-placement="top"></span>
+                             {{else}}
+                              <span id="span_{{unbound category._id}}" class="icon-checkmark clsPosition" {{action 'deleteCategory' category._id category this}} data-rel="tooltip" data-original-title="Activate" data-placement="top"></span>
+                            {{/if}}
+                          </div>
+                        </div>
+                  
+                    </div>
+
+                </div>
+                {{/each}}
+
+                {{else}}
+                   <div class="no-value"> No results found </div>
+                {{/if}}
+              </div>
+            </div><!--/admin-table-wrap-content-->
+          </div><!--/admin-table-wrap-inner-->
+        </div><!--/admin-table-wrap-outer-->
+
+        {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+
+        {{!-- else
+
+            /* Re-add the 'else' statement when the condition is created/added in */
+
+            <h3>You may not have permission to perform operations in this tab</h3>
+            <h5>If you were looking to perform administrative operations, please look at other tabs</h5>
+        /if --}}
+    
+      </div>
+    </div>
+  </div>
+</div>

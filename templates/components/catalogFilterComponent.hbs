@@ -1,0 +1,16 @@
+<ul class="horizontal-list">
+    <li class="filter-by-title">Filter By: </li>
+    {{#each filter in applicableFilters}}
+        <li class="views-filter">
+            {{view Ember.RadioButton name="cloudletFilter" selectionBinding=selectedFilter value=filter.value }}
+            <span class="lbl"></span>
+            <label class="filter-by-label"> {{filter.label}}</label>
+        </li>
+    {{/each}}
+</ul>
+<select class="filter-items-dropdown" name="" id="">
+    <option>Filter By</option>
+    {{#each filter in applicableFilters}}
+        <option value={{unbound filter.value}}>{{unbound filter.label}}</option>
+    {{/each}}
+</select>

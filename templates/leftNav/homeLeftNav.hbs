@@ -1,0 +1,24 @@
+<ul class="nav nav-list">
+    <li class="active">
+        <button class="dropdown-toggle no-top-border" data-icon-after="caret-down">
+            <i class="icon-home menu-icon"></i>
+            <span class="menu-text"> Workspace</span>
+        </button>
+        <ul class="submenu">
+            {{#if isVkmEnabled}}
+                <li>
+                    {{#link-to 'map' activeClass='active'}}
+                        <i class="membership hide"></i>
+                        <span class="menu-text">Knowledge Map</span>
+                    {{/link-to}}
+                </li>
+            {{/if}}
+            <li>
+                {{#link-to 'activity' activeClass='active'}}
+                    <i class="membership hide"></i>
+                    <span class="menu-text">Activity Stream</span>
+                {{/link-to}}
+            </li>
+        </ul>
+    </li>
+</ul>

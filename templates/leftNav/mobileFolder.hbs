@@ -1,0 +1,34 @@
+<ul class="nav nav-list">
+    <li class="active">
+        <button class="dropdown-toggle" data-icon-after="caret-right">
+            <i class="icon-folder-arrow-right menu-icon"></i>
+            <span class="menu-text"> Mobile Folder</span>
+        </button>
+        <ul class="submenu">
+            <li id='mf-collections'>
+                {{#link-to 'collections' activeClass='active'}}
+                    <i class="connections hide"></i>
+                    <span class="menu-text">My Collections</span>
+                {{/link-to}}
+            </li>
+            <li id="mf-notes">
+                {{#link-to 'notes' activeClass='active'}}
+                    <i class="connections hide"></i>
+                    <span class="menu-text">My Notes</span>
+                {{/link-to}}
+            </li>
+            <li id='mf-sharedItems'>
+                {{#link-to 'sharedItems' activeClass='active'}}
+                    <i class='connections hide'></i>
+                    <span class='menu-text'>Shared Folders</span>
+                {{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'drives' activeClass='active'}}
+                    <i class="connections hide"></i>
+                    <span class="menu-text">External Data</span>
+                {{/link-to}}
+            </li>
+        </ul>
+    </li>
+</ul>

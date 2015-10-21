@@ -1,0 +1,161 @@
+{{#if error}}
+    {{render "notAllowed"}}
+{{else}}
+
+{{!-- <span class="flashMessage success">{{successMessage}}</span> --}}
+
+  <div class="eLearningCustom details-page community-detail-page">
+
+<div class="message-navbar clearfix" id="id-message-item-navbar">
+  <div class="clearfix">      
+    <div class="document-name-icon-read-button pull-left">
+      <div class="document-primary-details">
+        <div class="document-icon">
+        </div>
+        <div class="document-name">{{jobFamilyName}}</div>
+        <div class="read-button">           
+        </div>
+      </div>
+    </div>
+      {{#if active}}
+        <div class="document-extras pull-right">
+          <div class="social pull-right" ref-entity-id="{{unbound _id}}" ref-entity-type="community"></div>
+        </div>
+      {{/if}}
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+  <div class="info-bar clearfix">
+    <span class="pull-left margin-right-20">
+<!--        {{avatarCommunityImg creatorShortName creator}} Started by {{creatorShortName}}-->
+    </span>
+    <span class='pull-left'>
+      <i class="icon-calendar-empty"></i>
+      <span>Playbook Phase: {{playbookPhase}}</span>
+    </span>
+    <span class='pull-left'>
+      <i class="icon-calendar-empty"></i>
+      <span>Current Version: {{currentVersion}}</span>
+    </span>
+    <span class='pull-left'>
+      <i class="icon-calendar-empty"></i>
+      <span>Planned Next Review: {{nextReview}}</span>
+    </span>    
+</div>
+
+
+<div id="description" class="tab-pane active">
+    <div class="widget-box transparent">
+       
+            <!-- <div class="widget-header widget-header-flat widget-padding bborder row-header">
+
+                <span class="widget-toolbar">  
+                   <!-- <a data-parent="#accordion" data-action="collapse" class="accordion-toggle">
+                        <i class="icon-caret-up"></i>
+                    </a> -->
+                 </span>
+               <!-- <i data-rel="tooltip" data-original-title="Edit" data-placement="left" {{bindAttr class=":icon-pencil :add-question-icon :margin-top-5 :pull-right active:show:hidden isMember:show:hidden"}}{{action "editCommunity" _id}}></i> -->
+                {{#if view.isWebexEnabled}}
+                    <i data-rel="tooltip" data-original-title="Launch Webex" data-placement="left" {{bindAttr class=":icon-webex :add-question-icon :margin-top-5 :pull-right active:show:hidden isMember:show:hidden"}}{{action "instantMeeting" on="click"}}></i>
+                {{/if}}
+            </div>
+       
+        <div id="communityDescription" class="panel-collapse collapse in">
+            <div class="widget-body">
+                <p class="page-padding">{{{jobFamilyDescription}}}</p>
+            </div>
+        </div>
+
+
+        <div id="communityDescription" class="panel-collapse collapse in">
+            <div class="widget-body">
+            <div class="document-name page-padding">Roles Importance to Cisco Services</div>
+                <p class="page-padding">{{{strategicImportanceText}}}</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!--<div class="message-navbar clearfix" id="id-message-item-navbar">
+  <div class="clearfix">      
+    <div class="document-name-icon-read-button pull-left">
+      <div class="document-primary-details">
+        <div class="document-icon">
+        </div>
+        <div class="document-name">Associated Skills & Recommended Learning</div>
+        <div class="read-button">           
+        </div>
+      </div>
+    </div>
+      {{#if active}}
+        <div class="document-extras pull-right">
+          <div class="social pull-right" ref-entity-id="{{unbound _id}}" ref-entity-type="community"></div>
+        </div>
+      {{/if}}
+    <div class="clearfix"></div>
+  </div>
+</div> -->
+
+
+  <div class="widget-box transparent">
+  <!--{{ view App.CommunitiesDetailTagsView }}-->
+      <div class="widget-header no-padding">
+          <div class="no-border">
+              <ul class="nav nav-tabs padding-left-18 tab-size-bigger" id="myTab">
+                  {{#link-to "community.foundational" data-target="#community-outlet" tagName="li"}}
+                  <a>Foundational</a> {{/link-to}}
+                  {{#link-to "community.specialized" data-target="#community-outlet" tagName="li"}}
+                  <a>Specialized</a> {{/link-to}}
+                  <!-- addition of all activities tab-->
+                  {{#link-to "community.transformational" data-target="#community-outlet" tagName="li"}}
+                  <a>Transformational</a> {{/link-to}}
+              </ul>
+          </div>
+      </div>
+  </div>
+  <div class="tab-content no-border" id="community-outlet">
+          <div class="message-container"></div>
+          {{outlet}}
+  </div>
+	<div class="widget-box transparent">
+		<div class="widget-header widget-header-flat widget-padding bborder row-header">
+			<div class="widget-toolbar">
+			</div>
+		</div>
+		<div id="communityComments" class="panel-collapse widget-body collapse in">
+			<div class="recentReaders comments_container" ref-entity-id="6" ref-entity-type="course">
+				<div class="uyan-comment" load="no" articletitle="{{unbound name}}" entityid="{{unbound _id}}"></div>
+			</div>
+		</div>
+	</div>  
+  </div>
+{{/if}}
+
+<div class="modal file-upload-modal" id="fileuploadCommunity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+                  <div class="modal-header learningplanblue-header modal-create-header clearfix">
+                      <button type="button" class="close white" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h4 class="modal-title" id="myModalLabel">File Upload</h4>
+                  </div>
+                  <div class="modal-body">
+                <span>Accepted:<strong>epub, pdf, doc, docx, ppt, pptx, xls, xlsx, png, jpg, jpeg</strong></span>            
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <span>
+                          {{file-upload allowedFileTypes=allowedFileTypes name="files[]" maxFileSizeInMB=5 reset=resetFileChooser multiple="multiple"}}
+                        </span>
+                      </span>
+                    </div>
+                  <div>
+                  <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary"{{action attachFile }}> Attach File</button>
+                      <button type="reset" class="btn  btn-primary" {{action cancelAttachFile}}> Cancel </button>
+                  </div>
+      </div>
+  </div>
+</div>
+

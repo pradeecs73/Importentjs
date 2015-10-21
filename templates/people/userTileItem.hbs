@@ -1,0 +1,63 @@
+<div class="item-wrap col-xs-12 col-sm-6 col-md-4 col-lg-3">  
+
+  <div {{bindAttr class=":item-inner-wrap :contact-tile userChecked:selected-user :clearfix"}} data-rel="popover" data-container="body" data-toggle="popover" data-placement="auto right">
+
+    <span class="avatar">
+      {{avatarMini fullName username}}
+      {{#unless isCurrentUser}}
+        <i>{{ render "jabberStatusPill" model}}</i>
+      {{/unless}}
+    </span>
+
+    <span class="contact-info">
+      <span class="name">
+        {{profileLink fullName username}}
+      </span>
+      <span class="job">
+        {{ellipsis jobTitle 18}}
+        <p><strong>{{activeMessage}}</strong></p>
+      </span>
+      <span class="email">
+        <a {{bind-attr href="mailTo"}} class="visit-date" onclick="javascript:event.stopPropagation();"><smaller>{{email}}</smaller></a>
+      </span>
+      <address class="location">
+        {{location.city}}{{isCommaRequired}}{{ellipsis location.country 5}}
+      </address>
+    </span>
+
+      <!-- there was a unless is CurrentUser here before. Removed to show on community page. Also got rid of the multiSelectEnabled for you guys to set in the controller and re-add -->
+    {{#unless isCurrentUser}}
+      <span class="contact-icons" id="icons-position">
+        <i>{{ render "jabberItem" model}}</i>
+        <i>{{ render "webexItem" model}}</i>
+      </span>
+    {{/unless}}
+    {{#if isMultiSelectEnabled}}
+      <span class="checkbox-more-actions" id="checkbox-position">
+      <!-- there was a unless is CurrentUser here before. Removed to show on community page. Also got rid of the multiSelectEnabled for you guys to set in the controller and re-add. Only show pencil/trash on community page-->
+      <!--<i class="icon-pencil"></i> <i class="icon icon-trash-o"></i>-->
+        {{#unless isCurrentUser}}
+          <span onclick="javscript:event.stopPropagation();">
+            <label {{bindAttr class=":middle multiSelectEnabled:show:hide"}}>
+              {{view Ember.Checkbox class="ace" checkedBinding="controller.userChecked" bubbles=false}}
+              <span class="lbl"></span>
+            </label>
+          </span>
+        {{/unless}}
+        <div class="clearfix"></div>
+      </span>
+    {{/if}}
+  {{# if expertise.length}}
+    <span class="expert-badge icon-badge-shield"> </span>
+  {{/if}}
+
+  {{#if shouldShowVisitingCard}}
+    {{ view App.PeoplePopOverView }}
+  {{/if}}
+  {{#if joinCommunityRequestContext}}
+    {{ view App.JoinCommunityRequestView}}
+  {{/if}}
+
+  </div><!--/.item-inner-wrap-->
+
+</div>

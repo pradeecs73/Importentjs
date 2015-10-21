@@ -1,0 +1,48 @@
+<div class="msg_page-wrap self-registration-page">
+
+    <div class="msg_page-box">
+          
+        <!-- Message Header (branding, logo) -->
+        <div class="msg_box-header">
+            <img class="msg_page-logo" src="knowledgecenter/branding/images/common_landing_logo.png" alt="CISCO">
+            <h2 class="msg_page-heading sub-heading">Cisco Collaborative Knowledge</h2>
+        </div><!--/.msg_page-header-->
+
+        <!-- Message Contents (text, forms, actions) -->
+        <div class="msg_box-content self-registration-form">
+            {{#if status.success}}
+                <p>We have successfully captured your registration details. We will get back to you via your registered email</p>
+            {{else}}
+            <div class="msg_page_form-group">
+                {{input id="username" name="username" value=username type="text" readonly="readonly" placeholder="Email" class="msg_page-text-input"}}
+                {{#if errors.username}}
+                    <span class="error msg_box-input-status"> {{errors.username}}</span>
+                {{/if}}
+                <input type="text" id="firstname" name="firstname" placeholder="First Name" class="msg_page-text-input first"/>
+                {{#if errors.firstName}}
+                    <span class="error msg_box-input-status"> {{errors.firstName}}</span>
+                {{/if}}
+                <input type="text" id="lastname" name="lastname" placeholder="Last Name" class="msg_page-text-input"/>
+                {{#if errors.lastName}}
+                    <span class="error msg_box-input-status"> {{errors.lastName}}</span>
+                {{/if}}                
+            </div>
+            <div class="msg_page_form-group">
+                <img src="/knowledgecenter/jcaptcha.jpg?type=image" />
+                <input type="text" name="jcaptcha" id="jcaptcha" value="" placeholder="Please enter the text shown above" class="msg_page-text-input"/>
+                <span class="msg_box-input-status msg_box-captcha-status"> {{status.message}} </span>
+
+                <button type="submit" class="btn btn-primary msg_page-button" id="register" {{action 'register'}}>Register</button>
+                <button type="submit" class="btn btn-primary msg_page-button" id="reset" {{action 'reset'}}>Reset</button>                
+
+            </div>
+
+            {{/if}}
+        </div><!--/.msg_page-content-->
+
+        <!-- Message Footer (disclaimers, terms) -->
+        {{partial "loginTerms"}}
+
+    </div>
+
+</div>

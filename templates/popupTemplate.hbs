@@ -1,0 +1,33 @@
+<div class="modal fade" id="popupTemplate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+				<div class="modal-header learningplanblue-header modal-create-header clearfix">
+					<button type="button" class="close font-25" data-dismiss="modal" id="popupClose">
+						<i class="icon-remove white"></i>
+					</button>
+					<h4 class="modal-title">{{categoryTitle}} Subcategories</h4>
+				</div>
+				<div class="modal-body">
+					<div class="modal-section">
+						<i class="margin-right-10 setdate-TrainingCatlog-icon"></i>
+						<span class="grey">Select a {{categoryTitle}}category to filter by</span>
+					</div>
+					<div class="modal-section">
+						<ul class="collapsed-sub-categories">
+							{{#each category in popupCategories}}
+								<li {{ bind-attr class="clearfix category.selected:active" }}>
+									{{#view "sub-category"}}
+										<span class="truncate">{{category.name}}</span> 
+										<a class="btn btn-sm btn-primary" href="#" {{ action "showSubCategoriesAndCourse" category on="click"}} data-dismiss="modal" name="sub-categories">Filter</a> 
+									{{/view}}
+								</li>
+							{{/each}}
+						</ul>
+					</div>
+				</div>
+			<div class="modal-footer">
+				<button class="btn btn-sm btn-primary" data-dismiss="modal" id="popupCancel">Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>

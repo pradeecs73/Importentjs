@@ -1,0 +1,109 @@
+{{#if isJabberEnabled}}
+<li class="cis-dropdown cis-nav-drop-jabber">
+    <a data-toggle="dropdown" class="dropdown-toggle topnavigation-comment" data-icon-before="chat-square" href="#">
+        {{#if jabberError }}
+            <i class="icon-exclamation-triangle chat-status red"></i>
+        {{else}}
+            {{#if jabberUnavailableError}}
+                <i class="pill-icon chat-status status-offline"></i>
+            {{else}}
+                {{#if isLoggingIntoJabber}}
+                    <i class="icon-spin icon-spinner-dots blue-dark-text chat-status jabber-loader" id="jabber-loader"></i>
+                {{else}}
+                    <i>{{ render "jabberStatusPill" jabberPillModel}}</i>
+                {{/if}}
+            {{/if}}
+        {{/if}}
+    </a>
+    {{#unless isLoggingIntoJabber}}
+        <ul class="pull-right dropdown-navbar navbar-drop navbar-status dropdown-menu dropdown-caret dropdown-close">
+            {{#if jabberError }}
+
+                {{#if isAuthenticationError}}
+                    <li class="dropdown-header" data-icon-before="exclamation-triangle">
+                        Login Failed
+                    </li>
+                    <li>
+                        <div class="notification-text">Invalid Username or Password. Please update your credentials and try again. </div>
+                    </li>
+                    <li class="last clearfix">
+                        {{#link-to "myAccount" activeClass='active' tagName="button" classNames="btn btn-primary pull-right"}}
+                            Update Details
+                            <i class="icon-angle-right"></i>
+                        {{/link-to}}
+                    </li>
+                {{else}}
+                    <li class="dropdown-header" data-icon-before="exclamation-triangle">
+                        Network Error
+                    </li>
+                    <li>
+                        <div class="notification-text">It looks like the connection to Jabber is unsuccessful. Please contact your administrator. </div>
+                    </li>
+                    <li class="last clearfix" {{action logonToJabber }}>
+
+                        <button href="#" class="btn btn-primary pull-right">
+                            Try again
+                            <i class="icon-angle-right"></i>
+                        </button>
+                    </li>
+                {{/if}}
+            {{else }}
+                {{#if jabberUnavailableError}}
+                    <li class="dropdown-header" data-icon-before="exclamation-triangle">
+                        Jabber Details Unavailable
+                    </li>
+                    <li>
+                        <div class="notification-text">It looks like your Jabber credentials are unavailable. Please update your credentials and try again. </div>
+                    </li>
+
+                    <li class="last clearfix">
+                        {{#link-to "myAccount" activeClass='active' tagName="button" classNames="btn btn-primary pull-right"}}
+                            Update Details
+                            <i class="icon-angle-right"></i>
+                        {{/link-to}}
+                    </li>
+                {{else }}
+                    {{#if isOfflineInJabber }}
+                        <li class="last" {{action logonToJabber }}>
+                            <a href="#">
+                                Go Online
+                                <i class="icon-angle-right"></i>
+                            </a>
+                        </li>
+                    {{else}}
+                        <li class="dropdown-header status-current" data-ember-action="20">
+                            <i {{bindAttr class=":pill-icon jabberStatusName"}}></i>
+                            My Status
+                        </li>
+                        <li class="status-available" {{action updateJabberStatus "" }}>
+                            <a href="#">
+                                <i class="pill-icon status-available"></i>
+                                Available
+                            </a>
+                        </li>
+                        <li class="status-dont-disturb" {{action updateJabberStatus "dnd" }}>
+                            <a href="#">
+                                <i class="pill-icon status-dont-disturb"></i>
+                                Do Not Disturb
+                            </a>
+                        </li>
+                        <li class="status-away" {{action updateJabberStatus "away" }}>
+                            <a href="#">
+                                <i class="pill-icon status-away"></i>
+                                Away
+                            </a>
+                        </li>
+                        <li class="last status-offline" {{action updateJabberStatus "offline" }}>
+                            <a href="#">
+                                <i class="pill-icon status-offline pull-left"></i>
+                                Go Offline
+                                <i class="icon-angle-right"></i>
+                            </a>
+                        </li>
+                    {{/if}}
+                {{/if}}
+            {{/if}}
+        </ul>
+    {{/unless}}
+</li>
+{{/if}}

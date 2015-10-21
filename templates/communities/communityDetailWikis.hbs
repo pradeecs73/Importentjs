@@ -1,0 +1,87 @@
+<div id="wikis" class="tab-pane">
+    <div class="widget-box transparent">
+        <div class="widget-header widget-header-flat widget-padding bborder row-header">
+    	    <div class="searchCatalogCustom blog-catalogCustom pull-left">
+    	        <div id="toggle_view" class="clearfix toggle-view-container layout-buttons">
+                      <div class="dropdown sorting-dropdown" data-action="sort" id="sortCommunitiesWikis">
+                            <a href="#" class="sorter-toggle dropdown-toggle" id="change-dir" data-toggle="dropdown" data-icon-before="sort-descending">
+                                    <span class="icon-caret-down"></span>
+                                </a>
+                            
+                             <ul class="dropdown-menu" role="menu" id='sortingDropdownIdWikis'>
+                                <li><a id ="titleWIKI" {{action 'getSortedDataByFiledType'  "title" "WIKI" "#sortCommunitiesWikis"}}>Name<i class="icon-sort-ascending icon-sorter pull-right"></i></a></li>
+                                <li><a id="authorNameWIKI" {{action 'getSortedDataByFiledType'  "authorName" "WIKI" "#sortCommunitiesWikis"}}>Author<i class="icon-sort-ascending icon-sorter pull-right"></i></a></li>
+                                <li><a id="categoryWIKI" {{action 'getSortedDataByFiledType'  "category.name" "WIKI" "#sortCommunitiesWikis"}}>Category<i class="icon-sort-ascending icon-sorter pull-right"></i></a></li>
+                                <li><a class="selected" id="updateDateWIKI" {{action 'getSortedDataByFiledType'  "updateDate" "WIKI" '#sortCommunitiesWikis'}}>Date Updated<i class="icon-sort-ascending icon-sorter pull-right"></i></a></li>
+                                <li><a id="viewsCountWIKI" {{action 'getSortedDataByFiledType'  "viewsCount" "WIKI" "#sortCommunitiesWikis"}}>Views<i class="icon-sort-ascending icon-sorter pull-right"></i></a></li>
+                            </ul>
+                      </div>
+                      
+    	         </div>
+            </div>
+            <span class="widget-toolbar">
+                <!--div data-parent="#accordion" data-action="collapse" class="accordion-toggle collapsed">
+                    <i class="icon-caret-up"></i>
+                </div-->
+            </span>
+            {{#if userHasAccessToCreatePostInDetailsPage}}
+            <a href="#"><i data-rel="tooltip" data-original-title="Add A Wiki" data-placement="left" {{bindAttr class=":icon-plus-thin :wiki-add :pull-right :margin-top-5 active:show:hidden isMember:show:hidden"}} {{action "createWiki" _id}}></i></a>
+            {{/if}}
+        </div>
+
+        <div class="panel-collapse collapse in widget-body" id="collapseSeven">
+          {{#if allWiki}}
+            <div class="widget-body details-table">
+                <ul class="table-top-header">
+                    <li class="col-sm-2">
+                        <label class="grey bold"> Title </label>
+                    </li>
+                    <li class="col-sm-2 hidden-xs">
+                        <label class="grey bold"> Author </label>
+                    </li>
+                    <li class="col-sm-2 hidden-xs">
+                        <label class="grey bold"> Category </label>
+                    </li>
+                    <li class="col-sm-2 hidden-xs">
+                        <label class="grey bold"> Updated </label>
+                    </li>
+                    <li class="col-sm-2 hidden-xs">
+                        <label class="grey bold"> Views </label>
+                    </li>
+                     <li class="col-sm-2 hidden-xs">
+                        <label class="grey bold"> Likes </label>
+                    </li>
+                </ul>
+                {{#each post in allWiki}}
+                    <ul class="data-row clearfix">
+                        <li class="col-sm-2">
+                            {{#link-to "wiki" post._id }} {{post.title}} {{/link-to}}
+                        </li>
+                        <li class="col-sm-2 tableheader-leftborder">
+                            {{profileLink post.authorName post.author}}
+                        </li>
+                        <li class="col-sm-2">
+                            {{post.category.name}}
+                        </li>
+                        <li class="col-sm-2 tableheader-leftborder">
+                            {{formatDate post.updateDate "DD MMM YYYY"}}
+                        </li>
+                        <li class="col-sm-2 tableheader-leftborder">
+                            {{post.viewsCount}}
+                        </li>
+                         <li class="col-sm-2 tableheader-leftborder">
+                            {{post.likesCount}}
+                        </li>
+                    </ul>
+                {{/each}}
+                {{pagination-community action='gotoWikiPage' totalWikiResults=totalWikiResult wikiPageNumber=wikiPageNumber}}
+            </div>
+
+          {{else}}
+            <p class="no-records-found widget-padding">There are no wikis in this community.</p>
+          {{/if}}
+
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,149 @@
+<div id="user-activity" class="page-content user-profile-page">
+  	<div class="widget-body list-with-tags" id="profile-layout">
+	    <div class="container header-panel">
+	        <div class="row">
+	            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	                <h1 class="eclipse-text">Recent Learnings</h1>
+	            </div>
+	        </div>
+	    </div>
+		<div class="tabbable">
+			<ul class="nav nav-tabs padding-left-18 tab-size-bigger" id="myTab">
+				<li >
+					{{#link-to "profile.my" data-toggle="tab" data-target="#profile"}}
+					Profile {{/link-to}}
+				</li>
+				<li>
+					{{#link-to "profile.myactivity" data-toggle="tab" data-target="#activity"}}
+					My Activities {{/link-to}}
+				</li>
+				<li class="active">
+				  {{#link-to "profile.myrecentlearnings" data-toggle="tab" data-target="#rl"}}
+				  Recent Learnings {{/link-to}}
+				</li>
+				<li>
+				  {{#link-to "profile.myprescribedlearningplans" data-toggle="tab" data-target="#plp"}}
+				  Prescribed Learning Plans {{/link-to}}
+				</li>
+				<li>
+		          {{#link-to "profile.activitysettings" data-toggle="tab" data-target="#notificationsSettings"}}
+		          Activity Stream Preferences {{/link-to}}
+		        </li>
+			</ul>
+			<div class="tab-content">
+				<div id="rl" class="tab-pane in active" >
+					<div class="widget-box profile-activity-learnings">
+						<div class="page-content list-grid-page training-catalog my-enrollments no-padding">
+							<div class="widget-body list-with-tags list-view">
+								<div class="sortCatalogCustom">
+									<div class="table-top-header training-catalog-bordertop">
+										<div class="col-sm-12">
+											 <div  class="col-lg-6 col-md-6 col-sm-4 col-xs-12">
+												
+											 </div>
+											<div class="clearfix pull-right align-right">
+												<label class="grey pull-left"><b>Filter By: </b></label>
+												<div class="views-filter">
+													{{view Ember.RadioButton name="selectionTest" selectionBinding="sort" value="progress"}}
+													<span class="lbl"></span>
+													<label class="grey"> Active</label>
+												</div>
+												<div class="views-filter">
+													{{view Ember.RadioButton name="selectionTest" selectionBinding="sort" value="completed"}}
+													<span class="lbl"></span>
+													<label class="grey"> Completed</label>
+												</div>
+											</div>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+								<div class="sortCatalogCustom">
+									<div class="list-headings">
+										<div class="col-sm-6 tc-course-section">
+											<h5 class="bold"> Name </h5>
+										</div>
+										<div class="col-sm-4 tc-type">
+											<h5 class="bold"> 
+											{{#if enrolled}}
+												Completed Date
+												{{else}}
+												Enrolled Date
+											{{/if}}
+											</h5>
+										</div>
+										<div class="col-sm-2 tc-actions">
+											<h5 class="bold"> Status </h5>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+							{{#if courses.length}}
+								<div class="sortCatalogCustomHeader">
+									{{#each course in courses}}
+										<div class="item-wrap col-xs-12">
+											<div class="item-inner-wrap">
+												<div class="tc-course-section col-sm-6">
+													<label class="tc-course-title">
+														{{#link-to "learningCourse" course.id (query-params coursetype=course.courseType)}} {{course.name}} {{/link-to}}
+													</label>
+													<label class="tc-course-type">
+														({{course.courseType}})
+													</label>
+													<div class="tc-course-section-inner">
+														<p>{{ellipsis course.summary 400}}</p>
+													</div>
+													<div class="tc-course-section-inner">
+														{{#if course.sessions.length}}
+															<p><b>Session(s):</b></p>
+																<ul>
+																	{{#each session in course.sessions}}							
+																		<li>
+																		{{session.title}}:
+																			{{#if session.startDate}}
+																				{{dateInGMTFormat session.startDate}}
+																			{{else}}
+																				No start date
+																			{{/if}}
+																			
+																			{{#if session.endDate}}
+																			to 
+																				{{dateInGMTFormat session.endDate}} | Location: {{session.city}}
+																			{{/if}}
+																			 
+																		</li>
+																	{{/each}}
+																</ul>
+														{{/if}}
+													</div>
+												</div>
+												<div class="col-sm-4 tc-type">
+													{{dateInGMTFormat course.startDate}}
+												</div>
+												<div class="tc-actions col-sm-2">
+													<span>{{checkForCompletionStatus course.completed}}</span>
+												</div>	
+												<div class="clearfix"></div>
+											</div>
+										</div>
+									{{/each}}
+									
+								</div>
+								 
+								{{else}}
+									<div class="no-value col-xs-12">No courses to display</div>
+								{{/if}}
+							</div>
+						</div>
+
+						<div class="col-md-12">
+							<div>
+								{{view App.PaginationView controllerBinding="courses"}}
+							</div>
+						</div>
+
+				</div>
+			</div>
+  		</div>
+  	</div>
+</div>

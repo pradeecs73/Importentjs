@@ -1,0 +1,319 @@
+<div class="page-content list-grid-page questions no-padding">
+    <div {{ bind-attr class=":widget-body :list-with-tags isGridView:grid-view:list-view"}}>
+        <div class="container header-panel">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h1 class="eclipse-text" {{bind-attr title=pageTitle}}>Discussions</h1>
+                </div>
+            </div>
+        </div>
+
+        <div id="questionsDelMessage" {{bind-attr class="showMessage::hide"}}>
+            <div class="alert alert-block alert-success">
+                <button type="button" class="close" data-dismiss="alert">
+                     <i class="icon-remove"></i>
+                </button>
+                <p>
+                    <i class="icon-ok"></i> You have successfully deleted the discussion.
+                </p>
+            </div>
+        </div>
+
+        {{view view.confirmModelDialogView}}
+        
+        {{!--
+        <div class="widget-box transparent">
+              <div class="widget-header no-padding">
+                  <div class="no-border">
+                      <ul class="nav nav-tabs padding-left-18 tab-size-bigger" id="myTab">
+
+                          <li class="active">
+                            <a data-toggle="tab" href="#top-discussions">
+                            Top Discussions
+                            </a>
+                          </li>
+                          <li>
+                            <a data-toggle="tab" href="#most-recent">
+                            Most Recent
+                            </a>
+                          </li>
+                          <li>
+                            <a data-toggle="tab" href="#answer-questions">
+                            Answer Questions
+                            </a>
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+        </div>
+        --}}
+        <div class="filter-wrapper">
+            <div class="filters-panel has-sorting">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                    <div class="row">
+                        <div id="view-option-buttons" class="col-lg-4 col-md-5 col-sm-4 col-xs-6 layout-buttons">
+                            {{!--
+                            <a id="catalog-grid-view" {{ bind-attr class=":icon-chat-squares-rounded :pull-left isGridView:active" }} {{action toggleView "grid-view" target=view}}></a>
+                            --}}
+                            <a id="catalog-grid-view" {{ bind-attr class=":icon-grid-layout :pull-left isGridView:active" }} {{action toggleView "grid-view" target=view}}></a>
+                            <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action toggleView "list-view" target=view}}></a>
+                            {{sorting-link sortableFields=sortableFields sortBy=sortBy sortOrder=sortOrder updateSortByAction='updateSortBy' toggleSortOrderAction='toggleSortOrder'}}
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-8 col-xs-6">
+                            {{visual-search componentId='fileCatalogFilterBox' facets=allFacets filters=filters searchAction='filter' placeHolderText='Filter by Scope, Status, # of comments'}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 search-add-wrap">
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-10 form-wrap col-xs-10">
+                            <div class="form-search">
+                                <i class="icon-search" {{action 'search'}}></i>
+                                {{input class="form-control" value=searchBoxText placeholder="Search By Title, Description" type="text" action='search' on='enter'}}
+                            </div>
+                        </div>
+                        {{#if isUserHasAccessToCreate}}
+                        <span {{bind-attr class=":li-new-mail :pull-right newPath:active"}}> {{#link-to "questions.new" (query-params chatSession="" session="" chatRoom="" communityId="") class="btn-new-mail createNew-icon-right"  data-target="#questions-outlet"}}
+                           <span class="">
+                               <i data-rel="tooltip" data-original-title="Add Discussion" data-placement="left" data-icon-before="plus-thin" class="btn"></i>
+                           </span>{{/link-to}}
+                        </span>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+            <div class="filters-panel has-filter-list">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 filter-items-wrapper">
+
+                    <ul class="horizontal-list">
+                        <li class="filter-by-title">Filter By: </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton checked="checked" name="selectionTest" selectionBinding="filter" value="my"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">My Discussions</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="filter" value="recent"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">All Discussions</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="filter" value="shared"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">Shared</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="filter" value="liked"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">My Likes</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="filter" value="favorite"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">My Favorites</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="filter" value="followed"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">Followed by Me</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="filter" value="top"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">Top Discussions</label>
+                        </li>
+                        <li class="views-filter">
+                            {{view Ember.RadioButton name="selectionTest" selectionBinding="filter" value="unAnswer"}}
+                            <span class="lbl"></span>
+                            <label class="filter-by-label">Un Answered</label>
+                        </li>
+                    </ul>
+                    <select class="filter-items-dropdown" name="" id="">
+                        <option>Filter By</option>
+                        <option value="my">My Discussions</option>
+                        <option value="recent">All Discussions</option>
+                        <option value="shared">Shared</option>
+                        <option value="liked">My Likes</option>
+                        <option value="favorite">My Favorites</option>
+                        <option value="followed">Followed by Me</option>
+                    </select>
+
+                </div>
+            </div>
+        </div>
+
+        {{view view.confirmModelDialogView}}
+        <div class="tab-content no-brd-grid">
+            <!-- top discussions tab -->
+            <div id="top-discussions" class="tab-pane active">
+
+                <div id="questions-outlet" class="grid-view" data-bindattr-14="14">
+
+                {{#if isGridView}}
+                    <div style="padding-top:10px;">
+                    {{#each thisquestion in allPosts itemController="questions.index"}}
+                    <div class="col-sm-4 col-md-4 col-lg-3 trng-catlogue-gridView">
+                        <div class="kc-grid withPopOver postGrid" data-rel="popover" data-container="body" data-toggle="popover" data-placement="auto right">
+                            <div class="category-description-block position-relative">
+
+                                <h2 class="grid-header clearfix">
+                                    <span class="category-image">
+                                        {{avatarMini thisquestion.authorName thisquestion.author}}
+                                    </span>
+
+                                </h2>
+                                <div class="grid-sub-info discussion-author-title">
+                                    <span class="grid-title">
+                                        {{profileLink thisquestion.authorName thisquestion.author}}
+                                    </span>
+                                    <span class="grid-title">{{#link-to "question" thisquestion._id}} {{thisquestion.title}} {{/link-to}}</span> 
+                                    {{#if thisquestion.hasAtleastOneAnswer}}
+                                    <span class="status-bubble"></span>
+                                    {{else}}
+                                    <span class="status-bubble" style="background-color:#28be29"></span>
+                                    {{/if}}
+                                    <!--span> <i class="icon-quote-left"></i> {{{ellipsis thisquestion.content.content 50}}}</span-->
+                                </div>
+                                <div class="grid-sub-info discussion-status-time">
+                                    <span class="grid-status"><label>Status:</label> 
+                                        {{#if thisquestion.hasAtleastOneAnswer}}
+                                            Answered 
+                                        {{else}}
+                                            Unanswered
+                                        {{/if}}
+                                    </span>
+                                    <span class="time-stamp-grid"><label>Time:</label> {{formatDate thisquestion.updateDate  "DD MMM YYYY"}}</span>
+
+                                    <span class="status-buttons">
+                                        <span>
+                                        {{#if thisquestion.topDiscussions}}
+
+                                            {{else}}
+                                                <i class="icon-thumbs-up bigger-150"></i> {{stats.likes}}
+                                        {{/if}}
+                                        </span>
+                                        <span>
+                                        <i class="icon-eye bigger-150"></i> {{thisquestion.viewsCount}}
+                                       </span>
+                                        <span>
+                                            <i class="icon-chat-squares-rounded bigger-150"></i> {{thisquestion.Comments}}
+                                       </span>
+                                    </span>
+                                    
+                                </div>
+
+                                <div class="grid-sub-section last">
+                                    <div class="document-upload-date">
+                                        <div class="clearfix"></div>
+                                    </div><!--/.document-upload-date-->
+
+                                </div><!--/.grid-sub-section last-->
+                              </div><!--/.category-description-block-->
+                         </div><!-- /.kc-grid-->
+                    </div><!--/.col-sm-4-->
+                    {{/each}}
+                    </div>
+
+                {{else}}
+                    <div class="discussion-list-header row hidden-xs">
+                        <div class="col-sm-6 col-md-9 ">  
+                            Name
+                        </div>
+                        <div class="col-sm-6 col-md-3 discussion-status">
+                            Status
+                        </div>
+                    </div>
+                    {{#each thisquestion in allPosts itemController="questions.index"}}
+                    <!-- Regular List Version -->
+                    <div class="message-item no-border no-padding message-unread no-hover">
+                        <div class="itemdiv commentdiv profile-activity kc-list clearfix">
+                            <div class="col-sm-6 col-md-9">
+                            <div class="pull-left"> {{avatarMini thisquestion.authorName thisquestion.author}}</div>
+                                <div class="discussion-title">
+                                    {{!-- Article: --}}
+                                    <a class="user " href="#">
+                                        <span class="text">{{#link-to "question" thisquestion._id}} {{thisquestion.title}} {{/link-to}} </span> 
+                                        {{#if thisquestion.hasAtleastOneAnswer}}
+                                            <span class="status-bubble"></span>
+                                        {{else}}
+                                            <span class="status-bubble" style="background-color:#28be29"></span>
+                                        {{/if}}
+                                    </a>
+                                </div>
+                                <span class="author_name">{{profileLink thisquestion.authorName thisquestion.author}} {{!-- : --}}</span>
+                                <div class="pull-left summaryText">
+                                    {{{ellipsis thisquestion.content.content 120}}}
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <div class="pull-left status-buttons" style="clear:both"></div>
+
+                                <div class="pull-left status-buttons">
+                                    <span>
+                                        {{#if thisquestion.topDiscussions}}
+
+                                        {{else}}
+                                            <i class="icon-thumbs-up bigger-150"></i> {{stats.likes}}
+                                        {{/if}}
+                                    </span>
+                                    <span> 
+                                        <i class="icon-eye bigger-150"></i> {{thisquestion.viewsCount}}
+                                   </span>
+                                    <span>
+                                        <i class="icon-chat-squares-rounded bigger-150"></i> 
+                                        {{thisquestion.Comments}}
+                                   </span>
+                                   <span>
+                                        <i class="icon-clock bigger-150"></i>
+                                        {{#if thisquestion.updateDate}} 
+                                            {{formatDate thisquestion.updateDate  "DD MMM YYYY"}} 
+                                        {{else}}
+                                            {{formatDate thisquestion.createDate "DD MMM YYYY"}}
+                                        {{/if}}
+                                   </span>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                {{#if thisquestion.isUserHasAccessToDelete}}
+                                <!-- Don't know if you're removing this or not, so I commented out. -->
+                                <!--div class="pull-right action-buttons">{{#link-to "question.edit" thisquestion  class="blue"}}
+                                   <i class="icon-pencil bigger-125"></i> {{/link-to}}
+                                   <a data-dismiss="modal" data-target="#deletePost" {{action beforeDelete thisquestion target="view"}} data-toggle="modal" class="red"> <i class="icon-remove bigger-125"></i> </a>
+                                </div-->
+                                {{/if}}
+                            </div>
+                            <div class="col-sm-6 col-md-3 right-status">
+                                {{#if thisquestion.hasAtleastOneAnswer}}
+                                    <span class="status-label"> Answered </span>
+                                {{else}}
+                                    <span class="status-label"> Unanswered </span>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+
+    
+                    {{/each}}
+
+                {{/if}}
+                </div><!--/#questions-outlet-->
+
+                <div class="col-md-12">
+                    <div>
+                        {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+                    </div>
+                </div>
+                <div class="no-value">{{model.status}}</div>
+            </div>
+            <!-- most recent tab -->
+            <div id="most-recent" class="tab-pane">
+                <!--content for this area-->
+            </div>
+            <!-- answer questions tab -->
+            <div id="answer-questions" class="tab-pane">
+                <!--content for this area-->
+            </div>
+        </div>
+
+    </div><!--/.widget-body-->
+</div><!--/.page-content-->

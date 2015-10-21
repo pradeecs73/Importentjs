@@ -1,0 +1,54 @@
+<div class="header-panel container file-author-wrap tborder">
+    <div class="row file-author-info">
+
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 no-padding">
+            <div class="row">
+                <div class="col-sm-12">
+                    <!-- <i class="icon-user"></i> -->
+                    <div class="file-author-name-photo">
+                        <div class="file-author-photo">
+                            {{avatarMini profile.shortName profile.username}}
+                        </div>
+                    </div>
+                    <div class="file-author-name">
+                        {{profileLink profile.shortName profile.username}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-11 col-md-12 onleft truncate">
+                    <i class="icon icon-file"></i>
+                    <span class="eclipse-text 95-truncate" data-html="true" data-rel="tooltip" data-original-title="{{{fileNameFromPath uri}}}">
+                    <strong>{{fileNameFromPath uri}}</strong>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 col-xs-12 file-modified-date pull-right">
+                        <!-- <i class="icon-refresh"></i> -->
+                        <span><strong>Modified</strong> {{formatDate modifiedOn "DD-MMM-YYYY hh:mm A"}}</span>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xs-12 file-upload-date pull-right">
+                        <!-- <i class="icon icon-calendar"></i> -->
+                        <span><strong>Uploaded</strong> {{formatDate uploadedOn "DD-MMM-YYYY hh:mm A"}}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-9 col-xs-12 file-checksum-info pull-right">
+                        <i class="icon-check-sign"></i>
+                        <span><strong>Checksum</strong> {{checksum}}</span>
+                    </div>
+                    <div class="col-md-3 col-xs-12 file-size-info pull-right">
+                        <span class="inner-info">
+                            <strong>Size</strong> {{humanReadableFileSize size}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

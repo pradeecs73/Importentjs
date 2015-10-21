@@ -1,0 +1,87 @@
+<div id="manageFriends">
+  <div class="page-content">
+    <div class="page-header">
+      <h1>My Contacts</h1>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="kotg">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="row">
+                <div class="space-6"></div>
+                <div class="col-sm-6">
+                  <div class="widget-box transparent">
+                    <div class="widget-header widget-header-flat widget-header-small">
+                      <div class="lt all-contacts col-xs-12">
+                        <div class="contacts-title br-5">
+                          <h2 class="lt">All Contacts</h2>
+                          <div class="nav-search" id="nav-search" style="padding-top:8px">
+                            <span class="input-icon">
+                              <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" style="background-color:white"> <i class="icon-search nav-search-icon"></i>
+                            </span>
+                          </div>
+                          <span class="new-btn rt"> <i class="contacts-btn btn-overflow" addnode="contactsBtn" id="new-contact">New Contact</i>
+                          </span>
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="widget-body">
+                      <div class="widget-main">
+                        <div class="kotg">
+                          <div class="clearfix" id="product"> 
+                            <!-- contacts List template -->
+                            {{#each selectedUser in model.selectedUsers}}
+                             {{contact-item selectedUser=selectedUser}} 
+                            {{/each}}
+                            <!-- //contacts list template --> </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="vspace-sm"></div>
+                <div class="col-sm-6 ">
+                  <div class="widget-box transparent">
+                    <div class="widget-header widget-header-flat widget-header-small">
+                      <div class="contacts-groups">
+                        <div class="contacts-title br-5">
+                          <h2 class="lt">Groups</h2>
+                          <span class="new-btn rt">
+                            <i class="groups-btn btn-overflow" addgroupnode="groupsBtn">New Contacts</i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="widget-body">
+                      <div class="widget-main ">
+                        <div class="basket">
+                          <div class="basket_list">
+                            <div class="infobox infobox-red" style="width:100% !important; margin:0 !important">
+                              <div class="groups-block groups-block-c-5 groups-block-all col-xs-12" node="groupsBlock">
+                                <div class="groups-block-title">
+                                  <span class="block lt">
+                                    <i class="icon"></i>
+                                  </span>
+                                  <h2>All</h2> <em><span class="count">0</span></em> 
+                                </div>
+                                <div class="groups-block-content" node="groupsBlockBontent">
+                                  <ul></ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

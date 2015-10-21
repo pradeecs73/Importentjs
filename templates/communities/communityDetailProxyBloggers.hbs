@@ -1,0 +1,74 @@
+<style>
+  .admin-ui .item-tags .item-tag-text {top:-10px !important}  
+  .admin-ui .item-tags li span.profile-tag-remove  {top:-13px !important}
+</style> 
+
+<div class="admin-ui admin-tab-blog-proxy">
+  <div class="widget-body no-border" id="admin-lists">
+    <div class="widget-body-inner">
+      <div class="widget-main clearfix">
+        
+        <div class="admin-table-wrap-outer">
+          <div class="admin-table-wrap-inner">
+            <div class="admin-table-content">
+          
+              <div class="list-headings">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-xs-6">
+                        <h5>Bloggers</h5>
+                    </div>
+                    <div class="col-xs-6">
+                        <h5>Proxies</h5>
+                    </div>
+                  </div>
+                </div>
+              </div><!--/list-headings-->
+
+              <div id="expertise-topics" class="list-container">
+                {{#each bloggerProxy in model}}
+                <div class="item-wrap container">
+                  <div class="row">
+                    <div class="col-xs-6 item-name-email">
+                        <span class="info-label">Bloggers</span>
+                        <p class="item-fullname" >{{bloggerProxy.displayName}}</p>
+                        <p class="item-email eclipse-text">{{bloggerProxy.userId}}</p>
+                        <p><strong>{{activeMessage}}</strong></p>                      
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="inner-col-wrap">
+                            <div class="tags-container">
+                                <ul class="item-tags" id="ul{{unbound bloggerProxy.userId}}">
+                                    {{#each names in bloggerProxy.proxies}}
+                                        <li id="li{{unbound bloggerProxy.userId }}{{unbound names.displayName}}">
+                                            <div>
+                                                <span class="item-tag-text">{{names.displayName}}</span>
+                                                <span class="profile-tag-remove"><i class="icon-remove red" {{action "removeSelectedUser" bloggerProxy.userId names.userId }}></i></span>
+                                            </div>
+                                        </li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                                <div class="add-tags-wrap add-tags-container">
+
+                                <div class="input-group"> <span class="input-group-addon"> <i class="icon-arrow-share"></i> </span>
+                                <form {{action 'getBloggerId' bloggerProxy.userId on="focusIn"}}>
+                                {{bootstrap-tags-input remoteSourceConfig=allUsersConfig  componentId=bloggerProxy._id freeInput=false  placeHolderText="Enter user name" addItemAction="addProxy"}}
+                                 </form>
+                                </div>
+                                </div>
+                            </div>
+                        <div class="error">{{errorMessage}}</div>
+                    </div>
+                  </div>
+                </div>
+                {{/each}}
+              </div>
+
+            </div><!--/admin-table-wrap-content-->
+          </div><!--/admin-table-wrap-inner-->
+        </div><!--/admin-table-wrap-outer-->    
+      </div>
+    </div>
+  </div>
+</div>

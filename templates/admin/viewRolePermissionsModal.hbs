@@ -1,0 +1,30 @@
+<div class="modal file-upload-modal view-permissions-modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     id="viewPermissions">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header learningplanblue-header modal-create-header clearfix">
+                <button type="button" class="close font-25" data-dismiss="modal">
+                    <i class="icon-remove white"></i>
+                </button>
+                <h4 class="modal-title"> {{modalTitle}}</h4>
+                <h6 class="modal-title">{{modalSubTitle}}</h6>
+            </div>
+            {{#each permission in model.permissions}}
+                <table>
+                    <tr>
+                        <td rowspan="3" width="20px"></td>
+                        <td><span class="info-label">{{permission.title}}</span>
+                            <p class="item-name eclipse-text">{{permission.description}}</p></td>
+                        <br>
+                    </tr>
+                </table>
+            {{/each}}
+            <div class="modal-footer role-view-success">
+                <button type="button" class="btn btn-primary"
+                        data-dismiss="modal">Ok
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,22 @@
+<div class="modal" id="joinCommunityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close white" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel"> Join Community</h4>
+        </div>
+        <div class="modal-body">
+          <div class="col-sm-12">
+            <div class="padding-10">
+              <span class="grey" id="joinCommunityConfirmMessage">Thank you for your interest. Your request has been sent to the Community Admin and is subjected to approval.</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal"> Cancel </button>
+          <a href="javascript:;" {{action joinCommunity target="view"}}><button type="button" class="btn btn-sm btn-primary"  data-dismiss="modal" id="joinCommunityBtn"> Join </button>
+          </a>
+        </div>
+      </div>
+  </div>
+</div>

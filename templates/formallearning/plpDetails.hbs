@@ -1,0 +1,292 @@
+
+<link href="assets/css/app/coursedetails-innerstyle.css" rel="stylesheet" />
+
+<div class="eLearningCustom page-content course-details-page">
+	
+    <div class="eLearningCustom page-content course-details-page">
+    	<div id="successMessageDiv" class="alert alert-block alert-success hide">
+			<button type="button" class="close" >
+				<i class="icon-remove"></i>
+			</button>
+			<p>
+				<i class="icon-ok" id="status-message-icon"></i> <span id="status-message-text"></span> {{message}}
+			</p>
+		</div>
+    <div class="clearfix"></div>
+
+    <div class="header-panel border-bottom row-header widget-padding-title">
+         <div class="row">
+            <!-- title-->
+            <div class="col-lg-6 col-md-5 col-sm-5 col-xs-12">
+                <div class="cd-header-title">
+                    <h4 class="lighter">{{title}} </h4>
+                </div>
+            </div>
+            <!-- title//-->
+
+
+             <!-- social strip-->
+             <div class="col-lg-4 col-md-5 col-sm-4 col-xs-12">
+                 <div class="eLearningCustom details-page">
+                     <div class="social-strip clearfix  tc-social-strip">
+                         <div class="clearfix">
+                             <div class="social pull-right" ref-entity-id="{{unbound id}}" ref-entity-type="plp"></div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             <!--social strip //-->
+            <!--actions-->
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                <div class="actions">
+                    <div class="approvals">
+                        {{#if learningPlan.assignStatus}}
+							{{#if learningPlan.pendingApproval}}
+								<div> Pending Approval </div>
+							{{/if}}
+                            {{#if learningPlan.registerStatus}}
+								<span class="dark-border inline-border line-height-normal actioniconsright">
+									 <a id="dropId" {{action "togglePrescribedLearningPlanEnrollment" "drop" id learningPlan.enrollmentId ""}}>Drop</a>
+								</span>
+                            {{else}}
+                                <span class="dark-border inline-border line-height-normal actioniconsright">
+                                    <a id="registerId" {{action "togglePrescribedLearningPlanEnrollment" "register" id  "" learningPlan.managerApproval}}>Register</a>
+                                </span>
+                            {{/if}}
+                        {{else}}
+                            <span class="dark-border inline-border line-height-normal actioniconsright">
+                                 <a id="registerId" {{action "togglePrescribedLearningPlanEnrollment" "enrol" id}}>Self Assignment</a>
+                            </span>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+            <!--actions//-->
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+
+    <!-- Prescribed LearningPlan Description -->
+    <div class="userprofileRow padding-left-right padding-top" id="plpDeatilsSummary">
+        {{#if description}} {{description}} {{else}}
+        <span class="no-data">Description is not available for this prescribed learning plan.</span>
+        {{/if}}
+    </div><br>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="row cd-margin-bottom">
+            <div class="col-sm-6">
+            Prescribed by: <a href="#/user/{{unbound learningPlan.manager}}">{{learningPlan.assignedBy}}</a> <br>
+            Job Roles: {{learningPlan.jobrole}} <br>
+            Skills: {{learningPlan.skills}} <br>
+            </div>
+            <div class="col-sm-6">
+            Prescribed on: {{#if learningPlan.prescribedDate}}
+                        {{dateInGMTFormat learningPlan.prescribedDate}}
+                    {{else}}
+                        No Prescribed Date
+                    {{/if}}
+                    <br>
+            Complete by date:{{#if learningPlan.completeByDate}}
+                        {{dateInGMTFormat learningPlan.completeByDate}}
+                    {{else}}
+                        No Completion Goal Date
+                    {{/if}}
+                    <br>
+            Status: {{learningPlan.currentStatus}}
+					<br>
+			Order Enforced: {{#if learningPlan.enforceOrder}}
+							    Yes
+							{{else}}
+							    No
+							{{/if}}
+					<br>
+			Requires Approval: {{#if learningPlan.managerApproval}} Yes {{else}} No {{/if}}
+								
+            </div>
+        </div>
+    </div>
+
+    <!--likes/ views--->
+    <div class="grey">&nbsp;&nbsp;
+        <span class="tc-likes"><i class="icon-thumbs-up icon-1x black"></i> {{stats.likes}} likes </span>
+        <span class="tc-views"><i class="icon-eye-open icon-1x black"></i> {{stats.views}} views </span>
+    </div>
+
+    <div class="list-headings widget-table-header clearfix" >
+        <div class="col-sm-2"><h5>Name</h5></div>
+        <div class="col-sm-2"><h5>Type</h5></div>
+        <div class="col-sm-2"><h5 class="eclipse-text">Completion Goal Date</h5></div>
+        <div class="col-sm-2"><h5>Status</h5></div>
+        <div class="col-sm-2"><h5>Mandatory</h5></div>
+        <div class="col-sm-2"><h5>Actions</h5></div>
+    </div>
+    {{#if learningPlanItems}}
+        {{#each course in learningPlanItems}}
+        <div class="enrollAct-data no-background-lp">
+            <ul>
+                <li class="col-sm-2 col-xs-10 col-one">
+                    {{#if course.courseid}}
+                        {{#link-to "learningCourse" course.courseid (query-params coursetype=course.course_type)}}
+                            {{course.fullname}}
+                        {{/link-to}}
+                            {{#if course.mandatory}}
+                                <span style="font-size:14px; color:#FF0000">*</span>
+                            {{/if}}
+                    {{else}}
+                        {{course.taskDesc}}
+                    {{/if}}
+                </li>
+                <li class="col-sm-2 col-xs-10 col-two">
+                    <label class="hidden-lg hidden-md hidden-sm"><strong>Type: </strong></label>
+                    {{#if course.courseid}}
+                        {{course.course_type}}
+                    {{else}}
+                        Task
+                    {{/if}}
+                </li>
+                <li class="col-sm-2 col-xs-10 col-two">
+                    <label class="hidden-lg hidden-md hidden-sm"><strong>Details: </strong></label>
+                    {{#if course.detail}}
+                        {{course.detail}}
+                    {{else}}
+                        No Details
+                    {{/if}}
+                </li>
+                <li class="col-sm-2 col-xs-10 col-four">
+                    <label class="hidden-lg hidden-md hidden-sm"><strong>Status: </strong></label>
+                    {{#if course.courseid}}
+                        {{#if course.isCourseCompleted}}
+                            Completed
+                        {{else}}
+                            {{#if course.courseCompleted}}
+                                In Progress
+                            {{else}}
+                                Not Registered
+                            {{/if}}
+                        {{/if}}
+                    {{else}}
+                        NA
+                    {{/if}}
+                </li>
+                <li class="col-sm-2 col-xs-10 col-two">
+                    <label class="hidden-lg hidden-md hidden-sm"><strong>Details: </strong></label>
+                    {{#if course.mandatory}}
+                        Yes
+                    {{else}}
+                        No
+                    {{/if}}
+                    </li>
+                <li class="col-sm-1 action-links-wrap" style="display: block">
+                    {{#if course.showRegister}}
+                        {{#if course.courseCompleted}}
+							{{#if course.isCourseCompleted}}
+							{{else}}
+								<div id="plpdetails-drop">
+									<a class="tc-drop"{{ action "cancelCourse" course.courseid course.enrollmentId}}>Drop</a>
+								</div>
+							{{/if}}
+                            {{#if course.isELearning}}
+								{{#if course.pendingApproval}}
+									<div> Pending Approval </div>
+								{{else}}
+									{{#if learningPlan.enforceOrder}}
+										{{#if course.isLaunch}}
+											<div id="plpdetails-onlaunch">
+												<a {{action "onLaunch" course}}>Launch</a>
+											</div>
+										{{else}}
+											<div id="plpdetails-oninvalidlaunch">
+												<a {{action "onInvalidLaunch" course}}>Launch</a>
+											</div>
+										{{/if}}
+									{{else}}
+										<div id="plpdetails-onlaunch2">
+											<a {{action "onLaunch" course}}>Launch</a>
+										</div>
+									{{/if}}
+								{{/if}}
+                            {{/if}}
+                            {{#if course.isScorm}}
+								{{#if course.pendingApproval}}
+									<div> Pending Approval </div>
+								{{else}}
+									<span class="tclaunch-icon" style="padding-top:8px">
+										{{#if learningPlan.enforceOrder}}
+											{{#if course.isLaunch}}
+												<div id="plpdetails-onlaunch3">
+													<a {{action "onLaunch" course}}>Launch</a>
+												</div>
+											{{else}}
+												<div id="plpdetails-onlaunch4">
+													<a {{action "onInvalidLaunch" course}}>Launch</a>
+												</div>
+											{{/if}}
+										{{else}}
+											<div id="plpdetails-onlaunch5">
+												<a {{action "onLaunch" course}}>Launch</a>
+											</div>
+										{{/if}}
+									</span>
+								{{/if}}
+                            {{/if}}
+                            {{#if course.isAssessment}}
+								{{#if course.pendingApproval}}
+									<div> Pending Approval </div>
+								{{else}}
+									{{#if learningPlan.enforceOrder}}
+										{{#if course.isLaunch}}
+											<div id="plpdetails-onlaunch6">
+												<a href="#" {{action transition course.quizID ../../course.moduleID on="click"}}>Launch</a>
+											</div>
+										{{else}}
+											<div id="plpdetails-onlaunch7">
+												<a {{action "onInvalidLaunch" course}}>Launch</a>
+											</div>
+										{{/if}}
+									{{else}}
+										<div id="plpdetails-onlaunch8">
+											<a href="#" {{action transition course.quizID ../../course.moduleID on="click"}}>Launch</a>
+										</div>
+									{{/if}}
+								{{/if}}
+                            {{/if}}
+                        {{else}}
+                            {{#if course.visible}}
+							<div id="plpdetails-register">
+                                <a class="tc-register" {{ action "enrollCourse" course.courseid course.managerapproval}}>Register</a>
+							</div>
+                            {{else}}
+							<div id="plpdetails-register2">
+                                <a class="tc-register" {{ action "disabledCourse" on="click"}}>Register</a>
+								</div>
+                            {{/if}}
+                        {{/if}}
+                    {{else}}
+                        NA
+                    {{/if}}
+                </li>
+            </ul>
+        </div>
+        {{/each}}
+    {{else}}
+        <div class="no-value">No learning plans to display</div>
+    {{/if}}
+
+    <div class="widget-box transparent">
+        <div class="widget-header widget-header-flat widget-padding row-header remove-rightborder">
+            <div class="col-sm-11">
+                <h4 class="lighter">Comments & Reviews</h4>
+            </div>
+            <div class="col-sm-1">
+                <a data-toggle="collapse" data-parent="#accordion" class="pull-right"  href="#comments" id="cd-comments" style="padding-top:8px"></a>
+            </div>
+        </div>
+        <div class="panel-collapse" id="comments">
+            <div class="widget-body recentReaders col-xs-12 col-sm-12 col-md-12 col-lg-12 courseComments cd-border-top no-padding">
+                <div class="uyan-comment" load="no" articletitle="{{unbound courseDetails.title}}" entityid="{{unbound courseDetails.courseId}}"></div>
+            </div>
+        </div>
+    </div>
+</div>

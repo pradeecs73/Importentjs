@@ -1,0 +1,62 @@
+<div class="page-content no-padding">
+  <div id="id-message-item-navbar" class="message-navbar clearfix">
+    <div class="pull-left"> <span class="blue bigger-125">My Tags</span> </div>
+  </div>
+  <div class="col-xs-12 no-padding">
+    <div class="kotg">
+      <div id="tag-page-body"  class="">
+        <div id="conter-tag">
+          <div class="tag-groups lt col-xs-12">
+            <div class="new-tag-nav"> <a class="new-tag-btn" {{action addTag}} ><strong>+</strong> New tag</a> 
+            </div>
+            <div class="col-xs-12" style="margin:0 auto"> 
+              <div class="row-fluid">
+                <ul class="cis-thumbnails">                  
+                  <!-- single li template for Tag box --> 
+                  {{#each tag in model.tags}}
+                  <li>
+                    <div class="widget-box transparent">
+                      <div class="widget-body">
+                        <div class="widget-main padding-6">
+                          <div class="groups-block groups-block-c-6" data-field-id="file">
+                            <div class="groups-block-title ui-draggable">
+                            {{#if tag.isEditing}}
+                            <div class="input-text d-n" style="display: block;">
+                                {{focus-input type="text" value=tag.title param=tag}}
+                            </div>
+                            {{else}}
+                              <div class="groups-block-title-d-n"><span class="block lt"><i class="icon"></i></span>
+                                <h2>{{tag.title}}</h2>
+                              </div>
+                            {{/if}}
+                            </div>
+                            <div class="groups-block-content" >
+                              <div style="">
+                                <h4>Content</h4>
+                                <div class="icon-div ov-h">
+                                  <ul class="icon-list">
+                                    <li class="icon-document"><a >Contents</a></li>
+                                  </ul>
+                                </div>
+                                <div class="bot-icon">
+                                  <i class="icon-delete" {{action removeTag tag}}>delete</i>
+                                  <i class="icon-edit" {{action editTag tag}}>edit</i>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  {{/each}}
+                  <!-- //single li template for Tag box -->   
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

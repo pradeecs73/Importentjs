@@ -1,0 +1,27 @@
+<div class="modal file-upload-modal fade in" id="deleteRole" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header learningplanblue-header modal-create-header clearfix">
+                <button type="button" class="close white" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Delete Roles</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-sm-12">
+                    <div class="padding-10">
+                            <span class="grey" id="deletePostMessage"><h6>Are you sure you want to delete the selected
+                                role?</h6></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-sm btn-primary">No</button>
+                <a href="javascript:;" {{action 'deleteRole' roleIdToDelete}}>
+                    <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal" id="deleteFileButton">
+                        Yes
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+

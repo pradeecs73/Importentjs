@@ -1,0 +1,132 @@
+<div class="vkm-right-sidebar-toggle">
+	<a href="#" class="toggle-desktop-sidebar"></a>
+	<a href="#" class="toggle-mobile-sidebar"></a>
+</div>
+
+<div class="vkm-right-sidebar fill-height-or-more" id="rightPanelTabs"><!-- may want to rename ID since it's not just tabs -->
+
+	<!-- Filter Tabs -->
+	<div class="vkm-tabs-wrap" id="tabs-wrap">
+		
+		<div class="tab-content tab-content-filters" id="sideFilters">
+
+			<div class="tab-shadow"></div>
+
+			<!-- PEOPLE filters
+			<div class="tab-pane tab-filter-pane" id="people">
+
+				<div class="search-box">
+					<button type="submit" data-icon-before="remove" class="btn autocomplete-close"></button>
+					<input type="text" class="search-filters" id="narrow-people" placeholder="Narrow people..." />
+				</div>
+
+				<div class="tab-inner-wrap scroll-pane clearfix">
+
+					<div class="tab-summary">
+
+						<ul class="tab-summary-list" id="peopleList">
+
+						</ul>
+
+					</div>
+
+				</div>
+			</div> -->
+
+			<!-- ORGANIZATION filters -->
+			<div class="tab-pane tab-filter-pane active" data-tab-content="summary" id="organizations">
+
+				<div class="search-box">
+					<button type="submit" data-icon-before="remove" class="btn autocomplete-close"></button>
+					<input type="text" class="search-filters" id="narrow-organizations" placeholder="Narrow organizations..." />
+				</div>
+
+				<div class="tab-inner-wrap scroll-pane clearfix">
+
+					{{view App.SidebarOrgView}}
+					
+				</div>		
+			</div>
+
+			<!-- LOCATION filters -->
+			<div class="tab-pane tab-filter-pane" id="locations">
+
+				<div class="search-box">
+					<button type="submit" data-icon-before="remove" class="btn autocomplete-close"></button>
+					<input type="text" class="search-filters" id="narrow-locations" placeholder="Narrow locations..." />
+				</div>
+
+				<div class="tab-inner-wrap scroll-pane clearfix">
+
+					{{view App.SidebarLocationsView}}
+
+				</div>
+			</div>
+
+			<!-- TITLE filters -->
+			<div class="tab-pane tab-filter-pane" id="jobtitles">
+
+				<div class="search-box">
+					<button type="submit" data-icon-before="remove" class="btn autocomplete-close"></button>
+					<input type="text" class="search-filters" id="narrow-jobtitles" placeholder="Narrow job titles..." />
+				</div>
+
+				<div class="tab-inner-wrap scroll-pane clearfix">
+
+					{{view App.SidebarJobTitlesView}}
+
+				</div>
+			</div>
+
+		</div>
+
+	</div><!-- /.vkm-tabs-wrap -->
+
+	<!-- Topic Content -->
+	<div class="vkm-topic-wrap" id="topic-wrap" data-topic-view="overview">
+
+		<!-- Topic Header -->
+		<div class="topic-content-header">
+			
+			<div class="topic-content-heading">
+				<h2></h2>
+			</div>	
+		
+			<div class="topic-content-subheading">
+				<h2 data-icon-before=""></h2>
+
+				<div class="search-box topic-search-box">
+					<!-- search form wrapper for instant search through results ... same code as filters -->
+				</div>
+			</div>
+		
+
+		</div>
+
+		<!-- Topic Slider (toggles between overview and full content) -->
+		<div class="topic-slides-outer">
+
+			<div class="tab-shadow"></div>
+
+			<!-- Topic Overview/Preview Contents -->
+			<div class="topic-slide topic-content-overview" id="topic-slide-overview">
+				
+						{{view App.SidebarCommunitiesView}}
+						{{view App.SidebarCoursesView}}
+						{{view App.SidebarDocumentsView}}
+						{{view App.SidebarBlogsView}}
+						{{view App.SidebarWikisView}}
+						{{view App.SidebarForumsView}}
+			</div>
+			
+
+			<!-- Topic Full Contents -->
+			<div class="topic-slide topic-content-full" id="topic-slide-full">
+				</div>
+
+		</div>
+
+
+	</div>
+
+</div><!-- /#vkm-right-sidebar-->

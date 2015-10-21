@@ -1,0 +1,18 @@
+<div class="modal-header learningplanblue-header modal-create-header clearfix">
+    <button type="button" class="close font-25" data-dismiss="modal" {{action closeModal}}>
+        <i class="icon-remove white"></i>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">{{title}}</h4>
+</div>
+<div class="modal-body">
+    <div class="col-sm-12">
+        <div class="padding-10">
+            <span class="grey" id="confirmationMessage"><h6>{{message}}</h6></span>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-sm btn-primary" {{action closeModal}}>No</button>
+    <a href="javascript:;" {{action onConfirmation}}><button type="button" class="btn btn-sm btn-primary"  data-dismiss="modal" id="confirmButton">Yes</button>
+    </a>
+</div>

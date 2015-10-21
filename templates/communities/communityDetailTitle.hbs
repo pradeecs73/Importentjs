@@ -1,0 +1,41 @@
+<div class="message-navbar clearfix" id="id-message-item-navbar">
+  <div class="clearfix">
+      {{#if activationError}}
+        <span style="color:red;"> {{activationError}}</span>
+      {{/if}}
+      {{#if joinError}}
+          <span style="color:red;"> {{joinError}}</span>
+      {{/if}}
+      {{#if joinMessage}}
+        <span class="flashMessage success">{{joinMessage}}</span>
+      {{/if}}
+    <div class="document-name-icon-read-button pull-left">
+      <div class="document-primary-details">
+        <div class="document-icon">
+          
+        </div>
+        <div class="document-name">{{name}}</div>
+        <div class="read-button">
+            {{#unless active}}
+              <div class="document-deactivate-text">(Deactivated)</div>
+            {{/unless}}
+          {{#if isJoinRequestSent}}
+              <div {{bindAttr class=":detail-title-btn :dark-border :right-move :btn :btn-primary :pull-left :margin-top-5 isMember:hidden:show" }}>
+                  Join Request Pending
+              </div>
+          {{else}}
+            <div {{bindAttr class=":detail-title-btn :dark-border :right-move :btn :btn-primary :pull-left :margin-top-5 isMember:hidden:show" }} {{action "joinCommunity"}}>
+                  ASK TO JOIN
+            </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+      {{#if active}}
+        <div class="document-extras pull-right">
+          <div class="social pull-right" ref-entity-id="{{unbound _id}}" ref-entity-type="community"></div>
+        </div>
+      {{/if}}
+    <div class="clearfix"></div>
+  </div>
+</div>

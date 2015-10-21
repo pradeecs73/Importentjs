@@ -1,0 +1,142 @@
+<div class="page-content list-grid-page training-catalog shared-learning no-padding">
+
+	<div {{ bind-attr class=":widget-body :list-with-tags isGridView:grid-view:list-view"}}>
+
+        <div class="container header-panel">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h1 class="eclipse-text">Shared Learning</h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions status message -->
+        <div {{bind-attr class="showMessage::hide"}}>
+            <div class="alert alert-block alert-danger">
+                <span>
+                    Due to some unexpected errors course details cannot be displayed.
+                </span>
+            </div>
+        </div>
+
+        <div id="status-message-div" class="alert alert-block alert-success hide">
+        	<div>
+        		<span id="status-message-text"></span>
+        	</div>
+        </div>
+        <!-- //Actions status message -->
+
+		<!--Search catalog section -->
+        <div class="filter-wrapper">
+            <div class="filters-panel has-sorting">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                    <div class="row">
+                        <div id="view-option-buttons" class="col-lg-4 col-md-5 col-sm-4 col-xs-5 layout-buttons">
+                            <a id="catalog-grid-view" {{ bind-attr class=":icon-grid-layout :pull-left isGridView:active" }} {{action toggleView "grid-view" target=view}}></a>
+                            <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action toggleView "list-view" target=view}}></a>
+							<!--Start sorting-->
+								{{sorting-link sortableFields=sortableFields sortBy=sortByName sortOrder=sortOrder updateSortByAction='updateSortBy' 	toggleSortOrderAction='toggleSortOrder'}}
+						<!--End sorting-->
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-8 col-xs-7">
+							{{visual-search componentId='search_box_container2' facets=allFacets filters=filters searchAction='filter' placeHolderText='Filter By Categories / Type'}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 search-add-wrap">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-wrap col-xs-12">
+                            <div class="form-search">
+                                <i class="icon-search" {{action 'search'}}></i>
+                                {{input type="text" size="40" placeholder="Search By Title , Description"  value=searchText class="form-control no-shadow-input input-mask-date width2x" action="search" on="enter"}}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- Check if Courses Exist -->
+    {{#if courses.length}}
+
+		<div class="sortCatalogCustomHeader">
+            {{#unless isGridView}}
+                <!-- Show List View Headings -->
+                <div class="sortCatalogCustom">
+                    <div class="list-headings">
+
+                        <div class="col-sm-3 tc-name">
+                            <h5 class="bold"> Name <a data-action="collapse" href="#"></a></h5>
+                        </div>
+                        <div class="col-sm-1 tc-type">
+                            <h5 class="bold"> Shared By <a data-action="collapse" href="#"> </a></h5>
+                        </div>
+                        <div class="col-sm-2 tc-comments">
+                            <h5 class="bold"> Comments </h5>
+                        </div>
+                        <div class="col-sm-2 tc-shared">
+                            <h5 class="bold"> Date Shared<a data-action="collapse" href="#"></a></h5>
+                        </div>
+						<div class="col-sm-2 tc-approval">
+                            <h5 class="bold"> Requires Approval<a data-action="collapse" href="#"></a></h5>
+                        </div>
+                        <div class="col-sm-2 tc-actions">
+                            <h5 class="bold"> Actions </h5>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            {{/unless}}
+            <!--// end: List Headings -->
+			{{#each course in courses}}
+
+				{{#if course.name}}
+
+                    {{render "courseItem" course}}
+	                <!-- modal data for DROP -->
+	                <div class="modal fade" id="dropModal{{unbound course.id}}{{unbound course.categoryid}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	                    <div class="modal-dialog">
+	                        <div class="modal-content">
+	                            <div class="modal-header">
+	                                <button type="button" class="close white" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                                <h4 class="modal-title" id="myModalLabel"> Drop Learning Offering</h4>
+	                            </div>
+	                            <div class="modal-body">
+	                                <div class="modal-section">
+	                                    <p class="gray-text"> Please confirm you want to drop this learning offering. Some dropped offerings may still be charged to your department. Please review the official drop policy to learn about all effects, costs, and consequences associated with dropping.</p>
+	                                </div>
+	                            </div>
+	                            <div class="modal-footer">
+	                                <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal"> Cancel </button>
+	                                <a href="#" {{ action "unEnrollCourse" course.id course.enrollmentId on="click"}}>
+	                                    <button type="button" class="btn btn-sm btn-primary"  data-dismiss="modal"> Drop Enrollment </button>
+	                                </a>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <!-- modal data for DROP //-->
+
+	            {{/if}}
+
+            {{/each}}
+
+		</div><!--/.course data-->
+
+		<div class="tc-pagination">
+			<div>
+				{{view App.PaginationView controllerBinding="courses"}}
+			</div>
+		</div>
+
+    <!-- if courses.length == false: -->
+    {{else}}
+
+        <div class="no-value">No courses to display</div>
+
+    {{/if}}
+    <!--// courses.length -->
+
+	</div><!--/.widget-body -->
+</div><!--/.page-content -->

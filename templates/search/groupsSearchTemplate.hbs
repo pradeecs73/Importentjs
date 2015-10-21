@@ -1,0 +1,175 @@
+<div id="groups" class="tab-pane">
+
+    <div class="communities">
+
+      <div class="dashboard filters-wrapper container">
+          <div class="row filters-panel results-count table-top-header clearfix">            
+
+              <ul class="col-xs-7 col-sm-7 col-md-7 col-lg-8 filters">
+                  <li><span class="results-count-label">{{totalResults}} Results for :</span></li>
+                  <li><span class="selected-tag">{{searchText}}</span></li>
+              </ul>
+
+              <div id="document_toggle_view" class="clearfix pull-right layout-buttons">
+                  <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action toggleView "list-view" "document"}}></a>
+                  <a id="catalog-grid-view" {{ bind-attr class=":icon-grid-layout :pull-left isGridView:active" }} {{action toggleView "grid-view" "document"}}></a>
+              </div>
+          </div>
+      </div>
+        <!-- Dashboard Ends -->
+
+        {{#if results.length}}
+            <div id="groups_search_results" class="container widget-container">
+                <!-- PAGE CONTENT BEGINS -->
+                <div {{bindAttr class=":catalog :row isGridView:grid:list"}}>
+                    <div class="header">
+                        <ul>
+                            <li class="thumb"></li>
+                            <li class="name">Name</li>
+                            <li class="members">Members</li>
+                            <li class="type">Type</li>
+                            <li class="actions"></li>
+                        </ul>
+                    </div>
+                    <ul class="communities items">
+                        {{#if isGridView}}
+                            {{#each results itemController="documentItem"}}
+                                <li {{bindAttr class=":withPopOver :col-xs-12 :col-sm-3 resource.active::deactivated"}} data-rel="popover" data-container="body" data-toggle="popover" data-placement="auto right" data-original-title="" title="">
+                                    <div class="grid-item">
+                                                          <span class="thumb">
+                                                            <img src='assets/images/thumb_group_default.jpg' width="65" class="round-border" />
+                                                          </span>
+                                                          <span class="summary">
+                                                            <span class="name">
+                                                                {{#link-to "community.details" resource.id}} {{{ellipsis resource.name 150}}} {{/link-to}}
+                                                            </span>
+                                                            <span class="description">
+                                                                {{{ellipsis resource.description 200}}}
+                                                            </span>
+                                                            <span class="creator">
+															 <h6></h6>
+                                                              <label class="removeContent">Created by: {{profileLink resource.creatorShortName resource.creator}}</label>
+                                                            </span>
+															
+                                                            <span class="creator">
+															<h6></h6>
+                                                              <label class="removeContent">Updated on: {{from-now resource.updatedOn}}</label>
+                                                            </span>															
+                                                            <span class="hidden">
+                                                                {{#each resource.tags}}
+                                                                    <span class="tag">{{this}}</span>
+                                                                {{/each}}
+                                                            </span>
+                                                          </span>
+                                                          <span class="members">
+                                                              {{#if resource.active}}
+                                                                  <label class="removeContent">Members: {{resource.members.length}}</label> 
+                                                              {{else}}
+                                                                  <label class="removeContent">Members: {{resource.oldMembers.length}}</label> 
+                                                              {{/if}}
+
+                                                          </span>
+                                                          <span class="type">
+                                                            <label class="removeContent">Type: {{resource.type}}</label> 
+                                                          </span>
+                                                          <span class="actions">
+                                                            {{#link-to "community" resource.id class="pull-right" target="_self"}}
+                                                                <span class="btn btn btn-sm btn-primary">View</span>
+                                                            {{/link-to}}
+
+                                                              {{#if isEditable}}
+                                                                  {{#link-to "community.edit" resource.id class="icon-edit blue bigger-160 pull-right align-icon-to-btn"}}{{/link-to}}
+                                                              {{/if}}
+                                                          </span>
+                                        <div class="catalogPopover">
+                                            <div class="popover-container">
+                                                <div class="popover-header">
+                                                    <span class="thumb">
+                                                        <img src='assets/images/thumb_group_default.jpg' width="35" class="round-border" />
+                                                    </span>
+                                                    <span class="name">
+                                                        {{#link-to "community" resource.id target="_self" class="white"}}
+                                                            {{resource.name}}
+                                                        {{/link-to}}
+                                                    </span>
+                                                </div>
+
+                                                <div class="popover-body">
+                                                    <span class="dataCont description">
+                                                        <span><b>Description : </b>
+                                                            {{{ellipsis resource.description 150}}}...
+                                                        </span>
+                                                    </span>
+                                                    <span class="dataCont">
+                                                        {{#each resource.tags}}
+                                                            <span class="tag">{{{this}}}</span>
+                                                        {{/each}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            {{/each}}
+                        {{else}}
+                            {{#each results itemController="documentItem"}}
+                                <li {{bindAttr class="resource.active::deactivated"}} >
+                                    <div class="list-item">
+                                                        <span class="thumb">
+                                                          <img src='assets/images/thumb_group_default.jpg' width="50" class="round-border" />
+                                                        </span>
+                                                        <span class="summary">
+                                                          <span class="name">
+                                                              {{#link-to "community" resource.id}}{{resource.name}}{{/link-to}}
+                                                          </span>
+                                                          <span class="description">
+                                                              {{{ellipsis resource.description 250}}}
+                                                          </span>
+                                                          <span class="creator">
+                                                            <label>Created by</label><span>{{profileLink resource.creatorShortName resource.creator}}</span>
+                                                          </span>
+														  <span class="creator">
+														    <label>Updated on</label><span>{{from-now resource.updatedOn}}</span>
+														  </span>															  
+                                                          <span>
+                                                              {{#each resource.tags}}
+                                                                  <span class="tag">{{this}}</span>
+                                                              {{/each}}
+                                                          </span>
+                                                        </span>
+                                                        <span class="members">
+                                                            {{#if resource.active}}
+                                                                <label>Members</label><span>{{resource.members.length}}</span>
+                                                            {{else}}
+                                                                <label>Members</label><span>{{resource.oldMembers.length}}</span>
+                                                            {{/if}}
+                                                        </span>
+                                                        <span class="type">
+                                                          <label>Type</label><span>{{resource.type}}</span>
+                                                        </span>
+                                                        <span class="actions">
+                                                          {{#link-to "community" resource.id class="pull-right" target="_self"}}
+                                                              <span class="btn btn btn-sm btn-primary">View</span>
+                                                          {{/link-to}}
+
+                                                            {{#if isEditable}}
+                                                                {{#link-to "community.edit" resource.id class="icon-edit blue bigger-160 pull-right align-icon-to-btn"}}{{/link-to}}
+                                                            {{/if}}
+                                                        </span>
+                                    </div>
+                                </li>
+                            {{/each}}
+                        {{/if}}
+                    </ul>
+                </div>
+                <!-- PAGE CONTENT ENDS -->
+            </div>
+        {{else}}
+            <div class="no-value"> No results found </div>
+        {{/if}}
+        <!-- /search results -->
+    </div>
+    <div>
+        {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+    </div>
+</div>

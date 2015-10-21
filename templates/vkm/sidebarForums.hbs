@@ -1,0 +1,15 @@
+<div class="topic-section topic-overview-section last-section" data-topic-id="46" data-topic-connection="forums" data-topic-prefix="forum">
+	<h4 class="topic-heading display-full-topic" data-icon-before="chat-bubbles-o" data-icon-after="angle-right">Related Forums</h4>
+		{{#if relatedForums}}
+			<ul class= "topic-item-list topic-preview-list">
+				{{#each forum in relatedForums}}
+					<li><a title="{{unbound forum.assetTitle}}" href="#/question/{{unbound forum.assetURL}}">{{forum.assetTitle}}</a>
+					</li>
+				{{/each}}
+			</ul>
+		{{else}}
+			<ul class="missing-data-message">
+				<li><em>No Forums to Display</em></li>
+			</ul>
+		{{/if}}
+</div>		

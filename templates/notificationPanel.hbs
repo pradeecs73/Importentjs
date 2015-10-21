@@ -1,0 +1,55 @@
+<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+    <i class="icon-exclamation-triangle white bigger-260 top-5 left-8"></i>
+	<span class="badge badge-summary navbar-badge navbar-shoulder">
+        {{totalCount.count}}
+    </span>
+</a>
+
+<ul class="pull-right dropdown-navbar navbar-drop navbar-notifications dropdown-menu dropdown-caret dropdown-close"
+    role="menu">
+    <li class="dropdown-header" data-icon-before="exclamation-triangle">
+        <span class="dropdown-header-title">Notifications</span>
+        <span class="badge badge-summary">{{totalCount.count}}</span>
+    </li>
+    {{#each notifications}}
+
+    {{/each}}
+
+    {{#if discussionNotificationEnabled}}
+        {{#link-to "notifications.questions"  tagName='li'}}
+            <a href="#">
+                Discussions
+		<span class="badge badge-notification">
+            {{notificationsCount.count}}
+        </span>
+            </a>
+        {{/link-to}}
+    {{/if}}
+
+    {{#link-to "notifications.endorsement"  tagName='li'}}
+        <a href="#">
+            Endorsements
+		<span class="badge badge-notification">
+            {{endorsements.count}}
+        </span>
+        </a>
+    {{/link-to}}
+
+
+    {{#link-to "followedUserActivties" tagName='li'}}
+        <a href="#">
+            Followers
+		<span class="badge badge-notification">
+            {{followedUserActivities.count}}
+        </span>
+        </a>
+    {{/link-to}}
+
+
+    {{#link-to "allNotifications" tagName='li' class="allnotifications loading last"}}
+        <a href="#">
+            See all notifications
+        </a>
+    {{/link-to}}
+
+</ul>

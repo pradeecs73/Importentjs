@@ -1,0 +1,34 @@
+<div class="widget-box transparent">
+    <div class="widget-header widget-header-flat widget-padding bborder row-header tborder">
+        <h5 data-icon-before="file-lines-o">
+            Description
+        </h5>
+
+        <span class="widget-toolbar">           
+            <div data-parent="#accordion" data-action="collapse" class="accordion-toggle collapsed">
+                <i class="icon-caret-up"></i>
+            </div>
+        </span>
+
+    </div>
+    <div id="documentDescription" class="panel-collapse collapse in widget-body">
+        <div class="widget-body-inner">
+            <div class="widget-main">
+                <div class="file-panel-content qa-automation-file-description">
+                    {{#if description}}
+                        <div class="widget-body">
+                            <p>{{{description}}}</p>
+                        </div>
+                    {{else}}
+                        <p class="no-value">Description is not available for this document.</p>
+                    {{/if}}
+                    {{#if isVideoUploadEnabled}}
+                        {{#if isVideo}}
+                            {{#video-player document=model appId=appId}}{{/video-player}}
+                        {{/if}}
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

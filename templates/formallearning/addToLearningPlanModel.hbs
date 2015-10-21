@@ -1,0 +1,62 @@
+<div class="shareModal">
+	<div class="modal fade" id="addACourseToLP" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header learningplanblue-header modal-create-header clearfix">
+					<button type="button" class="close white" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Add To Learning Plan</h4>
+				</div>
+				<div class="modal-body">
+					<div class="modal-section select-personal">
+						<!--dropdown-->
+						<div class="btn-group select-style">
+							{{view Ember.Select
+							contentBinding=learningPlans
+							classNames="form-control"
+							optionValuePath="content.id"
+							optionLabelPath="content.name"
+							valueBinding="controller.planId"
+							id="planSelector"}}
+						</div>
+						<!--dropdown-->
+					</div>
+					<h4 class="align-center">OR</h4>
+					<div class="modal-section">
+						<i class="createP-TrainingCatlog-icon margin-right-10"></i>
+						<span class="grey"> Or create new Personalized Learning Plan (70 character limit):</span>
+						<div class="form-group">
+							{{input type="text" class="form-control tc-addPlanTextBox" placeholder="Type a Title" value=learningPlanName maxlength="70"}}
+							{{#if errors.title}}
+							<span style="color:red;float:left;padding-left:6px">{{errors.title}}</span>
+							{{/if}}
+						</div>
+					</div>
+					{{#if showDate}}
+						<div class="modal-section">
+							<i class="margin-right-10 setdate-TrainingCatlog-icon"></i>
+							<span class="grey"> Set a date for Learning Plan completion</span>
+						</div>
+						<div class="col-sm-12">
+							<div class="input-group date addToPlpPopup" data-provide="datepicker">{{input class="date-picker-input" valueBinding="learningPlanDate"}}<i class="btn icon-calendar learning_calendar_btn"></i>
+							</div>
+						</div>
+					{{/if}}
+					<!-- set date-->
+					<div class="modal-section set-date-container">
+						{{#if errors.date}}
+						<span style="color:red;float:left;padding-left:6px">{{errors.date}}</span>
+						{{/if}}	
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-sm btn-primary" data-dismiss="modal" {{action "cancelAddToLp" courseId on="click"}}>Cancel</button>
+					{{#if update}}
+					<button type="button" class="btn btn-sm btn-primary" {{action "addToLearningPlan" courseId oldLearningPlanId learningPlanItemId on="click"}}>Move</button>
+					{{else}}
+					<button type="button" class="btn btn-sm btn-primary" {{action "addToLearningPlan" courseId on="click"}}>Add</button>
+					{{/if}}
+				</div>
+			</div> 
+		</div>
+	</div>
+</div>

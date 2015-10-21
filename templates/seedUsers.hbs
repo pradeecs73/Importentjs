@@ -1,0 +1,44 @@
+  <div class="modal-create-header" xmlns="http://www.w3.org/1999/html">
+  <button  {{bindAttr class=":close busy:hide"}} {{action close}}>
+    <i class="icon-remove close"></i>
+  </button>
+  Bulk Create Users
+
+</div>
+<div class="modal-body clearfix">
+    {{#if success}}
+      <p>User creation request has been accepted. Upload report will be sent to your registered email address</p>
+    {{else}}
+      <div>
+        {{input type="file" id="file"}}
+      </div>
+
+      <div class=" row" >
+        <div class="col-sm-12">
+            <a href="assets/data/expertise/bulk-create-users-template.csv">Download Sample Template</a></br>
+            <a href="assets/data/expertise/createUserTemplate">Download Instruction File</a>
+        </div>
+        <div class="col-sm-12">
+          {{#each error in validationErrors}}
+            <div class="error">{{error}}</div>
+          {{/each}}
+          
+        </div>
+      </div>
+      <div class="pull-left row" >
+        <div class="col-sm-12">  
+          <span>Note: Only .CSV files allowed. Please make sure manager(s) are either already existing or is included in the csv.</span>
+        </div>
+      </div>
+        <div class="pull-right row" style="width: 100px;">
+          <div class="col-sm-12"> 
+          {{#if busy}}
+            <i class="icon-spin icon-spinner-dots loading-icon bigger-160" style="margin-top: 7px;"></i>
+          {{/if}}
+          <button type="submit" {{action upload}} {{bindAttr class=":btn :btn-sm :btn-primary :pull-right busy:disabled"}}>
+            Submit
+          </button>
+        </div>
+      </div>      
+    {{/if}}
+</div>

@@ -1,0 +1,33 @@
+<div class="page-content">
+    <div class="page-header">
+        <h1> Trending Topics </h1>
+    </div>
+    <div class="widget-box transparent">
+        <div class="widget-body circle-widget">
+            <div class="widget-main padding-16">
+                <div class="clearfix">
+					{{#if model.length}}
+						{{#each model}}
+                            <div class="grid3 center">
+                                <div class="infobox-progress">
+	                                {{#link-to "trendingTopic" name}}
+	                                    <div class="easy-pie-chart percentage" data-color="#2b7dbc" data-percent="100"
+	                                         data-size="100">
+	                                        <span class="percent red">{{{documentCount}}}</span>
+	                                    </div>
+	                                {{/link-to}}
+                                </div>
+                                <div class="space-2"></div>
+								{{{name}}}
+                            </div>
+						{{/each}}
+					{{else}}
+                        <div class="no-value"> No results found</div>
+					{{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{outlet}}

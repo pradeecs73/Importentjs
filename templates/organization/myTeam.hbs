@@ -1,0 +1,316 @@
+<div class="page-content list-grid-page people my-team no-padding">
+    <div {{ bind-attr class=":widget-body :list-with-tags isGridView:grid-view:list-view"}}>
+        <div class="container header-panel">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <h1 class="eclipse-text" {{bind-attr title=pageTitle}}>{{managerUserName}}'s Team</h1>
+                </div>
+            </div>
+        </div>
+        <div class="filter-wrapper">
+            <div class="filters-panel has-sorting">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                    <div class="row">
+                        <div id="view-option-buttons" class="col-lg-4 col-md-5 col-sm-4 col-xs-5 layout-buttons">
+                            <a id="catalog-grid-view" {{ bind-attr class=":icon-grid-layout :pull-left isGridView:active" }} {{action toggleView "grid-view" target=view}}></a>
+                            <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action toggleView "list-view" target=view}}></a>
+
+                            <!--div class="dropdown sorting-dropdown" data-action="sort" id="sortCommunities">
+                                <a href="#" class="sorter-toggle dropdown-toggle" id="change-dir" data-toggle="dropdown" data-icon-before="sort-descending">
+                                    <span class="icon-caret-down"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="#" data-sub-action="f_name" data-sort-direction="asc" data-icon-after="sort-ascending">First Name</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" data-sub-action="f_size" data-sort-direction="asc" data-icon-after="sort-ascending">Last Name</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" data-sub-action="f_modf" data-sort-direction="asc" data-icon-after="sort-ascending">Job Title</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="selected" data-sub-action="f_upld" data-sort-direction="asc" data-icon-after="sort-ascending">Location</a>
+                                    </li>
+                                </ul>
+                            </div -->
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-8 col-xs-7">
+                            {{visual-search componentId='peopleFilterBox' facets=myTeamfilterArray filters=filters searchAction='filter' placeHolderText='Filter by Expertise, City, JobTitle, Organization'}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 search-add-wrap">
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-10 form-wrap col-xs-10">
+                            <div class="form-search">
+                                <i class="icon-search" {{action 'searchbytext'}}></i>
+                                {{input id="managerpeopleSearchBox" class="form-control" value=managersearchBoxText placeholder="Search by user attributes" type="text" action='searchbytext' on='enter'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-ui">
+            <div class="widget-body no-border" id="admin-lists">
+                <div class="tab-pane expertise-tab" id="expertise-list">
+                    <div class="admin-header-panel list-headings">
+                        {{#unless isGridView}}
+                            <div class="container">
+                                <div class="row manager">
+                                    <div class="col-11">
+                                        <label class="manager-plp-checkbox">
+
+                                            {{view Ember.Checkbox checkedBinding="controller.allChecked" bubbles=false id="maincheck"}}
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </div>
+                                    <div class="col-8"><h5>Name</h5></div>
+                                    <div class="col-6"><h5>Type</h5></div>
+                                    <div class="col-14"><h5>Organization</h5></div>
+                                    {{#if loggedinmanager}}
+                                        <div class="col-10"><h5>PLP</h5></div>
+                                    {{/if}}
+                                    <div class="col-3"><h5>Current Enrollments</h5></div>
+                                    <div class="col-3"><h5>Completed Courses</h5></div>
+                                    <div class="col-12"><h5>Actions</h5></div>
+                                </div>
+                            </div>
+                        {{/unless}}
+                    </div>
+
+
+                    <div class="list-container multi-contact-action">
+                      <div id='multiselect' style= "width: 100%; background-color: #0096d6; height: 50px; display:none" >
+                         {{view App.MultiSelectWidgetView}}
+                      </div>
+
+
+                        {{#if allUsers}}
+                            {{#each contact in allUsers}}
+                                {{render "managerUserItem" contact}}
+                            {{/each}}
+                            <div class="clearfix"></div>
+                            {{#if preferences.FormalLearning}}
+                               {{#if loggedinmanager}}
+                                    <div class="searchCatalogCustom list-grid-page margin-top-20">
+                                        <div class="text-right page-padding">
+                                            <button id="bttn-add-plp" data-target="#addPrescribedModal" data-toggle="modal"
+                                                    class="btn btn-sm btn-primary pull-right"
+                                                    style="margin-right: 20px;" {{action openPlpModelPopup}} disabled>
+                                                <div style="line-height:28px;">
+                                                    <span class="icon-add-plp-white"></span> Add Prescribed Learning Plans
+                                                </div>
+                                            </button>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                {{/if}}
+                            {{/if}}
+                            {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+                        {{else}}
+                            <div class="no-value"> No results found</div>
+                        {{/if}}
+                    </div>
+                    <!-- /. Add Prescribed Learning Plan modals -->
+                    <div class="manager-plp-assign-screen">
+
+                        <!-- Add Prescribed Learning Plan Modal -->
+                        <div class="modal fade" id="addPrescribedModal" tabindex="-1" role="dialog"
+                             aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header learningplanblue-header modal-create-header clearfix">
+                                        <button type="button" class="close font-25" data-dismiss="modal"
+                                                aria-hidden="true"><i
+                                                class="icon-remove white top-7"></i></button>
+                                        <h4 class="modal-title" id="myModalLabel"> Add Prescribed Learning Plan</h4>
+                                    </div>
+
+                                    <div class="modal-body page-padding grey-back padding-bottom-20">
+                                        <div>
+                                            {{visual-search componentId='plpSearchBox' facets=serachFilters filters=facetFilters searchAction='facetFilter' placeHolderText='Filter by Skills, JobRole'}}
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 form-wrap col-xs-12">
+                                            <div class="form-search">
+                                                <i class="icon-search" {{action 'searchPrescribedLearningPlans'}}></i>
+                                                {{input id="plpPlanSearchBox" class="form-control" placeholder="Search By Title, Description" type="text" value=plpSearchText action="searchPrescribedLearningPlans" on="enter"}}
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <form action="#" method="POST" id="createLPForm">
+                                                <fieldset>
+                                                    <div class="row grey-back">
+                                                        <div class="col-sm-12 col-xs-12">
+
+                                                            <div class="row">
+                                                                <div class="col-sm-12 col-xs-12">
+                                                                    <label class="search-group title" for="CTitle"> <i
+                                                                            class="icon ccksicon-size-30 black catelog-LP pointer add-learningplan-icon-big"></i><b>Select
+                                                                        Prescribed Learning Plans:</b> (select all that
+                                                                        apply)</label>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="col-sm-12 col-xs-9">
+                                                                    <div class="manager-plp-list">
+                                                                        {{#if isAPICalled}}
+                                                                            {{#if plpList.length}}
+                                                                                {{#each plp in plpList}}
+                                                                                    <div class="manager-plp-container">
+                                                                                        <label class="manager-plp-checkbox">
+                                                                                            {{view Ember.Checkbox checkedBinding=plp.isSelected class="checkbox"}}
+                                                                                            <span class="lbl"></span>
+                                                                                        </label>
+
+                                                                                        <div class="manager-plp-label">
+																							<div class="eclipse-text">{{plp.name}}</div>
+																						</div>
+                                                                                    </div>
+                                                                                {{/each}}
+                                                                            {{else}}
+                                                                                No Prescribed Learning Plans available
+                                                                            {{/if}}
+                                                                        {{else}}
+                                                                            Loading Prescribed learning Plans ........
+                                                                        {{/if}}
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                        <!--div class="col-sm-11">
+                                                        </div-->
+                                                    </div>
+                                                    <div class="row padding-12">
+                                                        <div class="col-sm-11 col-xs-9 set-date">
+                                                            <label class="search-group" for="LPTitle"><i
+                                                                    class="icon-add-learning-small margin-right-8"></i>Set
+                                                                a date for Learning Plan
+                                                                completion:</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row padding-12 no-padding-topbottom date-picker">
+														<div class="col-sm-12">
+															<div class="input-group date addToPlpPopup" data-provide="datepicker">{{input class="date-picker-input" valueBinding="learningPlanDate"}}<i class="btn icon-calendar learning_calendar_btn"></i>
+															</div>
+														</div>
+                                                        <span id="myTeamError"
+                                                              style="color:red;float:left;padding-left:6px">Date Should Be Future Date</span>
+                                                    </div>
+                                                    <input type="hidden"
+                                                           value="3f92894361bea6974217642e1be91cb1bb548e15"
+                                                           id="authenticity_token1"
+                                                           name="authenticity_token">
+                                                </fieldset>
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="modal-footer padding-12">
+                                        <span class="dark-red-border inline-border">
+                                            <button class="btn btn-red" type="button" data-dismiss="modal">Cancel
+                                            </button>
+                                        </span>
+                                        <span class="dark-border inline-border">
+                                            <button type="button" class="btn btn-primary"
+                                                    id="modalAddButton" {{action assignPLPsToUsers}} {{bind-attr disabled=buttonDisabled}}>
+                                                Add
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /. Add Prescribed Learning Plan modal -->
+
+                        <!-- Add Prescribed Learning Plan Success Modal -->
+                        <div class="modal fade" id="myAddPrescribedSuccessModal" tabindex="-1" role="dialog"
+                             aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header learningplanblue-header modal-create-header clearfix">
+                                        <button type="button" class="close font-25" data-dismiss="modal"
+                                                aria-hidden="true"><i
+                                                class="icon-remove white top-7"></i></button>
+
+                                        <h4 class="modal-title" id="myModalLabel"><i
+                                                class="icon-checked white-icon"></i> Success</h4>
+                                    </div>
+
+                                    <div class="modal-body page-padding grey-back padding-bottom-20">
+                                        <form action="#" method="POST" id="createLPForm">
+                                            <fieldset>
+                                                <div class="row grey-back">
+                                                    <div class="col-sm-12 col-xs-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-xs-12">
+                                                                You have successfully added {{assignedPLPsCount}}
+                                                                Prescribed Learning Plans to
+                                                                the selected user(s).
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-11 col-xs-8">
+                                                            <div class="manager-plp-success-list">
+                                                                <div class="manager-plp-success-table-top">
+                                                                    <div class="col-sm-10">
+                                                                        <b>Name</b>
+                                                                    </div>
+                                                                    <div class="col-sm-2">
+                                                                        <b>Status</b>
+                                                                    </div>
+                                                                </div>
+                                                                {{#each assignedPLP in assignedPLPs}}
+                                                                    <div class="manager-plp-success-container">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-10 manager-plp-success-name">
+                                                                                {{assignedPLP.name}}
+                                                                            </div>
+                                                                            <div class="col-sm-2">
+                                                                                {{#if assignedPLP.status}}
+                                                                                    <i class="icon-checked"></i>
+                                                                                {{else}}
+                                                                                    <i class="icon-remove"></i>
+                                                                                {{/if}}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                {{/each}}
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" value="3f92894361bea6974217642e1be91cb1bb548e15"
+                                                       id="authenticity_token1"
+                                                       name="authenticity_token">
+                                            </fieldset>
+                                        </form>
+                                    </div>
+
+                                    <div class="modal-footer padding-12">
+                                        <span class="dark-border inline-border">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal"id="modalAddButton" {{action "clearAssignedPLP"}}>OK</button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+
+                    </div>
+                    <!--/.manager-plp-assign-screen-->
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

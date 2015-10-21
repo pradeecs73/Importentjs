@@ -1,0 +1,15 @@
+<div class="topic-section topic-overview-section" data-topic-id="46" data-topic-connection="wikis" data-topic-prefix="wiki">
+	<h4 class="topic-heading display-full-topic" data-icon-before="file-globe" data-icon-after="angle-right">Related Wikis</h4>
+		{{#if relatedWikis}}
+			<ul class= "topic-item-list topic-preview-list">
+				{{#each wiki in relatedWikis}}
+					<li><a title ="{{unbound wiki.assetTitle}}" href="#/wiki/{{unbound wiki.assetURL}}">{{wiki.assetTitle}}</a>
+					</li>
+				{{/each}}
+			</ul>
+		{{else}}
+			<ul class="missing-data-message">
+				<li><em>No Wikis to Display</em></li>
+			</ul>
+		{{/if}}
+</div>

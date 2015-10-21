@@ -1,0 +1,34 @@
+<div class="modal file-upload-modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="profileImageModal">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header learningplanblue-header modal-create-header clearfix">
+              <button type="button" class="close font-25" data-dismiss="modal" {{action closeProfileImageModal}}>
+                  <i class="icon-remove white"></i>
+              </button>
+              <h4 class="modal-title">Profile Image</h4>
+          </div>
+          <div class="modal-body page-padding padding-bottom-10">
+
+              <fieldset>
+                  <div class="row clearfix">
+                      <div class="col-sm-12 col-xs-12">
+
+                          <div class="user-image-wrapper" id="avatar">
+                            {{#if adminAssignedExpertise.length}}
+                            <span class="expert-badge"></span>
+                            {{/if}}
+                            {{avatarProfile shortName username}}
+                          </div>
+
+                      </div>
+                  </div>
+              </fieldset>
+
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" {{action closeProfileImageModal}}>Cancel</button>
+                  <button type="submit" class="btn btn-primary" {{action uploadFile}}>Upload</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<div id="panelThree" class="panel">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <span data-parent="#topicDetailAccordion" data-panel="#panelThree">
+          Communities <span class="panel-counter">({{communitycount}})</span>
+        </span>
+      </h4>
+    </div>
+    <div id="communitiesPanel" class="panel-collapse collapse">
+      <div class="panel-body">
+      	<div class="sub-panel">
+
+        	<div class="sub-panel-content">
+        		<div class="sub-panel-list sub-panel-table sub-table-has-header">
+
+        			<div class="row sub-panel-table-row sub-panel-table-heading item-template">
+						<div class="col-sm-1"></div>
+						<div class="col-sm-5"><strong>Name</strong></div>
+						<div class="col-sm-2 communitiy-count"><strong>Members</strong></div>
+						<div class="col-sm-2"><strong>Type</strong></div>
+						<div class="col-sm-2"><strong>Actions</strong></div>
+        			</div>
+
+        			<div class="community-list">
+
+        				<!-- COMMUNITY TEMPLATE -->
+        				{{#if topicCommunity}}
+        				{{#each community in topicCommunity}}
+		        			<div class="row sub-panel-table-row item-template" id="community-template">
+								<div class="col-sm-1 communitiy-graphic-wrap item-image">
+									<img src="assets/images/thumb_group_default.jpg" width="50" alt="" />
+								</div>
+								<div class="col-sm-5 community-summary">
+									<a href="#/community/{{unbound community.communityURI}}" class="community-title">{{community.communityName}}</a>
+									<p class="community-description">{{community.community_text}}</p>
+									<ul class="table-item-tags">
+									</ul>					
+								</div>
+								<div class="col-sm-2 communitiy-count">
+									<p class="subtitle total-members">{{community.numberOfMembers}}</p>
+								</div>
+								<div class="col-sm-2 communitiy-type">
+									<p class="subtitle item-category"></p>
+								</div>
+								<div class="col-sm-2 communitiy-link">
+									<a class="btn btn-primary view-community-btn" href="#/community/{{unbound community.communityURI}}" ><span class="btn-txt">View</span></a>
+								</div>
+		        			</div>
+		        		{{/each}}
+		        		{{else}}
+							<div class="missing-data-message">
+                               <p class="error-message"><em>No Communities to display.</em></p>
+							</div>	
+						{{/if}}								        			
+
+        			</div>
+
+        		</div>
+        	</div>
+
+      	</div>
+
+      </div>
+    </div>
+  </div>

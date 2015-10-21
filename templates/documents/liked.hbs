@@ -1,0 +1,18 @@
+<div class="row widget-container" id="rss-feed-box">
+
+  <div id="toggle_view" class="clearfix margin-top-10 pull-right min-width-90 toggle-view-container">
+    <a id="catalog-grid-view" {{ bind-attr class=":toggle_view :icon-grid-layout :col-lg-3 :rborder isGridView:active" }}
+        {{action "toggleView" "catalog-grid-view" target=view}}></a>
+    <a id="catalog-list-view" {{ bind-attr class=":toggle_view :icon-list-layout :col-lg-3 isGridView::active" }}
+        {{action "toggleView" "catalog-list-view" target=view}}></a>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="eLearningCustom">
+    <div id="search_results" {{ bind-attr class="isGridView:catalog-grid-view:catalog-list-view" }}>
+        {{#each document in model}}
+            {{render "documentsCatalogItem" document}}
+        {{/each}}
+    </div>
+  </div>
+</div>

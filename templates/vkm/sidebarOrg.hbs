@@ -1,0 +1,17 @@
+	<div class="tab-inner-wrap clearfix">
+		<div class="tab-summary">
+		{{#if organizations}}
+			<ul class="tab-summary-list" id="orgList">
+				{{#each organization in organizations}}
+					{{#if organization.addToFilter}}
+						<li data-placement="left" data-toggle="tooltip" data-categ="organization" data-uri-info="{{ unbound organization.orgURI }}" data-original-title="{{ unbound organization.orgName }}" class="long-text active"><a class="filter-link" alt="{{unbound organization.orgName}}" title="{{unbound organization.orgName}}" href="#" {{action "removeFilter" organization.orgName "organizations"}}>{{organization.orgName}}</a></li>
+					{{else}}
+						<li data-placement="left" data-toggle="tooltip" data-categ="organization" data-uri-info="{{ unbound organization.orgURI }}" data-original-title="{{ unbound organization.orgName }}" class="{{unbound organization.cssClass}}"><a class="filter-link" alt="{{unbound organization.orgName}}" title="{{unbound organization.orgName}}" href="#" {{action "selectFilter" organization.orgName organization.orgURI "organizations"}}>{{organization.orgName}}</a></li>
+					{{/if}}
+				{{/each}}
+			</ul>
+		{{/if}}
+		</div>
+	</div>		
+
+	

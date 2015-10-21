@@ -1,0 +1,148 @@
+<div id="home" class="tab-pane active">
+
+    <!--DASHBOARD GOES HERE-->
+    <div class="dashboard filters-wrapper container">
+        <div class="row filters-panel results-count table-top-header clearfix">            
+
+            <ul class="col-xs-7 col-sm-7 col-md-7 col-lg-8 filters">
+                <li><span class="results-count-label">{{totalResults}} Results for :</span></li>
+                <li><span class="selected-tag">{{searchText}}</span></li>
+            </ul>
+
+            <div id="document_toggle_view" class="clearfix pull-right layout-buttons">
+                {{sorting-link sortableFields=sortableFields sortBy=sortBy sortOrder=sortOrder updateSortByAction='updateSortBy' toggleSortOrderAction='toggleSortOrder'}}
+                <a id="catalog-list-view" {{ bind-attr class=":icon-list-layout :pull-left isGridView::active" }} {{action toggleView "list-view" "document"}}></a>
+                <a id="catalog-grid-view" {{ bind-attr class=":icon-grid-layout :pull-left isGridView:active" }} {{action toggleView "grid-view" "document"}}></a>
+            </div>
+        </div>
+    </div>
+
+    {{#if results.length}}
+        <div  id="document_search_results" class="container widget-container">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                {{#each results itemController='documentItem'}}
+                    {{#if isGridView}}
+                        <div class="col-sm-4 col-md-4 col-lg-3">
+                            <div class="kc-grid withPopOver" data-rel="popover" data-container="body" data-toggle="popover" data-placement="auto right" data-original-title="" title="">
+                                <h2 class="grid-header">
+                                    <div class="category-image">
+                                        <i class="white icon-file"></i>
+                                    </div>
+                                    <div class="grid-title">
+                                        {{#link-to 'document' resource.id class="white"}}
+                                            {{documentTitle}}
+                                        {{/link-to}}
+                                    </div>
+                                </h2>
+                                <div class="grid-sub-section summary snippets">
+                                    {{#if highlights}}
+                                        {{{highlightedContent}}}
+                                    {{else}}
+                                        <p class="no-value">All or part of the search term matches the file type or the access type of this document.</p>
+                                    {{/if}}
+                                </div>
+                                <div class="grid-sub-section">
+                                    <span>Type:</span>
+                                    <span> {{resource.documentType}}</span>
+                                </div>
+                                <div class="grid-sub-section">
+                                    <span>Uploaded on: </span>
+                                    <span>{{formatDate resource.uploadedOn "DD MMM YYYY"}}</span>
+                                </div>
+                                <div class="grid-sub-section last">
+                                    <div class="align-left action-icons">
+                                        {{#read-link document=resource appId=appId fileUnavailable='openFileUnavailableModal' videoAvailable='openVideoPlayerModal'}}
+                                            <span class="btn btn-sm btn-primary">Read</span>
+                                        {{/read-link}}
+                                    </div>
+                                </div>
+                                <div class="catalogPopover">
+                                    <div class="popover-container">
+                                        <div class="popover-header">
+                                            <span class="thumb">
+                                               <i class="white icon-file"></i>
+                                            </span>
+                                            <span class="name">
+                                                {{documentTitle}}
+                                            </span>
+                                        </div>
+                                        <div class="popover-body">
+                                            <span class="dataCont">
+                                                <span>
+                                                    <b>Description : </b>
+                                                    {{{ ellipsis resource.description 150}}}
+                                                </span>
+                                            </span>
+                                            <span class="dataCont">
+                                                {{#each resource.userTags}}
+                                                    <span class="tag">{{this}}</span>
+                                                {{/each}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {{else}}
+                        <div class="catalog-list-view">
+                            <div class="document-catalog">
+                                <div class="category-description-block position-relative">
+                                    <div class="category-image">
+                                        <i class="blue icon-file"></i>
+                                        <span class="blue">
+                                            {{resource.documentType}}
+                                        </span>
+                                    </div>
+                                    <div class="document-name">
+                                        {{#link-to 'document' resource.id}}
+                                            {{documentTitle}}
+                                        {{/link-to}}
+                                    </div>
+                                    <div class="document-subtitle snippets">
+                                        {{#if highlights}}
+                                            {{{highlightedContent}}}
+                                        {{else}}
+                                          <p class="no-value">All or part of the search term matches the file type or the access type of this document.</p>
+                                        {{/if}}
+                                    </div>
+                                    <div class="category-block-description">
+                                        <p class="category-description">
+                                                <b>Description : </b>
+                                                {{{resource.description}}}
+                                        </p>
+                                        {{#each resource.userTags}}
+                                            <span class="tag">{{this}}</span>
+                                        {{/each}}
+                                    </div>
+                                    <div class="document-upload-date">
+                                        <div><span class="grey uploaded-date">Uploaded on: {{formatDate resource.uploadedOn "DD MMM YYYY"}}</span>
+                                        </div>
+
+                                        <div class="action-buttons">
+                                            <div class="pull-right">
+                                                <div class="grid-sub-section last">
+                                                    <div class="align-left action-icons">
+                                                        {{#read-link document=resource appId=appId fileUnavailable='openFileUnavailableModal' videoAvailable='openVideoPlayerModal'}}
+                                                            <span class="btn btn-sm btn-primary">Read</span>
+                                                        {{/read-link}}
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/each}}
+            </div>
+            <div>
+                {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+            </div>
+        </div>
+    {{else}}
+        <div class="no-value"> No results found </div>
+    {{/if}}
+</div>

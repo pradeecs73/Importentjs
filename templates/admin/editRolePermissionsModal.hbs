@@ -1,0 +1,45 @@
+<div class="modal file-upload-modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     id="editPermissions">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header learningplanblue-header modal-create-header clearfix">
+                <button type="button" class="close font-25" data-dismiss="modal" {{action closeRoleModal}}>
+                    <i class="icon-remove white"></i>
+                </button>
+                <h4 class="modal-title"> {{modalTitle}}</h4>
+                <h6 class="modal-title">{{modalFilterTitle}}</h6>
+                <h6 class="modal-title">{{modalSubTitle}}</h6>
+
+
+                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                    {{visual-search componentId='permissionFilterBox' facets=model.filteredFacets filters=filters searchAction='filter' placeHolderText='Filter by  Type'}}
+                </div>
+
+            </div>
+            {{#each permission in model.filteredPermission}}
+                <table class="admin-ui">
+                    <tr class="item-permission">
+                        <td rowspan="3" width="20px">
+                            {{view App.CheckBoxWithAction action='handlePermissionChange' checked=permission.isChecked name=permission.name}}
+                        </td>
+                        <td><span class="info-label">{{permission.title}}</span>
+
+                            <p class="item-name eclipse-text">{{permission.description}}</p>
+                        </td>
+                        <br>
+                    </tr>
+                </table>
+            {{/each}}
+
+            <div class="modal-footer role-view-success">
+                <button type="button" class="btn btn-primary"
+                        data-dismiss="modal" {{action closeRoleModal}}>Cancel
+                </button>
+                <button type="button" class="btn btn-primary"
+                        data-dismiss="modal" {{action setPermissions}}>Set Permissions
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

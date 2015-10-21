@@ -1,0 +1,36 @@
+<div class="widget-box transparent">
+    <div class="widget-header widget-header-flat widget-padding bborder row-header tborder">
+        <h5 data-icon-before="arrow-shared">
+            Shared
+        </h5>
+
+        <span class="widget-toolbar">           
+            <div data-parent="#accordion" data-action="collapse" class="accordion-toggle collapsed">
+                <i class="icon-caret-up"></i>
+            </div>
+        </span>
+    
+    </div>
+    <div id="documentShares" class="panel-collapse collapse in widget-body">
+        <div class="widget-body">
+            <div class="widget-body-inner" style="display: block;">
+                <div class="file-panel-content">
+                    <ul class="file-tags-list document-file-tags">
+                        {{#if isPublic}}
+                            <li class="file-tag-keyword">
+                                <span class="inner-info">All Registered Users</span>
+                            </li>
+                        {{/if}}
+                        {{#each share in shares}}
+                            <li class="file-tag-keyword">
+                                <span class="inner-info">
+                                    {{share.entityName}}
+                                </span>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

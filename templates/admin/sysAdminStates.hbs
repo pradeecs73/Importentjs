@@ -1,0 +1,62 @@
+
+<div class="widget-box">
+    <div class="widget-header widget-header-flat padding-12">
+        <h4 class="lighter"><i class="icon-list orange"></i>State Transitions</h4>
+    </div>
+
+    <div class="widget-body">
+        <div class="widget-main padding-10">
+            <div class="container">
+	            {{#if error}}
+                    <span style="color:red;"> {{error}}</span>
+	            {{/if}}
+
+                <div class="row">
+                    <div class="col-md-10 form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-4 control-label no-padding-right">Raw Resource Type:</label>
+                            <div class="col-md-2 col-sm-6">
+	                            {{view Ember.Select content=resourceTypes value=resourceType}}
+                            </div>
+
+                            <label class="col-md-2 col-sm-4 control-label no-padding-right">Raw Resource Id:</label>
+                            <div class="col-md-4 col-sm-6">
+			                    {{input type="text" value=rawResourceId placeholder="Raw Resource Id" class="col-md-12"}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-4 control-label no-padding-right">Pipeline Resource Id:</label>
+                            <div class="col-md-8 col-sm-6">
+								{{input type="text" value=resourceId placeholder="Pipeline Resource Id" class="col-md-12"}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-4 control-label no-padding-right">Resource Version:</label>
+                            <div class="col-md-8 col-sm-6">
+								{{input type="text" value=resourceVersion placeholder="Pipeline Resource Version" class="col-md-12"}}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-sm-4 control-label no-padding-right">Resource Source Application Id:</label>
+                            <div class="col-md-8 col-sm-6">
+								{{input type="text" value=sourceApplicationId placeholder="Pipeline Resource Source Application Id" class="col-md-12"}}
+                            </div>
+                        </div>
+
+                        <div class="align-right">
+                            <button type="submit" class="btn btn-sm btn-primary"  {{action getStates}}> <i class="icon-upload-alt bigger-140"></i>Get States</button>
+                            <button type="reset" class="btn btn-sm btn-danger" {{action reset}}> <i class="icon-remove bigger-140"></i> Reset </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="state-graph" class="graph-container">
+
+</div>
+

@@ -1,0 +1,21 @@
+<div class="sub-panel-content-inner sub-panel-available">
+	<h5>Events <!-- <span id="noEvents">({{eventCount}})</span> --></h5>
+	<div class="sub-panel-list-wrap">
+		{{#if events}}
+			<ul id="eventList"  class="sub-panel-list sub-communities-list">
+				{{#each event in events}}
+					<li><strong>{{event.assetTitle}}</strong>
+						<ul>
+							<li>Created by:{{event.authorName}}</li>
+							<li>Created on:{{event.creationDate}}</li>
+						</ul>
+					</li>
+				{{/each}}
+			</ul>
+		{{else}}
+			<ul class="missing-data-message">
+				<li><em>No Events to Display</em></li>
+			</ul>
+		{{/if}}
+	</div>
+</div>

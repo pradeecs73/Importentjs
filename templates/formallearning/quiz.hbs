@@ -1,0 +1,368 @@
+
+<div class="page-content clearfix">
+{{#if model.quizErrorMessageFlag}}
+  <div class="alert alert-block alert-danger" id="quizErrorDetails" >
+    <div class="alert alert-block alert-danger">
+        <button type="button" class="close" data-dismiss="alert">
+        <i class="icon-remove"></i>
+        </button>
+        <span>
+            <i class="icon-remove"></i>  Due to some unexpected errors course details cannot be displayed.
+        </span>
+    </div>
+  </div>
+{{/if}}
+  <div class="assessment-custom-class clearfix">
+
+    <div class="container header-panel">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h1 class="eclipse-text">Quiz Topic</h1>
+            </div>
+        </div>
+    </div>  
+
+    <div class="clearfix">
+    </div>
+    <div class="panel panel-default">
+      <div class="container panel-body">
+        <div class="row timer-wrapper">
+          <div class="infobox infobox-blue pull-left stopwatch-no-border">
+            <span id="stopwatch" class="stopwatch">
+              00:00:00
+            </span>
+          </div> 
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="assessment-row">
+        <div id="fuelux-wizard" class="row-fluid" data-target="#step-container">
+          <ul>           
+            {{#each question in quiz}}
+              <li data-target="#{{unbound question.slot}}" class="active"></li>
+            {{/each}}           
+          </ul>
+        </div>
+        <div id="fuelux-wizard" class="row-fluid" data-target="#step-container-review">
+          <ul>           
+            {{#each question in quiz}}
+              <li data-target="#review{{unbound question.slot}}" class="active"></li>
+            {{/each}}
+          </ul>
+        </div>
+        <div class="col-md-12 no-padding">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title pull-left">
+                <strong>
+                  Assessment
+                </strong>
+                <i class="assessment-headericon">
+                </i>
+              </h3>
+
+            </div>
+            <div class="panel-body">
+              <div class="step-content row-fluid position-relative" id="step-container">
+                {{#each question in quiz}}
+                <div class="step-pane question" id="{{unbound question.slot}}">
+                  <div class="question-set" >
+                    <div class="question-instruction"> 
+			                <p>
+                        <span class="badge question-count">
+                          {{unbound question.slot}}
+                        </span>
+                        {{{question.text}}}
+                      </p>
+			              </div>
+                    <div style="padding-left:30px;">
+                      <form>
+                        <ul>
+                          {{#if question.answerOptions.length}}
+                          {{#each answer in question.answerOptions}}
+                          <li>
+                            {{#if question.radio}}
+                            <input type="radio" value="{{unbound question.id}}" name="{{unbound question.id}}" {{action "answered" question.id answer.name question.qtype on="change"}} style="opacity: 100!important">
+                            <label>
+                              {{{unbound answer.value}}}
+                            </label>
+                            {{else}}
+                            <input type="checkbox" name="{{unbound question.id}}" value="{{unbound answer.name}}" style="opacity: 100!important"/>
+                            <label>
+                              {{{unbound answer.value}}}
+                            </label>
+                            {{/if}}
+                          </li>
+                          {{/each}}
+                          {{else}}
+                          <li>
+                            <input type="radio" value="{{unbound question.id}}" name="{{unbound question.id}}" {{action "answered" question.id 1 question.qtype on="change"}} style="opacity: 100!important">
+                            <label>
+                              Yes
+                            </label>
+                          </li>
+                          <li>
+                            <input type="radio" value="{{unbound question.id}}" name="{{unbound question.id}}" {{action "answered" question.id 0 question.qtype on="change"}} style="opacity: 100!important">
+                            <label>
+                              No
+                            </label>
+                          </li>
+                          
+                          {{/if}}
+                        </ul>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                {{/each}}
+                <div class="step-pane" id="review">
+                  <div class="">
+                    
+                    <div >
+                      {{#each option in options}}
+                      <p class="remaining-questions">
+                        There are {{option.remaining}} unattempted questions. Once you submit you cannot re-submit. Still you want to end the quiz?
+                      </p>
+                      {{/each}}
+                      <div class="space-20">
+                      </div>
+                      <p  style="padding-left:30px;">
+                        Following are unattempted questions
+                        <select style="vertical-align:text-top" multiple="" size="5" name="">
+                          {{#each unanswered}}
+                          <option>
+                            {{this}}
+                          </option>
+                          {{/each}}
+                        </select>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="step-pane" id="result">
+                  <div class="">
+                    <div class="nav-pills-custom">
+                      <ul  class="nav nav-pills nav-stacked review-grade-section">
+                        {{#each result in results}}
+                        <li class="active review-grade-percentage">
+							<a href="#">
+                            <span class="badge pull-right percentage-record result-obtained">
+                              {{unbound result.percent}}%
+                            </span>
+                            Percentage
+                          </a>
+                        </li>
+                        <li class="correct-answer-section">
+						<a href="#">
+						  <span class="pull-left">Correct Answers  </span>
+                            <span class="result-obtained pull-left">
+                              {{unbound result.marks_obtained}}
+                            </span>
+						</a>
+                        </li>
+                        <li class="wrong-answer-section">
+						<a href="#">
+						  <span class="pull-left"> Total Questions</span>
+                            <span class="result-obtained pull-left">
+                              {{unbound result.total_marks}}
+                            </span>
+						</a>
+                        </li>
+                        {{/each}}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div  id="quizPercentage" class="nav-pills-custom" style="display:none;">
+                      <ul  class="nav nav-pills nav-stacked review-grade-section">
+                        {{#each result in results}}
+                        <li class="active review-grade-percentage">
+						<a href="#">
+                            <span class="badge pull-right percentage-record">
+                              {{unbound result.percent}}%
+                            </span>
+                            Percentage
+						</a>
+                        </li>
+                        {{/each}}
+                      </ul>
+			  </div>
+              
+              {{#each question in reviewResults}}
+              <div class="step-pane review-question" id="review{{unbound question.slot}}">
+                <div class="">
+                  <p class="pull-left">
+                    {{#if question.correct}} 
+                    <span class=" success ">
+                      {{unbound question.slot}}
+                    </span>
+                    {{{question.text}}}
+                  </p>
+                  {{else}}
+                  <span class=" red ">
+                    {{unbound question.slot}}
+                  </span>
+                  {{{question.text}}}
+                </p>
+                {{/if}}
+                
+                <div style="padding-left:30px;">
+                  <form>
+                    <ul>
+                      {{#if question.answerOptions.length}}
+                      {{#each answer in question.answerOptions}}
+                      <li>
+                        {{#if question.radio}}
+                        {{unbound radioButton answer question.userAnswerResponse question.id question.correct}}
+                        {{else}}
+                        {{unbound checkBox question.userAnswerResponse question.id answer question.correct question.partial}}
+                        {{/if}}
+                      </li>
+                      {{/each}}
+                      {{else}}
+                      <li>
+                        {{unbound radioButtonTrueOrFalse question.userAnswerResponse question.id 1 question.correct}}
+                      </li>
+                      <li>
+                        {{unbound radioButtonTrueOrFalse question.userAnswerResponse question.id 0 question.correct}}
+                      </li>
+                      
+                      {{/if}}
+                    </ul>
+                  </form>
+                </div>
+              </div>
+            </div>
+            {{/each}}   
+          </div>
+        </div>
+      </div>
+      <div class="clearfix">
+      </div>
+      <div class="row-fluid wizard-actions align-right">
+        <button class="btn btn-prev btn-primary" id="prevButton">
+          <!--
+<i class="icon-angle-left">
+</i>
+-->
+        Prev
+      </button>
+      <button class="btn btn-primary btn-next" data-last="Next" id="nextButton">
+        Next
+        <!-- 
+<i class="icon-angle-right icon-on-right">
+</i>
+-->
+      </button>
+      <button class="btn btn-primary" id="ReviewAndSubmit">
+        Submit
+        <!--
+<i class="icon-angle-right icon-on-right">
+</i>
+-->
+      </button>
+      <button class="btn btn-primary" id="SubmitFinal" style="display:none" {{action "submit" quizid courseId}}>
+        Submit
+        <!--
+<i class="icon-angle-right icon-on-right">
+</i>
+-->
+      </button>
+      
+      <!--button class="btn btn-prev" id="prevButton-Review" style="display:none;">
+<i class="icon-angle-left">
+</i>
+Prev
+</button>
+<button class="btn btn-success btn-next" data-last="Next" id="nextButton-Review" style="display:none;">
+Next
+<i class="icon-angle-right icon-on-right">
+</i>
+</button-->
+      <button class="btn btn-primary" id="reviewAssesment" style="display:none" {{action "reviewQuiz" quizid courseId on="click"}}>
+        Review
+        <!--
+<i class="icon-angle-right icon-on-right">
+</i>
+-->
+      </button>
+      <button class="btn btn-primary topopup" id="finishAssesment" style="display:none" {{action "finish" on="click"}}>
+        Finish
+        <!--
+<i class="icon-angle-right icon-on-right">
+</i>
+-->
+      </button>
+      
+      </div>
+      <div class="clearfix space">
+      </div>
+    </div>
+    <div class="clearfix">
+    </div>
+    <div class="quiz-infobox-container">
+      {{#each option in options}}
+      <div class="infobox infobox-green">
+        <div class="infobox-icon">
+          <i class=" icon-lightbulb">
+          </i>
+        </div>
+        <div class="infobox-data">
+          <span class="infobox-data-number">
+            {{../quiz.length}}
+          </span>
+          <div class="infobox-content">
+            Total
+          </div>
+        </div>
+      </div>
+      <div class="infobox infobox-orange">
+        <div class="infobox-icon">
+          <i class="icon-exclamation">
+          </i>
+        </div>
+        <div class="infobox-data">
+          <span class="infobox-data-number">
+            {{option.notattempted}}
+          </span>
+          <div class="infobox-content">
+            Not Attempted
+          </div>
+        </div>
+      </div>
+      <div class="infobox infobox-red">
+        <div class="infobox-icon">
+          <i class="icon-check">
+          </i>
+        </div>
+        <div class="infobox-data">
+          <span class="infobox-data-number">
+            {{option.attempted}}
+          </span>
+          <div class="infobox-content">
+            Attempted
+          </div>
+        </div>
+      </div>
+      <div class="infobox infobox-orange">
+        <div class="infobox-icon">
+          <i class="icon-beaker btn-purple">
+          </i>
+        </div>
+        <div class="infobox-data">
+          <span class="infobox-data-number">
+            {{option.remaining}}
+          </span>
+          <div class="infobox-content">
+            Remaining
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    
+    </div>
+   
+  </div>

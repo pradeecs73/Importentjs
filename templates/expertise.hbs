@@ -1,0 +1,163 @@
+<div class="admin-ui admin-tab-expertise">
+  <div class="widget-body no-border" id="admin-lists">
+    <div class="widget-body-inner">
+      <div class="widget-main clearfix">
+    
+        {{#if is__ed_Expertise}}
+        <div class="admin-filters-panel">
+          
+            <div class="row list-grid-page">
+
+              <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+
+                  <div class="row">      
+                      <div class="col-lg-8 col-md-8 col-sm-10 col-xs-10 form-wrap">
+                          <form class="form-search" {{action "add" on="submit"}}>
+                              <i class="ccks-icon icon-tag"></i>
+                              {{input type="text" data-icon-before="tag" value=newExpertise placeholder="Type an area of expertise" maxlength="50"}}
+                          </form>
+                      </div>
+                      <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1">
+                          <button type="button" class="btn btn-primary" data-toggle="modal" {{action 'add'}}><span class="add-text-long">Add</span><!--span class="add-text-short">+</span--> </button>
+
+                      </div>             
+                  </div>
+                  <div class="error">{{errorMessage}}</div>
+                  <div {{bind-attr class=':success successMessage:fade-out-message'}}>{{successMessage}}</div>
+              </div>
+              <!--div class="col-lg-1 col-md-4 col-sm-1 col-xs-10 filter-panel-divider"></div-->
+
+              <!--div class="col-lg-4 col-md-4 col-sm-4 col-xs-10">
+                <div class="form-search">
+                     <i class="icon-search" {{action 'searchbyexpertise'}}></i>
+                    {{input id="adminSearchBoxvalue" class="form-control" value=expertisesearchvalue placeholder="Search by expertise name" type="text" action="searchbyexpertise" on="enter"}}
+                 </div>
+              </div-->
+
+              <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 search-add-wrap">
+
+                  <div class="row">
+
+                      <div class="col-lg-10 col-md-4 col-sm-4 form-wrap col-xs-10">
+                              <div class="form-search">
+                                     <i class="icon-search" {{action 'searchbyexpertise'}}></i>
+                                    {{input id="adminSearchBoxvalue" class="form-control" value=expertisesearchvalue placeholder="Search by expertise name" type="text" action="searchbyexpertise" on="enter"}}
+                               </div>
+                          </div>
+
+                          {{#unless isMobile}}
+                          <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1">
+                              <!--pan class="expert-badge" {{action 'uploadUsersModal'}}></span-->
+                              <button class="btn upload-btn" type="button" data-icon-before="arrow-upload" data-rel="tooltip" data-original-title="Bulk Upload"
+                                  {{action 'uploadExpertiseModal'}}>
+                              </button>
+                          </div>
+                          {{/unless}}              
+
+                  </div>
+
+              </div>     
+
+            </div>
+          
+        </div><!--/admin-filters-panel-->
+        
+        <div class="admin-table-wrap-outer">
+          <div class="admin-table-wrap-inner">
+            <div class="admin-table-content">
+          
+              <div class="list-headings">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-25">
+                        <h5>Expertise</h5>
+                    </div>
+                    <div class="col-10">
+                        <h5>Experts</h5>
+                    </div>
+                    <div class="col-15">
+                        <h5>Created By</h5>
+                    </div>
+                    <div class="col-20">
+                        <h5>Updated By</h5>
+                    </div>
+                    <div class="col-20">
+                      <h5>Last Update</h5>
+                    </div>
+                    <div class="col-10">
+                      <h5>Actions</h5>
+                    </div>
+                  </div>
+                </div>
+              </div><!--/list-headings-->
+
+
+              <div id="expertise-topics" class="list-container">
+              {{#if allExpertise}}
+                {{#each expertise in allExpertise itemController="adminExpertiseItem"}}                
+                <div class="item-wrap container">
+                  <div class="row">
+                    
+                    <div class="col-25">
+                      {{#if inEditMode}}
+                      <form {{action "editAndSave" model on="submit"}}>
+                      {{focus-input type="text" id="edit-area-of-expertise" value=expertiseName maxlength="50" autofocus="autofocus"}}<br>
+                      </form>
+                      {{else}}
+                        <p class="item-topic eclipse-text">{{expertise.name}}</p>
+                        <div {{bind-attr class=':success expertiseEditSuccessMessage:fade-out-message-update'}}>{{{expertiseEditSuccessMessage}}}</div>
+                      {{/if}}
+                        <div class="error">{{expertiseEditErrorMessage}}</div>
+                    </div>
+                    <div class="col-10">
+                      {{#if expertise.experts.length}}
+                      <p class="item-expert-number">{{#link-to "userManagement.users" (query-params filters=expertiseFilter searchText="" pageNumber=1 sortBy='shortName' sortOrder='asc')}}<span class="expert-total">{{expertise.experts.length}}</span>{{/link-to}}</p>
+                      {{else}}
+                      <p class="item-expert-number"><span class="expert-total">{{expertise.experts.length}}</span></p>
+                      {{/if}}
+                    </div>
+                    <div class="col-15">
+                      <p class="item-created-by eclipse-text">{{expertise.createdByShortName}}</p>
+                    </div>
+                    <div class="col-20">
+                      <p class="item-updated-by eclipse-text">{{expertise.updatedByShortName}}</p>
+                    </div>
+                    <div class="col-20">
+                      <p class="item-updated-short">{{formatDate expertise.lastUpdated "ddd., MMM. DD, YYYY"}}</p>
+                    </div>
+                    <div class="col-10">
+                      <div class="actions-wrap">
+                        {{#unless expertise.experts.length}}
+                          {{#if inEditMode}}
+                            <span class="" {{action 'editAndSave' model}}>
+                              <i class="save-button icon-save blue font-20" data-rel="tooltip" data-original-title="Save"></i>
+                            </span>
+                          {{else}}
+                            <span class="expertise-action expertise-action-edit font-20 blue" data-icon-before="pencil" {{action 'setEditMode' model}}></span>
+                          {{/if}}
+                            <span class="expertise-action expertise-action-delete font-20 red" data-icon-before="trash-o" {{action 'delete' model}}></span>
+                        {{/unless}}
+                      </div>                      
+                    </div>
+                  </div>
+                </div>
+                {{/each}}
+                {{else}}
+                  <div class="no-value"> No results found</div>
+                {{/if}}
+              </div>
+
+            </div><!--/admin-table-wrap-content-->
+          </div><!--/admin-table-wrap-inner-->
+        </div><!--/admin-table-wrap-outer-->
+
+        {{pagination-link action='gotoPage' totalResults=totalResults pageNumber=pageNumber}}
+        {{else}}
+            <h3>You may not have permission to perform operations in this tab</h3>
+            <h5>If you were looking to perform administrative operations, please look at other tabs</h5>
+        {{/if}}
+    
+      </div>
+    </div>
+  </div>
+</div>

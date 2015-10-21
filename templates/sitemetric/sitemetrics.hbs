@@ -1,0 +1,562 @@
+<div class="container header-panel page-header">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 clearfix">
+            <h1>Site Analytics <a  data-icon-before="refresh" href="javascript:location.reload()"></a> </h1>
+        </div>
+    </div>
+</div>
+
+<script>
+(function(w,d,s,g,js,fjs){
+  g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(cb){this.q.push(cb)}};
+  js=d.createElement(s);fjs=d.getElementsByTagName(s)[0];
+  js.src='https://apis.google.com/js/platform.js';
+  fjs.parentNode.insertBefore(js,fjs);js.onload=function(){g.load('analytics')};
+}(window,document,'script'));
+</script>
+
+
+<div class="widget-box transparent">
+    <div class="widget-header no-padding">
+        <div class="no-border">
+            <ul class="nav nav-tabs padding-left-18" id="myTab">
+                <li class="active">
+                    <a data-toggle="tab" href="#site-usage">Site Usage
+                        
+                    </a>
+                </li>
+               <li class="">
+                    <a data-toggle="tab" href="#community">Community
+                        
+                    </a>
+                </li>
+               <li class="">
+                    <a data-toggle="tab" href="#discussion">Discussions
+                        
+                    </a>
+                </li>
+
+                <li class="">
+                    <a data-toggle="tab" href="#blogs">Blogs
+                        
+                    </a>
+                </li>
+
+                <li class="">
+                    <a data-toggle="tab" href="#people">People
+                        
+                    </a>
+                </li>
+
+                <li class="">
+                    <a data-toggle="tab" href="#documents">Documents
+                        
+                    </a>
+                </li
+
+            </ul>
+        </div>
+
+    </div><!--/.widget-header-->
+    <div class="widget-body clearfix">
+        <div class="widget-main no-padding">
+            <div class="tab-content">
+            	<div id="site-usage" class="tab-pane active">
+				    <div class="widget-box transparent">
+				       
+			            <div class="widget-header widget-header-flat widget-padding bborder row-header">			            	
+							<div id="auth_container"></div>
+			            </div>
+				       
+				        <div id="siteMetrics" class="panel-collapse collapse in">
+				            
+				        </div>
+				    </div>
+				    <div class="widget-box transparent">
+				       
+			            <div class="widget-header widget-header-flat widget-padding bborder row-header">
+
+			            	<h5 class="padding-left-10">Site Results</h5>
+
+			                <span class="widget-toolbar"> The 'time' is in seconds.</span>
+			               
+			            </div>
+				       
+				        <div id="siteMetrics" class="panel-collapse collapse in">
+				            <div class="widget-body">
+									<div id="pageViewsByRegion" ></div>
+									<section id="pageViews"></section>
+									<div id="displayRegionsInfo"></div>									
+									<div id="allStatsMostVistiedPages"></div>
+									
+									<script>
+
+									gapi.analytics.ready(function() {
+
+									  /**
+									   * Authorize the user immediately if the user has already granted access.
+									   * If no access has been created, render an authorize button inside the
+									   * element with the ID "auth_container".
+									   */
+									  gapi.analytics.auth.authorize({
+										container: 'auth_container',
+										clientid: '107248878027-826aj8r989m52g8ej140ejfnhgl080bj.apps.googleusercontent.com',
+									  });
+
+									  /**
+									   * Create the first DataChart for top countries over the past 30 days.
+									   * It will be rendered inside an element with the id "displayRegionsInfo".
+									   */
+
+									  var dataQuery =  {
+										  metrics: 'ga:sessions',
+										  dimensions: 'ga:date',
+										  'start-date': '30daysAgo',
+										  'end-date': 'today',
+										  'max-results': 600,
+										   sort: '-ga:sessions'
+										};
+
+									  var dataChart1 = new gapi.analytics.googleCharts.DataChart({
+										query : dataQuery,
+										chart: {
+										  container: 'displayRegionsInfo',
+										  type: 'COLUMN',
+										  options: {
+											width: '100%'
+										  }
+										}
+									  });
+
+
+									  var pageViews = new gapi.analytics.googleCharts.DataChart({
+											reportType: 'ga',
+											query: {
+											  'dimensions': 'ga:date',
+											  'metrics': 'ga:pageviews',
+											  'start-date': '30daysAgo',
+											  'end-date': 'today',
+											},
+											chart: {
+											  type: 'LINE',
+											  container: 'pageViews'
+											}
+									   });
+
+										var pageViewId = {
+										  query: {
+											ids: gaConfig["metricIds"][window.location.host]
+										  }
+										}
+										pageViews.set(pageViewId).execute();
+									  
+
+										  var allStatsMostVistiedPages = new gapi.analytics.googleCharts.DataChart({
+											reportType: 'ga',
+											query: {
+											  'dimensions': 'ga:pageTitle',
+											  'metrics': 'ga:pageviews,ga:uniquePageviews,ga:timeOnPage,ga:bounces,ga:entrances,ga:exits',
+											  'start-date': '30daysAgo',
+											  'end-date': 'today',
+											  'sort' : '-ga:pageviews'
+											},
+											chart: {
+											  type: 'TABLE',
+											  container: 'allStatsMostVistiedPages',
+											  options: {
+												width: '100%'
+											  }
+											}
+										  });
+
+
+
+											var mostVisitedPagesId = {
+											  query: {
+												ids: gaConfig["metricIds"][window.location.host]
+											  }
+											}
+											allStatsMostVistiedPages.set(mostVisitedPagesId).execute();
+											allStatsMostVistiedPages.on('success', function(response){
+												jQuery("#allStatsMostVistiedPages").find('table:nth-child(1)').find('td').each(function(){
+													if(jQuery(this).hasClass('google-visualization-table-td-number')){
+														jQuery(this).html( Math.floor(jQuery(this).text()) ) ;
+													}else{
+														jQuery(this).html( jQuery(this).text() ).text();
+													}
+												});
+											})							
+
+
+									  /**
+									   * Update the first dataChart when the first view selecter is changed.
+									   */
+
+										dataChart1.set({query: {ids: gaConfig["metricIds"][window.location.host]}}).execute();
+
+
+									});
+									</script>
+			                    
+				            </div>
+				        </div>
+				    </div>
+				</div>
+            	<div id="community" class="tab-pane">
+				    <div class="widget-box transparent">
+				       
+			            <div class="widget-header widget-header-flat widget-padding bborder row-header">
+			               
+			            </div>
+				       
+				        <div id="siteMetrics" class="panel-collapse collapse in">
+				            <div class="widget-body">
+								<section id="auth-button"></section>
+				            </div>
+				        </div>
+				    </div>
+				    <div class="widget-box transparent">
+				       
+			            <div class="widget-header widget-header-flat widget-padding bborder row-header">
+
+			            	<h5 class="padding-left-10">Community Results</h5>
+
+							<span class="widget-toolbar"> The 'time' is in seconds.</span>
+			               
+			            </div>
+				       
+				        <div id="siteMetrics" class="panel-collapse collapse in">
+				            <div class="widget-body">				                
+								<div id="allStatsCommunities"></div>
+								<div id="graphCommunities"></div>
+								<script>
+										gapi.analytics.ready(function() {
+
+										  var allStatsCommunities = new gapi.analytics.googleCharts.DataChart({
+											reportType: 'ga',
+											query: {
+											  'dimensions': 'ga:pageTitle',
+											  'metrics': 'ga:pageViews,ga:uniquePageviews,ga:timeOnPage,ga:avgTimeOnPage',
+											  'start-date': '30daysAgo',
+											  'end-date': 'today',
+											  'sort' : '-ga:pageviews',
+											'filters' : 'ga:pagePath=~^/community/;ga:pagePath!~edit;ga:pagePath!~new'
+											},
+											chart: {
+											  type: 'TABLE',
+											  container: 'allStatsCommunities',
+											  options: {
+												width: '100%'
+											  }
+											}
+										  });
+										  
+											var communitiesVisitedId = {
+											  query: {
+												ids: gaConfig["metricIds"][window.location.host]
+											  }
+											}
+											allStatsCommunities.set(communitiesVisitedId).execute();											
+											allStatsCommunities.on('success', function(response){
+												jQuery("#allStatsCommunities").find('table:nth-child(1)').find('td').each(function(){
+													if(jQuery(this).hasClass('google-visualization-table-td-number')){
+														jQuery(this).html( Math.floor(jQuery(this).text()) ) ;
+													}else{
+														jQuery(this).html( jQuery(this).text() ).text();
+													}
+												});
+											})										
+										});
+										</script>
+								
+				            </div>
+				        </div>
+				    </div>
+				</div>
+            	<div id="discussion" class="tab-pane">
+				    <div class="widget-box transparent">
+				       
+			            <div class="widget-header widget-header-flat widget-padding bborder row-header">
+
+			            </div>				       
+				        
+				    </div>
+				    <div class="widget-box transparent">
+				       
+			            <div class="widget-header widget-header-flat widget-padding bborder row-header">
+
+			            	<h5 class="padding-left-10">Discussions Results</h5>
+
+							<span class="widget-toolbar"> The 'time' is in seconds.</span>
+			               
+			            </div>
+				       
+				        <div id="siteMetrics" class="panel-collapse collapse in">
+				            <div class="widget-body">								
+								<div id="allStatsQuestions"></div>
+								<div id="plotQuestionsViews"></div>
+								<script>
+								gapi.analytics.ready(function() {
+
+								  var allStatsQuestions = new gapi.analytics.googleCharts.DataChart({
+									reportType: 'ga',
+									query: {
+									  'dimensions': 'ga:pageTitle',
+									  'metrics': 'ga:pageViews,ga:uniquePageviews,ga:timeOnPage,ga:avgTimeOnPage',
+									  'start-date': '30daysAgo',
+									  'end-date': 'today',
+									  'sort' : '-ga:pageviews',
+									'filters' : 'ga:pagePath=~^/question/;ga:pagePath!~edit;ga:pagePath!~new'
+									},
+									chart: {
+									  type: 'TABLE',
+									  container: 'allStatsQuestions',
+									  options: {
+										width: '100%'
+									  }
+									}
+								  });
+								  
+								  
+									var allQuestionsVisitedId = {
+									  query: {
+										ids:  gaConfig["metricIds"][window.location.host]
+									  }
+									}
+									allStatsQuestions.set(allQuestionsVisitedId).execute();
+									allStatsQuestions.on('success', function(response){
+										jQuery("#allStatsQuestions").find('table:nth-child(1)').find('td').each(function(){
+											if(jQuery(this).hasClass('google-visualization-table-td-number')){
+												jQuery(this).html( Math.floor(jQuery(this).text()) ) ;
+											}else{
+												jQuery(this).html( jQuery(this).text() ).text();
+											}
+										});
+									})									
+								});
+								</script>
+				                
+				            </div>
+				        </div>
+				    </div>
+				</div>
+            	<div id="blogs" class="tab-pane">
+				    <div class="widget-box transparent">
+				       
+			            <div class="widget-header widget-header-flat widget-padding bborder row-header">
+			               
+			            </div>
+				       
+				        <div id="siteMetrics" class="panel-collapse collapse in">
+				            <div class="widget-body">
+
+				            </div>
+				        </div>
+				    </div>
+				    <div class="widget-box transparent">
+				       
+			            <div class="widget-header widget-header-flat widget-padding bborder row-header">
+
+			            	<h5 class="padding-left-10">Blog Results</h5>
+
+							<span class="widget-toolbar"> The 'time' is in seconds.</span>
+			               
+			            </div>
+				       
+				        <div id="siteMetrics" class="panel-collapse collapse in">
+				            <div class="widget-body">
+								<div id="allStats_blogs"></div>
+			                    <div id="plotBlogs"></div>
+								<script>
+								gapi.analytics.ready(function() {
+
+								  var allStats_blogs = new gapi.analytics.googleCharts.DataChart({
+									reportType: 'ga',
+									query: {
+									  'dimensions': 'ga:pageTitle',
+									  'metrics': 'ga:pageViews,ga:uniquePageviews,ga:timeOnPage,ga:avgTimeOnPage',
+									  'start-date': '30daysAgo',
+									  'end-date': 'today',
+									  'sort' : '-ga:pageviews',
+									'filters' : 'ga:pagePath=~^/blog/;ga:pagePath!~edit;ga:pagePath!~new'
+									},
+									chart: {
+									  type: 'TABLE',
+									  container: 'allStats_blogs',
+									  options: {
+										width: '100%'
+									  }
+									}
+								  });
+							  
+
+									var allBlogsVisitedId = {
+									  query: {
+										ids:  gaConfig["metricIds"][window.location.host]
+									  }
+									}
+									allStats_blogs.set(allBlogsVisitedId).execute();
+									allStats_blogs.on('success', function(response){
+										jQuery("#allStats_blogs").find('table:nth-child(1)').find('td').each(function(){
+											if(jQuery(this).hasClass('google-visualization-table-td-number')){
+												jQuery(this).html( Math.floor(jQuery(this).text()) ) ;
+											}else{
+												jQuery(this).html( jQuery(this).text() ).text();
+											}
+										});
+									})									
+
+								});
+								</script>
+								
+				            </div>
+				        </div>
+				    </div>
+				</div>
+            	<div id="people" class="tab-pane">
+				    <div class="widget-box transparent">
+				       
+			            <div class="widget-header widget-header-flat widget-padding bborder row-header">
+			               
+			            </div>
+				       
+				        <div id="siteMetrics" class="panel-collapse collapse in">
+				            
+				        </div>
+				    </div>
+				    <div class="widget-box transparent">
+				       
+			            <div class="widget-header widget-header-flat widget-padding bborder row-header">
+
+			            	<h5 class="padding-left-10">Site Results</h5>
+
+							<span class="widget-toolbar"> The 'time' is in seconds.</span>
+			               
+			            </div>
+				       
+				        <div id="siteMetrics" class="panel-collapse collapse in">
+				            <div class="widget-body">				                
+									<div id="allStatsPeople"></div>
+									<div id="plotPeople"></div>									
+										<script>
+										gapi.analytics.ready(function() {
+
+										  var allStatsPeople = new gapi.analytics.googleCharts.DataChart({
+											reportType: 'ga',
+											query: {
+											  'dimensions': 'ga:pageTitle',
+											  'metrics': 'ga:pageviews,ga:uniquePageviews,ga:timeOnPage',
+											  'start-date': '30daysAgo',
+											  'end-date': 'today',
+											  'sort' : '-ga:pageviews',
+											  'filters' : 'ga:pagePath=~^/user/;ga:pagePath!~my'
+											},
+											chart: {
+											  type: 'TABLE',
+											  container: 'allStatsPeople',
+											  options: {
+												width: '100%'
+											  }
+											}
+										  });
+
+										  var allPeopleVisitedId = {
+											  query: {
+												ids:  gaConfig["metricIds"][window.location.host]
+											  }
+											}
+										allStatsPeople.set(allPeopleVisitedId).execute();
+										allStatsPeople.on('success', function(response){
+											jQuery("#allStatsPeople").find('table:nth-child(1)').find('td').each(function(){
+												if(jQuery(this).hasClass('google-visualization-table-td-number')){
+													jQuery(this).html( Math.floor(jQuery(this).text()) ) ;
+												}else{
+													jQuery(this).html( jQuery(this).text() ).text();
+												}
+											});
+										})										
+										});
+										</script>
+									
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+
+            	<div id="documents" class="tab-pane">
+				    <div class="widget-box transparent">
+				       
+			            <div class="widget-header widget-header-flat widget-padding bborder row-header">
+		               
+			            </div>
+				       
+				        <div id="siteMetrics" class="panel-collapse collapse in">
+				            <div class="widget-body">
+				                
+				            </div>
+				        </div>
+				    </div>
+				    <div class="widget-box transparent">
+				       
+			            <div class="widget-header widget-header-flat widget-padding bborder row-header">
+
+			            	<h5 class="padding-left-10">Site Results</h5>
+
+							<span class="widget-toolbar"> The 'time' is in seconds.</span>
+			               
+			            </div>
+				       
+				        <div id="siteMetrics" class="panel-collapse collapse in">
+				            <div class="widget-body">
+										<div id="allDocStats"></div>
+										<div id="plotDocuments"></div>										
+											<script>
+											gapi.analytics.ready(function() {
+
+											  var allDocStats = new gapi.analytics.googleCharts.DataChart({
+												reportType: 'ga',
+												query: {
+												  'dimensions': 'ga:pageTitle',
+												  'metrics': 'ga:pageViews,ga:uniquePageviews,ga:timeOnPage,ga:avgTimeOnPage',
+												  'start-date': '30daysAgo',
+												  'end-date': 'today',
+												  'sort' : '-ga:pageviews',
+												'filters' : 'ga:pagePath=~^/document/;ga:pagePath!~edit;ga:pagePath!~new;ga:pagePath!~catalog;ga:pagePath!~shared'
+												},
+												chart: {
+												  type: 'TABLE',
+												  container: 'allDocStats',
+												  options: {
+													width: '100%'
+												  }
+												}
+											  });
+
+												var allDocStatsIds = {
+												  query: {
+													ids:  gaConfig["metricIds"][window.location.host]
+												  }
+												}
+												allDocStats.set(allDocStatsIds).execute();
+												allDocStats.on('success', function(response){
+													jQuery("#allDocStats").find('table:nth-child(1)').find('td').each(function(){
+														if(jQuery(this).hasClass('google-visualization-table-td-number')){
+															jQuery(this).html( Math.floor(jQuery(this).text()) ) ;
+														}else{
+															jQuery(this).html( jQuery(this).text() ).text();
+														}
+													});
+												})											
+											});
+											</script>
+			                    
+			                   
+				            </div>
+				        </div>
+				    </div>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>

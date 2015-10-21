@@ -1,0 +1,48 @@
+<div class="modal-header learningplanblue-header modal-create-header clearfix">
+    <button class="close font-25" {{action close}}>
+        <i class="icon-remove white"></i>
+    </button>
+    <h4 class="modal-title">
+        Add RSS Feed
+    </h4>
+</div>
+<div class="modal-body page-padding padding-bottom-10">
+    <fieldset>
+
+
+        <div class="row clearfix">
+            <div class="col-sm-2 col-xs-12">
+                <span class="field-input-label">Name</span><span class="asterisk">*</span>
+            </div>
+            <div class="col-sm-10 col-xs-12 input-wrap">
+                <div {{bindAttr class="nameError:error"}}>
+                    {{input type="text" value=name name="name" placeholder="Name"}}
+                </div>
+                <span {{bindAttr class=":error blankNameError:show:hide"}}><i class="icon-remove"></i> Title cannot be empty</span>
+                <span {{bindAttr class=":error feedExistsError:show:hide"}}><i class="icon-remove red"></i> Feed with same title/url already exists</span>
+                <span {{bindAttr class=":error nameTooLongError:show:hide"}}><i class="icon-remove red"></i> Feed name should be less than 35 characters</span>
+            </div>
+        </div>
+
+
+        <div class="row clearfix">
+            <div class="col-sm-2 col-xs-12">
+                <span class="field-input-label">Url</span><span class="asterisk">*</span>
+            </div>
+            <div class="col-sm-10 col-xs-12 input-wrap">
+                <div {{bindAttr class="urlError:error"}}>
+                    {{input type="text" value=url name="url" placeholder="Url"}}
+                </div>
+                <span {{bindAttr class=":error blankUrlError:show:hide"}}><i class="icon-remove red"></i> Url cannot be empty</span>
+                <span {{bindAttr class=":error rssUrlError:show:hide"}}><i class="icon-remove red"></i> Url is not a valid rss link</span>
+            </div>
+        </div>
+    </fieldset>
+    <div><span class="asterisk">*</span> Data Required</div>
+</div>
+
+<div class="modal-footer">
+
+    <button class="btn btn-primary" {{action close}}>Cancel</button>
+    <button class="btn btn-primary"{{bindAttr class="nameError:disabled urlError:disabled"}} {{action save}}>Submit</button>
+</div>

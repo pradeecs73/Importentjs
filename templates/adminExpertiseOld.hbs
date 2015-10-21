@@ -1,0 +1,39 @@
+<div class="allCategories"></div>
+
+<div class="widget-box transparent">
+  <div class="widget-header widget-header-flat padding-12">
+    <h4 class="lighter"><i class="icon-list orange"></i> Add new area of expertise</h4>
+    <div class="widget-toolbar">
+      <a data-action="collapse" href="#"><i class="icon-chevron-up"></i></a>
+    </div>
+  </div>
+    <div class="widget-body padding-10">
+    <div class="areas-of-expertise">
+        <form {{action "add" on="submit"}}>
+        {{input type="text" value=newExpertise placeholder="Areas of Expertise" class="form-control col-md-4" maxlength="50"}}<button {{action 'add'}} class="btn btn-info">Add</button>
+        </form>
+    </div>
+    <div class="error">{{errorMessage}}</div>
+      <div class="category admin-expertise">
+        {{#each expertise in sortedExpertise itemController="adminExpertiseItem"}}
+            <div class="show-expert-tag-column pull-left">
+            {{#if inEditMode}}
+                <div class="expert-tag editMode">
+                    <form {{action "editAndSave" on="submit"}}>
+                        {{focus-input type="text" id="edit-area-of-expertise" value=expertiseName class="form-control col-md-4" maxlength="50" autofocus="autofocus" focus-out="exitEditMode"}}<br>
+                    </form>
+                    <div class="error">{{expertiseError}}</div>
+                </div>
+            {{else}}
+                <div class="expert-tag">
+                    <span>{{model.name}}</span>
+                    <span class="icon icon-edit" {{action 'setEditMode' model}}></span>
+                    <span class="icon delete" {{action 'delete' model}}>X</span>
+                </div>
+                <div class="error">{{expertiseError}}</div>
+            {{/if}}
+            </div>
+          {{/each}}
+      </div>
+    </div>
+</div>

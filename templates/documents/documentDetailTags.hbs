@@ -1,0 +1,16 @@
+{{#if isTagsAvailable}}
+    <div class="header-panel file-tags-wrap bborder tborder">
+        <div class="row">
+            <ul class="file-tags-list document-file-tags">
+                <li><i class="icon-tag"></i></li>
+                {{#each tag in userTags}}
+                    <li class="file-tag-keyword">
+                        <span class="inner-info">
+                            {{tag}}
+                        </span>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+{{/if}}

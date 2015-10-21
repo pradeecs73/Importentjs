@@ -1,0 +1,45 @@
+<div class="list-item">
+    {{#if isFile}}
+    <span class="col-1 thumb box-unable-icon"><img style="height:25px;vertical-align:top;float:right;" {{bind-attr src=icon}}></span>
+    {{else}}
+    <span class="col-1 thumb box-unable-icon" data-icon-before="folder-lines" style="font-size:25px;text-align:right;"></span>
+    {{/if}}
+    <span class="col-2 summary">
+      <a>
+        {{#if isFile}}
+            <span class="box-name" {{bind-attr title=name}} {{action 'loadList' id type}}>{{{ellipsis name 150}}}</span>
+        {{else}}
+            <span class="box-name" {{bind-attr title=name}} {{action 'selectItem' id}}>{{{ellipsis name 150}}}</span>
+        {{/if}}
+      </a>
+      <span class="description" style="font-size:14px;height:40px;" {{bind-attr title=description}}>
+          {{{ellipsis description 250}}}
+      </span>
+      <div class="box-information">
+        <span class="time-info icon-clock box-information-icon box-unable-icon">
+          <span>Uploaded {{formatedDate}}</span>
+        </span>
+{{!--
+        <span class="count-info icon-file box-information-icon box-unable-icon">
+          <span>{{count}}</span>
+        </span>
+        <span class="count-info icon-user-group3 box-information-icon box-unable-icon">
+          <span>{{shared.count}}</span>
+        </span>
+--}}
+          {{!--#if hasShared}}
+             <i class="icon-chain-linked box-information-icon box-unable-icon"></i>
+          {{/if--}}
+      </div>
+    </span>
+    <span class="col-5 actions">
+      {{#if canShare}}
+        <span class="btn" data-icon-before="arrow-share" {{action "_openShareModel" id type name}}></span>
+      {{/if}}
+{{!--#if isFile}}
+          <span class="btn btn-primary pull-right" {{action 'loadList' id type}}>Download</span>
+      {{else}}
+          <span class="btn btn-primary pull-right" {{action 'selectItem' id}}>View</span>
+{{/if--}}
+    </span>
+</div>

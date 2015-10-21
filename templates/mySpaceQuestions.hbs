@@ -1,0 +1,33 @@
+<div id="mySpace-tab" class="tab-pane active">
+ <div class="widget-body no-border">
+    <div class="widget-body-inner" style="display: block;">
+      <div class="widget-main no-padding">
+      {{#each question in model.posts}}
+         <div class="itemdiv commentdiv profile-activity clearfix">
+            <div class="body" style="margin:5px !important"> 
+              {{avatarMini question.authorName question.author}}
+               {{#link-to "question" question._id class="user"}} <span class="text">{{question.title}} </span>{{/link-to}} <br/>
+                <span class="author_name">{{profileLink question.authorName question.author}} <i class="icon-time orange bigger-110"></i> {{from-now question.createDate}}</span>
+                <div class="grey"><i class="icon-quote-left"></i>  {{{ellipsis question.content 150}}}</div>
+                    <div class="pull-left status-buttons grey">
+                    <span>
+                          <i class="icon-thumbs-up icon-1x blue"></i> {{question.follows.length}} likes
+                    </span>                
+                    <span>
+                         <i class="icon-eye-open icon-1x purple"></i> {{question.views.length}} views
+                    </span>                                                                                                                                                
+                    <span>
+                         <i class="icon-comments-alt icon-1x red"></i> {{question.comments.length}} comments
+                    </span>
+                </div>
+            </div>
+        </div>
+      {{/each}}
+         
+        <div class="center"> <i class="icon-question-sign icon-2x orange"></i>{{#link-to "questions.my"}} &nbsp;See more &nbsp; <i class="icon-angle-right"></i> {{/link-to}}  </div>
+        <div class="hr hr-double hr8"></div>
+      </div>
+      <!-- /widget-main --> 
+    </div>
+  </div>
+</div>

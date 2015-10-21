@@ -1,0 +1,38 @@
+<ul class="nav nav-list">
+    <li class="active">
+        <button class="dropdown-toggle" data-icon-after="caret-right">
+        <i class="icon-graduation-cap2 menu-icon"></i>
+        <span class="menu-text"> Learning</span>
+    </button>
+    <ul class="submenu">
+        {{!--
+        <li>
+            {{#link-to 'formalLearning' activeClass='active'}}
+            <i class="questioner hide"></i><span class="menu-text">All</span>
+            {{/link-to}}
+        </li>
+        --}}
+        <li id="_trainingCatalog">
+            {{#link-to 'catalog' activeClass='active'}}
+                <i class="questioner hide"></i><span class="menu-text">Training Catalog</span>
+            {{/link-to}}
+        </li>
+        <li>
+            {{#link-to 'myEnrollment' (query-params reporteesUsername="" reporteesSort="progress") activeClass='active'}}
+                <i class="questioner hide"></i><span class="menu-text">My Enrollments</span>
+            {{/link-to}}
+        </li>
+        <li>
+            {{#link-to 'shared' activeClass='active'}}
+                <i class="questioner hide"></i><span class="menu-text">Shared Learning</span>
+            {{/link-to}}
+        </li>
+        <li id="_learningPlans">
+            {{#link-to 'learningPlans' (query-params pageNumber=1 reporteesUsername="") activeClass='active'}}
+                <i class="questioner hide"></i> <span class="menu-text">Learning Plans </span>
+            {{/link-to}}
+        </li>
+    </ul>
+</li>
+
+</ul>
